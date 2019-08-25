@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/admin_notice_board"
+        android:title="Notices"
+        android:icon="@drawable/ic_menu_camera" />
+
+    <item
+        android:id="@+id/admin_complaints"
+        android:title="Complaints"
+        android:icon="@drawable/ic_menu_camera" />
+
+    <item
+        android:id="@+id/admin_group_chat"
+        android:title="Groups"
+        android:icon="@drawable/ic_menu_camera" />
+
+    <item
+        android:id="@+id/admin_finances"
+        android:title="Finance"
+        android:icon="@drawable/ic_menu_camera" />
+
+</menu>

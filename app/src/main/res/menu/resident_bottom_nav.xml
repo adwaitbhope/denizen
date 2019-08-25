@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/resident_notice_board"
+        android:icon="@drawable/ic_menu_camera"
+        android:title="Notices" />
+
+    <item
+        android:id="@+id/resident_group_chat"
+        android:icon="@drawable/ic_menu_camera"
+        android:title="Groups" />
+
+    <item
+        android:id="@+id/resident_amenities"
+        android:icon="@drawable/ic_menu_camera"
+        android:title="Amenities" />
+
+    <item
+        android:id="@+id/resident_visitor_history"
+        android:icon="@drawable/ic_menu_camera"
+        android:title="Visitor History" />
+
+    <item
+        android:id="@+id/resident_maintenance"
+        android:icon="@drawable/ic_menu_camera"
+        android:title="Maintenance" />
+
+</menu>
