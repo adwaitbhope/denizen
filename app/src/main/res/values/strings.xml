@@ -8,4 +8,10 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_resident_home_screen">ResidentHomeScreenActivity</string>
     <string name="title_activity_security_home_screen">SecurityHomeScreenActivity</string>
+    <string name="username">Username</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="Password">Password</string>
+    <string name="register_your_society">Register Your Society</string>
+    <string name="contact_us">Contact Us</string>
 </resources>
