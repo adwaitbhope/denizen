@@ -5,34 +5,40 @@
 
     <group>
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/nav_intercom_admin"
+            android:icon="@drawable/ic_call_black_24dp"
+            android:title="Intercom" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_admin_info_admin"
+            android:icon="@drawable/ic_domain_black_24dp"
+            android:title="Society Admin Info" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/nav_security_list_admin"
+            android:icon="@drawable/ic_security_black_24dp"
+            android:title="Security Desk List" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_vendors_admin"
+            android:icon="@drawable/ic_build_black_24dp"
+            android:title="Service Vendors" />
+        <item
+            android:id="@+id/nav_wing_details_admin"
+            android:icon="@drawable/ic_location_city_black_24dp"
+            android:title="Wing Details" />
+        <item
+            android:id="@+id/nav_amenities_admin"
+            android:icon="@drawable/ic_pool_black_24dp"
+            android:title="Amenities" />
+        <item
+            android:id="@+id/nav_maintenance_admin"
+            android:icon="@drawable/ic_build_black_24dp"
+            android:title="Maintenance" />
+        <item
+            android:id="@+id/nav_visitor_history_admin"
+            android:icon="@drawable/ic_group_black_24dp"
+            android:title="Visitor History" />
+        <item
+            android:id="@+id/nav_logout_admin"
+            android:icon="@drawable/ic_power_settings_new_black_24dp"
+            android:title="Logout" />
     </group>
-
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
-
 </menu>

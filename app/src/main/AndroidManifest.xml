@@ -25,6 +25,7 @@
             android:name=".ResidentHomeScreenActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
 
         <activity
