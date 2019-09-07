@@ -20,4 +20,6 @@
     <string name="if_approved_continue_payment">If approved, continue payment</string>
     <string name="enter_details_new_application">Enter Details New Application</string>
     <string name="dialog">dialog</string>
+    <string name="input_email">Input Email</string>
+    <string name="email">Email</string>
 </resources>
