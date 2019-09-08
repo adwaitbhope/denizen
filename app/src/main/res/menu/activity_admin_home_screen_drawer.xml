@@ -2,43 +2,52 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-
     <group>
-        <item
-            android:id="@+id/nav_intercom_admin"
-            android:icon="@drawable/ic_call_black_24dp"
-            android:title="Intercom" />
-        <item
-            android:id="@+id/nav_admin_info_admin"
-            android:icon="@drawable/ic_domain_black_24dp"
-            android:title="Society Admin Info" />
-        <item
-            android:id="@+id/nav_security_list_admin"
-            android:icon="@drawable/ic_security_black_24dp"
-            android:title="Security Desk List" />
-        <item
-            android:id="@+id/nav_vendors_admin"
-            android:icon="@drawable/ic_build_black_24dp"
-            android:title="Service Vendors" />
-        <item
-            android:id="@+id/nav_wing_details_admin"
-            android:icon="@drawable/ic_location_city_black_24dp"
-            android:title="Wing Details" />
-        <item
-            android:id="@+id/nav_amenities_admin"
-            android:icon="@drawable/ic_pool_black_24dp"
-            android:title="Amenities" />
-        <item
-            android:id="@+id/nav_maintenance_admin"
-            android:icon="@drawable/ic_build_black_24dp"
-            android:title="Maintenance" />
-        <item
-            android:id="@+id/nav_visitor_history_admin"
-            android:icon="@drawable/ic_group_black_24dp"
-            android:title="Visitor History" />
-        <item
-            android:id="@+id/nav_logout_admin"
-            android:icon="@drawable/ic_power_settings_new_black_24dp"
-            android:title="Logout" />
+        <group android:id="@+id/group1">
+            <item
+                android:id="@+id/nav_intercom_admin"
+                android:icon="@drawable/ic_call_black_24dp"
+                android:title="Intercom" />
+            <item
+                android:id="@+id/nav_maintenance_admin"
+                android:icon="@drawable/ic_build_black_24dp"
+                android:title="Maintenance" />
+            <item
+                android:id="@+id/nav_visitor_history_admin"
+                android:icon="@drawable/ic_group_black_24dp"
+                android:title="Visitor History" />
+        </group>
+
+        <group android:id="@+id/group2">
+            <item
+                android:id="@+id/nav_admin_info_admin"
+                android:icon="@drawable/ic_domain_black_24dp"
+                android:title="Society Admin Info" />
+            <item
+                android:id="@+id/nav_security_list_admin"
+                android:icon="@drawable/ic_security_black_24dp"
+                android:title="Security Desk List" />
+
+            <item
+                android:id="@+id/nav_wing_details_admin"
+                android:icon="@drawable/ic_location_city_black_24dp"
+                android:title="Wing Details" />
+            <item
+                android:id="@+id/nav_amenities_admin"
+                android:icon="@drawable/ic_pool_black_24dp"
+                android:title="Amenities" />
+
+            <item
+                android:id="@+id/nav_vendors_admin"
+                android:icon="@drawable/ic_settings_black_24dp"
+                android:title="Service Vendors" />
+        </group>
+
+        <group android:id="@+id/group3">
+            <item
+                android:id="@+id/nav_logout_admin"
+                android:icon="@drawable/ic_power_settings_new_black_24dp"
+                android:title="Logout" />
+        </group>
     </group>
 </menu>

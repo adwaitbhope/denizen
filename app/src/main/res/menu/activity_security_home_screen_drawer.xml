@@ -16,17 +16,20 @@
 
         <item
             android:id="@+id/nav_vendors_security"
-            android:icon="@drawable/ic_build_black_24dp"
+            android:icon="@drawable/ic_settings_black_24dp"
             android:title="Service Vendors" />
 
         <item
             android:id="@+id/nav_visitor_history_security"
             android:icon="@drawable/ic_group_black_24dp"
             android:title="Visitor History" />
+
+    <group android:id="@+id/group1">
         <item
             android:id="@+id/nav_logout_security"
             android:icon="@drawable/ic_power_settings_new_black_24dp"
             android:title="Logout" />
+    </group>
 
     </group>
 

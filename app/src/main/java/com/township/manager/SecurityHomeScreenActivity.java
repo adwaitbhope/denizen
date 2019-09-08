@@ -49,17 +49,15 @@ public class SecurityHomeScreenActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_intercom_security) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_admin_info_security) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_vendors_security) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_visitor_history_security) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_logout_security) {
 
         }
 
