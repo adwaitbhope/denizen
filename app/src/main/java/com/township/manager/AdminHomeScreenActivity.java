@@ -49,17 +49,23 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_intercom_admin) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_maintenance_admin) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_visitor_history_admin) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_admin_info_admin) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_security_list_admin) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_vendors_admin) {
+
+        } else if (id == R.id.nav_wing_details_admin) {
+
+        } else if (id == R.id.nav_amenities_admin) {
+
+        } else if (id == R.id.nav_logout_admin) {
 
         }
 

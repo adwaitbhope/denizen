@@ -3,27 +3,27 @@
 
     <item
         android:id="@+id/resident_notice_board"
-        android:icon="@drawable/ic_menu_camera"
+        android:icon="@drawable/ic_assignment_black_24dp"
         android:title="Notices" />
 
     <item
         android:id="@+id/resident_group_chat"
-        android:icon="@drawable/ic_menu_camera"
-        android:title="Groups" />
+        android:icon="@drawable/ic_chat_black_24dp"
+        android:title="Chats" />
 
     <item
         android:id="@+id/resident_amenities"
-        android:icon="@drawable/ic_menu_camera"
+        android:icon="@drawable/ic_pool_black_24dp"
         android:title="Amenities" />
 
     <item
-        android:id="@+id/resident_visitor_history"
-        android:icon="@drawable/ic_menu_camera"
-        android:title="Visitor History" />
+        android:id="@+id/resident_maintenance"
+        android:icon="@drawable/ic_build_black_24dp"
+        android:title="Maintenance" />
 
     <item
-        android:id="@+id/resident_maintenance"
-        android:icon="@drawable/ic_menu_camera"
-        android:title="Maintenance" />
+        android:id="@+id/resident_visitor_history"
+        android:icon="@drawable/ic_group_black_24dp"
+        android:title="Visitor History" />
 
 </menu>
