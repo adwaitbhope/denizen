@@ -8,4 +8,18 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_resident_home_screen">ResidentHomeScreenActivity</string>
     <string name="title_activity_security_home_screen">SecurityHomeScreenActivity</string>
+    <string name="username">Username</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="Password">Password</string>
+    <string name="register_your_society">Register Your Society</string>
+    <string name="contact_us">Contact Us</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="if_approved_continue_payment">If approved, continue payment</string>
+    <string name="enter_details_new_application">Enter Details New Application</string>
+    <string name="dialog">dialog</string>
+    <string name="input_email">Input Email</string>
+    <string name="email">Email</string>
 </resources>
