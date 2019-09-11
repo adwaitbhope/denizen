@@ -20,6 +20,8 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_admin_home_screen"
-        app:menu="@menu/activity_admin_home_screen_drawer" />
+        app:menu="@menu/activity_admin_home_screen_drawer" >
+
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

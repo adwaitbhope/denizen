@@ -51,8 +51,8 @@ public class LoginScreenActivity extends FragmentActivity {
             ft.remove(prev);
         }
         ft.addToBackStack(null);
-        DialogFragment dialogFragment = new ForgotPasswordFragment();
-        dialogFragment.show(ft, getString(R.string.dialog));
+//        DialogFragment dialogFragment = new ForgotPasswordFragment();
+//        dialogFragment.show(ft, getString(R.string.dialog));
     }
     public void openRegisterSocietyDialogFragment(){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
