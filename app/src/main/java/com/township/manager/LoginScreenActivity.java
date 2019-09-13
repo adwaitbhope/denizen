@@ -1,12 +1,13 @@
 package com.township.manager;
 
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 public class LoginScreenActivity extends FragmentActivity {
     public Button forgotpassword,registersociety,contactus;
@@ -51,8 +52,8 @@ public class LoginScreenActivity extends FragmentActivity {
             ft.remove(prev);
         }
         ft.addToBackStack(null);
-//        DialogFragment dialogFragment = new ForgotPasswordFragment();
-//        dialogFragment.show(ft, getString(R.string.dialog));
+        DialogFragment dialogFragment = new ForgotPasswordFragment();
+        dialogFragment.show(ft, getString(R.string.dialog));
     }
     public void openRegisterSocietyDialogFragment(){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
