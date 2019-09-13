@@ -92,11 +92,14 @@ public class LoginScreenActivity extends FragmentActivity {
 
                                       JSONArray jsonArray= new JSONArray(response);
                                       JSONObject jsonObject=jsonArray.getJSONObject(0);
+                                      AuthenticationBackend authenticationBackend=new AuthenticationBackend();
+                                      authenticationBackend.setLogin(jsonObject.getInt("login"));
+                                      authenticationBackend.setLoginType(jsonObject.getString("type"));
                                       Log.d("Take",username+password);
-                                      if(jsonObject.getInt("login")==1){
+                                      if(authenticationBackend.getLogin()==1){
                                           Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
                                           Log.d("response",response);
-                                          switch (jsonObject.getString("type")){
+                                          switch (authenticationBackend.getLoginType()){
 
                                               case "admin":{
                                                   startActivity(new Intent(LoginScreenActivity.this,AdminHomeScreenActivity.class));
