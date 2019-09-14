@@ -1,5 +1,6 @@
 package com.township.manager;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -13,11 +14,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
@@ -26,18 +27,19 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.lang.String;
 
 public class LoginScreenActivity extends FragmentActivity {
     public Button forgotpassword,registersociety,contactus,loginButton;
     public EditText usernameEditText,passwordEditText;
     String url= "https://township-manager.herokuapp.com";
 
-
+    DBManager dbManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
-
+        dbManager=new DBManager(this);
         forgotpassword = findViewById(R.id.forgotpassword);
         forgotpassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +68,7 @@ public class LoginScreenActivity extends FragmentActivity {
         logIn();
     }
     public void logIn(){
+
           loginButton.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View view) {
@@ -91,30 +94,59 @@ public class LoginScreenActivity extends FragmentActivity {
                                   try {
 
                                       JSONArray jsonArray= new JSONArray(response);
-                                      JSONObject jsonObject=jsonArray.getJSONObject(0);
-                                      AuthenticationBackend authenticationBackend=new AuthenticationBackend();
-                                      authenticationBackend.setLogin(jsonObject.getInt("login"));
-                                      authenticationBackend.setLoginType(jsonObject.getString("type"));
-                                      Log.d("Take",username+password);
-                                      if(authenticationBackend.getLogin()==1){
-                                          Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
+                                      JSONObject jsonObjectLogin=jsonArray.getJSONObject(0);
+                                      User user =new User();
+                                      JSONObject jsonObjectLoginInfo=jsonArray.getJSONObject(1);
+
+                                      user.setLogin(jsonObjectLogin.getInt("login"));
+                                      user.setLoginType(jsonObjectLoginInfo.getString("type"));
+                                      user.setUserName(jsonObjectLoginInfo.getString("username"));
+                                      user.setPassword(password);
+                                      user.setFirstName(jsonObjectLoginInfo.getString("first_name"));
+                                      user.setLastName(jsonObjectLoginInfo.getString("last_name"));
+                                      user.setPhoneNumber(jsonObjectLoginInfo.getString("phone"));
+                                      user.setEmail(jsonObjectLoginInfo.getString("email"));
+                                      user.setProfileUpdated(jsonObjectLoginInfo.getBoolean("profile_updated"));
+                                      user.setTownship(jsonObjectLoginInfo.getString("township"));
+
+                                      ContentValues contentValues=new ContentValues();
+                                      contentValues.put(DBManager.ColUsername,user.getUserName());
+                                      contentValues.put(DBManager.ColPassword,user.getPassword());
+                                      contentValues.put(DBManager.ColFirstName,user.getFirstName());
+                                      contentValues.put(DBManager.ColLastName,user.getLastName());
+                                      contentValues.put(DBManager.ColPhone,user.getPhoneNumber());
+                                      contentValues.put(DBManager.ColEmail,user.getEmail());
+                                      contentValues.put(DBManager.ColProfileUpdated,user.getProfileUpdated());
+                                      contentValues.put(DBManager.ColTownship,user.getTownship());
+                                      contentValues.put(DBManager.ColType,user.getLoginType());
+
+
+                                      if(user.getLogin()==1){
+                                       //   Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
                                           Log.d("response",response);
-                                          switch (authenticationBackend.getLoginType()){
+                                          switch (user.getLoginType()){
 
                                               case "admin":{
+                                                  user.setDesignation(jsonObjectLoginInfo.getString("designation"));
+                                                  contentValues.put(DBManager.ColDesignation,user.getDesignation());
+                                                  long id=dbManager.Insert(contentValues);
                                                   startActivity(new Intent(LoginScreenActivity.this,AdminHomeScreenActivity.class));
-                                                  Toast.makeText(getApplicationContext(),"admin",Toast.LENGTH_SHORT).show();
+                                                  Toast.makeText(getApplicationContext(),"admin "+id,Toast.LENGTH_SHORT).show();
                                                   break;
                                               }
                                               case "security":{
+                                                  long id=dbManager.Insert(contentValues);
                                                   startActivity(new Intent(LoginScreenActivity.this,SecurityHomeScreenActivity.class));
-                                                  Toast.makeText(getApplicationContext(),"security",Toast.LENGTH_SHORT).show();
+                                                  Toast.makeText(getApplicationContext(),"security "+id,Toast.LENGTH_SHORT).show();
                                                   break;
                                               }
                                               case "resident": {
-
+                                                  user.setWing(jsonObjectLoginInfo.getString("wing"));
+                                                  contentValues.put(DBManager.ColWing,user.getWing());
+                                                  long id=dbManager.Insert(contentValues);
+                                                  user.setApartment(jsonObjectLoginInfo.getString("apartment"));
                                                   startActivity(new Intent(LoginScreenActivity.this, ResidentHomeScreenActivity.class));
-                                                  Toast.makeText(getApplicationContext(),"resident",Toast.LENGTH_SHORT).show();
+                                                  Toast.makeText(getApplicationContext(),"resident "+id,Toast.LENGTH_SHORT).show();
                                                   break;
                                               }
 
