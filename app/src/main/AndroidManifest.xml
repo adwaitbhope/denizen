@@ -12,6 +12,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".RegistrationSocietyStepTwo">
 
+
         </activity>
 
         <activity android:name=".LoginScreenActivity">

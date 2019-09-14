@@ -11,6 +11,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 public class LoginScreenActivity extends FragmentActivity {
     public Button forgotpassword,registersociety,contactus;
+    public Button login;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,14 +27,15 @@ public class LoginScreenActivity extends FragmentActivity {
                 openForgotPasswordDialogFragment();
             }
         });
+
         registersociety = findViewById(R.id.registersociety);
         registersociety.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openRegisterSocietyDialogFragment();
-
             }
         });
+
         contactus = findViewById(R.id.contactus);
         contactus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,7 +43,11 @@ public class LoginScreenActivity extends FragmentActivity {
                 openDialog();
             }
         });
+
+
     }
+
+
     public void openDialog() {
         ContactUsDialog exampleDialog = new ContactUsDialog();
         exampleDialog.show(getSupportFragmentManager(), "example dialog");
