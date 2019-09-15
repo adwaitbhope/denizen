@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.township.manager">
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".GlobalVariables"
@@ -11,9 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".RegistrationSocietyStepTwo">
-
-
-        </activity>
 
         <activity android:name=".LoginScreenActivity">
             <intent-filter>
@@ -27,8 +25,8 @@
             android:name=".AdminHomeScreenActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
-        </activity>
 
+        </activity>
         <activity
             android:name=".ResidentHomeScreenActivity"
             android:label="@string/app_name"
@@ -45,4 +43,5 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
+
 </manifest>

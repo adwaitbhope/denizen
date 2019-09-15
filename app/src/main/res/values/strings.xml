@@ -23,7 +23,7 @@
     <string name="input_email">Input Email</string>
     <string name="email">Email</string>
 
-    <string name="server_addr">https://township-manager.herokuapp.com/</string>
+    <string name="server_addr">https://township-manager.herokuapp.com</string>
     <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
