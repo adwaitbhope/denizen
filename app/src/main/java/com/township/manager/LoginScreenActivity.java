@@ -134,13 +134,11 @@ public class LoginScreenActivity extends FragmentActivity {
                                                 contentValues.put(DBManager.ColDesignation, user.getDesignation());
                                                 long id = dbManager.Insert(contentValues);
                                                 startActivity(new Intent(LoginScreenActivity.this, AdminHomeScreenActivity.class));
-                                                Toast.makeText(getApplicationContext(), "admin " + id, Toast.LENGTH_SHORT).show();
                                                 break;
                                             }
                                             case "security": {
                                                 long id = dbManager.Insert(contentValues);
                                                 startActivity(new Intent(LoginScreenActivity.this, SecurityHomeScreenActivity.class));
-                                                Toast.makeText(getApplicationContext(), "security " + id, Toast.LENGTH_SHORT).show();
                                                 break;
                                             }
                                             case "resident": {
@@ -149,7 +147,6 @@ public class LoginScreenActivity extends FragmentActivity {
                                                 long id = dbManager.Insert(contentValues);
                                                 user.setApartment(jsonObjectLoginInfo.getString("apartment"));
                                                 startActivity(new Intent(LoginScreenActivity.this, ResidentHomeScreenActivity.class));
-                                                Toast.makeText(getApplicationContext(), "resident " + id, Toast.LENGTH_SHORT).show();
                                                 break;
                                             }
 
@@ -197,8 +194,8 @@ public class LoginScreenActivity extends FragmentActivity {
             ft.remove(prev);
         }
         ft.addToBackStack(null);
-//        DialogFragment dialogFragment = new ForgotPasswordFragment();
-//        dialogFragment.show(ft, getString(R.string.dialog));
+        DialogFragment dialogFragment = new ForgotPasswordFragment();
+        dialogFragment.show(ft, getString(R.string.dialog));
     }
 
     public void openRegisterSocietyDialogFragment() {
