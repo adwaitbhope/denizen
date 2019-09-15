@@ -21,13 +21,13 @@ public class SliderAdapter extends PagerAdapter {
     }
 
     public int[] slide_images = {
-            R.drawable.eat_icon,R.drawable.owl_icon,R.drawable.pc_icon
+            R.drawable.building_icon,R.drawable.amenities_icon,R.drawable.login_icon
     };
 
     public String[] slide_headings = {
-            "EAT",
-            "SLEEP",
-            "CODE"
+            "WING DETAILS",
+            "AMENITIES",
+            "ADMIN-LOGINS"
     };
 
 

@@ -2,12 +2,6 @@ package com.township.manager;
 
 import android.content.ContentValues;
 import android.content.Intent;
-
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,6 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -29,14 +27,10 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.lang.String;
 
 public class LoginScreenActivity extends FragmentActivity {
-    public Button forgotpassword,registersociety,contactus;
-    public Button login;
+    public Button forgotpasswordButton,registersociety,contactus,loginButton;
 
-
-    public Button forgotpassword, registersociety, contactus, loginButton;
     public EditText usernameEditText, passwordEditText;
 
     DBManager dbManager;
@@ -46,8 +40,8 @@ public class LoginScreenActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
         dbManager = new DBManager(this);
-        forgotpassword = findViewById(R.id.forgotpassword);
-        forgotpassword.setOnClickListener(new View.OnClickListener() {
+        forgotpasswordButton = findViewById(R.id.forgotpasswordButton);
+        forgotpasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openForgotPasswordDialogFragment();
