@@ -22,12 +22,14 @@ public class RegistrationSocietyStepTwo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_society_step_two);
 
+        SliderAdapter sliderAdapter = new SliderAdapter(getSupportFragmentManager());
+//        sliderAdapter.addFragment();
+
         mSlideViewPager = (ViewPager) findViewById(R.id.slideViewPager);
-        mDotLayout = (LinearLayout) findViewById(R.id.dotsLayout);
-
-        SliderAdapter sliderAdapter = new SliderAdapter(this);
         mSlideViewPager.setAdapter(sliderAdapter);
+        mSlideViewPager.setOffscreenPageLimit(2);
 
+        mDotLayout = (LinearLayout) findViewById(R.id.dotsLayout);
         addDotsIndicator(0);
 
         mSlideViewPager.addOnPageChangeListener(viewListener);
@@ -42,15 +44,14 @@ public class RegistrationSocietyStepTwo extends AppCompatActivity {
         for (int i = 0; i < mDots.length; i++){
 
             mDots[i] = new TextView(this);
-            mDots[i].setText(Html.fromHtml("&#8226;"));
-            mDots[i].setTextSize(25);
-            mDots[i].setTextColor(getResources().getColor(R.color.colorGrey));
+            mDots[i].setText(Html.fromHtml("&#9702;"));
+            mDots[i].setTextSize(35);
 
             mDotLayout.addView(mDots[i]);
         }
 
         if(mDots.length > 0){
-            mDots[position].setTextSize(35);
+            mDots[position].setText(Html.fromHtml("&#8226;"));
             mDots[position].setTextColor((getResources().getColor(R.color.colorAccent)));
         }
     }
