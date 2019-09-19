@@ -1,5 +1,6 @@
 package com.township.manager;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Gravity;
@@ -10,7 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-public class RegistrationSocietyStepTwo extends AppCompatActivity {
+public class RegistrationSocietyStepTwo extends AppCompatActivity implements RegistrationSocietyStepTwoWingDetailsFragment.OnFragmentInteractionListener, RegistrationSocietyStepTwoAmenitiesDetailsFragment.OnFragmentInteractionListener, RegistrationSocietyStepTwoAdminLoginDetailsFragment.OnFragmentInteractionListener {
 
     public Button login;
     private TextView[] mDots;
@@ -23,7 +24,9 @@ public class RegistrationSocietyStepTwo extends AppCompatActivity {
         setContentView(R.layout.activity_registration_society_step_two);
 
         SliderAdapter sliderAdapter = new SliderAdapter(getSupportFragmentManager());
-//        sliderAdapter.addFragment();
+        sliderAdapter.addFragment(new RegistrationSocietyStepTwoWingDetailsFragment());
+        sliderAdapter.addFragment(new RegistrationSocietyStepTwoAmenitiesDetailsFragment());
+        sliderAdapter.addFragment(new RegistrationSocietyStepTwoAdminLoginDetailsFragment());
 
         mSlideViewPager = (ViewPager) findViewById(R.id.slideViewPager);
         mSlideViewPager.setAdapter(sliderAdapter);
@@ -72,4 +75,9 @@ public class RegistrationSocietyStepTwo extends AppCompatActivity {
 
         }
     };
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }
