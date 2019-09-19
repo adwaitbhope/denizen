@@ -1,66 +1,37 @@
 package com.township.manager;
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.viewpager.widget.PagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
-public class SliderAdapter extends PagerAdapter {
+public class SliderAdapter extends FragmentStatePagerAdapter {
 
-    Context context ;
-    LayoutInflater layoutInflater;
+    private final List<Fragment> mFragmentList = new ArrayList<>();
 
-    public SliderAdapter(Context context){
-        this.context=context;
+    public SliderAdapter(@NonNull FragmentManager fm) {
+        super(fm, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     }
 
-    public int[] slide_images = {
-            R.drawable.building_icon,R.drawable.amenities_icon,R.drawable.login_icon
-    };
-
-    public String[] slide_headings = {
-            "WING DETAILS",
-            "AMENITIES",
-            "ADMIN-LOGINS"
-    };
-
-
-    @Override
-    public int getCount() {
-        return slide_headings.length;
-    }
-
-    @Override
-    public boolean isViewFromObject(@NonNull View view, @NonNull Object o) {
-        return view == (ConstraintLayout) o;
-
-    }
+//    public SliderAdapter(@NonNull FragmentManager fm) {
+//        super(fm);
+//    }
 
     @NonNull
     @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.slide_layout,container,false);
+    public Fragment getItem(int position) {
+        return mFragmentList.get(position);
+    }
 
-        ImageView slideImageView = (ImageView) view.findViewById(R.id.slide_image);
-        TextView slideHeading = (TextView) view.findViewById(R.id.slide_heading);
-
-        slideImageView.setImageResource(slide_images[position]);
-        slideHeading.setText(slide_headings[position]);
-
-        container.addView(view);
-
-        return view;
+    public void addFragment(Fragment fragment) {
+        mFragmentList.add(fragment);
     }
 
     @Override
-    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((ConstraintLayout)object);
+    public int getCount() {
+        return mFragmentList.size();
     }
 }
