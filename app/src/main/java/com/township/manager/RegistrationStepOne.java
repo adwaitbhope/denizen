@@ -7,6 +7,7 @@ import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -27,6 +28,9 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_step_one);
         Button setLocationButton = findViewById(R.id.registration_set_location_button);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+//        toolbar.setTitleTextColor(getColor(R.color.secondaryColor));
         setLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -35,6 +39,7 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
                 startActivityForResult(intent, LOCATION_REQUEST_CODE);
             }
         });
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_embedded_map);
         mapFragment.getMapAsync(this);
 
