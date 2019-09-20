@@ -41,4 +41,9 @@
     <string name="wing_details">Wings</string>
     <string name="naming_convention">Naming Convention</string>
 
+    <string-array name="naming_convention_spinner">
+        <item>A/1 to A/36</item>
+        <item>A/101 to A/904</item>
+    </string-array>
+
 </resources>

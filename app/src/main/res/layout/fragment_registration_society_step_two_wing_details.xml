@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:layout_marginBottom="300dp"
+            android:layout_marginBottom="400dp"
             android:text="@string/wing_details"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -38,10 +38,35 @@
             android:id="@+id/naming_convention"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="64dp"
             android:text="@string/naming_convention"
-            android:textSize="17sp"
-            tools:layout_editor_absoluteX="65dp"
-            tools:layout_editor_absoluteY="216dp" />
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/wing_details_title" />
 
+        <Spinner
+            android:id="@+id/wing_naming_convention_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:paddingLeft="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/naming_convention"
+            app:layout_constraintStart_toEndOf="@+id/naming_convention"
+            app:layout_constraintTop_toTopOf="@+id/naming_convention" />
+        <!--            android:layout_marginStart="8dp"-->
+<!--            android:layout_marginTop="64dp"-->
+
+
+<!--        <Spinner-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="-9dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:entries="@array/naming_convention_spinner"-->
+<!--            android:gravity="left"-->
+<!--            android:padding="0dp"-->
+<!--            android:spinnerMode="dropdown"-->
+<!--            android:layout_marginStart="-9dp" />-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
