@@ -28,9 +28,14 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_step_one);
         Button setLocationButton = findViewById(R.id.registration_set_location_button);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.registration_step_one_toolbar);
 //        toolbar.setTitleTextColor(getColor(R.color.secondaryColor));
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Society Details");
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         setLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

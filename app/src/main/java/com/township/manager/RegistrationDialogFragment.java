@@ -69,21 +69,24 @@ public class RegistrationDialogFragment extends DialogFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_registration_dialog, container, false);
 
+        Button registrationStepOne = (Button) view.findViewById(R.id.registration_step_one_button);
+        registrationStepOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), RegistrationStepOne.class);
+                startActivity(intent);
+            }
+        });
+
         Button registrationStepTwo = (Button) view.findViewById(R.id.registration_step_two_button);
         registrationStepTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openRegisterSocietyStepTwoViewPager();
-            }
+                Intent intent = new Intent(getContext(), RegistrationSocietyStepTwo.class);
+                startActivity(intent);            }
         });
 
         return view;
-    }
-
-    public void openRegisterSocietyStepTwoViewPager(){
-        Intent intent = new Intent(getContext(), RegistrationSocietyStepTwo.class);
-        startActivity(intent);
-
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -10,7 +10,7 @@
     <!-- TODO: Update blank fragment layout -->
 
     <Button
-        android:id="@+id/new_application"
+        android:id="@+id/registration_step_one_button"
         android:layout_width="165dp"
         android:layout_height="70dp"
         android:layout_marginStart="16dp"
@@ -34,6 +34,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_application" />
+        app:layout_constraintTop_toBottomOf="@+id/registration_step_one_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
