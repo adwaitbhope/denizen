@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginScreenActivity extends FragmentActivity {
-    public com.google.android.material.button.MaterialButton forgotpasswordButton,registersociety,contactus,loginButton;
+    public com.google.android.material.button.MaterialButton forgotpasswordButton, registersociety, contactus, loginButton;
 
     public TextInputEditText usernameEditText, passwordEditText;
 
@@ -39,7 +39,7 @@ public class LoginScreenActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
         dbManager = new DBManager(this);
-        forgotpasswordButton = findViewById(R.id.forgotpasswordButton);
+        forgotpasswordButton = findViewById(R.id.login_screen_forgot_password_button);
         forgotpasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,7 +47,7 @@ public class LoginScreenActivity extends FragmentActivity {
             }
         });
 
-        registersociety = findViewById(R.id.registersociety);
+        registersociety = findViewById(R.id.login_screen_register_button);
         registersociety.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,7 +55,7 @@ public class LoginScreenActivity extends FragmentActivity {
             }
         });
 
-        contactus = findViewById(R.id.contactus);
+        contactus = findViewById(R.id.login_screen_contact_us_button);
         contactus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,12 +64,11 @@ public class LoginScreenActivity extends FragmentActivity {
         });
 
 
-        usernameEditText =  findViewById(R.id.loginscreen_username_edittext);
-        passwordEditText =  findViewById(R.id.login_screen_password_edit_text);
-        loginButton = findViewById(R.id.loginscreen_login_button);
+        usernameEditText = (TextInputEditText) findViewById(R.id.login_username_edittext);
+        passwordEditText = (TextInputEditText) findViewById(R.id.login_password_edittext);
+        loginButton = findViewById(R.id.login_screen_login_button);
         logIn();
     }
-
 
 
     public void logIn() {
