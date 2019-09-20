@@ -34,5 +34,8 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_maps_step_one">Map</string>
+    <string name="how_many_buildings">How many buildings?</string>
+    <string name="number_of_admins">Number of Admins</string>
+    <string name="no_of_security_desks">No. of Security Desks</string>
 
 </resources>

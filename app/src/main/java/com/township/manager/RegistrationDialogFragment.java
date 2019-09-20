@@ -1,12 +1,15 @@
 package com.township.manager;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 
 /**
@@ -64,7 +67,23 @@ public class RegistrationDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_registration_dialog, container, false);
+        View view = inflater.inflate(R.layout.fragment_registration_dialog, container, false);
+
+        Button registrationStepTwo = (Button) view.findViewById(R.id.registration_step_two_button);
+        registrationStepTwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openRegisterSocietyStepTwoViewPager();
+            }
+        });
+
+        return view;
+    }
+
+    public void openRegisterSocietyStepTwoViewPager(){
+        Intent intent = new Intent(getContext(), RegistrationSocietyStepTwo.class);
+        startActivity(intent);
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
