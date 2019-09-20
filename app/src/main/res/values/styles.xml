@@ -35,6 +35,8 @@
     <style name="AppTextField" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/secondaryColor</item>
         <item name="boxBackgroundMode">outline</item>
+
+
     </style>
 
     <style name="AppBottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView" >

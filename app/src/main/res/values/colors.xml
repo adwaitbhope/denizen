@@ -9,6 +9,10 @@
   <color name="primaryTextColor">#000000</color>
   <color name="secondaryTextColor">#ffffff</color>
   <color name="errorColor">#BD0C0C</color>
+  <color name="mtrl_textinput_default_box_stroke_color">#D6D7D7</color>
+
+
+  <!--  Aashay Colors-->
   <color name="colorAccent">#FFFFFF</color>
   <color name="colorGrey">#4FFFFFFF</color>
   <color name="colorYellow">#CCF72F</color>

@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
@@ -20,6 +18,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,9 +28,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginScreenActivity extends FragmentActivity {
-    public Button forgotpasswordButton,registersociety,contactus,loginButton;
+    public com.google.android.material.button.MaterialButton forgotpasswordButton,registersociety,contactus,loginButton;
 
-    public EditText usernameEditText, passwordEditText;
+    public TextInputEditText usernameEditText, passwordEditText;
 
     DBManager dbManager;
 
@@ -65,8 +64,8 @@ public class LoginScreenActivity extends FragmentActivity {
         });
 
 
-        usernameEditText = findViewById(R.id.loginscreen_username_edittext);
-        passwordEditText = findViewById(R.id.loginscreen_password_edittext);
+        usernameEditText =  findViewById(R.id.loginscreen_username_edittext);
+        passwordEditText =  findViewById(R.id.login_screen_password_edit_text);
         loginButton = findViewById(R.id.loginscreen_login_button);
         logIn();
     }
