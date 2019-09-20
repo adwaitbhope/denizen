@@ -211,7 +211,7 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button2"
+            android:id="@+id/registration_set_location_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -238,7 +238,7 @@
             app:iconPadding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button2" />
+            app:layout_constraintTop_toBottomOf="@+id/registration_set_location_button" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button4"
