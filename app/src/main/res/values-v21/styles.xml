@@ -10,11 +10,9 @@
 
     <style name="NumberPickerTheme" parent="Theme.AppCompat.Light">
         <item name="colorAccent">@android:color/white</item>
-        <!-- To remove divider of the number picker -->
         <item name="colorControlNormal">@android:color/transparent</item>
-
         <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="android:background">@color/colorOrange</item>
+        <item name="android:background">@android:color/transparent</item>
         <item name="android:textSize">30sp</item>
     </style>
 </resources>
