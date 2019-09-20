@@ -83,7 +83,7 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
         numberPicker.setFormatter(new NumberPicker.Formatter() {
             @Override
             public String format(int i) {
-                return String.format("%02d", i);
+                return String.format("%01d", i);
             }
         });
         numberPicker.setOnValueChangedListener(this);
