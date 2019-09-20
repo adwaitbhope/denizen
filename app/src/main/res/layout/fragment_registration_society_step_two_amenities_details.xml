@@ -6,32 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".RegistrationSocietyStepTwoAmenitiesDetailsFragment">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/NumberOfLogins"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="256dp"
-        android:layout_marginTop="108dp"
-        android:layout_marginEnd="64dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
-
     <TextView
-        android:id="@+id/NumberOfAdmins"
+        android:id="@+id/amenities_details_title"
         android:layout_width="wrap_content"
-        android:layout_height="55dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="108dp"
-        android:text="@string/number_of_admins"
-        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/amenities_details"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/amenities_icon" />
+
+    <ImageView
+        android:id="@+id/amenities_icon"
+        android:layout_width="106dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/ic_pool_black_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

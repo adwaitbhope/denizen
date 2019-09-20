@@ -1,6 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".RegistrationSocietyStepTwoWingDetailsFragment"/>
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".RegistrationSocietyStepTwoWingDetailsFragment">
+
+        <ImageView
+            android:id="@+id/wing_icon"
+            android:layout_width="106dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/ic_domain_black_64dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/wing_details_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="300dp"
+            android:text="@string/wing_details"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/wing_icon" />
+
+        <TextView
+            android:id="@+id/naming_convention"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/naming_convention"
+            android:textSize="17sp"
+            tools:layout_editor_absoluteX="65dp"
+            tools:layout_editor_absoluteY="216dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
