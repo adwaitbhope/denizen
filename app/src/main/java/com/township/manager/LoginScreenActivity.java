@@ -8,10 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -45,7 +42,7 @@ public class LoginScreenActivity extends FragmentActivity {
         forgotpasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openForgotPasswordDialogFragment();
+                startActivity(new Intent(LoginScreenActivity.this,ForgotPassword.class));
             }
         });
 
@@ -53,7 +50,7 @@ public class LoginScreenActivity extends FragmentActivity {
         registersociety.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openRegisterSocietyDialogFragment();
+                openRegisterSocietyScreen();
             }
         });
 
@@ -196,25 +193,8 @@ public class LoginScreenActivity extends FragmentActivity {
         exampleDialog.show(getSupportFragmentManager(), "example dialog");
     }
 
-    public void openForgotPasswordDialogFragment() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-        DialogFragment dialogFragment = new ForgotPasswordFragment();
-        dialogFragment.show(ft, getString(R.string.dialog));
-    }
-
-    public void openRegisterSocietyDialogFragment() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-        DialogFragment dialogFragment = new RegistrationDialogFragment();
-        dialogFragment.show(ft, getString(R.string.dialog));
+    public void openRegisterSocietyScreen() {
+        Intent intent = new Intent(LoginScreenActivity.this, RegistrationStepsActivity.class);
+        startActivity(intent);
     }
 }

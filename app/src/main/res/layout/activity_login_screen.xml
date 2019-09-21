@@ -35,7 +35,7 @@
         android:paddingLeft="8dp"
         android:text="@string/forgot_password"
         android:textColor="@color/primaryColor"
-        app:icon="@drawable/ic_warning_black_24dp"
+        app:icon="@drawable/ic_error_black_24dp"
         app:iconPadding="8dp"
         app:layout_constraintEnd_toStartOf="@+id/login_screen_login_button"
         app:layout_constraintHorizontal_bias="0.0"
