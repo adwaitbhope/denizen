@@ -42,6 +42,7 @@
     <string name="naming_convention">Naming Convention</string>
     <string name="no_of_floors">No. of floors</string>
     <string name="wing_name">Wing Name</string>
+    <string name="no_of_flats_per_floor">No. of flats per floor</string>
 
     <string-array name="naming_convention_spinner">
         <item>A/1 to A/36</item>
