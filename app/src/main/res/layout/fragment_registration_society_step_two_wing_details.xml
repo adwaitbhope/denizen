@@ -34,39 +34,110 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/wing_icon" />
 
-        <TextView
-            android:id="@+id/naming_convention"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="64dp"
-            android:text="@string/naming_convention"
-            android:textSize="15sp"
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="328dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/wing_details_title" />
+            app:layout_constraintTop_toBottomOf="@+id/wing_details_title">
 
-        <Spinner
-            android:id="@+id/wing_naming_convention_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:paddingLeft="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/naming_convention"
-            app:layout_constraintStart_toEndOf="@+id/naming_convention"
-            app:layout_constraintTop_toTopOf="@+id/naming_convention" />
-        <!--            android:layout_marginStart="8dp"-->
-<!--            android:layout_marginTop="64dp"-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+                <Spinner
+                    android:id="@+id/naming_convention_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="end"
+                    android:paddingStart="0dp"
+                    app:layout_constraintStart_toStartOf="@+id/naming_convention"
+                    app:layout_constraintTop_toBottomOf="@+id/naming_convention" />
 
-<!--        <Spinner-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginLeft="-9dp"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:entries="@array/naming_convention_spinner"-->
-<!--            android:gravity="left"-->
-<!--            android:padding="0dp"-->
-<!--            android:spinnerMode="dropdown"-->
-<!--            android:layout_marginStart="-9dp" />-->
+                <TextView
+                    android:id="@+id/naming_convention"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/naming_convention"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toStartOf="@+id/flats_per_floor_textinput"
+                    app:layout_constraintTop_toBottomOf="@+id/flats_per_floor_textinput" />
+
+                <TextView
+                    android:id="@+id/building_name_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/wing_name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/no_of_floors_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/no_of_floors"
+                    app:layout_constraintStart_toStartOf="@+id/wing_name_textinput"
+                    app:layout_constraintTop_toBottomOf="@+id/wing_name_textinput" />
+
+                <TextView
+                    android:id="@+id/flats_per_floor_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="No. of flats per floor"
+                    app:layout_constraintStart_toStartOf="@+id/no_of_floors_textinput"
+                    app:layout_constraintTop_toBottomOf="@+id/no_of_floors_textinput" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/no_of_floors_textinput"
+                    android:layout_width="60dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintStart_toStartOf="@+id/no_of_floors_textview"
+                    app:layout_constraintTop_toBottomOf="@+id/no_of_floors_textview">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/wing_name_textinput"
+                    android:layout_width="80dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintStart_toStartOf="@+id/building_name_textview"
+                    app:layout_constraintTop_toBottomOf="@+id/building_name_textview">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/flats_per_floor_textinput"
+                    android:layout_width="60dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintStart_toStartOf="@+id/flats_per_floor_textview"
+                    app:layout_constraintTop_toBottomOf="@+id/flats_per_floor_textview">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
