@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +32,7 @@ public class LoginScreenActivity extends FragmentActivity {
     public com.google.android.material.button.MaterialButton forgotpasswordButton, registersociety, contactus, loginButton;
 
     public TextInputEditText usernameEditText, passwordEditText;
+    public TextInputLayout usernameTextLayout, passwordTextLayout;
 
     DBManager dbManager;
 
@@ -66,6 +68,10 @@ public class LoginScreenActivity extends FragmentActivity {
 
         usernameEditText = (TextInputEditText) findViewById(R.id.login_username_edittext);
         passwordEditText = (TextInputEditText) findViewById(R.id.login_password_edittext);
+        usernameTextLayout = (TextInputLayout) findViewById(R.id.login_username_text_layout);
+        passwordTextLayout = (TextInputLayout) findViewById(R.id.login_password_text_layout);
+        usernameTextLayout.setErrorEnabled(false);
+        passwordTextLayout.setErrorEnabled(false);
         loginButton = findViewById(R.id.login_screen_login_button);
         logIn();
     }
@@ -80,14 +86,16 @@ public class LoginScreenActivity extends FragmentActivity {
                 final String password = passwordEditText.getText().toString();
 
                 if (TextUtils.isEmpty(username)) {
-                    usernameEditText.setError("Please enter your username");
-                    usernameEditText.requestFocus();
+                    usernameTextLayout.setError("Please enter your username.");
+                    usernameTextLayout.setErrorEnabled(true);
+                    usernameTextLayout.requestFocus();
                     return;
                 }
 
                 if (TextUtils.isEmpty(password)) {
-                    passwordEditText.setError("Please enter your password");
-                    passwordEditText.requestFocus();
+                    passwordTextLayout.setError("Please enter your password.");
+                    passwordTextLayout.setErrorEnabled(true);
+                    passwordTextLayout.requestFocus();
                     return;
                 }
 
