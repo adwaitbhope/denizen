@@ -3,17 +3,17 @@ package com.township.manager;
 import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
+
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
 public class ResidentHomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -25,26 +25,26 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         setContentView(R.layout.activity_resident_home_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        DBManager dbManager=new DBManager(getApplicationContext());
+        DBManager dbManager = new DBManager(getApplicationContext());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        int flatNoCol,firstNameCol,lastNameCol;
+        int flatNoCol, firstNameCol, lastNameCol;
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        View header=navigationView.getHeaderView(0);
-        TextView residentName,residentFlatNo;
-        residentFlatNo=header.findViewById(R.id.navheader_resident_home_screen_flatno_textview);
-        residentName=header.findViewById(R.id.navheader_resident_home_screen_name_textview);
-        Cursor cursor= dbManager.getDataLogin();
-        firstNameCol=cursor.getColumnIndexOrThrow("First_Name");
-        lastNameCol=cursor.getColumnIndexOrThrow("Last_Name");
-        flatNoCol=cursor.getColumnIndexOrThrow("Apartment");
+        View header = navigationView.getHeaderView(0);
+        TextView residentName, residentFlatNo;
+        residentFlatNo = header.findViewById(R.id.navheader_resident_home_screen_flatno_textview);
+        residentName = header.findViewById(R.id.navheader_resident_home_screen_name_textview);
+        Cursor cursor = dbManager.getDataLogin();
+        firstNameCol = cursor.getColumnIndexOrThrow("First_Name");
+        lastNameCol = cursor.getColumnIndexOrThrow("Last_Name");
+        flatNoCol = cursor.getColumnIndexOrThrow("Apartment");
         cursor.moveToFirst();
         residentFlatNo.setText(cursor.getString(flatNoCol));
-        residentName.setText(cursor.getString(firstNameCol)+" "+cursor.getString(lastNameCol));
+        residentName.setText(cursor.getString(firstNameCol) + " " + cursor.getString(lastNameCol));
     }
 
     @Override
@@ -74,8 +74,8 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_security_list_resident) {
 
         } else if (id == R.id.nav_logout_resident) {
-            LogOutDialog logOutDialog=new LogOutDialog();
-            logOutDialog.show(getSupportFragmentManager(),"Logout");
+            LogOutDialog logOutDialog = new LogOutDialog();
+            logOutDialog.show(getSupportFragmentManager(), "Logout");
 
         }
 

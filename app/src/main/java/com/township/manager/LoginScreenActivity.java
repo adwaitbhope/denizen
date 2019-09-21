@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -32,7 +31,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.lang.String;
 
-
 public class LoginScreenActivity extends FragmentActivity {
     public Button forgotpassword, registersociety, contactus, loginButton;
     public EditText usernameEditText, passwordEditText;
@@ -47,7 +45,7 @@ public class LoginScreenActivity extends FragmentActivity {
         Cursor cursor = dbManager.getDataLogin();
         if (cursor.getCount()!=0) {
             int columntypeindex = cursor.getColumnIndexOrThrow("Type");
-          //  Log.d("hikr","hello");
+            //  Log.d("hikr","hello");
             cursor.moveToFirst();
             switch (cursor.getString(columntypeindex)){
                 case "admin":
@@ -72,14 +70,15 @@ public class LoginScreenActivity extends FragmentActivity {
                 openForgotPasswordDialogFragment();
             }
         });
+
         registersociety = findViewById(R.id.registersociety);
         registersociety.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openRegisterSocietyDialogFragment();
-
             }
         });
+
         contactus = findViewById(R.id.contactus);
         contactus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +86,7 @@ public class LoginScreenActivity extends FragmentActivity {
                 openDialog();
             }
         });
+
         usernameEditText = findViewById(R.id.loginscreen_username_edittext);
         passwordEditText = findViewById(R.id.loginscreen_password_edittext);
         loginButton = findViewById(R.id.loginscreen_login_button);
@@ -233,7 +233,7 @@ public class LoginScreenActivity extends FragmentActivity {
             ft.remove(prev);
         }
         ft.addToBackStack(null);
-        DialogFragment dialogFragment = new DialogFragment();
+        DialogFragment dialogFragment = new RegistrationDialogFragment();
         dialogFragment.show(ft, getString(R.string.dialog));
     }
 }

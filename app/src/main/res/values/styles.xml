@@ -3,15 +3,22 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorSecondary">@color/secondaryColor</item>
         <item name="fontFamily">@font/roboto_mono</item>
-        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:fontFamily">@font/roboto_mono</item>
         <item name="materialButtonStyle">@style/AppButton</item>
         <item name="textInputStyle">@style/AppTextField</item>
         <item name="bottomNavigationStyle">@style/AppBottomNavigation</item>
+    </style>
 
+    <style name="NumberPickerTheme" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@android:color/white</item>
+        <item name="colorControlNormal">@android:color/transparent</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:background">@android:color/darker_gray</item>
+        <item name="android:textSize">30dp</item>
 
     </style>
 
@@ -21,23 +28,24 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
-
     <style name="AppButton" parent="Widget.MaterialComponents.Button.UnelevatedButton" >
-        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="backgroundTint">@color/primaryColor</item>
     </style>
 
     <style name="AppTextField" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/colorAccent</item>
+        <item name="boxStrokeColor">@color/secondaryColor</item>
         <item name="boxBackgroundMode">outline</item>
     </style>
 
     <style name="AppBottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView" >
-
     </style>
 
+
+
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
 </resources>
 
 

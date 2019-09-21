@@ -4,28 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/secondaryTextColor"
     tools:context=".RegistrationDialogFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/registration_step_one_button"
         android:layout_width="165dp"
-        android:textColor="@android:color/black"
         android:layout_height="70dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
         android:text="@string/enter_details_new_application"
-        app:layout_constraintBottom_toTopOf="@+id/button7"
+        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/registration_step_two_button"
         android:layout_width="165dp"
         android:layout_height="70dp"
         android:layout_marginStart="16dp"
@@ -36,6 +34,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button6" />
+        app:layout_constraintTop_toBottomOf="@+id/registration_step_one_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

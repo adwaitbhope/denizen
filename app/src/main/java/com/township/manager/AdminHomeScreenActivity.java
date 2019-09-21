@@ -3,18 +3,22 @@ package com.township.manager;
 import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
+
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import com.google.android.material.navigation.NavigationView;
 
 import org.w3c.dom.Text;
 
@@ -24,33 +28,32 @@ public class AdminHomeScreenActivity extends AppCompatActivity
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        DBManager dbManager=new DBManager(getApplicationContext());
-        Cursor cursor=dbManager.getDataLogin();
+        DBManager dbManager = new DBManager(getApplicationContext());
+        Cursor cursor = dbManager.getDataLogin();
         cursor.moveToFirst();
-        int firstNameCol,desCol,lastNameCol;
+        int firstNameCol, desCol, lastNameCol;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_home_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        View header=navigationView.getHeaderView(0);
-        TextView adminName,adminDesignation;
-        adminDesignation=header.findViewById(R.id.navheader_admin_home_screen_designation_textview);
-        adminName=header.findViewById(R.id.navheader_admin_home_screen_name_textview);
-        firstNameCol=cursor.getColumnIndexOrThrow("First_Name");
-        lastNameCol=cursor.getColumnIndexOrThrow("Last_Name");
-        desCol=cursor.getColumnIndexOrThrow("Designation");
+        View header = navigationView.getHeaderView(0);
+        TextView adminName, adminDesignation;
+        adminDesignation = header.findViewById(R.id.navheader_admin_home_screen_designation_textview);
+        adminName = header.findViewById(R.id.navheader_admin_home_screen_name_textview);
+        firstNameCol = cursor.getColumnIndexOrThrow("First_Name");
+        lastNameCol = cursor.getColumnIndexOrThrow("Last_Name");
+        desCol = cursor.getColumnIndexOrThrow("Designation");
         cursor.moveToFirst();
         adminDesignation.setText(cursor.getString(desCol));
-        adminName.setText(cursor.getString(firstNameCol)+" "+cursor.getString(lastNameCol));
+        adminName.setText(cursor.getString(firstNameCol) + " " + cursor.getString(lastNameCol));
 
 
     }
@@ -88,8 +91,8 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_amenities_admin) {
 
         } else if (id == R.id.nav_logout_admin) {
-            LogOutDialog logOutDialog=new LogOutDialog();
-            logOutDialog.show(getSupportFragmentManager(),"Logout");
+            LogOutDialog logOutDialog = new LogOutDialog();
+            logOutDialog.show(getSupportFragmentManager(), "Logout");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
