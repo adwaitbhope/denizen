@@ -6,20 +6,17 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,9 +26,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginScreenActivity extends FragmentActivity {
-    public Button forgotpasswordButton,registersociety,contactus,loginButton;
+    public com.google.android.material.button.MaterialButton forgotpasswordButton, registersociety, contactus, loginButton;
 
-    public EditText usernameEditText, passwordEditText;
+    public TextInputEditText usernameEditText, passwordEditText;
+    public TextInputLayout usernameTextLayout, passwordTextLayout;
 
     DBManager dbManager;
 
@@ -40,23 +38,23 @@ public class LoginScreenActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
         dbManager = new DBManager(this);
-        forgotpasswordButton = findViewById(R.id.forgotpasswordButton);
+        forgotpasswordButton = findViewById(R.id.login_screen_forgot_password_button);
         forgotpasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openForgotPasswordDialogFragment();
+                startActivity(new Intent(LoginScreenActivity.this,ForgotPassword.class));
             }
         });
 
-        registersociety = findViewById(R.id.registersociety);
+        registersociety = findViewById(R.id.login_screen_register_button);
         registersociety.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openRegisterSocietyDialogFragment();
+                openRegisterSocietyScreen();
             }
         });
 
-        contactus = findViewById(R.id.contactus);
+        contactus = findViewById(R.id.login_screen_contact_us_button);
         contactus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,12 +63,15 @@ public class LoginScreenActivity extends FragmentActivity {
         });
 
 
-        usernameEditText = findViewById(R.id.loginscreen_username_edittext);
-        passwordEditText = findViewById(R.id.loginscreen_password_edittext);
-        loginButton = findViewById(R.id.loginscreen_login_button);
+        usernameEditText = (TextInputEditText) findViewById(R.id.login_username_edittext);
+        passwordEditText = (TextInputEditText) findViewById(R.id.login_password_edittext);
+        usernameTextLayout = (TextInputLayout) findViewById(R.id.login_username_text_layout);
+        passwordTextLayout = (TextInputLayout) findViewById(R.id.login_password_text_layout);
+        usernameTextLayout.setErrorEnabled(false);
+        passwordTextLayout.setErrorEnabled(false);
+        loginButton = findViewById(R.id.login_screen_login_button);
         logIn();
     }
-
 
 
     public void logIn() {
@@ -82,14 +83,16 @@ public class LoginScreenActivity extends FragmentActivity {
                 final String password = passwordEditText.getText().toString();
 
                 if (TextUtils.isEmpty(username)) {
-                    usernameEditText.setError("Please enter your username");
-                    usernameEditText.requestFocus();
+                    usernameTextLayout.setError("Please enter your username.");
+                    usernameTextLayout.setErrorEnabled(true);
+                    usernameTextLayout.requestFocus();
                     return;
                 }
 
                 if (TextUtils.isEmpty(password)) {
-                    passwordEditText.setError("Please enter your password");
-                    passwordEditText.requestFocus();
+                    passwordTextLayout.setError("Please enter your password.");
+                    passwordTextLayout.setErrorEnabled(true);
+                    passwordTextLayout.requestFocus();
                     return;
                 }
 
@@ -190,25 +193,8 @@ public class LoginScreenActivity extends FragmentActivity {
         exampleDialog.show(getSupportFragmentManager(), "example dialog");
     }
 
-    public void openForgotPasswordDialogFragment() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-        DialogFragment dialogFragment = new ForgotPasswordFragment();
-        dialogFragment.show(ft, getString(R.string.dialog));
-    }
-
-    public void openRegisterSocietyDialogFragment() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-        DialogFragment dialogFragment = new RegistrationDialogFragment();
-        dialogFragment.show(ft, getString(R.string.dialog));
+    public void openRegisterSocietyScreen() {
+        Intent intent = new Intent(LoginScreenActivity.this, RegistrationStepsActivity.class);
+        startActivity(intent);
     }
 }
