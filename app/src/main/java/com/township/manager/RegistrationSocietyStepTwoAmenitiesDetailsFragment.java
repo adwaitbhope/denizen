@@ -24,7 +24,7 @@ import androidx.fragment.app.Fragment;
  * Use the {@link RegistrationSocietyStepTwoAmenitiesDetailsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment implements AdapterView.OnItemSelectedListener,CompoundButton.OnCheckedChangeListener{
+public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment implements AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -74,12 +74,11 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        switchCompat = (SwitchCompat)findViewById(R.id.free_for_members_switch);
+        View view = inflater.inflate(R.layout.fragment_registration_society_step_two_amenities_details, container, false);
+        switchCompat = (SwitchCompat) view.findViewById(R.id.free_for_members_switch);
 
         switchCompat.setOnCheckedChangeListener(this);
 
-
-        View view = inflater.inflate(R.layout.fragment_registration_society_step_two_amenities_details, container, false);
 
         Spinner spinner = view.findViewById(R.id.billing_period_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
@@ -127,12 +126,13 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        if(switchCompat.isChecked()){
+        if (switchCompat.isChecked()) {
             Toast.makeText(getContext(), "Yes", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             Toast.makeText(getContext(), "No", Toast.LENGTH_SHORT).show();
-    }
+        }
 
+    }
 
     /**
      * This interface must be implemented by activities that contain this
@@ -148,5 +148,4 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-}
 }
