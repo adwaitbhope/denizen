@@ -98,7 +98,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_person_black_24dp"
+                    android:drawableLeft="@drawable/ic_rupee_indian"
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/secondaryColor"
                     android:hint="Username"
