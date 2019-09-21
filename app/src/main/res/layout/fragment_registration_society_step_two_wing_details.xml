@@ -113,7 +113,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/wing_name_textinput"
-                    android:layout_width="80dp"
+                    android:layout_width="200dp"
                     android:layout_height="48dp"
                     android:layout_marginTop="4dp"
                     app:layout_constraintStart_toStartOf="@+id/building_name_textview"

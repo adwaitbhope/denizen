@@ -6,7 +6,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
+import android.widget.Spinner;
+import android.widget.Toast;
 
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
 
@@ -18,7 +24,7 @@ import androidx.fragment.app.Fragment;
  * Use the {@link RegistrationSocietyStepTwoAmenitiesDetailsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment {
+public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment implements AdapterView.OnItemSelectedListener,CompoundButton.OnCheckedChangeListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -27,6 +33,9 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    public SwitchCompat switchCompat;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -65,7 +74,20 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_registration_society_step_two_amenities_details, container, false);
+        switchCompat = (SwitchCompat)findViewById(R.id.free_for_members_switch);
+
+        switchCompat.setOnCheckedChangeListener(this);
+
+
+        View view = inflater.inflate(R.layout.fragment_registration_society_step_two_amenities_details, container, false);
+
+        Spinner spinner = view.findViewById(R.id.billing_period_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.billing_period_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -92,6 +114,26 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
         mListener = null;
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
+        String text = parent.getItemAtPosition(position).toString();
+        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        if(switchCompat.isChecked()){
+            Toast.makeText(getContext(), "Yes", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getContext(), "No", Toast.LENGTH_SHORT).show();
+    }
+
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -106,4 +148,5 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+}
 }

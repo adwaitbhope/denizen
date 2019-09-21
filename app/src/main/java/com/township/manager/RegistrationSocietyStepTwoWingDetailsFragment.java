@@ -77,7 +77,7 @@ public class RegistrationSocietyStepTwoWingDetailsFragment extends Fragment impl
 
         Spinner spinner = view.findViewById(R.id.naming_convention_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.naming_convention_spinner, android.R.layout.simple_spinner_item);
+                R.array.naming_convention_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
