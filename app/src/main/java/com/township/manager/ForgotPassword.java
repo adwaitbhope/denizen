@@ -3,6 +3,7 @@ package com.township.manager;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class ForgotPassword extends AppCompatActivity {
 
@@ -10,5 +11,12 @@ public class ForgotPassword extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.forgot_password_toolbar);
+//        toolbar.setTitleTextColor(getColor(R.color.secondaryColor));
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Forgot Password");
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

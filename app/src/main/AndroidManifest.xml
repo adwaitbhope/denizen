@@ -13,10 +13,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RegistrationStepsActivity">
-        </activity>
-        <activity android:name=".ForgotPassword"></activity>
+
+
+        <activity android:name=".RegistrationStepsActivity"
+            android:label="Registration Steps"
+            android:parentActivityName=".LoginScreenActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".ForgotPassword"
+            android:label="Forgot Password"
+            android:parentActivityName=".LoginScreenActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".RegistrationSocietyStepTwo" />
+
         <activity
             android:name=".MapsActivityStepOne"
             android:label="@string/title_activity_maps_step_one" />
@@ -29,6 +39,7 @@
             </intent-filter>
 
         </activity>
+
         <activity
             android:name=".RegistrationStepOne"
             android:label="Society Details"

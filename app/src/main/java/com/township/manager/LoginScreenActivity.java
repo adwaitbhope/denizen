@@ -37,6 +37,7 @@ public class LoginScreenActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
+
         dbManager = new DBManager(this);
         forgotpasswordButton = findViewById(R.id.login_screen_forgot_password_button);
         forgotpasswordButton.setOnClickListener(new View.OnClickListener() {
@@ -62,15 +63,17 @@ public class LoginScreenActivity extends FragmentActivity {
             }
         });
 
-
-        usernameEditText = (TextInputEditText) findViewById(R.id.login_username_edittext);
-        passwordEditText = (TextInputEditText) findViewById(R.id.login_password_edittext);
-        usernameTextLayout = (TextInputLayout) findViewById(R.id.login_username_text_layout);
-        passwordTextLayout = (TextInputLayout) findViewById(R.id.login_password_text_layout);
+        usernameEditText = (TextInputEditText) findViewById(R.id.login_screen_username_edit_text);
+        passwordEditText = (TextInputEditText) findViewById(R.id.login_screen_password_edit_text);
+        usernameTextLayout = (TextInputLayout) findViewById(R.id.login_screen_username_til);
+        passwordTextLayout = (TextInputLayout) findViewById(R.id.login_screen_password_til);
         usernameTextLayout.setErrorEnabled(false);
         passwordTextLayout.setErrorEnabled(false);
         loginButton = findViewById(R.id.login_screen_login_button);
         logIn();
+
+
+
     }
 
 

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class RegistrationStepsActivity extends AppCompatActivity {
 
@@ -14,6 +15,12 @@ public class RegistrationStepsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_steps);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.registration_steps_toolbar);
+//        toolbar.setTitleTextColor(getColor(R.color.secondaryColor));
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Registration Steps");
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Button registrationStepOne = (Button) findViewById(R.id.registration_step_one_button);
         registrationStepOne.setOnClickListener(new View.OnClickListener() {

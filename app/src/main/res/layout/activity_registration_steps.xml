@@ -6,6 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".RegistrationStepsActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/registration_steps_app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/registration_steps_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
     <TextView
         android:id="@+id/start_new_application_text_view"
         android:layout_width="wrap_content"
@@ -18,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/registration_steps_app_bar_layout" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/registration_step_one_button"

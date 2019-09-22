@@ -11,8 +11,8 @@ public class ContactUsDialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("CONTACT US")
-                .setMessage("E-mail: SDLNiggas@pvgcoet.ac.in\nPhone: 69420-69420")
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                .setMessage("E-mail: hi@pvgcoet.ac.in\nPhone: 69420-69420")
+                .setPositiveButton("CLOSE", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
