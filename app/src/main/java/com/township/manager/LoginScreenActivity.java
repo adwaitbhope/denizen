@@ -180,8 +180,10 @@ public class LoginScreenActivity extends FragmentActivity {
                                                 case "resident": {
                                                     user.setWing(jsonObjectLoginInfo.getString("wing"));
                                                     contentValues.put(DBManager.ColWing, user.getWing());
-                                                    long id = dbManager.Insert(contentValues);
                                                     user.setApartment(jsonObjectLoginInfo.getString("apartment"));
+                                                    contentValues.put(DBManager.ColApartment,user.getApartment());
+                                                    long id = dbManager.Insert(contentValues);
+
                                                     startActivity(new Intent(LoginScreenActivity.this, ResidentHomeScreenActivity.class));
                                                     finish();
                                                     break;

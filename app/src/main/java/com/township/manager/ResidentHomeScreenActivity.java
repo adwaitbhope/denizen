@@ -31,7 +31,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        int flatNoCol, firstNameCol, lastNameCol;
+        int flatNoCol, firstNameCol, lastNameCol, wingNoCol;
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View header = navigationView.getHeaderView(0);
@@ -42,9 +42,10 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         firstNameCol = cursor.getColumnIndexOrThrow("First_Name");
         lastNameCol = cursor.getColumnIndexOrThrow("Last_Name");
         flatNoCol = cursor.getColumnIndexOrThrow("Apartment");
+        wingNoCol = cursor.getColumnIndexOrThrow("Wing");
         cursor.moveToFirst();
-        residentFlatNo.setText(cursor.getString(flatNoCol));
-        residentName.setText(cursor.getString(firstNameCol) + " " + cursor.getString(lastNameCol));
+        residentFlatNo.setText(cursor.getString(wingNoCol) +" " +cursor.getString(flatNoCol));
+        residentName.setText(cursor.getString(firstNameCol) + "  " + cursor.getString(lastNameCol));
     }
 
     @Override
