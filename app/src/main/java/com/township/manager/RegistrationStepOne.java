@@ -27,7 +27,7 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_step_one);
-        Button setLocationButton = findViewById(R.id.registration_set_location_button);
+        Button setLocationButton = findViewById(R.id.registration_step_one_set_location_button);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.registration_step_one_toolbar);
 //        toolbar.setTitleTextColor(getColor(R.color.secondaryColor));

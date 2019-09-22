@@ -56,8 +56,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/billing_period"
-                    app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+                    app:layout_constraintStart_toStartOf="@+id/registration_step_one_username_til"
+                    app:layout_constraintTop_toBottomOf="@+id/registration_step_one_username_til" />
 
                 <TextView
                     android:id="@+id/amenity_name_textview"
@@ -129,7 +129,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputLayout2"
+                    android:id="@+id/registration_step_one_username_til"
                     android:layout_width="80dp"
                     android:layout_height="48dp"
                     android:layout_marginTop="4dp"

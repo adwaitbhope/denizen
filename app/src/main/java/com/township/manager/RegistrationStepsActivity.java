@@ -14,6 +14,7 @@ public class RegistrationStepsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_steps);
 
+
         Button registrationStepOne = (Button) findViewById(R.id.registration_step_one_button);
         registrationStepOne.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,5 +32,7 @@ public class RegistrationStepsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
     }
 }
