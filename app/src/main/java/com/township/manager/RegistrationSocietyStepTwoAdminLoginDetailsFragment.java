@@ -32,7 +32,7 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
 
     public TextView tvShowNumbers;
 
-    public NumberPicker numberPicker;
+    public NumberPicker admin_number_picker, security_number_picker;
 
     private OnFragmentInteractionListener mListener;
 
@@ -73,20 +73,29 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
         View view = inflater.inflate(R.layout.fragment_registration_society_step_two_admin_login_details, container, false);
         // Inflate the layout for this fragment
 
-
-
-
-        numberPicker = view.findViewById(R.id.AdminNumberPicker);
-        numberPicker.setMinValue(0);
-        numberPicker.setMaxValue(23);
-        // to change format of number in numberpicker
-        numberPicker.setFormatter(new NumberPicker.Formatter() {
+        admin_number_picker = view.findViewById(R.id.admin_number_picker);
+        admin_number_picker.setMinValue(0);
+        admin_number_picker.setMaxValue(99);
+        admin_number_picker.setFormatter(new NumberPicker.Formatter() {
             @Override
             public String format(int i) {
-                return String.format("%02d", i);
+                return String.format("%01d", i);
             }
         });
-        numberPicker.setOnValueChangedListener(this);
+        admin_number_picker.setOnValueChangedListener(this);
+
+
+        security_number_picker = view.findViewById(R.id.security_number_picker);
+        security_number_picker.setMinValue(0);
+        security_number_picker.setMaxValue(99);
+        security_number_picker.setFormatter(new NumberPicker.Formatter() {
+            @Override
+            public String format(int i) {
+                return String.format("%01d", i);
+            }
+        });
+        security_number_picker.setOnValueChangedListener(this);
+
         return view;
     }
 

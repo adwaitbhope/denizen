@@ -35,7 +35,29 @@
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_maps_step_one">Map</string>
     <string name="how_many_buildings">How many buildings?</string>
-    <string name="number_of_admins">Number of Admins</string>
+    <string name="number_of_admins">No. of Admins</string>
     <string name="no_of_security_desks">No. of Security Desks</string>
+    <string name="admin_login_details">Admin Logins </string>
+    <string name="amenities_details">Amenities</string>
+    <string name="wing_details">Wings</string>
+    <string name="naming_convention">Naming Convention</string>
+    <string name="no_of_floors">No. of floors</string>
+    <string name="wing_name">Wing Name</string>
+    <string name="no_of_flats_per_floor">No. of flats per floor</string>
+    <string name="name_of_amenity">Name of Amenity</string>
+    <string name="billing_period">Billing period</string>
+    <string name="is_it_free_for_members_who_have_paid_membership_fees">Is it free for members who have paid membership fees?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="rate_in_rupees">Rate(in ₹)</string>
+
+    <string-array name="naming_convention_array">
+        <item>A/1 to A/36</item>
+        <item>A/101 to A/904</item>
+    </string-array>
+    <string-array name="billing_period_array">
+        <item>per hour</item>
+        <item>per day</item>
+    </string-array>
 
 </resources>

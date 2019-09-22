@@ -6,39 +6,70 @@
     android:layout_height="match_parent"
     tools:context=".RegistrationSocietyStepTwoAdminLoginDetailsFragment">
 
+    <NumberPicker
+        android:id="@+id/admin_number_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="96dp"
+        android:theme="@style/NumberPickerTheme"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/NumberOfAdmins"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/NumberOfAdmins" />
+
+
     <TextView
         android:id="@+id/NumberOfAdmins"
         android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginTop="180dp"
-        android:layout_marginEnd="150dp"
-        android:layout_marginBottom="504dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="80dp"
+        android:gravity="center_vertical"
         android:text="@string/number_of_admins"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="17sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <NumberPicker
-        android:id="@+id/AdminNumberPicker"
-        android:layout_width="66dp"
-        android:layout_height="125dp"
-        android:layout_margin="20dp"
-        android:layout_marginTop="108dp"
-        android:theme="@style/NumberPickerTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/NumberOfAdmins"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/login_details_title" />
 
     <TextView
         android:id="@+id/SecurityDesks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="58dp"
-        android:layout_marginEnd="150dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginStart="0dp"
+        android:gravity="center_vertical"
         android:text="@string/no_of_security_desks"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="@id/NumberOfAdmins"
+        app:layout_constraintTop_toBottomOf="@+id/admin_number_picker" />
+
+    <NumberPicker
+        android:id="@+id/security_number_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="96dp"
+        android:theme="@style/NumberPickerTheme"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/SecurityDesks"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/SecurityDesks" />
+
+    <TextView
+        android:id="@+id/login_details_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/admin_login_details"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NumberOfAdmins" />
+        app:layout_constraintTop_toBottomOf="@+id/login_icon" />
+
+    <ImageView
+        android:id="@+id/login_icon"
+        android:layout_width="106dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_people_black_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

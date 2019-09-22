@@ -101,7 +101,7 @@
                     android:drawableLeft="@drawable/ic_person_black_24dp"
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/secondaryColor"
-                    android:hint="Administrator Name"
+                    android:hint="Username"
                     android:inputType="textPersonName|text"
                     android:paddingLeft="10dp"
                     android:textSize="14sp" />

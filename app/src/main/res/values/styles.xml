@@ -17,7 +17,7 @@
         <item name="colorAccent">@android:color/white</item>
         <item name="colorControlNormal">@android:color/transparent</item>
         <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="android:background">@android:color/darker_gray</item>
+        <item name="android:background">@android:color/transparent</item>
         <item name="android:textSize">30dp</item>
 
     </style>
@@ -35,6 +35,8 @@
     <style name="AppTextField" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/secondaryColor</item>
         <item name="boxBackgroundMode">outline</item>
+
+
     </style>
 
     <style name="AppBottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView" >
