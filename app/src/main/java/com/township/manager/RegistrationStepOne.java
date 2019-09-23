@@ -72,13 +72,13 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        usernameTextLayout = findViewById(R.id.registration_step_one_username);
-        administratorPhoneNumberTextLayout = findViewById(R.id.registratio_step_one_administrator_phone_number);
-        designationTextLayout = findViewById(R.id.registration_step_one_designation);
-        emailTextLayout = findViewById(R.id.register_step_one_email);
-        societyNameTextLayout = findViewById(R.id.register_step_one_society_name);
-        societyAddressTextLayout = findViewById(R.id.register_step_one_society_address);
-        societyPhoneNumberTextLayout = findViewById(R.id.register_step_one_society_phone_number);
+        usernameTextLayout = findViewById(R.id.registration_step_one_username_til);
+        administratorPhoneNumberTextLayout = findViewById(R.id.registration_step_one_admin_phone_til);
+        designationTextLayout = findViewById(R.id.registration_step_one_admin_designation_til);
+        emailTextLayout = findViewById(R.id.registration_step_one_admin_email_til);
+        societyNameTextLayout = findViewById(R.id.registration_step_one_society_name_til);
+        societyAddressTextLayout = findViewById(R.id.registration_step_one_society_address_til);
+        societyPhoneNumberTextLayout = findViewById(R.id.registration_step_one_society_phone_til);
 
         setLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,8 +88,8 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
                 startActivityForResult(intent, LOCATION_REQUEST_CODE);
             }
         });
-        documentUploadButton = findViewById(R.id.registration_step_one_documents_upload);
-        submitButton = findViewById(R.id.registration_step_one_submit);
+        documentUploadButton = findViewById(R.id.registration_step_one_upload_documents_button);
+        submitButton = findViewById(R.id.registration_step_one_submit_form_button);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_embedded_map);
         mapFragment.getMapAsync(this);
         documentUpload();
