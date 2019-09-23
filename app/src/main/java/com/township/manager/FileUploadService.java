@@ -12,5 +12,5 @@ import retrofit2.http.Part;
 public interface FileUploadService {
     @Multipart
     @POST("/register/new/")
-    Call<RegistrationStepOneResponse> registerApplicant(@Body RegistrationDetailsStepOne registrationDetailsStepOne)
+    Call<RegistrationStepOneResponse> registerApplicant(@Body RegistrationDetailsStepOne registrationDetailsStepOne);
 }
