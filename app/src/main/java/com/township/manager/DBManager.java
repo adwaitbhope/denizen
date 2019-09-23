@@ -2,6 +2,7 @@ package com.township.manager;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -61,6 +62,7 @@ public class DBManager {
     public DBManager(Context context) {
         DatabaseHelperUser databaseHelperUser = new DatabaseHelperUser(context);
         sqLiteDatabase = databaseHelperUser.getWritableDatabase();
+
     }
 
     public long Insert(ContentValues values) {
@@ -68,9 +70,16 @@ public class DBManager {
             long id = sqLiteDatabase.insertOrThrow(TabNameLogin, null, values);
             return id;
         } catch (SQLException e) {
-            Log.d("Insert", e.getMessage());
+            Log.    d("Insert", e.getMessage());
         }
         return 0;
+    }
+    public Cursor getDataLogin(){
+        Cursor cursor=sqLiteDatabase.rawQuery("select * from " +TabNameLogin,null);
+        return cursor;
+    }
+    public void deleteAll(){
+        sqLiteDatabase.execSQL("delete from "+ TabNameLogin);
     }
 
 }

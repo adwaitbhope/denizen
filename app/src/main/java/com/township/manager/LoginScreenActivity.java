@@ -2,13 +2,19 @@ package com.township.manager;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -24,6 +30,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.lang.String;
 
 public class LoginScreenActivity extends FragmentActivity {
     public com.google.android.material.button.MaterialButton forgotpasswordButton, registersociety, contactus, loginButton;
@@ -39,6 +46,27 @@ public class LoginScreenActivity extends FragmentActivity {
         setContentView(R.layout.activity_login_screen);
 
         dbManager = new DBManager(this);
+        Cursor cursor = dbManager.getDataLogin();
+        if (cursor.getCount()!=0) {
+            int columntypeindex = cursor.getColumnIndexOrThrow("Type");
+            //  Log.d("hikr","hello");
+            cursor.moveToFirst();
+            switch (cursor.getString(columntypeindex)){
+                case "admin":
+                    startActivity(new Intent(LoginScreenActivity.this,AdminHomeScreenActivity.class));
+                    finish();
+                    break;
+                case "security":
+                    startActivity(new Intent(LoginScreenActivity.this,SecurityHomeScreenActivity.class));
+                    finish();
+                    break;
+                case "resident":
+                    startActivity(new Intent(LoginScreenActivity.this,ResidentHomeScreenActivity.class));
+                    finish();
+                    break;
+            }
+
+        }
         forgotpasswordButton = findViewById(R.id.login_screen_forgot_password_button);
         forgotpasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,92 +127,99 @@ public class LoginScreenActivity extends FragmentActivity {
                     return;
                 }
 
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, getString(R.string.server_addr) + "/login/",
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                try {
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, getString(R.string.server_addr) + "/login/",
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    try {
 
-                                    JSONArray jsonArray = new JSONArray(response);
-                                    JSONObject jsonObjectLogin = jsonArray.getJSONObject(0);
-                                    User user = new User();
-                                    JSONObject jsonObjectLoginInfo = jsonArray.getJSONObject(1);
-
-                                    user.setLogin(jsonObjectLogin.getInt("login"));
-                                    user.setLoginType(jsonObjectLoginInfo.getString("type"));
-                                    user.setUserName(jsonObjectLoginInfo.getString("username"));
-                                    user.setPassword(password);
-                                    user.setFirstName(jsonObjectLoginInfo.getString("first_name"));
-                                    user.setLastName(jsonObjectLoginInfo.getString("last_name"));
-                                    user.setPhoneNumber(jsonObjectLoginInfo.getString("phone"));
-                                    user.setEmail(jsonObjectLoginInfo.getString("email"));
-                                    user.setProfileUpdated(jsonObjectLoginInfo.getBoolean("profile_updated"));
-                                    user.setTownship(jsonObjectLoginInfo.getString("township"));
-
-                                    ContentValues contentValues = new ContentValues();
-                                    contentValues.put(DBManager.ColUsername, user.getUserName());
-                                    contentValues.put(DBManager.ColPassword, user.getPassword());
-                                    contentValues.put(DBManager.ColFirstName, user.getFirstName());
-                                    contentValues.put(DBManager.ColLastName, user.getLastName());
-                                    contentValues.put(DBManager.ColPhone, user.getPhoneNumber());
-                                    contentValues.put(DBManager.ColEmail, user.getEmail());
-                                    contentValues.put(DBManager.ColProfileUpdated, user.getProfileUpdated());
-                                    contentValues.put(DBManager.ColTownship, user.getTownship());
-                                    contentValues.put(DBManager.ColType, user.getLoginType());
+                                        JSONArray jsonArray = new JSONArray(response);
+                                        JSONObject jsonObjectLogin = jsonArray.getJSONObject(0);
+                                        User user = new User();
+                                        user.setLogin(jsonObjectLogin.getInt("login"));
 
 
-                                    if (user.getLogin() == 1) {
-                                        //   Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
-                                        Log.d("response", response);
-                                        switch (user.getLoginType()) {
 
-                                            case "admin": {
-                                                user.setDesignation(jsonObjectLoginInfo.getString("designation"));
-                                                contentValues.put(DBManager.ColDesignation, user.getDesignation());
-                                                long id = dbManager.Insert(contentValues);
-                                                startActivity(new Intent(LoginScreenActivity.this, AdminHomeScreenActivity.class));
-                                                break;
+                                        if (user.getLogin() == 1) {
+                                            JSONObject jsonObjectLoginInfo = jsonArray.getJSONObject(1);
+                                            user.setLoginType(jsonObjectLoginInfo.getString("type"));
+                                            user.setUserName(jsonObjectLoginInfo.getString("username"));
+                                            user.setPassword(password);
+                                            user.setFirstName(jsonObjectLoginInfo.getString("first_name"));
+                                            user.setLastName(jsonObjectLoginInfo.getString("last_name"));
+                                            user.setPhoneNumber(jsonObjectLoginInfo.getString("phone"));
+                                            user.setEmail(jsonObjectLoginInfo.getString("email"));
+                                            user.setProfileUpdated(jsonObjectLoginInfo.getBoolean("profile_updated"));
+                                            user.setTownship(jsonObjectLoginInfo.getString("township"));
+
+                                            ContentValues contentValues = new ContentValues();
+                                            contentValues.put(DBManager.ColUsername, user.getUserName());
+                                            contentValues.put(DBManager.ColPassword, user.getPassword());
+                                            contentValues.put(DBManager.ColFirstName, user.getFirstName());
+                                            contentValues.put(DBManager.ColLastName, user.getLastName());
+                                            contentValues.put(DBManager.ColPhone, user.getPhoneNumber());
+                                            contentValues.put(DBManager.ColEmail, user.getEmail());
+                                            contentValues.put(DBManager.ColProfileUpdated, user.getProfileUpdated());
+                                            contentValues.put(DBManager.ColTownship, user.getTownship());
+                                            contentValues.put(DBManager.ColType, user.getLoginType());
+                                            //   Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
+                                            Log.d("response", response);
+                                            switch (user.getLoginType()) {
+
+                                                case "admin": {
+                                                    user.setDesignation(jsonObjectLoginInfo.getString("designation"));
+                                                    contentValues.put(DBManager.ColDesignation, user.getDesignation());
+                                                    long id = dbManager.Insert(contentValues);
+                                                    startActivity(new Intent(LoginScreenActivity.this, AdminHomeScreenActivity.class));
+                                                    finish();
+                                                    break;
+                                                }
+                                                case "security": {
+                                                    long id = dbManager.Insert(contentValues);
+                                                    startActivity(new Intent(LoginScreenActivity.this, SecurityHomeScreenActivity.class));
+                                                    finish();
+                                                    break;
+                                                }
+                                                case "resident": {
+                                                    user.setWing(jsonObjectLoginInfo.getString("wing"));
+                                                    contentValues.put(DBManager.ColWing, user.getWing());
+                                                    user.setApartment(jsonObjectLoginInfo.getString("apartment"));
+                                                    contentValues.put(DBManager.ColApartment,user.getApartment());
+                                                    long id = dbManager.Insert(contentValues);
+
+                                                    startActivity(new Intent(LoginScreenActivity.this, ResidentHomeScreenActivity.class));
+                                                    finish();
+                                                    break;
+                                                }
+
                                             }
-                                            case "security": {
-                                                long id = dbManager.Insert(contentValues);
-                                                startActivity(new Intent(LoginScreenActivity.this, SecurityHomeScreenActivity.class));
-                                                break;
-                                            }
-                                            case "resident": {
-                                                user.setWing(jsonObjectLoginInfo.getString("wing"));
-                                                contentValues.put(DBManager.ColWing, user.getWing());
-                                                long id = dbManager.Insert(contentValues);
-                                                user.setApartment(jsonObjectLoginInfo.getString("apartment"));
-                                                startActivity(new Intent(LoginScreenActivity.this, ResidentHomeScreenActivity.class));
-                                                break;
-                                            }
 
+                                        } else {
+                                            Log.d("login", "failed");
                                         }
-
-                                    } else {
-                                        Log.d("login", "failed");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<>();
-                        params.put("username", username);
-                        params.put("password", password);
-                        return params;
-                    }
-                };
-                ((GlobalVariables) getApplication()).getQueue().add(stringRequest);
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            params.put("username", username);
+                            params.put("password", password);
+                            return params;
+                        }
+                    };
+                    ((GlobalVariables) getApplication()).getQueue().add(stringRequest);
+
+
             }
         });
 
