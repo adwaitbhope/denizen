@@ -283,8 +283,11 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
         }
 
         if (requestCode == 10) {
-            filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
-            Log.d("file path", filePath);
+            try {
+                filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
         }
     }
 
