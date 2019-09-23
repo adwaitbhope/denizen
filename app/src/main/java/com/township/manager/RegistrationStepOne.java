@@ -49,14 +49,14 @@ import java.util.Objects;
 
 public class RegistrationStepOne extends AppCompatActivity implements OnMapReadyCallback {
 
-    private static final int REQUEST_WRITE_STORAGE =112 ;
+    private static final int REQUEST_WRITE_STORAGE = 112;
     private GoogleMap mMap;
     private static int LOCATION_REQUEST_CODE = 1;
     private static final int DEFAULT_ZOOM = 15;
     Button documentUploadButton, submitButton;
     Uri fileUri;
-    private TextInputLayout usernameTextLayout,administratorPhoneNumberTextLayout,designationTextLayout,emailTextLayout,societyNameTextLayout,societyPhoneNumberTextLayout,societyAddressTextLayout;
-    private double latitude,longitude;
+    private TextInputLayout usernameTextLayout, administratorPhoneNumberTextLayout, designationTextLayout, emailTextLayout, societyNameTextLayout, societyPhoneNumberTextLayout, societyAddressTextLayout;
+    private double latitude, longitude;
     private String geoaddress;
 
     @Override
@@ -72,14 +72,13 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        usernameTextLayout=findViewById(R.id.registration_step_one_username);
-        administratorPhoneNumberTextLayout=findViewById(R.id.registratio_step_one_administrator_phone_number);
-        designationTextLayout=findViewById(R.id.registration_step_one_designation);
-        emailTextLayout=findViewById(R.id.register_step_one_email);
-        societyNameTextLayout=findViewById(R.id.register_step_one_society_name);
-        societyAddressTextLayout=findViewById(R.id.register_step_one_society_address);
-        societyPhoneNumberTextLayout=findViewById(R.id.register_step_one_society_phone_number);
-
+        usernameTextLayout = findViewById(R.id.registration_step_one_username);
+        administratorPhoneNumberTextLayout = findViewById(R.id.registratio_step_one_administrator_phone_number);
+        designationTextLayout = findViewById(R.id.registration_step_one_designation);
+        emailTextLayout = findViewById(R.id.register_step_one_email);
+        societyNameTextLayout = findViewById(R.id.register_step_one_society_name);
+        societyAddressTextLayout = findViewById(R.id.register_step_one_society_address);
+        societyPhoneNumberTextLayout = findViewById(R.id.register_step_one_society_phone_number);
 
 
         setLocationButton.setOnClickListener(new View.OnClickListener() {
@@ -90,8 +89,8 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
                 startActivityForResult(intent, LOCATION_REQUEST_CODE);
             }
         });
-        documentUploadButton=findViewById(R.id.registration_step_one_documents_upload);
-        submitButton=findViewById(R.id.registration_step_one_submit);
+        documentUploadButton = findViewById(R.id.registration_step_one_documents_upload);
+        submitButton = findViewById(R.id.registration_step_one_submit);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_embedded_map);
         mapFragment.getMapAsync(this);
         documentUpload();
@@ -100,70 +99,70 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
     }
 
     private void submit() {
-      submitButton.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-              String username=usernameTextLayout.getEditText().getText().toString();
-              String adminphonenumber=administratorPhoneNumberTextLayout.getEditText().getText().toString();
-              String designation=designationTextLayout.getEditText().getText().toString();
-              String email=emailTextLayout.getEditText().getText().toString();
-              String societyname=societyNameTextLayout.getEditText().getText().toString();
-              String societyaddress=societyAddressTextLayout.getEditText().getText().toString();
-              String societyphonenumber=societyPhoneNumberTextLayout.getEditText().getText().toString();
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String username = usernameTextLayout.getEditText().getText().toString();
+                String adminphonenumber = administratorPhoneNumberTextLayout.getEditText().getText().toString();
+                String designation = designationTextLayout.getEditText().getText().toString();
+                String email = emailTextLayout.getEditText().getText().toString();
+                String societyname = societyNameTextLayout.getEditText().getText().toString();
+                String societyaddress = societyAddressTextLayout.getEditText().getText().toString();
+                String societyphonenumber = societyPhoneNumberTextLayout.getEditText().getText().toString();
 
-              if (TextUtils.isEmpty(username)) {
-                  usernameTextLayout.setError("Please enter your username.");
-                  usernameTextLayout.requestFocus();
-                  return;
-              }
-              if (TextUtils.isEmpty(adminphonenumber)) {
-                  administratorPhoneNumberTextLayout.setError("Please enter your admin phonenumber.");
-                  administratorPhoneNumberTextLayout.setErrorEnabled(true);
-                  administratorPhoneNumberTextLayout.requestFocus();
-                  return;
-              }
-              if (TextUtils.isEmpty(designation)) {
-                  designationTextLayout.setError("Please enter your designation.");
-                  designationTextLayout.setErrorEnabled(true);
-                  designationTextLayout.requestFocus();
-                  return;
-              }
-              if (TextUtils.isEmpty(email)) {
-                  emailTextLayout.setError("Please enter your email");
-                  emailTextLayout.setErrorEnabled(true);
-                  emailTextLayout.requestFocus();
-                  return;
-              }
-              if (TextUtils.isEmpty(societyname)) {
-                  societyNameTextLayout.setError("Please enter your society name");
-                  societyNameTextLayout.setErrorEnabled(true);
-                  societyNameTextLayout.requestFocus();
-                  return;
-              }
-              if (TextUtils.isEmpty(societyaddress)) {
-                  societyAddressTextLayout.setError("Please enter your society address");
-                  societyAddressTextLayout.setErrorEnabled(true);
-                  societyAddressTextLayout.requestFocus();
-                  return;
-              }
-              if (TextUtils.isEmpty(societyphonenumber)) {
-                  societyPhoneNumberTextLayout.setError("Please enter your admin society phone number.");
-                  societyPhoneNumberTextLayout.setErrorEnabled(true);
-                  societyPhoneNumberTextLayout.requestFocus();
-                  return;
-              }
-              RegistrationDetailsStepOne registrationDetailsStepOne =new RegistrationDetailsStepOne(username,adminphonenumber,email,designation,societyname,societyaddress,societyphonenumber,geoaddress,String.valueOf(latitude),String.valueOf(longitude));
-              sendNetworkRequest(registrationDetailsStepOne);
+                if (TextUtils.isEmpty(username)) {
+                    usernameTextLayout.setError("Please enter your username.");
+                    usernameTextLayout.requestFocus();
+                    return;
+                }
+                if (TextUtils.isEmpty(adminphonenumber)) {
+                    administratorPhoneNumberTextLayout.setError("Please enter your admin phonenumber.");
+                    administratorPhoneNumberTextLayout.setErrorEnabled(true);
+                    administratorPhoneNumberTextLayout.requestFocus();
+                    return;
+                }
+                if (TextUtils.isEmpty(designation)) {
+                    designationTextLayout.setError("Please enter your designation.");
+                    designationTextLayout.setErrorEnabled(true);
+                    designationTextLayout.requestFocus();
+                    return;
+                }
+                if (TextUtils.isEmpty(email)) {
+                    emailTextLayout.setError("Please enter your email");
+                    emailTextLayout.setErrorEnabled(true);
+                    emailTextLayout.requestFocus();
+                    return;
+                }
+                if (TextUtils.isEmpty(societyname)) {
+                    societyNameTextLayout.setError("Please enter your society name");
+                    societyNameTextLayout.setErrorEnabled(true);
+                    societyNameTextLayout.requestFocus();
+                    return;
+                }
+                if (TextUtils.isEmpty(societyaddress)) {
+                    societyAddressTextLayout.setError("Please enter your society address");
+                    societyAddressTextLayout.setErrorEnabled(true);
+                    societyAddressTextLayout.requestFocus();
+                    return;
+                }
+                if (TextUtils.isEmpty(societyphonenumber)) {
+                    societyPhoneNumberTextLayout.setError("Please enter your admin society phone number.");
+                    societyPhoneNumberTextLayout.setErrorEnabled(true);
+                    societyPhoneNumberTextLayout.requestFocus();
+                    return;
+                }
+                RegistrationDetailsStepOne registrationDetailsStepOne = new RegistrationDetailsStepOne(username, adminphonenumber, email, designation, societyname, societyaddress, societyphonenumber, geoaddress, String.valueOf(latitude), String.valueOf(longitude));
+                sendNetworkRequest(registrationDetailsStepOne);
 
-          }
-      });
+            }
+        });
     }
 
     private void sendNetworkRequest(RegistrationDetailsStepOne registrationDetailsStepOne) {
 
-        File orignalfile =new File(""+fileUri);
-        Log.d("extern",Environment.getExternalStorageDirectory().toString());
-            Log.d("lenghth",String.valueOf(orignalfile.length()));
+        File orignalfile = new File("" + fileUri);
+        Log.d("extern", Environment.getExternalStorageDirectory().toString());
+        Log.d("lenghth", String.valueOf(orignalfile.length()));
 //            registrationDetailsStepOne.setLat("1");
 //            registrationDetailsStepOne.setLng("1");
 //            registrationDetailsStepOne.setGeo_address("asas");
@@ -177,51 +176,51 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
 //            Log.d("sname",registrationDetailsStepOne.getName());
 //            Log.d("sphone",registrationDetailsStepOne.getPhone());
 //            Log.d("designation",registrationDetailsStepOne.getApplicant_designation());
-            RequestBody filePart = RequestBody.create(MediaType.parse(Objects.requireNonNull(getContentResolver().getType(fileUri))), orignalfile);
+        RequestBody filePart = RequestBody.create(MediaType.parse(Objects.requireNonNull(getContentResolver().getType(fileUri))), orignalfile);
 
-            MultipartBody.Part file = MultipartBody.Part.createFormData("certificate",orignalfile.getName(),filePart);
+        MultipartBody.Part file = MultipartBody.Part.createFormData("certificate", orignalfile.getName(), filePart);
 
-            Retrofit.Builder builder=new Retrofit.Builder()
-                    .baseUrl(getString(R.string.server_addr))
-                    .addConverterFactory(GsonConverterFactory.create());
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(getString(R.string.server_addr))
+                .addConverterFactory(GsonConverterFactory.create());
 
-            Retrofit retrofit=builder.build();
+        Retrofit retrofit = builder.build();
 
-            FileUploadService fileUploadService=retrofit.create(FileUploadService.class);
-            Call<ResponseBody> call=fileUploadService.registerApplicant(createPartFromString(registrationDetailsStepOne.getApplicant_name()),createPartFromString(registrationDetailsStepOne.getApplicant_phone()),createPartFromString(registrationDetailsStepOne.getApplicant_email()),createPartFromString(registrationDetailsStepOne.getApplicant_designation()),createPartFromString(registrationDetailsStepOne.getName()),createPartFromString(registrationDetailsStepOne.getAddress()),createPartFromString(registrationDetailsStepOne.getPhone()),createPartFromString(geoaddress),createPartFromString(String.valueOf(latitude)),createPartFromString(String.valueOf(longitude)),file);
-            call.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    Toast.makeText(RegistrationStepOne.this,"Done",Toast.LENGTH_SHORT).show();
-                    Log.d("heloo","done");
-                }
+        FileUploadService fileUploadService = retrofit.create(FileUploadService.class);
+        Call<ResponseBody> call = fileUploadService.registerApplicant(createPartFromString(registrationDetailsStepOne.getApplicant_name()), createPartFromString(registrationDetailsStepOne.getApplicant_phone()), createPartFromString(registrationDetailsStepOne.getApplicant_email()), createPartFromString(registrationDetailsStepOne.getApplicant_designation()), createPartFromString(registrationDetailsStepOne.getName()), createPartFromString(registrationDetailsStepOne.getAddress()), createPartFromString(registrationDetailsStepOne.getPhone()), createPartFromString(geoaddress), createPartFromString(String.valueOf(latitude)), createPartFromString(String.valueOf(longitude)), file);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Toast.makeText(RegistrationStepOne.this, "Done", Toast.LENGTH_SHORT).show();
+                Log.d("heloo", "done");
+            }
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Toast.makeText(RegistrationStepOne.this,"something went wrong",Toast.LENGTH_SHORT).show();
-                    Log.d("errpre",call.toString());
-                    Log.d("erryty",t.toString());
-                }
-            });
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(RegistrationStepOne.this, "something went wrong", Toast.LENGTH_SHORT).show();
+                Log.d("errpre", call.toString());
+                Log.d("erryty", t.toString());
+            }
+        });
 //        catch (NullPointerException e){
 //            Log.d("hie",e.toString());
 //            e.printStackTrace();
 //        }
 
 
-
     }
-        @NonNull
-        private RequestBody createPartFromString(String s){
-           return RequestBody.create(okhttp3.MultipartBody.FORM,s);
-        }
+
+    @NonNull
+    private RequestBody createPartFromString(String s) {
+        return RequestBody.create(okhttp3.MultipartBody.FORM, s);
+    }
 
 
     private void documentUpload() {
         documentUploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent();
+                Intent intent = new Intent();
                 intent.setType("application/pdf");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), 112);
@@ -243,29 +242,28 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
                     mMap.addMarker(new MarkerOptions().position(currentLocation));
                     mMap.moveCamera(CameraUpdateFactory
                             .newLatLngZoom(currentLocation, DEFAULT_ZOOM));
-                    MarkerOptions markerOptions=new MarkerOptions();
-                    latitude=currentLocation.latitude;
-                    longitude=currentLocation.longitude;
-                    Geocoder geocoder = null;
-                    List<Address> addresses;
-                    try {
-                        addresses=geocoder.getFromLocation(latitude,longitude,1);
-                        geoaddress=addresses.get(0).getAddressLine(0);
-
-                    }
-                    catch (IOException e){
-                       e.printStackTrace();;
-                    }
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    latitude = currentLocation.latitude;
+                    longitude = currentLocation.longitude;
+//                    Geocoder geocoder = null;
+//                    List<Address> addresses;
+//                    try {
+//                        addresses=geocoder.getFromLocation(latitude,longitude,1);
+//                        geoaddress=addresses.get(0).getAddressLine(0);
+//
+//                    }
+//                    catch (IOException e){
+//                       e.printStackTrace();;
+//                    }
                 }
 
 
             }
         }
-        if (requestCode == REQUEST_WRITE_STORAGE){
+        if (requestCode == REQUEST_WRITE_STORAGE) {
             try {
                 fileUri = data.getData();
-            }
-            catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 e.printStackTrace();
             }
             //Log.d("helloy",String.valueOf(fileUri));
