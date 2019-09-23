@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -19,6 +20,13 @@ public class SliderAdapter extends FragmentStatePagerAdapter {
 //    public SliderAdapter(@NonNull FragmentManager fm) {
 //        super(fm);
 //    }
+
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return super.getPageTitle(position);
+    }
 
     @NonNull
     @Override

@@ -80,7 +80,6 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
         societyAddressTextLayout = findViewById(R.id.register_step_one_society_address);
         societyPhoneNumberTextLayout = findViewById(R.id.register_step_one_society_phone_number);
 
-
         setLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -256,8 +255,6 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
 //                       e.printStackTrace();;
 //                    }
                 }
-
-
             }
         }
         if (requestCode == REQUEST_WRITE_STORAGE) {

@@ -2,16 +2,21 @@ package com.township.manager;
 
 import android.annotation.SuppressLint;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.google.android.material.bottomnavigation.BottomNavigationMenu;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.MenuItem;
@@ -23,7 +28,7 @@ import com.google.android.material.navigation.NavigationView;
 import org.w3c.dom.Text;
 
 public class AdminHomeScreenActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ComplaintsFragment.OnFragmentInteractionListener, RegistrationSocietyStepTwoAmenitiesDetailsFragment.OnFragmentInteractionListener, RegistrationSocietyStepTwoAdminLoginDetailsFragment.OnFragmentInteractionListener {
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -55,6 +60,22 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         adminDesignation.setText(cursor.getString(desCol));
         adminName.setText(cursor.getString(firstNameCol) + " " + cursor.getString(lastNameCol));
 
+        BottomNavigationView bottomNavigationView = findViewById(R.id.admin_bottom_nav);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                FragmentTransaction transaction;
+
+                switch (menuItem.getItemId()) {
+                    case R.id.admin_complaints:
+                        transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.admin_home_screen_fragment_area, new ComplaintsFragment());
+                        transaction.commit();
+                        return true;
+                }
+                return false;
+            }
+        });
 
     }
 
@@ -98,5 +119,10 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
