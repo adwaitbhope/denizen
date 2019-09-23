@@ -1,13 +1,9 @@
 package com.township.manager;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -23,10 +19,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -40,11 +32,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.apache.commons.io.FileUtils;
-
 import java.io.File;
-import java.io.IOException;
-import java.util.List;
 import java.util.Objects;
 
 public class RegistrationStepOne extends AppCompatActivity implements OnMapReadyCallback {
@@ -72,7 +60,7 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        usernameTextLayout = findViewById(R.id.registration_step_one_username_til);
+        usernameTextLayout = findViewById(R.id.rate_of_amenity_textview);
         administratorPhoneNumberTextLayout = findViewById(R.id.registration_step_one_admin_phone_til);
         designationTextLayout = findViewById(R.id.registration_step_one_admin_designation_til);
         emailTextLayout = findViewById(R.id.registration_step_one_admin_email_til);

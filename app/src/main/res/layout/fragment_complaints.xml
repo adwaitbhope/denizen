@@ -16,14 +16,16 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/pending_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pending" />
+            android:text="@string/pending" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/resolved_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Resolved" />
+            android:text="@string/resolved" />
 
     </com.google.android.material.tabs.TabLayout>
 

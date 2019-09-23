@@ -21,7 +21,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/amenities_details_title"
+            android:id="@+id/amenities_details_title_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -31,11 +31,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/amenities_icon" />
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/amenities_details_title"
+            app:layout_constraintTop_toBottomOf="@+id/amenities_details_title_textview"
             tools:layout_editor_absoluteX="207dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -56,8 +56,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/billing_period"
-                    app:layout_constraintStart_toStartOf="@+id/registration_step_one_username_til"
-                    app:layout_constraintTop_toBottomOf="@+id/registration_step_one_username_til" />
+                    app:layout_constraintStart_toStartOf="@+id/rate_of_amenity_textview"
+                    app:layout_constraintTop_toBottomOf="@+id/rate_of_amenity_textview" />
 
                 <TextView
                     android:id="@+id/amenity_name_textview"
@@ -124,12 +124,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/amenity_name_textview">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/amenity_name_textinput_child"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/registration_step_one_username_til"
+                    android:id="@+id/rate_of_amenity_textview"
                     android:layout_width="80dp"
                     android:layout_height="48dp"
                     android:layout_marginTop="4dp"
@@ -137,12 +138,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/amenity_rate_textview">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rate_of_amenity_textview_child"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

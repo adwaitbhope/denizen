@@ -10,18 +10,18 @@
         android:layout_height="wrap_content"
         tools:context=".RegistrationSocietyStepTwoAdminLoginDetailsFragment">
     <NumberPicker
-        android:id="@+id/admin_number_picker"
+        android:id="@+id/no_of_admins_numberpicker"
         android:layout_width="wrap_content"
         android:layout_height="96dp"
         android:theme="@style/NumberPickerTheme"
         android:layout_marginEnd="32dp"
-        app:layout_constraintBottom_toBottomOf="@+id/NumberOfAdmins"
+        app:layout_constraintBottom_toBottomOf="@+id/no_of_admins_textview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/NumberOfAdmins" />
+        app:layout_constraintTop_toTopOf="@+id/no_of_admins_textview" />
 
 
     <TextView
-        android:id="@+id/NumberOfAdmins"
+        android:id="@+id/no_of_admins_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -30,10 +30,10 @@
         android:text="@string/number_of_admins"
         android:textSize="17sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_details_title" />
+        app:layout_constraintTop_toBottomOf="@+id/login_details_title_textview" />
 
     <TextView
-        android:id="@+id/SecurityDesks"
+        android:id="@+id/no_of_security_desks_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
@@ -41,21 +41,21 @@
         android:gravity="center_vertical"
         android:text="@string/no_of_security_desks"
         android:textSize="17sp"
-        app:layout_constraintStart_toStartOf="@id/NumberOfAdmins"
-        app:layout_constraintTop_toBottomOf="@+id/admin_number_picker" />
+        app:layout_constraintStart_toStartOf="@id/no_of_admins_textview"
+        app:layout_constraintTop_toBottomOf="@+id/no_of_admins_numberpicker" />
 
     <NumberPicker
-        android:id="@+id/security_number_picker"
+        android:id="@+id/no_of_security_desks_numberpicker"
         android:layout_width="wrap_content"
         android:layout_height="96dp"
         android:theme="@style/NumberPickerTheme"
         android:layout_marginEnd="32dp"
-        app:layout_constraintBottom_toBottomOf="@+id/SecurityDesks"
+        app:layout_constraintBottom_toBottomOf="@+id/no_of_security_desks_textview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/SecurityDesks" />
+        app:layout_constraintTop_toTopOf="@+id/no_of_security_desks_textview" />
 
     <TextView
-        android:id="@+id/login_details_title"
+        android:id="@+id/login_details_title_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -82,8 +82,8 @@
             android:layout_marginTop="40dp"
             android:text="@string/proceed_to_pay"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/security_number_picker"
-            app:layout_constraintTop_toBottomOf="@+id/security_number_picker" />
+            app:layout_constraintEnd_toEndOf="@+id/no_of_security_desks_numberpicker"
+            app:layout_constraintTop_toBottomOf="@+id/no_of_security_desks_numberpicker" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

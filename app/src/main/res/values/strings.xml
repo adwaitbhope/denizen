@@ -55,6 +55,10 @@
     <string name="continue_your_application">Continue your application</string>
     <string name="step_two">Step Two</string>
     <string name="proceed_to_pay">PROCEED TO PAY</string>
+    <string name="fill_up_contact_details_of_your_society_nset_your_society_location_nupload_a_pdf_document_certifying_the_validity_of_your_housing_society_nthere_must_be_only_one_document_and_the_file_size_should_not_exceed_2_mb_nif_you_have_already_completed_step_one_do_not_re_fill_the_application_and_proceed_towards_step_two_nyou_will_receive_a_registration_number_with_which_you_can_proceed_with_step_two">Fill up contact details of your society.  Set your society location.  Upload a PDF document certifying the validity of your housing society.  There must be only one document and the file size should not exceed 2 MB.  If you have already completed step one do not re-fill the application and proceed towards step two.  You will receive a registration number with which you can proceed with step two.</string>
+    <string name="proceed_with_your_application_if_you_have_completed_step_one_of_the_registration_process_with_your_registration_number_nenter_the_number_of_admins_and_security_desks_as_per_the_society_nenter_the_number_of_wings_floors_different_amenities_etc_in_your_society_nfill_up_banking_details_nproceed_towards_payment_of_the_product_nthe_registration_will_be_then_completed_and_you_will_be_contacted_shortly">Proceed with your application if you have completed step one of the registration process with your registration number.  Enter the number of admins and security desks as per the society.  Enter the number of wings, floors, different amenities, etc. in your society.  Fill up banking details.  Proceed towards payment of the product.  The registration will be then completed and you will be contacted shortly.</string>
+    <string name="pending">Pending</string>
+    <string name="resolved">Resolved</string>
 
     <string-array name="naming_convention_array">
         <item>A/1 to A/36</item>

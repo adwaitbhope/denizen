@@ -8,22 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
-
-import com.google.android.material.tabs.TabLayout;
-
-import java.util.Objects;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ComplaintsFragment.OnFragmentInteractionListener} interface
+ * {@link PendingComplaintFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ComplaintsFragment#newInstance} factory method to
+ * Use the {@link PendingComplaintFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ComplaintsFragment extends Fragment {
+public class PendingComplaintFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,7 +30,7 @@ public class ComplaintsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ComplaintsFragment() {
+    public PendingComplaintFragment() {
         // Required empty public constructor
     }
 
@@ -45,11 +40,11 @@ public class ComplaintsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ComplaintsFragment.
+     * @return A new instance of fragment PendingComplaintFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ComplaintsFragment newInstance(String param1, String param2) {
-        ComplaintsFragment fragment = new ComplaintsFragment();
+    public static PendingComplaintFragment newInstance(String param1, String param2) {
+        PendingComplaintFragment fragment = new PendingComplaintFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -70,23 +65,8 @@ public class ComplaintsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_pending_complaint, container, false);
 
-        View view = inflater.inflate(R.layout.fragment_complaints, container, false);
-
-        SliderAdapter sliderAdapter = new SliderAdapter(Objects.requireNonNull(getActivity()).getSupportFragmentManager());
-
-        // TODO: Change the fragments that are loading here
-        sliderAdapter.addFragment(new PendingComplaintFragment());
-        sliderAdapter.addFragment(new RegistrationSocietyStepTwoAdminLoginDetailsFragment());
-
-        ViewPager mSlideViewPager = (ViewPager) view.findViewById(R.id.complaints_view_pager);
-        mSlideViewPager.setAdapter(sliderAdapter);
-        mSlideViewPager.setOffscreenPageLimit(1);
-
-        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.complaints_tab_layout);
-        tabLayout.setupWithViewPager(mSlideViewPager);
-
-        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -112,6 +92,8 @@ public class ComplaintsFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+
 
     /**
      * This interface must be implemented by activities that contain this

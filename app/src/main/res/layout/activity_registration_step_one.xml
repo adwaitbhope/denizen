@@ -68,7 +68,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/registration_step_one_upload_documents_button" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/registration_step_one_username_til"
+                android:id="@+id/rate_of_amenity_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -100,7 +100,7 @@
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/registration_step_one_username_til">
+                app:layout_constraintTop_toBottomOf="@+id/rate_of_amenity_textview">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/registration_step_one_admin_phone_edit_text"

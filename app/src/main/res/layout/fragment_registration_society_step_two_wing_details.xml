@@ -22,7 +22,7 @@
 
 
         <TextView
-            android:id="@+id/wing_details_title"
+            android:id="@+id/wing_details_title_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -42,7 +42,7 @@
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/wing_details_title">
+            app:layout_constraintTop_toBottomOf="@+id/wing_details_title_textview">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -57,11 +57,11 @@
                     android:gravity="end"
                     android:paddingStart="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/naming_convention"
-                    app:layout_constraintTop_toBottomOf="@+id/naming_convention" />
+                    app:layout_constraintStart_toStartOf="@+id/naming_convention_textview"
+                    app:layout_constraintTop_toBottomOf="@+id/naming_convention_textview" />
 
                 <TextView
-                    android:id="@+id/naming_convention"
+                    android:id="@+id/naming_convention_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -107,6 +107,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/no_of_floors_textview">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/no_of_floors_textinput_child"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -120,6 +121,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/building_name_textview">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/wing_name_textinput_child"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -133,6 +135,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/flats_per_floor_textview">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/flats_per_floor_textinput_child"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -141,7 +144,7 @@
         </androidx.cardview.widget.CardView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/add_wing_floating_button"
+            android:id="@+id/add_wing_floatingbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
