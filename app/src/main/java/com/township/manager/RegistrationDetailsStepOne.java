@@ -6,14 +6,14 @@ import java.io.File;
 
 public class RegistrationDetailsStepOne {
     @SerializedName("body")
-    String applicant_name,applicant_phone,applicant_email,applicant_designation,name,address,phone,geo_address,lat,lng;
-    File document;
+    String applicant_name, applicant_phone, applicant_email, applicant_designation, name, address, phone, geo_address, lat, lng;
+
 
     public String getApplicant_name() {
         return applicant_name;
     }
 
-    public RegistrationDetailsStepOne(String applicant_name, String applicant_phone, String applicant_email, String applicant_designation, String name, String address, String phone, String geo_address, String lat, String lng, File document) {
+    public RegistrationDetailsStepOne(String applicant_name, String applicant_phone, String applicant_email, String applicant_designation, String name, String address, String phone, String geo_address, String lat, String lng) {
         this.applicant_name = applicant_name;
         this.applicant_phone = applicant_phone;
         this.applicant_email = applicant_email;
@@ -24,7 +24,6 @@ public class RegistrationDetailsStepOne {
         this.geo_address = geo_address;
         this.lat = lat;
         this.lng = lng;
-        this.document = document;
     }
 
     public void setApplicant_name(String applicant_name) {
@@ -102,12 +101,5 @@ public class RegistrationDetailsStepOne {
     public void setLng(String lng) {
         this.lng = lng;
     }
-
-    public File getDocument() {
-        return document;
-    }
-
-    public void setDocument(File document) {
-        this.document = document;
-    }
 }
+

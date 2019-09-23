@@ -12,5 +12,16 @@ import retrofit2.http.Part;
 public interface FileUploadService {
     @Multipart
     @POST("/register/new/")
-    Call<RegistrationStepOneResponse> registerApplicant(@Body RegistrationDetailsStepOne registrationDetailsStepOne)
+    Call<ResponseBody> registerApplicant(@Part("applicant_name") RequestBody applicant_name,
+                                                        @Part("applicant_phone") RequestBody applicant_phone,
+                                                        @Part("applicant_email") RequestBody applicant_email,
+                                                        @Part("applicant_designation") RequestBody applicant_designation,
+                                                        @Part("name") RequestBody name,
+                                                        @Part("address") RequestBody address,
+                                                        @Part("phone") RequestBody phone,
+                                                        @Part("geo_address ") RequestBody geo_address,
+                                                        @Part("lat") RequestBody lat,
+                                                        @Part("lng") RequestBody lng,
+                                                        @Part MultipartBody.Part certificate
+    );
 }

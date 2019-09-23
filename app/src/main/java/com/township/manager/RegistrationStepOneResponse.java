@@ -5,7 +5,7 @@ public class RegistrationStepOneResponse {
     int registration_status;
     String application_id;
 
-    public RegistrationStepOneResponse(int registration_status, String application_id) {
+    public RegistrationStepOneResponse() {
         this.registration_status = registration_status;
         this.application_id = application_id;
     }
