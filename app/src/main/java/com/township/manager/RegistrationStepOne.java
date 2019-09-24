@@ -3,14 +3,18 @@ package com.township.manager;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -40,6 +44,7 @@ import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
 import java.io.File;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class RegistrationStepOne extends AppCompatActivity implements OnMapReadyCallback {
@@ -55,6 +60,9 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
     private double latitude, longitude;
     private String geoaddress;
     private String adminName, adminPhone, adminDesignation, adminEmail, societyName, societyAddress, societyPhone;
+    private Boolean locationSelected=false,fileSelected=false;
+    private TextView locationError,fileMessage;
+    private File orignalFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +83,10 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
         societyNameTextLayout = findViewById(R.id.registration_step_one_society_name_til);
         societyAddressTextLayout = findViewById(R.id.registration_step_one_society_address_til);
         societyPhoneNumberTextLayout = findViewById(R.id.registration_step_one_society_phone_til);
+        locationError=findViewById(R.id.registration_step_one_location_error);
+        fileMessage=findViewById(R.id.registration_step_one_file_message);
+
+
 
         setLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,11 +99,47 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
         documentUploadButton = findViewById(R.id.registration_step_one_upload_documents_button);
         submitButton = findViewById(R.id.registration_step_one_submit_form_button);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_embedded_map);
+        locationError.setVisibility(View.GONE);
+        fileMessage.setVisibility(View.GONE);
         mapFragment.getMapAsync(this);
         documentUpload();
+        error(usernameTextLayout);
+        error(administratorPhoneNumberTextLayout);
+        error(designationTextLayout);
+        error(emailTextLayout);
+        error(societyAddressTextLayout);
+        error(societyNameTextLayout);
+        error(societyPhoneNumberTextLayout);
         submit();
 
     }
+
+    private void error(final TextInputLayout textInputLayout) {
+        try {
+            Objects.requireNonNull(textInputLayout.getEditText()).addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    textInputLayout.setError(null);
+                    textInputLayout.setErrorEnabled(false);
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
+            });
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+    }
+
 
     private void submit() {
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +176,7 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
                     emailTextLayout.requestFocus();
                     return;
                 }
+
                 if (TextUtils.isEmpty(societyName)) {
                     societyNameTextLayout.setError("This field is required");
                     societyNameTextLayout.setErrorEnabled(true);
@@ -146,6 +195,19 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
                     societyPhoneNumberTextLayout.requestFocus();
                     return;
                 }
+                if(!locationSelected) {
+                    locationError.setText("Select a location");
+                    locationError.setVisibility(View.VISIBLE);
+                    locationError.setTextColor(Color.RED);
+                    return;
+                }
+                if(!fileSelected) {
+                    fileMessage.setText("Please select a file");
+                    fileMessage.setVisibility(View.VISIBLE);
+                    fileMessage.setTextColor(Color.RED);
+                    return;
+                }
+
 
                 sendNetworkRequest();
 
@@ -154,7 +216,6 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
     }
 
     private void sendNetworkRequest() {
-        File orignalFile = new File(filePath);
 
         RequestBody filePart = RequestBody.create(MediaType.parse("multipart/form-data"), orignalFile);
 
@@ -261,6 +322,8 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
                 Bundle extras = data.getExtras();
                 if (extras != null) {
                     LatLng currentLocation = data.getExtras().getParcelable("LatLong");
+                    locationSelected=data.getExtras().getBoolean("locationCheck");
+                    locationError.setVisibility(View.GONE);
                     mMap.clear();
                     mMap.addMarker(new MarkerOptions().position(currentLocation));
                     mMap.moveCamera(CameraUpdateFactory
@@ -285,6 +348,28 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
         if (requestCode == 10) {
             try {
                 filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
+                try {
+                    orignalFile = new File(filePath);
+
+                    if (orignalFile.exists()) {
+                        fileSelected=true;
+                        fileMessage.setText(orignalFile.getName());
+                        fileMessage.setTextColor(Color.BLACK);
+                        documentUploadButton.setText("Select different document");
+                        fileMessage.setVisibility(View.VISIBLE);
+                    }
+
+                    if(orignalFile.length()>2*1024*1024){
+                        fileSelected=false;
+                        fileMessage.setText("Select a file less than 2 MB");
+                        fileMessage.setTextColor(View.VISIBLE);
+                        fileMessage.setTextColor(Color.RED);
+                    }
+                }
+                catch (NullPointerException e){
+
+                    e.printStackTrace();
+                }
             } catch (NullPointerException e) {
                 e.printStackTrace();
             }
@@ -305,10 +390,7 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
             });
         }
 
-        // Add a marker in Sydney and move the camera
-        LatLng pune = new LatLng(18.4915, 73.8217);
-        mMap.addMarker(new MarkerOptions().position(pune).title("Marker in Pune"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(pune));
+//
     }
 
 

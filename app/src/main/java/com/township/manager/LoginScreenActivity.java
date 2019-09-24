@@ -4,7 +4,9 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +33,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 import java.lang.String;
+import java.util.Objects;
 
 public class LoginScreenActivity extends FragmentActivity {
     public com.google.android.material.button.MaterialButton forgotpasswordButton, registersociety, contactus, loginButton;
@@ -99,9 +102,30 @@ public class LoginScreenActivity extends FragmentActivity {
         passwordTextLayout.setErrorEnabled(false);
         loginButton = findViewById(R.id.login_screen_login_button);
         logIn();
+        error(usernameTextLayout);
+        error(passwordTextLayout);
 
 
+    }
 
+    private void error(final TextInputLayout textInputLayout) {
+        Objects.requireNonNull(textInputLayout.getEditText()).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                textInputLayout.setError(null);
+                textInputLayout.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
 
