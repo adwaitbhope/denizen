@@ -8,10 +8,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".PendingComplaintFragment">
+        tools:context=".ResolvedComplaintFragment">
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/pending_complaint_cardview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -24,16 +23,6 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
-                <Button
-                    android:id="@+id/resolve_complaint_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="Resolve Complaint"
-                    app:layout_constraintStart_toEndOf="@+id/date_textview"
-                    app:layout_constraintTop_toBottomOf="@+id/date_textview" />
 
                 <ImageButton
                     android:id="@+id/complaint_imagebutton"
@@ -48,10 +37,22 @@
                     app:layout_constraintVertical_bias="1.0" />
 
                 <TextView
+                    android:id="@+id/name_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/pandurang_d_souza"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
                     android:id="@+id/date_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="16dp"
                     android:text="14/06/2018"
                     app:layout_constraintBottom_toBottomOf="@+id/complaint_imagebutton"
                     app:layout_constraintStart_toEndOf="@+id/complaint_imagebutton"
@@ -59,12 +60,14 @@
 
                 <TextView
                     android:id="@+id/complaint_description_textview"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="Hi raymond."
+                    android:text="Cables of metrebox are faulty since duxhushdhsfhdhfshfsgfsgdsggegsegsjgjeds."
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/flat_no_textview"
                     app:layout_constraintTop_toBottomOf="@+id/flat_no_textview" />
 
@@ -88,16 +91,17 @@
                     app:layout_constraintTop_toBottomOf="@+id/complaint_description_textview" />
 
                 <TextView
-                    android:id="@+id/name_textview"
+                    android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/pandurang_d_souza"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:text="Resolved!"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/date_textview" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
