@@ -76,7 +76,7 @@ public class ComplaintsFragment extends Fragment {
         SliderAdapter sliderAdapter = new SliderAdapter(Objects.requireNonNull(getActivity()).getSupportFragmentManager());
 
         // TODO: Change the fragments that are loading here
-        sliderAdapter.addFragment(new PendingComplaintFragment());
+        sliderAdapter.addFragment(new ComplaintsListFragment());
         sliderAdapter.addFragment(new RegistrationSocietyStepTwoAdminLoginDetailsFragment());
 
         ViewPager mSlideViewPager = (ViewPager) view.findViewById(R.id.complaints_view_pager);

@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".PendingComplaintFragment">
+        tools:context=".ComplaintsListFragment">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/pending_complaint_cardview"
@@ -29,44 +29,23 @@
                     android:id="@+id/resolve_complaint_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
                     android:text="Resolve Complaint"
-                    app:layout_constraintStart_toEndOf="@+id/date_textview"
-                    app:layout_constraintTop_toBottomOf="@+id/date_textview" />
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/complaint_imagebutton" />
 
                 <ImageButton
                     android:id="@+id/complaint_imagebutton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:layout_marginBottom="64dp"
                     android:src="@android:drawable/ic_menu_camera"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/read_more_textview"
-                    app:layout_constraintTop_toBottomOf="@+id/read_more_textview"
-                    app:layout_constraintVertical_bias="1.0" />
-
-                <TextView
-                    android:id="@+id/date_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="14/06/2018"
-                    app:layout_constraintBottom_toBottomOf="@+id/complaint_imagebutton"
-                    app:layout_constraintStart_toEndOf="@+id/complaint_imagebutton"
-                    app:layout_constraintTop_toTopOf="@+id/complaint_imagebutton" />
-
-                <TextView
-                    android:id="@+id/complaint_description_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="Hi raymond."
-                    app:layout_constraintStart_toStartOf="@+id/flat_no_textview"
-                    app:layout_constraintTop_toBottomOf="@+id/flat_no_textview" />
+                    app:layout_constraintStart_toStartOf="@+id/complaint_description_textview"
+                    app:layout_constraintTop_toBottomOf="@+id/complaint_description_textview" />
 
                 <TextView
                     android:id="@+id/flat_no_textview"
@@ -76,16 +55,6 @@
                     android:text="B/306"
                     app:layout_constraintStart_toStartOf="@+id/name_textview"
                     app:layout_constraintTop_toBottomOf="@+id/name_textview" />
-
-                <TextView
-                    android:id="@+id/read_more_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:text="@string/read_more"
-                    android:textColor="@color/colorBlue"
-                    app:layout_constraintStart_toStartOf="@+id/complaint_description_textview"
-                    app:layout_constraintTop_toBottomOf="@+id/complaint_description_textview" />
 
                 <TextView
                     android:id="@+id/name_textview"
@@ -99,6 +68,25 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <com.borjabravo.readmoretextview.ReadMoreTextView
+                    android:id="@+id/complaint_description_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+
+                    android:layout_marginTop="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="The parking bulb is not working anymore. I suggest you to change the damaged one as it becomes difficult at night times. Images are attached herewith. Thank you."
+                    app:colorClickableText="@color/colorBlue"
+
+                    app:layout_constraintStart_toStartOf="@+id/flat_no_textview"
+                    app:layout_constraintTop_toBottomOf="@+id/flat_no_textview"
+                    app:trimCollapsedText="@string/read_more"
+                    app:trimExpandedText="@string/read_less"
+                    app:trimLines="1"
+                    app:trimMode="trimModeLine" />
+                <!--                android:ellipsize="end"-->
+                <!--                android:maxLines="1"-->
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
