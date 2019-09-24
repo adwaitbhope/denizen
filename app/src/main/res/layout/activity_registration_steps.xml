@@ -46,7 +46,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="Fill up contact details of your society. \nSet your society location. \nUpload a PDF document certifying the validity of your housing society. \nThere must be only one document and the file size should not exceed 2 MB. \nIf you have already completed step one do not re-fill the application and proceed towards step two. \nYou will receive a registration number with which you can proceed with step two."
+            android:text="• Fill up contact details of your society. \n• Set your society location. \n• Upload a PDF document certifying the validity of your housing society. \n• There must be only one document and the file size should not exceed 2 MB. \n• If you have already completed step one do not re-fill the application and proceed towards step two. \n• You will receive a registration number with which you can proceed with step two."
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +59,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="Proceed with your application if you have completed step one of the registration process with your registration number. \nEnter the number of admins and security desks as per the society. \nEnter the number of wings, floors, different amenities, etc. in your society. \nFill up banking details. \nProceed towards payment of the product. \nThe registration will be then completed and you will be contacted shortly."
+            android:text="• Proceed with your application if you have completed step one of the registration process with your registration number. \n• Enter the number of admins and security desks as per the society. \n• Enter the number of wings, floors, different amenities, etc. in your society. \n• Fill up banking details. \nProceed towards payment of the product. \n• The registration will be then completed and you will be contacted shortly."
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/proceed_application_text_view" />
