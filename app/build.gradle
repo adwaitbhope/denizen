@@ -16,6 +16,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    repositories {
+        maven {
+            url "http://dl.bintray.com/lukaville/maven"
+        }
+    }
 }
 
 dependencies {
@@ -36,7 +41,5 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.2.0'
-   // implementation 'org.apache.commons:commons-io:1.3.2'
-    implementation 'commons-io:commons-io:2.4'
-   // implementation 'https://github.com/iPaulPro/aFileChooser/blob/master/aFileChooser/src/com/ipaulpro/afilechooser/utils/FileUtils.java'
+    implementation 'com.nbsp:library:1.8'
 }
