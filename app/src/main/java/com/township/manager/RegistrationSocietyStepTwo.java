@@ -3,12 +3,12 @@ package com.township.manager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
-import android.view.Gravity;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 public class RegistrationSocietyStepTwo extends AppCompatActivity implements RegistrationSocietyStepTwoWingDetailsFragment.OnFragmentInteractionListener, RegistrationSocietyStepTwoAmenitiesDetailsFragment.OnFragmentInteractionListener, RegistrationSocietyStepTwoAdminLoginDetailsFragment.OnFragmentInteractionListener {
@@ -22,6 +22,13 @@ public class RegistrationSocietyStepTwo extends AppCompatActivity implements Reg
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_society_step_two);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.registration_step_two_toolbar);
+//        toolbar.setTitleTextColor(getColor(R.color.secondaryColor));
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Society Details");
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         SliderAdapter sliderAdapter = new SliderAdapter(getSupportFragmentManager());
         sliderAdapter.addFragment(new RegistrationSocietyStepTwoWingDetailsFragment());

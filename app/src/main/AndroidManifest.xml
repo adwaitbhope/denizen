@@ -27,11 +27,15 @@
             android:parentActivityName=".LoginScreenActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".RegistrationSocietyStepTwo" />
+        <activity android:name=".RegistrationSocietyStepTwo"
+            android:label="Society Details"
+            android:parentActivityName=".RegistrationStepsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".MapsActivityStepOne"
             android:label="@string/title_activity_maps_step_one" />
+
         <activity android:name=".LoginScreenActivity">
 
             <intent-filter>
@@ -45,7 +49,7 @@
         <activity
             android:name=".RegistrationStepOne"
             android:label="Society Details"
-            android:parentActivityName=".LoginScreenActivity"
+            android:parentActivityName=".RegistrationStepsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AdminHomeScreenActivity"

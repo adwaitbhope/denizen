@@ -38,6 +38,7 @@ public class MapsActivityStepOne extends FragmentActivity implements OnMapReadyC
     private boolean marker_set;
     Button confirnButton;
     LatLng LatLong;
+    private Boolean locationSelected=false;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +65,10 @@ public class MapsActivityStepOne extends FragmentActivity implements OnMapReadyC
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 } else {
+                    locationSelected=true;
                     Intent intent = new Intent();
                     intent.putExtra("LatLong", LatLong);
+                    intent.putExtra("locationCheck",locationSelected);
                     setResult(RESULT_OK, intent);
                     finish();
                 }

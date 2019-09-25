@@ -1,15 +1,28 @@
 package com.township.manager;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.database.Cursor;
+import android.location.Address;
+import android.location.Geocoder;
+import android.os.Build;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -19,6 +32,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -31,21 +48,31 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.textfield.TextInputLayout;
+import com.nbsp.materialfilepicker.MaterialFilePicker;
+import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class RegistrationStepOne extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final int REQUEST_WRITE_STORAGE = 112;
+    private static final int PERMISSIONS_REQUEST_CODE = 42;
     private GoogleMap mMap;
     private static int LOCATION_REQUEST_CODE = 1;
     private static final int DEFAULT_ZOOM = 15;
     Button documentUploadButton, submitButton;
-    Uri fileUri;
+    String filePath;
     private TextInputLayout usernameTextLayout, administratorPhoneNumberTextLayout, designationTextLayout, emailTextLayout, societyNameTextLayout, societyPhoneNumberTextLayout, societyAddressTextLayout;
     private double latitude, longitude;
     private String geoaddress;
+    private String adminName, adminPhone, adminDesignation, adminEmail, societyName, societyAddress, societyPhone;
+    private Boolean locationSelected=false,fileSelected=false;
+    private TextView locationError,fileMessage;
+    private File orignalFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,118 +81,155 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
         Button setLocationButton = findViewById(R.id.registration_step_one_set_location_button);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.registration_step_one_toolbar);
-//        toolbar.setTitleTextColor(getColor(R.color.secondaryColor));
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Society Details");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        usernameTextLayout = findViewById(R.id.rate_of_amenity_textview);
+        usernameTextLayout = findViewById(R.id.registration_step_one_username_til);
         administratorPhoneNumberTextLayout = findViewById(R.id.registration_step_one_admin_phone_til);
         designationTextLayout = findViewById(R.id.registration_step_one_admin_designation_til);
         emailTextLayout = findViewById(R.id.registration_step_one_admin_email_til);
         societyNameTextLayout = findViewById(R.id.registration_step_one_society_name_til);
         societyAddressTextLayout = findViewById(R.id.registration_step_one_society_address_til);
         societyPhoneNumberTextLayout = findViewById(R.id.registration_step_one_society_phone_til);
+        locationError=findViewById(R.id.registration_step_one_location_error);
+        fileMessage=findViewById(R.id.registration_step_one_file_message);
+
+
 
         setLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(RegistrationStepOne.this, MapsActivityStepOne.class);
-//                startActivity(intent);
                 startActivityForResult(intent, LOCATION_REQUEST_CODE);
             }
         });
+
         documentUploadButton = findViewById(R.id.registration_step_one_upload_documents_button);
         submitButton = findViewById(R.id.registration_step_one_submit_form_button);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_embedded_map);
+        locationError.setVisibility(View.GONE);
+        fileMessage.setVisibility(View.GONE);
         mapFragment.getMapAsync(this);
         documentUpload();
+        error(usernameTextLayout);
+        error(administratorPhoneNumberTextLayout);
+        error(designationTextLayout);
+        error(emailTextLayout);
+        error(societyAddressTextLayout);
+        error(societyNameTextLayout);
+        error(societyPhoneNumberTextLayout);
         submit();
 
     }
+
+    private void error(final TextInputLayout textInputLayout) {
+        try {
+            Objects.requireNonNull(textInputLayout.getEditText()).addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    textInputLayout.setError(null);
+                    textInputLayout.setErrorEnabled(false);
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
+            });
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+    }
+
 
     private void submit() {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = usernameTextLayout.getEditText().getText().toString();
-                String adminphonenumber = administratorPhoneNumberTextLayout.getEditText().getText().toString();
-                String designation = designationTextLayout.getEditText().getText().toString();
-                String email = emailTextLayout.getEditText().getText().toString();
-                String societyname = societyNameTextLayout.getEditText().getText().toString();
-                String societyaddress = societyAddressTextLayout.getEditText().getText().toString();
-                String societyphonenumber = societyPhoneNumberTextLayout.getEditText().getText().toString();
+                adminName = usernameTextLayout.getEditText().getText().toString();
+                adminPhone = administratorPhoneNumberTextLayout.getEditText().getText().toString();
+                adminDesignation = designationTextLayout.getEditText().getText().toString();
+                adminEmail = emailTextLayout.getEditText().getText().toString();
+                societyName = societyNameTextLayout.getEditText().getText().toString();
+                societyAddress = societyAddressTextLayout.getEditText().getText().toString();
+                societyPhone = societyPhoneNumberTextLayout.getEditText().getText().toString();
 
-                if (TextUtils.isEmpty(username)) {
-                    usernameTextLayout.setError("Please enter your username.");
+                if (TextUtils.isEmpty(adminName)) {
+                    usernameTextLayout.setError("This field is required");
                     usernameTextLayout.requestFocus();
                     return;
                 }
-                if (TextUtils.isEmpty(adminphonenumber)) {
-                    administratorPhoneNumberTextLayout.setError("Please enter your admin phonenumber.");
+                if (TextUtils.isEmpty(adminPhone)) {
+                    administratorPhoneNumberTextLayout.setError("This field is required");
                     administratorPhoneNumberTextLayout.setErrorEnabled(true);
                     administratorPhoneNumberTextLayout.requestFocus();
                     return;
                 }
-                if (TextUtils.isEmpty(designation)) {
-                    designationTextLayout.setError("Please enter your designation.");
+                if (TextUtils.isEmpty(adminDesignation)) {
+                    designationTextLayout.setError("This field is required");
                     designationTextLayout.setErrorEnabled(true);
                     designationTextLayout.requestFocus();
                     return;
                 }
-                if (TextUtils.isEmpty(email)) {
-                    emailTextLayout.setError("Please enter your email");
+                if (TextUtils.isEmpty(adminEmail)) {
+                    emailTextLayout.setError("This field is required");
                     emailTextLayout.setErrorEnabled(true);
                     emailTextLayout.requestFocus();
                     return;
                 }
-                if (TextUtils.isEmpty(societyname)) {
-                    societyNameTextLayout.setError("Please enter your society name");
+
+                if (TextUtils.isEmpty(societyName)) {
+                    societyNameTextLayout.setError("This field is required");
                     societyNameTextLayout.setErrorEnabled(true);
                     societyNameTextLayout.requestFocus();
                     return;
                 }
-                if (TextUtils.isEmpty(societyaddress)) {
-                    societyAddressTextLayout.setError("Please enter your society address");
+                if (TextUtils.isEmpty(societyAddress)) {
+                    societyAddressTextLayout.setError("This field is required");
                     societyAddressTextLayout.setErrorEnabled(true);
                     societyAddressTextLayout.requestFocus();
                     return;
                 }
-                if (TextUtils.isEmpty(societyphonenumber)) {
-                    societyPhoneNumberTextLayout.setError("Please enter your admin society phone number.");
+                if (TextUtils.isEmpty(societyPhone)) {
+                    societyPhoneNumberTextLayout.setError("This field is required");
                     societyPhoneNumberTextLayout.setErrorEnabled(true);
                     societyPhoneNumberTextLayout.requestFocus();
                     return;
                 }
-                RegistrationDetailsStepOne registrationDetailsStepOne = new RegistrationDetailsStepOne(username, adminphonenumber, email, designation, societyname, societyaddress, societyphonenumber, geoaddress, String.valueOf(latitude), String.valueOf(longitude));
-                sendNetworkRequest(registrationDetailsStepOne);
+                if(!locationSelected) {
+                    locationError.setText("Select a location");
+                    locationError.setVisibility(View.VISIBLE);
+                    locationError.setTextColor(Color.RED);
+                    return;
+                }
+                if(!fileSelected) {
+                    fileMessage.setText("Please select a file");
+                    fileMessage.setVisibility(View.VISIBLE);
+                    fileMessage.setTextColor(Color.RED);
+                    return;
+                }
+
+
+                sendNetworkRequest();
 
             }
         });
     }
 
-    private void sendNetworkRequest(RegistrationDetailsStepOne registrationDetailsStepOne) {
+    private void sendNetworkRequest() {
 
-        File orignalfile = new File("" + fileUri);
-        Log.d("extern", Environment.getExternalStorageDirectory().toString());
-        Log.d("lenghth", String.valueOf(orignalfile.length()));
-//            registrationDetailsStepOne.setLat("1");
-//            registrationDetailsStepOne.setLng("1");
-//            registrationDetailsStepOne.setGeo_address("asas");
-//            Log.d("address",registrationDetailsStepOne.getAddress());
-//            Log.d("aname",registrationDetailsStepOne.getApplicant_name());
-//            Log.d("geoadress",registrationDetailsStepOne.getGeo_address());
-//            Log.d("latitude",registrationDetailsStepOne.getLat());
-//            Log.d("longitude",registrationDetailsStepOne.getLng());
-//            Log.d("phone",registrationDetailsStepOne.getApplicant_phone());
-//            Log.d("email",registrationDetailsStepOne.getApplicant_email());
-//            Log.d("sname",registrationDetailsStepOne.getName());
-//            Log.d("sphone",registrationDetailsStepOne.getPhone());
-//            Log.d("designation",registrationDetailsStepOne.getApplicant_designation());
-        RequestBody filePart = RequestBody.create(MediaType.parse(Objects.requireNonNull(getContentResolver().getType(fileUri))), orignalfile);
+        RequestBody filePart = RequestBody.create(MediaType.parse("multipart/form-data"), orignalFile);
 
-        MultipartBody.Part file = MultipartBody.Part.createFormData("certificate", orignalfile.getName(), filePart);
+        MultipartBody.Part file = MultipartBody.Part.createFormData("certificate", orignalFile.getName(), filePart);
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(getString(R.string.server_addr))
@@ -174,24 +238,28 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
         Retrofit retrofit = builder.build();
 
         FileUploadService fileUploadService = retrofit.create(FileUploadService.class);
-        Call<ResponseBody> call = fileUploadService.registerApplicant(createPartFromString(registrationDetailsStepOne.getApplicant_name()), createPartFromString(registrationDetailsStepOne.getApplicant_phone()), createPartFromString(registrationDetailsStepOne.getApplicant_email()), createPartFromString(registrationDetailsStepOne.getApplicant_designation()), createPartFromString(registrationDetailsStepOne.getName()), createPartFromString(registrationDetailsStepOne.getAddress()), createPartFromString(registrationDetailsStepOne.getPhone()), createPartFromString(geoaddress), createPartFromString(String.valueOf(latitude)), createPartFromString(String.valueOf(longitude)), file);
+        Call<ResponseBody> call = fileUploadService.registerApplicant(createPartFromString(adminName),
+                createPartFromString(adminPhone),
+                createPartFromString(adminEmail),
+                createPartFromString(adminDesignation),
+                createPartFromString(societyName),
+                createPartFromString(societyAddress),
+                createPartFromString(societyPhone),
+                createPartFromString(""),
+                createPartFromString(String.valueOf(latitude)),
+                createPartFromString(String.valueOf(longitude)),
+                file);
+
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Toast.makeText(RegistrationStepOne.this, "Done", Toast.LENGTH_SHORT).show();
-                Log.d("heloo", "done");
+                Toast.makeText(RegistrationStepOne.this, "Application submitted!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(RegistrationStepOne.this, "something went wrong", Toast.LENGTH_SHORT).show();
-                Log.d("errpre", call.toString());
-                Log.d("erryty", t.toString());
             }
         });
-//        catch (NullPointerException e){
-//            Log.d("hie",e.toString());
-//            e.printStackTrace();
 //        }
 
 
@@ -207,14 +275,53 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
         documentUploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setType("application/pdf");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 112);
-
+                checkPermissionsAndOpenFilePicker();
             }
         });
 
+    }
+
+    public void openFilePicker() {
+        new MaterialFilePicker()
+                .withActivity(RegistrationStepOne.this)
+                .withRequestCode(10)
+                .withHiddenFiles(false)
+                .withFilter(Pattern.compile(".*\\.pdf$"))
+                .withTitle("Select PDF")
+                .start();
+    }
+
+    private void checkPermissionsAndOpenFilePicker() {
+        String permission = Manifest.permission.READ_EXTERNAL_STORAGE;
+
+        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                showError();
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{permission}, PERMISSIONS_REQUEST_CODE);
+            }
+        } else {
+            openFilePicker();
+        }
+    }
+
+    private void showError() {
+        Toast.makeText(this, "Allow external storage reading", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_CODE: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    openFilePicker();
+                } else {
+                    showError();
+                }
+            }
+        }
     }
 
     @Override
@@ -225,6 +332,8 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
                 Bundle extras = data.getExtras();
                 if (extras != null) {
                     LatLng currentLocation = data.getExtras().getParcelable("LatLong");
+                    locationSelected=data.getExtras().getBoolean("locationCheck");
+                    locationError.setVisibility(View.GONE);
                     mMap.clear();
                     mMap.addMarker(new MarkerOptions().position(currentLocation));
                     mMap.moveCamera(CameraUpdateFactory
@@ -245,13 +354,35 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
                 }
             }
         }
-        if (requestCode == REQUEST_WRITE_STORAGE) {
+
+        if (requestCode == 10) {
             try {
-                fileUri = data.getData();
+                filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
+                try {
+                    orignalFile = new File(filePath);
+
+                    if (orignalFile.exists()) {
+                        fileSelected=true;
+                        fileMessage.setText(orignalFile.getName());
+                        fileMessage.setTextColor(Color.BLACK);
+                        documentUploadButton.setText("Select different document");
+                        fileMessage.setVisibility(View.VISIBLE);
+                    }
+
+                    if(orignalFile.length()>2*1024*1024){
+                        fileSelected=false;
+                        fileMessage.setText("Select a file less than 2 MB");
+                        fileMessage.setTextColor(View.VISIBLE);
+                        fileMessage.setTextColor(Color.RED);
+                    }
+                }
+                catch (NullPointerException e){
+
+                    e.printStackTrace();
+                }
             } catch (NullPointerException e) {
                 e.printStackTrace();
             }
-            //Log.d("helloy",String.valueOf(fileUri));
         }
     }
 
@@ -269,10 +400,7 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
             });
         }
 
-        // Add a marker in Sydney and move the camera
-        LatLng pune = new LatLng(18.4915, 73.8217);
-        mMap.addMarker(new MarkerOptions().position(pune).title("Marker in Pune"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(pune));
+//
     }
 
 
