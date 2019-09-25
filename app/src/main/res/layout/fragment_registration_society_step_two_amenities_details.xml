@@ -70,12 +70,13 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/name_of_amenity"
-                        android:textSize="14sp"
                         android:drawableLeft="@drawable/ic_golf_course_black_24dp"
                         android:drawablePadding="10dp"
                         android:drawableTint="@color/secondaryColor"
-                        android:paddingLeft="10dp"/>
+                        android:hint="@string/name_of_amenity"
+                        android:inputType="text"
+                        android:paddingLeft="10dp"
+                        android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -96,6 +97,7 @@
                         android:drawablePadding="10dp"
                         android:drawableTint="@color/secondaryColor"
                         android:hint="@string/rate_in_rupees"
+                        android:inputType="number"
                         android:paddingLeft="10dp"
                         android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>

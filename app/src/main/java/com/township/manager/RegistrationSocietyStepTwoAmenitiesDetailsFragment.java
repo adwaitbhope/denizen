@@ -76,7 +76,7 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_registration_society_step_two_amenities_details, container, false);
 
-        String[] BILLING_PERIOD = new String[] {"Hourly", "Daily", "Weekly", "Monthly", "Yearly"};
+        String[] BILLING_PERIOD = new String[] {"Hourly", "Daily"};
 
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(

@@ -74,6 +74,7 @@
                         android:drawablePadding="10dp"
                         android:drawableTint="@color/secondaryColor"
                         android:hint="@string/no_of_floors"
+                        android:inputType="number"
                         android:paddingLeft="10dp"
                         android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -96,6 +97,7 @@
                         android:drawablePadding="10dp"
                         android:drawableTint="@color/secondaryColor"
                         android:hint="@string/wing_name"
+                        android:inputType="text"
                         android:paddingLeft="10dp"
                         android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -118,6 +120,7 @@
                         android:drawableLeft="@drawable/ic_view_module_black_24dp"
                         android:drawablePadding="10dp"
                         android:drawableTint="@color/secondaryColor"
+                        android:inputType="number"
                         android:paddingLeft="10dp"
                         android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>
