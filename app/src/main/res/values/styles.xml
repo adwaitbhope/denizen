@@ -13,15 +13,15 @@
         <item name="bottomNavigationStyle">@style/AppBottomNavigation</item>
         <item name="materialCardViewStyle">@style/AppCardView</item>
         <item name="popupMenuStyle">@style/AppPopupMenu</item>
+        <item name=""></item>
     </style>
 
     <style name="NumberPickerTheme" parent="Theme.AppCompat.Light">
-        <item name="colorAccent">@color/primaryTextColor</item>
+            <item name="colorAccent">@color/primaryTextColor</item>
         <item name="colorControlNormal">@android:color/transparent</item>
         <item name="android:textColorPrimary">@color/primaryTextColor</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:textSize">24sp</item>
-
     </style>
 
 

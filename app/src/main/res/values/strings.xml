@@ -37,7 +37,7 @@
     <string name="how_many_buildings">How many buildings?</string>
     <string name="number_of_admins">No. of Admins</string>
     <string name="no_of_security_desks">No. of Security Desks</string>
-    <string name="admin_login_details">Admin Logins </string>
+    <string name="other_details">Other Details </string>
     <string name="amenities_details">Amenity Details </string>
     <string name="wing_details">Wing Details</string>
     <string name="naming_convention">Naming Convention</string>

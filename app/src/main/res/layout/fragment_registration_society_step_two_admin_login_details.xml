@@ -9,28 +9,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".RegistrationSocietyStepTwoAdminLoginDetailsFragment">
-    <NumberPicker
-        android:id="@+id/admin_number_picker"
-        android:layout_width="wrap_content"
-        android:layout_height="96dp"
-        android:theme="@style/NumberPickerTheme"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintBottom_toBottomOf="@+id/NumberOfAdmins"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/NumberOfAdmins" />
+
+        <NumberPicker
+            android:id="@+id/admin_number_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintBottom_toBottomOf="@+id/NumberOfAdmins"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/NumberOfAdmins"
+            app:layout_constraintTop_toTopOf="@+id/NumberOfAdmins" />
 
 
-    <TextView
-        android:id="@+id/NumberOfAdmins"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="64dp"
-        android:gravity="center_vertical"
-        android:text="@string/number_of_admins"
-        android:textSize="17sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_details_title" />
+        <TextView
+            android:id="@+id/NumberOfAdmins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="64dp"
+            android:gravity="center_vertical"
+            android:text="@string/number_of_admins"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_icon" />
 
     <TextView
         android:id="@+id/SecurityDesks"
@@ -48,41 +51,50 @@
         android:id="@+id/security_number_picker"
         android:layout_width="wrap_content"
         android:layout_height="96dp"
-        android:theme="@style/NumberPickerTheme"
         android:layout_marginEnd="32dp"
         app:layout_constraintBottom_toBottomOf="@+id/SecurityDesks"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/SecurityDesks" />
 
-    <TextView
-        android:id="@+id/login_details_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="@string/admin_login_details"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_icon" />
+        <TextView
+            android:id="@+id/login_details_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/other_details"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/login_icon"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/login_icon"
-        android:layout_width="106dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/ic_people_black_24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/login_icon"
+            android:layout_width="106dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="72dp"
+            android:src="@drawable/ic_people_darkgreen_80dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/proceed_payment_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="40dp"
+            android:layout_marginEnd="16dp"
             android:text="@string/proceed_to_pay"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/security_number_picker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/security_number_picker" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
