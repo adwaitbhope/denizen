@@ -10,6 +10,34 @@
         android:layout_height="wrap_content"
         tools:context=".RegistrationSocietyStepTwoAdminLoginDetailsFragment">
 
+        <Button
+            android:id="@+id/proceed_payment_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/proceed_to_pay"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/no_of_security_desks_numberpicker"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/no_of_security_desks_numberpicker" />
+
+
+        <ImageView
+            android:id="@+id/login_icon"
+            android:layout_width="106dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="72dp"
+            android:src="@drawable/ic_people_darkgreen_80dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <NumberPicker
             android:id="@+id/admin_number_picker"
             android:layout_width="wrap_content"
@@ -22,39 +50,14 @@
             app:layout_constraintStart_toEndOf="@+id/NumberOfAdmins"
             app:layout_constraintTop_toTopOf="@+id/NumberOfAdmins" />
 
-
-        <TextView
-            android:id="@+id/NumberOfAdmins"
+        <NumberPicker
+            android:id="@+id/no_of_security_desks_numberpicker"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="64dp"
-            android:gravity="center_vertical"
-            android:text="@string/number_of_admins"
-            android:textSize="17sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_icon" />
-
-    <TextView
-        android:id="@+id/no_of_security_desks_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:layout_marginStart="0dp"
-        android:gravity="center_vertical"
-        android:text="@string/no_of_security_desks"
-        android:textSize="17sp"
-        app:layout_constraintStart_toStartOf="@id/no_of_admins_textview"
-        app:layout_constraintTop_toBottomOf="@+id/no_of_admins_numberpicker" />
-
-    <NumberPicker
-        android:id="@+id/no_of_security_desks_numberpicker"
-        android:layout_width="wrap_content"
-        android:layout_height="96dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintBottom_toBottomOf="@+id/no_of_security_desks_textview"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/no_of_security_desks_textview" />
+            android:layout_height="96dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintBottom_toBottomOf="@+id/no_of_security_desks_textview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/no_of_security_desks_textview" />
 
         <TextView
             android:id="@+id/login_details_title"
@@ -70,32 +73,29 @@
             app:layout_constraintStart_toEndOf="@+id/login_icon"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/login_icon"
-            android:layout_width="106dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="72dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="72dp"
-            android:src="@drawable/ic_people_darkgreen_80dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/proceed_payment_button"
+        <TextView
+            android:id="@+id/no_of_security_desks_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/proceed_to_pay"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/no_of_security_desks_numberpicker"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/no_of_security_desks_numberpicker" />
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="64dp"
+            android:gravity="center_vertical"
+            android:text="@string/no_of_security_desks"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="@id/NumberOfAdmins"
+            app:layout_constraintTop_toBottomOf="@+id/admin_number_picker" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/NumberOfAdmins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="64dp"
+            android:gravity="center_vertical"
+            android:text="@string/number_of_admins"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_icon" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
