@@ -10,12 +10,13 @@
         android:layout_height="wrap_content"
         tools:context=".ComplaintsListFragment">
 
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/pending_complaint_cardview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="64dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

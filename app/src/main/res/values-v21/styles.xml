@@ -5,6 +5,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+
     <style name="SwitchTheme" parent="Theme.AppCompat.Light">
         <!-- colorPrimary is used for the default action bar background -->
         <item name="colorPrimary">@color/colorPrimary</item>
