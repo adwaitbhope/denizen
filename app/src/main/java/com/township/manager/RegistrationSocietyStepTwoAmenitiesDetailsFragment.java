@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.SwitchCompat;
@@ -75,17 +75,45 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_registration_society_step_two_amenities_details, container, false);
-        switchCompat = (SwitchCompat) view.findViewById(R.id.free_for_members_switch);
 
-        switchCompat.setOnCheckedChangeListener(this);
+        String[] BILLING_PERIOD = new String[] {"Hourly", "Daily", "Weekly", "Monthly", "Yearly"};
+
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(
+                        getContext(),
+                        R.layout.dropdown_menu_popup_item,
+                        BILLING_PERIOD);
+
+        AutoCompleteTextView editTextFilledExposedDropdown =
+                view.findViewById(R.id.billing_period__details_filled_exposed_dropdown);
+        editTextFilledExposedDropdown.setAdapter(adapter);
 
 
-        Spinner spinner = view.findViewById(R.id.billing_period_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.billing_period_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+
+        String[] MEMBERS_FREE = new String[] {"Yes", "No"};
+
+        ArrayAdapter<String> adapter1 =
+                new ArrayAdapter<>(
+                        getContext(),
+                        R.layout.dropdown_menu_popup_item,
+                        MEMBERS_FREE);
+
+        AutoCompleteTextView editTextFilledExposedDropdown1 =
+                view.findViewById(R.id.free_for_members_filled_exposed_dropdown);
+        editTextFilledExposedDropdown1.setAdapter(adapter1);
+
+
+
+//        switchCompat = (SwitchCompat) view.findViewById(R.id.free_for_members_switch);
+//        switchCompat.setOnCheckedChangeListener(this);
+
+
+//        Spinner spinner = view.findViewById(R.id.billing_period_spinner);
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+//                R.array.billing_period_array, android.R.layout.simple_spinner_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinner.setAdapter(adapter);
+//        spinner.setOnItemSelectedListener(this);
         return view;
     }
 

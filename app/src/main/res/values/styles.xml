@@ -11,14 +11,16 @@
         <item name="materialButtonStyle">@style/AppButton</item>
         <item name="textInputStyle">@style/AppTextField</item>
         <item name="bottomNavigationStyle">@style/AppBottomNavigation</item>
+        <item name="materialCardViewStyle">@style/AppCardView</item>
+        <item name="popupMenuStyle">@style/AppPopupMenu</item>
     </style>
 
     <style name="NumberPickerTheme" parent="Theme.AppCompat.Light">
-        <item name="colorAccent">@android:color/white</item>
+        <item name="colorAccent">@color/primaryTextColor</item>
         <item name="colorControlNormal">@android:color/transparent</item>
-        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
         <item name="android:background">@android:color/transparent</item>
-        <item name="android:textSize">30dp</item>
+        <item name="android:textSize">24sp</item>
 
     </style>
 
@@ -34,15 +36,31 @@
 
     <style name="AppTextField" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/secondaryColor</item>
+        <item name="hintTextColor">@color/secondaryColor</item>
         <item name="boxBackgroundMode">outline</item>
-
-
     </style>
+
+    <style name="AppTextField.ExposedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxBackgroundMode">outline</item>
+        <item name="boxStrokeColor">@color/secondaryColor</item>
+        <item name="hintTextColor">@color/secondaryColor</item>
+    </style>
+
+    <style name="AppPopupMenu" parent="Widget.MaterialComponents.PopupMenu"></style>
+
 
     <style name="AppBottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView" >
     </style>
 
+    <style name="AppCardView" parent="Widget.MaterialComponents.CardView">
+        <item name="strokeColor">@color/secondaryColor</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="fontFamily">@font/roboto_mono</item>
+        <item name="cardCornerRadius">15dp</item>
+        <item name="cardElevation">0dp</item>
 
+
+    </style>
 
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />

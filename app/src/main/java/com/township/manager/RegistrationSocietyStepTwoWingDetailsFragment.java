@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -75,12 +75,24 @@ public class RegistrationSocietyStepTwoWingDetailsFragment extends Fragment impl
 
         View view = inflater.inflate(R.layout.fragment_registration_society_step_two_wing_details, container, false);
 
-        Spinner spinner = view.findViewById(R.id.naming_convention_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.naming_convention_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+        String[] NAMING_CONVENTION = new String[] {"A-1 to A-36", "A-101 to A-904"};
+
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(
+                        getContext(),
+                        R.layout.dropdown_menu_popup_item,
+                        NAMING_CONVENTION);
+
+        AutoCompleteTextView editTextFilledExposedDropdown =
+                view.findViewById(R.id.naming_convention_filled_exposed_dropdown);
+        editTextFilledExposedDropdown.setAdapter(adapter);
+
+//        Spinner spinner = view.findViewById(R.id.naming_convention_spinner);
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+//                R.array.naming_convention_array, android.R.layout.simple_spinner_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinner.setAdapter(adapter);
+//        spinner.setOnItemSelectedListener(this);
         return view;
     }
 
