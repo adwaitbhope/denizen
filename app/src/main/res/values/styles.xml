@@ -13,7 +13,6 @@
         <item name="bottomNavigationStyle">@style/AppBottomNavigation</item>
         <item name="materialCardViewStyle">@style/AppCardView</item>
         <item name="popupMenuStyle">@style/AppPopupMenu</item>
-        <item name=""></item>
     </style>
 
     <style name="NumberPickerTheme" parent="Theme.AppCompat.Light">
