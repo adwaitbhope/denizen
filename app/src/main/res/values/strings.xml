@@ -47,14 +47,12 @@
     <string name="name_of_amenity">Amenity Name</string>
     <string name="billing_period">Billing period</string>
     <string name="is_it_free_for_members_who_have_paid_membership_fees">Free for members</string>
-    <string name="no">No</string>
-    <string name="yes">Yes</string>
     <string name="rate_in_rupees">Rate</string>
     <string name="start_a_new_application">Start a new application</string>
     <string name="step_one">Step One</string>
     <string name="continue_your_application">Proceed with application</string>
     <string name="step_two">Step Two</string>
-    <string name="proceed_to_pay">PROCEED TO PAY</string>
+    <string name="proceed_to_payment">Proceed to Payment</string>
     <string name="add_amenity">Add Amenity</string>
 
     <string-array name="naming_convention_array">

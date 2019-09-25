@@ -10,51 +10,6 @@
         android:layout_height="wrap_content"
         tools:context=".RegistrationSocietyStepTwoAdminLoginDetailsFragment">
 
-        <NumberPicker
-            android:id="@+id/admin_number_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            app:layout_constraintBottom_toBottomOf="@+id/NumberOfAdmins"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/NumberOfAdmins"
-            app:layout_constraintTop_toTopOf="@+id/NumberOfAdmins" />
-
-
-        <TextView
-            android:id="@+id/NumberOfAdmins"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="64dp"
-            android:gravity="center_vertical"
-            android:text="@string/number_of_admins"
-            android:textSize="17sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_icon" />
-
-    <TextView
-        android:id="@+id/SecurityDesks"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:layout_marginStart="0dp"
-        android:gravity="center_vertical"
-        android:text="@string/no_of_security_desks"
-        android:textSize="17sp"
-        app:layout_constraintStart_toStartOf="@id/NumberOfAdmins"
-        app:layout_constraintTop_toBottomOf="@+id/admin_number_picker" />
-
-    <NumberPicker
-        android:id="@+id/security_number_picker"
-        android:layout_width="wrap_content"
-        android:layout_height="96dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintBottom_toBottomOf="@+id/SecurityDesks"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/SecurityDesks" />
 
         <TextView
             android:id="@+id/login_details_title"
@@ -74,28 +29,81 @@
             android:id="@+id/login_icon"
             android:layout_width="106dp"
             android:layout_height="100dp"
-            android:layout_marginStart="72dp"
+            android:layout_marginStart="48dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="72dp"
-            android:src="@drawable/ic_people_darkgreen_80dp"
+            android:layout_marginEnd="48dp"
+            android:src="@drawable/ic_group_add_darkgreen_80dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/proceed_payment_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="@string/proceed_to_pay"
+            android:layout_marginBottom="32dp"
+            android:text="@string/proceed_to_payment"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/security_number_picker" />
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout4"
+            android:paddingStart="8dp"
+            app:icon="@drawable/ic_check_circle_black_24dp"
+            app:iconPadding="8dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_icon">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_people_black_24dp"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/secondaryColor"
+                android:editable="false"
+                android:hint="@string/number_of_admins"
+                android:inputType="number"
+                android:paddingLeft="10dp"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/no_of_security_desks"
+                android:inputType="number"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/secondaryColor"
+                android:editable="false"
+                android:paddingLeft="10dp"
+                android:textSize="14sp"
+                android:drawableLeft="@drawable/ic_security_black_24dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
