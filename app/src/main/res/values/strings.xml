@@ -60,9 +60,12 @@
     <string name="pending">Pending</string>
     <string name="resolved">Resolved</string>
     <string name="pandurang_d_souza">Pandurang D\'Souza</string>
-    <string name="read_more"><u>Read more</u></string>
-    <string name="read_less"><u>Read less</u></string>
+    <string name="read_more"><u>(Read more)</u></string>
+    <string name="read_less"><u>(Read less)</u></string>
     <string name="add_amenity">Add Amenity</string>
+    <string name="filter">Filter</string>
+    <string name="by_date">By Date</string>
+    <string name="by_wing">By Wing</string>
 
     <string-array name="naming_convention_array">
         <item>A-1 to A-36</item>
