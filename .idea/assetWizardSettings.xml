@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/social/ic_people_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_assignment_late_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -33,9 +33,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="1b5e20" />
-                            <entry key="outputName" value="ic_people_darkgreen_80dp" />
-                            <entry key="sourceFile" value="C:\Users\athar\Downloads\rupee-indian.svg" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_dot_outlined_thick" />
+                            <entry key="sourceFile" value="C:\Users\athar\Downloads\dot_outlined_thick.svg" />
                           </map>
                         </option>
                       </PersistentState>
