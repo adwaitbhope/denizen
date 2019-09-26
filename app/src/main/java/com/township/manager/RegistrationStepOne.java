@@ -4,42 +4,21 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.database.Cursor;
-import android.location.Address;
-import android.location.Geocoder;
-import android.os.Build;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -52,10 +31,18 @@ import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegistrationStepOne extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -166,24 +153,28 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
                 if (TextUtils.isEmpty(adminName)) {
                     usernameTextLayout.setError("This field is required");
                     usernameTextLayout.requestFocus();
+                    usernameTextLayout.setErrorIconDrawable(null);
                     return;
                 }
                 if (TextUtils.isEmpty(adminPhone)) {
                     administratorPhoneNumberTextLayout.setError("This field is required");
                     administratorPhoneNumberTextLayout.setErrorEnabled(true);
                     administratorPhoneNumberTextLayout.requestFocus();
+                    administratorPhoneNumberTextLayout.setErrorIconDrawable(null);
                     return;
                 }
                 if (TextUtils.isEmpty(adminDesignation)) {
                     designationTextLayout.setError("This field is required");
                     designationTextLayout.setErrorEnabled(true);
                     designationTextLayout.requestFocus();
+                    designationTextLayout.setErrorIconDrawable(null);
                     return;
                 }
                 if (TextUtils.isEmpty(adminEmail)) {
                     emailTextLayout.setError("This field is required");
                     emailTextLayout.setErrorEnabled(true);
                     emailTextLayout.requestFocus();
+                    emailTextLayout.setErrorIconDrawable(null);
                     return;
                 }
 
@@ -191,18 +182,21 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
                     societyNameTextLayout.setError("This field is required");
                     societyNameTextLayout.setErrorEnabled(true);
                     societyNameTextLayout.requestFocus();
+                    societyNameTextLayout.setErrorIconDrawable(null);
                     return;
                 }
                 if (TextUtils.isEmpty(societyAddress)) {
                     societyAddressTextLayout.setError("This field is required");
                     societyAddressTextLayout.setErrorEnabled(true);
                     societyAddressTextLayout.requestFocus();
+                    societyAddressTextLayout.setErrorIconDrawable(null);
                     return;
                 }
                 if (TextUtils.isEmpty(societyPhone)) {
                     societyPhoneNumberTextLayout.setError("This field is required");
                     societyPhoneNumberTextLayout.setErrorEnabled(true);
                     societyPhoneNumberTextLayout.requestFocus();
+                    societyPhoneNumberTextLayout.setErrorIconDrawable(null);
                     return;
                 }
                 if(!locationSelected) {
