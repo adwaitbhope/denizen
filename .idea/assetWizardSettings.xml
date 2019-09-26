@@ -33,8 +33,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_assignment_late_black_24dp" />
-                            <entry key="sourceFile" value="C:\Users\athar\Downloads\rupee-indian.svg" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_dot_outlined_thick" />
+                            <entry key="sourceFile" value="C:\Users\athar\Downloads\dot_outlined_thick.svg" />
                           </map>
                         </option>
                       </PersistentState>

@@ -2,7 +2,7 @@
 <resources>
     <color name="primaryColor">#64dd17</color>
     <color name="primaryLightColor">#9cff57</color>
-    <color name="primaryDarkColor">#1faa00</color>
+    <color name="primaryDarkColor">#28C80C</color>
     <color name="secondaryColor">#1b5e20</color>
     <color name="secondaryLightColor">#4c8c4a</color>
     <color name="secondaryDarkColor">#003300</color>
@@ -11,4 +11,8 @@
     <color name="errorColor">#FF0000</color>
     <color name="mtrl_textinput_default_box_stroke_color">#D6D7D7</color>
 
+<!--    required for 3rd party file picker-->
+    <color name="colorAccent">#1b5e20</color>
+    <color name="colorPrimary">#64dd17</color>
+    <color name="colorPrimaryDark">#1faa00</color>
 </resources>
