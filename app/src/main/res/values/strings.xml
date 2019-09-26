@@ -54,6 +54,15 @@
     <string name="step_two">Step Two</string>
     <string name="proceed_to_payment">Proceed to Payment</string>
     <string name="add_amenity">Add Amenity</string>
+    <string name="application_number">Application Number</string>
+    <string name="upload_documents">Upload Documents</string>
+    <string name="check_status">Check Status</string>
+    <string name="proceed_to_step_two">Proceed to Step Two</string>
+    <string name="application_status">Application Status</string>
+    <string name="name_status">Name:</string>
+    <string name="phone_status">Phone:</string>
+    <string name="address_status">Address:</string>
+    <string name="status_status">Status:</string>
 
     <string-array name="naming_convention_array">
         <item>A-1 to A-36</item>

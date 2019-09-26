@@ -5,31 +5,4 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="SwitchTheme" parent="Theme.AppCompat.Light">
-        <!-- colorPrimary is used for the default action bar background -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-
-        <!-- colorPrimaryDark is used for the status bar -->
-        <item name="colorPrimaryDark">@color/colorAccent</item>
-
-        <!-- colorAccent is used as the default value for colorControlActivated,
-             which is used to tint widgets -->
-        <item name="colorAccent">@color/colorYellow</item>
-
-        <!-- You can also set colorControlNormal, colorControlActivated
-             colorControlHighlight, and colorSwitchThumbNormal. -->
-
-    </style>
-
-    <style name="NumberPickerTheme" parent="Theme.AppCompat.Light">
-        <item name="colorAccent">@android:color/white</item>
-        <!-- To remove divider of the number picker -->
-        <item name="colorControlNormal">@android:color/transparent</item>
-
-        <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:textSize">25sp</item>
-        <item name="fontFamily">@font/roboto_mono</item>
-        <item name="android:fontFamily">@font/roboto_mono_medium</item>
-    </style>
 </resources>

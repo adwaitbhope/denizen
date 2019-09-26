@@ -8,14 +8,7 @@
     <color name="secondaryDarkColor">#003300</color>
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#ffffff</color>
-    <color name="errorColor">#BD0C0C</color>
+    <color name="errorColor">#FF0000</color>
     <color name="mtrl_textinput_default_box_stroke_color">#D6D7D7</color>
 
-
-    <color name="colorPrimary">#8bc34a</color>
-    <color name="colorPrimaryDark">#79aa41</color>
-    <color name="colorAccent">#FFFFFF</color>
-    <color name="colorGrey">#4FFFFFFF</color>
-    <color name="colorYellow">#CCF72F</color>
-    <color name="colorOrange">#F74915</color>
 </resources>
