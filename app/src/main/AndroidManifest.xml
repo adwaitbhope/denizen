@@ -2,11 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.township.manager">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
     <application
         android:name=".GlobalVariables"
         android:allowBackup="true"
@@ -15,37 +10,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
-        <activity android:name=".RegistrationStepsActivity"
-            android:label="Registration Steps"
-            android:parentActivityName=".LoginScreenActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-        <activity android:name=".ForgotPassword"
-            android:label="Forgot Password"
-            android:parentActivityName=".LoginScreenActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".RegistrationSocietyStepTwo"
-            android:label="Society Details"
-            android:parentActivityName=".RegistrationStepsActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
-            android:name=".MapsActivityStepOne"
-            android:label="@string/title_activity_maps_step_one" />
-
-        <activity android:name=".LoginScreenActivity">
-
+        <activity android:name=".EditProfileActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".RegistrationStepsActivity"
+            android:label="Registration Steps"
+            android:parentActivityName=".LoginScreenActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ForgotPassword"
+            android:label="Forgot Password"
+            android:parentActivityName=".LoginScreenActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RegistrationSocietyStepTwo"
+            android:label="Society Details"
+            android:parentActivityName=".RegistrationStepsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MapsActivityStepOne"
+            android:label="@string/title_activity_maps_step_one" />
+        <activity android:name=".LoginScreenActivity">
 
         </activity>
-
         <activity
             android:name=".RegistrationStepOne"
             android:label="Society Details"
@@ -71,5 +63,10 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

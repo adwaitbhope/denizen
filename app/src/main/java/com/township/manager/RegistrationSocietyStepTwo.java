@@ -3,7 +3,6 @@ package com.township.manager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,7 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 
 public class RegistrationSocietyStepTwo extends AppCompatActivity implements RegistrationSocietyStepTwoWingDetailsFragment.OnFragmentInteractionListener, RegistrationSocietyStepTwoAmenitiesDetailsFragment.OnFragmentInteractionListener, RegistrationSocietyStepTwoAdminLoginDetailsFragment.OnFragmentInteractionListener {
 
-    public Button login;
+
     private TextView[] mDots;
     private ViewPager mSlideViewPager;
     private LinearLayout mDotLayout;

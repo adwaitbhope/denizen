@@ -66,6 +66,10 @@
     <string name="filter">Filter</string>
     <string name="by_date">By Date</string>
     <string name="by_wing">By Wing</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="designation">Designation</string>
+    <string name="phone_number">Phone Number</string>
 
     <string-array name="naming_convention_array">
         <item>A-1 to A-36</item>
