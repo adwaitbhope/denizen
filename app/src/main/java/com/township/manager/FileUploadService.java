@@ -37,8 +37,5 @@ public interface FileUploadService {
             @Field("INDUSTRY_TYPE_ID") String industryTypeId
     );
 
-   @POST("orderidandcustomerid")
-    Call<ResponseBody> get(
-            @Field("hello") String  hello
-   );
+
 }
