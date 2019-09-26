@@ -3,15 +3,21 @@ package com.township.manager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 /**
@@ -32,10 +38,12 @@ public class RegistrationSocietyStepTwoWingDetailsFragment extends Fragment impl
     private String mParam1;
     private String mParam2;
 
-
-//    public Spinner spinner;
-
     private OnFragmentInteractionListener mListener;
+    RecyclerView recyclerView;
+    RecyclerView.Adapter recyclerViewAdapter;
+    RecyclerView.LayoutManager layoutManager;
+
+    Button addWing;
 
     public RegistrationSocietyStepTwoWingDetailsFragment() {
         // Required empty public constructor
@@ -75,24 +83,30 @@ public class RegistrationSocietyStepTwoWingDetailsFragment extends Fragment impl
 
         View view = inflater.inflate(R.layout.fragment_registration_society_step_two_wing_details, container, false);
 
-        String[] NAMING_CONVENTION = new String[] {"A-1 to A-36", "A-101 to A-904"};
+        recyclerView = view.findViewById(R.id.registration_wings_recycler_view);
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
 
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(
-                        getContext(),
-                        R.layout.dropdown_menu_popup_item,
-                        NAMING_CONVENTION);
+        final ArrayList<Wing> dataset = new ArrayList<>();
+        dataset.add(new Wing());
 
-        AutoCompleteTextView editTextFilledExposedDropdown =
-                view.findViewById(R.id.naming_convention_filled_exposed_dropdown);
-        editTextFilledExposedDropdown.setAdapter(adapter);
+        recyclerViewAdapter = new RegistrationWingsAdapter(dataset, getContext());
+        recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.setHasFixedSize(true);
 
-//        Spinner spinner = view.findViewById(R.id.naming_convention_spinner);
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-//                R.array.naming_convention_array, android.R.layout.simple_spinner_item);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinner.setAdapter(adapter);
-//        spinner.setOnItemSelectedListener(this);
+        recyclerView.setItemViewCacheSize(20);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
+        Button button = view.findViewById(R.id.add_wing_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dataset.add(new Wing());
+                recyclerViewAdapter.notifyItemInserted(dataset.size() -1);
+            }
+        });
+
         return view;
     }
 
