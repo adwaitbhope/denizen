@@ -1,5 +1,10 @@
 package com.township.manager;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import org.json.JSONArray;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -28,14 +33,20 @@ public interface FileUploadService {
             @Part MultipartBody.Part certificate
     );
     @FormUrlEncoded
-    @POST("paytmbackendurlfromourserver")
-    Call<ResponseBody> getChecksum(
+    @POST("/payment/paytm/initiate/")
+    Call<JsonArray> getChecksum(
             @Field("CHANNEL_ID") String channelId,
             @Field("TXN_AMOUNT") String txnAmount,
             @Field("WEBSITE") String website,
             @Field("CALLBACK_URL") String callbackUrl,
             @Field("INDUSTRY_TYPE_ID") String industryTypeId
     );
+
+    @POST("/payment/paytm/verify/")
+    Call<JsonArray> checksumVerify(
+        @Field("paytm_response") String paytm_response
+    );
+
 
 
 }

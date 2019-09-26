@@ -3,6 +3,7 @@ package com.township.manager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,17 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.paytm.pgsdk.PaytmOrder;
 import com.paytm.pgsdk.PaytmPGService;
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -117,6 +126,7 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
         proceedPaymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 generateChecksum();
             }
         });
@@ -124,50 +134,65 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
     }
 
     private void generateChecksum() {
-        String txnAmount="100";  //currently set as default value as UI is not developed
+           final PaytmConstants paytmConstants=new PaytmConstants();  //currently set as default value as UI is not developed
 //        String orderId="200"; //will fetch from server once done
 //        String custId="200"; //will fetch from servr once done
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(getString(R.string.server_addr))
                 .addConverterFactory(GsonConverterFactory.create());
-
+        paytmConstants.setTXN_AMOUNT("100");
         Retrofit retrofit = builder.build();
 
-        final Paytm paytm = new Paytm(
+
+
+
+        FileUploadService fileUploadService = retrofit.create(FileUploadService.class);
+
+        Call<JsonArray> call = fileUploadService.getChecksum(
                 PaytmConstants.CHANNEL_ID,
-                txnAmount,
+                paytmConstants.getTXN_AMOUNT(),
                 PaytmConstants.WEBSITE,
                 PaytmConstants.CALLBACK_URL,
                 PaytmConstants.INDUSTRY_TYPE_ID
 
         );
 
-        FileUploadService fileUploadService = retrofit.create(FileUploadService.class);
+        call.enqueue(new Callback<JsonArray>() {
 
-        Call<ResponseBody> call = fileUploadService.getChecksum(
-                paytm.getChannelId(),
-                paytm.getTxnAmount(),
-                paytm.getWebsite(),
-                paytm.getCallBackUrl(),
-                paytm.getIndustryTypeId()
-
-        );
-        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String checksumhash="200"; //will fetch from server once done
-                initializePayment(checksumhash,paytm);
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+
+                  String jsonstring=response.body().getAsJsonArray().toString();
+
+                try {
+                    JSONArray jsonArray=new JSONArray(jsonstring);;
+                    JSONObject jsonObject=jsonArray.getJSONObject(0);
+
+                    paytmConstants.setCALLBACK_URL(jsonObject.getString("CALLBACK_URL"));
+                    paytmConstants.setCHECKSUMHASH(jsonObject.getString("CHECKSUMHASH"));
+                    paytmConstants.setCUST_ID(jsonObject.getString("CUST_ID"));
+                    paytmConstants.setORDER_ID(jsonObject.getString("ORDER_ID"));
+                    initializePayment(paytmConstants);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                }
+
+
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+            public void onFailure(Call<JsonArray> call, Throwable throwable) {
+                Log.d("patymerror",throwable.toString()+ " "+ call.toString());
 
             }
         });
 
     }
 
-    private void initializePayment(String checksumHash,Paytm paytm) {
+    private void initializePayment(PaytmConstants paytmConstants) {
 
         PaytmPGService Service = PaytmPGService.getStagingService();
 
@@ -176,15 +201,15 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
 
         //creating a hashmap and adding all the values required
         HashMap<String, String> paramMap = new HashMap<>();
-        paramMap.put("MID", PaytmConstants.M_ID);
-        paramMap.put("ORDER_ID", paytm.getOrderId());
-        paramMap.put("CUST_ID", paytm.getCustId());
-        paramMap.put("CHANNEL_ID", paytm.getChannelId());
-        paramMap.put("TXN_AMOUNT", paytm.getTxnAmount());
-        paramMap.put("WEBSITE", paytm.getWebsite());
-        paramMap.put("CALLBACK_URL", paytm.getCallBackUrl());
-        paramMap.put("CHECKSUMHASH", checksumHash);
-        paramMap.put("INDUSTRY_TYPE_ID", paytm.getIndustryTypeId());
+        paramMap.put("MID", PaytmConstants.MID);
+        paramMap.put("ORDER_ID", paytmConstants.getORDER_ID());
+        paramMap.put("CUST_ID", paytmConstants.getCUST_ID());
+        paramMap.put("CHANNEL_ID", PaytmConstants.CHANNEL_ID);
+        paramMap.put("TXN_AMOUNT", paytmConstants.getTXN_AMOUNT());
+        paramMap.put("WEBSITE", PaytmConstants.WEBSITE);
+        paramMap.put("CALLBACK_URL", paytmConstants.getCALLBACK_URL());
+        paramMap.put("CHECKSUMHASH", paytmConstants.getCHECKSUMHASH());
+        paramMap.put("INDUSTRY_TYPE_ID", PaytmConstants.INDUSTRY_TYPE_ID);
 
 
         //creating a paytm order object using the hashmap
@@ -216,7 +241,7 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
     }
 
     @Override
-    public void onDetach() {
+    public void onDetach(){
         super.onDetach();
         mListener = null;
     }
@@ -229,6 +254,65 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
     @Override
     public void onTransactionResponse(Bundle inResponse) {
         Toast.makeText(getActivity(), inResponse.toString(), Toast.LENGTH_LONG).show();
+
+        try {
+            JSONArray jsonArray = new JSONArray(inResponse.toString());
+            JSONObject jsonObject=jsonArray.getJSONObject(0);
+            if(jsonObject.getString("STATUS").equals("SUCCESS")){
+                Toast.makeText(getActivity(),"Transaction successfull wait for verification",Toast.LENGTH_SHORT).show();
+                Retrofit.Builder builder = new Retrofit.Builder()
+                        .baseUrl(getString(R.string.server_addr))
+                        .addConverterFactory(GsonConverterFactory.create());
+                Retrofit retrofit = builder.build();
+
+                FileUploadService fileUploadService = retrofit.create(FileUploadService.class);
+
+                Call<JsonArray> call = fileUploadService.checksumVerify(
+                        inResponse.toString()
+                );
+                call.enqueue(new Callback<JsonArray>() {
+                    @Override
+                    public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+
+                        assert response.body() != null;
+                        String jsonstring=response.body().getAsJsonArray().toString();
+                        try {
+                            JSONArray jsonArray=new JSONArray(jsonstring);;
+                            JSONObject jsonObject2=jsonArray.getJSONObject(0);
+
+                            if(jsonObject2.getString("checksum_verified").equals("true")){
+                                Toast.makeText(getActivity(),"transaction verified",Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                Toast.makeText(getActivity(),"transaction not verified",Toast.LENGTH_SHORT).show();
+                            }
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<JsonArray> call, Throwable throwable) {
+
+                    }
+                });
+            }
+            else{
+                Toast.makeText(getActivity(),"Transaction failed",Toast.LENGTH_SHORT).show();
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        ;
+
+
+
     }
 
     @Override
