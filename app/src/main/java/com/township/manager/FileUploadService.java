@@ -44,7 +44,15 @@ public interface FileUploadService {
 
     @POST("/payment/paytm/verify/")
     Call<JsonArray> checksumVerify(
-        @Field("paytm_response") String paytm_response
+        @Field("CHANNEL_ID") String CHANNEL_ID,
+        @Field("TXN_AMOUNT") String TXN_AMOUNT,
+        @Field("WEBSITE") String WEBSITE,
+        @Field("CALLBACK_URL") String CALLBACK_URL,
+        @Field("INDUSTRY_TYPE_ID") String INDUSTRY_TYPE_ID,
+        @Field("MID") String MID,
+        @Field("ORDER_ID") String ORDER_ID,
+        @Field("CUST_ID") String CUST_ID,
+        @Field("CHECKSUMHASH") String CHECKSUMHASH
     );
 
 
