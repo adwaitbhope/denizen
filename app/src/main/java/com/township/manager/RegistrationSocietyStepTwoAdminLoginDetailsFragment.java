@@ -6,10 +6,25 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.paytm.pgsdk.PaytmOrder;
+import com.paytm.pgsdk.PaytmPGService;
+import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.fragment.app.Fragment;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
@@ -20,7 +35,7 @@ import androidx.fragment.app.Fragment;
  * Use the {@link RegistrationSocietyStepTwoAdminLoginDetailsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragment implements NumberPicker.OnValueChangeListener{
+public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragment implements NumberPicker.OnValueChangeListener, PaytmPaymentTransactionCallback {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,6 +50,7 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
     public NumberPicker admin_number_picker, security_number_picker;
 
     private OnFragmentInteractionListener mListener;
+    private Button proceedPaymentButton;
 
     public RegistrationSocietyStepTwoAdminLoginDetailsFragment() {
         // Required empty public constructor
@@ -96,7 +112,89 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
         });
         security_number_picker.setOnValueChangedListener(this);
 
+        proceedPaymentButton = view.findViewById(R.id.registration_step_two_proceed_payment_button);
+
+        proceedPaymentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                generateChecksum();
+            }
+        });
         return view;
+    }
+
+    private void generateChecksum() {
+        String txnAmount="100";  //currently set as default value as UI is not developed
+//        String orderId="200"; //will fetch from server once done
+//        String custId="200"; //will fetch from servr once done
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(getString(R.string.server_addr))
+                .addConverterFactory(GsonConverterFactory.create());
+
+        Retrofit retrofit = builder.build();
+
+        final Paytm paytm = new Paytm(
+                PaytmConstants.CHANNEL_ID,
+                txnAmount,
+                PaytmConstants.WEBSITE,
+                PaytmConstants.CALLBACK_URL,
+                PaytmConstants.INDUSTRY_TYPE_ID
+
+        );
+
+        FileUploadService fileUploadService = retrofit.create(FileUploadService.class);
+
+        Call<ResponseBody> call = fileUploadService.getChecksum(
+                paytm.getChannelId(),
+                paytm.getTxnAmount(),
+                paytm.getWebsite(),
+                paytm.getCallBackUrl(),
+                paytm.getIndustryTypeId()
+
+        );
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String checksumhash="200"; //will fetch from server once done
+                initializePayment(checksumhash,paytm);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+
+            }
+        });
+
+    }
+
+    private void initializePayment(String checksumHash,Paytm paytm) {
+
+        PaytmPGService Service = PaytmPGService.getStagingService();
+
+        //use this when using for production
+        //PaytmPGService Service = PaytmPGService.getProductionService();
+
+        //creating a hashmap and adding all the values required
+        HashMap<String, String> paramMap = new HashMap<>();
+        paramMap.put("MID", PaytmConstants.M_ID);
+        paramMap.put("ORDER_ID", paytm.getOrderId());
+        paramMap.put("CUST_ID", paytm.getCustId());
+        paramMap.put("CHANNEL_ID", paytm.getChannelId());
+        paramMap.put("TXN_AMOUNT", paytm.getTxnAmount());
+        paramMap.put("WEBSITE", paytm.getWebsite());
+        paramMap.put("CALLBACK_URL", paytm.getCallBackUrl());
+        paramMap.put("CHECKSUMHASH", checksumHash);
+        paramMap.put("INDUSTRY_TYPE_ID", paytm.getIndustryTypeId());
+
+
+        //creating a paytm order object using the hashmap
+        PaytmOrder order = new PaytmOrder(paramMap);
+
+        //intializing the paytm service
+        Service.initialize(order, null);
+
+        //finally starting the payment transaction
+        Service.startPaymentTransaction(getActivity(), true, true, this);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -126,6 +224,42 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
     @Override
     public void onValueChange(NumberPicker numberPicker, int i, int i1) {
 
+    }
+
+    @Override
+    public void onTransactionResponse(Bundle inResponse) {
+        Toast.makeText(getActivity(), inResponse.toString(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void networkNotAvailable() {
+        Toast.makeText(getActivity(), "Network error", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void clientAuthenticationFailed(String inErrorMessage) {
+        Toast.makeText(getActivity(), inErrorMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void someUIErrorOccurred(String inErrorMessage) {
+        Toast.makeText(getActivity(), inErrorMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onErrorLoadingWebPage(int iniErrorCode, String inErrorMessage, String inFailingUrl) {
+        Toast.makeText(getActivity(), inErrorMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onBackPressedCancelTransaction() {
+        Toast.makeText(getActivity(), "Back Pressed", Toast.LENGTH_LONG).show();
+
+    }
+
+    @Override
+    public void onTransactionCancel(String inErrorMessage, Bundle inResponse) {
+        Toast.makeText(getActivity(), inErrorMessage + inResponse.toString(), Toast.LENGTH_LONG).show();
     }
 
     /**

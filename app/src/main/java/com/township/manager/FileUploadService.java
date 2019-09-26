@@ -5,6 +5,8 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -25,4 +27,18 @@ public interface FileUploadService {
             @Part("lng") RequestBody lng,
             @Part MultipartBody.Part certificate
     );
+    @FormUrlEncoded
+    @POST("paytmbackendurlfromourserver")
+    Call<ResponseBody> getChecksum(
+            @Field("CHANNEL_ID") String channelId,
+            @Field("TXN_AMOUNT") String txnAmount,
+            @Field("WEBSITE") String website,
+            @Field("CALLBACK_URL") String callbackUrl,
+            @Field("INDUSTRY_TYPE_ID") String industryTypeId
+    );
+
+   @POST("orderidandcustomerid")
+    Call<ResponseBody> get(
+            @Field("hello") String  hello
+   );
 }
