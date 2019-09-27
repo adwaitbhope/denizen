@@ -16,7 +16,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 
-public interface FileUploadService {
+public interface RetrofitServerAPI {
     @Multipart
     @POST("/register/new/")
     Call<ResponseBody> registerApplicant(
@@ -32,29 +32,22 @@ public interface FileUploadService {
             @Part("lng") RequestBody lng,
             @Part MultipartBody.Part certificate
     );
+
     @FormUrlEncoded
     @POST("/payment/paytm/initiate/")
     Call<JsonArray> getChecksum(
             @Field("CHANNEL_ID") String channelId,
-            @Field("TXN_AMOUNT") String txnAmount,
             @Field("WEBSITE") String website,
             @Field("CALLBACK_URL") String callbackUrl,
-            @Field("INDUSTRY_TYPE_ID") String industryTypeId
+            @Field("INDUSTRY_TYPE_ID") String industryTypeId,
+            @Field("TXN_AMOUNT") String txnAmount
     );
 
+    @FormUrlEncoded
     @POST("/payment/paytm/verify/")
-    Call<JsonArray> checksumVerify(
-        @Field("CHANNEL_ID") String CHANNEL_ID,
-        @Field("TXN_AMOUNT") String TXN_AMOUNT,
-        @Field("WEBSITE") String WEBSITE,
-        @Field("CALLBACK_URL") String CALLBACK_URL,
-        @Field("INDUSTRY_TYPE_ID") String INDUSTRY_TYPE_ID,
-        @Field("MID") String MID,
-        @Field("ORDER_ID") String ORDER_ID,
-        @Field("CUST_ID") String CUST_ID,
-        @Field("CHECKSUMHASH") String CHECKSUMHASH
+    Call<JsonArray> verifyChecksum(
+            @Field("ORDER_ID") String ORDER_ID
     );
-
 
 
 }

@@ -4,14 +4,10 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.location.Address;
-import android.location.Geocoder;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -227,8 +223,8 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
 
         Retrofit retrofit = builder.build();
 
-        FileUploadService fileUploadService = retrofit.create(FileUploadService.class);
-        Call<ResponseBody> call = fileUploadService.registerApplicant(createPartFromString(adminName),
+        RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
+        Call<ResponseBody> call = retrofitServerAPI.registerApplicant(createPartFromString(adminName),
                 createPartFromString(adminPhone),
                 createPartFromString(adminEmail),
                 createPartFromString(adminDesignation),
