@@ -70,6 +70,10 @@
     <string name="last_name">Last Name</string>
     <string name="designation">Designation</string>
     <string name="phone_number">Phone Number</string>
+    <string name="register_a_complaint">Register a complaint</string>
+    <string name="description_in_150_words">Description(in 150 words)</string>
+    <string name="upload_photos">Upload photos</string>
+    <string name="register_complaint">register complaint</string>
 
     <string-array name="naming_convention_array">
         <item>A-1 to A-36</item>
