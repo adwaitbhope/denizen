@@ -43,8 +43,6 @@ public class RegistrationSocietyStepTwoWingDetailsFragment extends Fragment impl
     RecyclerView.Adapter recyclerViewAdapter;
     RecyclerView.LayoutManager layoutManager;
 
-    Button addWing;
-
     public RegistrationSocietyStepTwoWingDetailsFragment() {
         // Required empty public constructor
     }
@@ -97,6 +95,8 @@ public class RegistrationSocietyStepTwoWingDetailsFragment extends Fragment impl
         recyclerView.setItemViewCacheSize(20);
         recyclerView.setDrawingCacheEnabled(true);
         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
+        recyclerView.setNestedScrollingEnabled(true);
 
         Button button = view.findViewById(R.id.add_wing_button);
         button.setOnClickListener(new View.OnClickListener() {
