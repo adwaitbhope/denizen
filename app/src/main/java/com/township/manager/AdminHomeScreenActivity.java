@@ -20,7 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class AdminHomeScreenActivity extends AppCompatActivity
-        implements ComplaintsListFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener, ComplaintsFragment.OnFragmentInteractionListener, RegistrationSocietyStepTwoAmenitiesDetailsFragment.OnFragmentInteractionListener, RegistrationSocietyStepTwoAdminLoginDetailsFragment.OnFragmentInteractionListener {
+        implements NoticeBoardFragment.OnFragmentInteractionListener, ComplaintsListFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener, ComplaintsFragment.OnFragmentInteractionListener, RegistrationSocietyStepTwoAmenitiesDetailsFragment.OnFragmentInteractionListener, RegistrationSocietyStepTwoAdminLoginDetailsFragment.OnFragmentInteractionListener {
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -59,6 +59,13 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                 FragmentTransaction transaction;
 
                 switch (menuItem.getItemId()) {
+
+                    case R.id.admin_notice_board:
+                        transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.admin_home_screen_fragment_area, new NoticeBoardFragment());
+                        transaction.commit();
+                        return true;
+
                     case R.id.admin_complaints:
                         transaction = getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.admin_home_screen_fragment_area, new ComplaintsFragment());

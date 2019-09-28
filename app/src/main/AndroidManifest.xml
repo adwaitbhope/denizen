@@ -15,13 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".RegistrationStepTwoStatusActivity"
+        <activity android:name=".NoticeBoardFragment2"></activity>
+        <activity
+            android:name=".RegistrationStepTwoStatusActivity"
             android:label="Application Status"
             android:parentActivityName=".RegistrationStepsActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RegistrationStepsActivity"
             android:label="Registration Steps"
@@ -47,7 +46,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".RegistrationStepOne"
             android:label="Society Details"
