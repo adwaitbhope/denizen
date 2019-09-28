@@ -76,8 +76,8 @@ public class ComplaintsFragment extends Fragment {
         SliderAdapter sliderAdapter = new SliderAdapter(Objects.requireNonNull(getActivity()).getSupportFragmentManager());
 
         // TODO: Change the fragments that are loading here
-        sliderAdapter.addFragment(new ComplaintsListFragment());
-        sliderAdapter.addFragment(new RegistrationSocietyStepTwoAdminLoginDetailsFragment());
+        sliderAdapter.addFragment(new ComplaintsListFragment(), "Pending");
+        sliderAdapter.addFragment(new ComplaintsListFragment(), "Resolved");
 
         ViewPager mSlideViewPager = (ViewPager) view.findViewById(R.id.complaints_view_pager);
         mSlideViewPager.setAdapter(sliderAdapter);
@@ -87,13 +87,6 @@ public class ComplaintsFragment extends Fragment {
         tabLayout.setupWithViewPager(mSlideViewPager);
 
         return view;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override

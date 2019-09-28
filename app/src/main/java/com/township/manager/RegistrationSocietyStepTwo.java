@@ -35,9 +35,9 @@ public class RegistrationSocietyStepTwo extends AppCompatActivity implements Reg
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         SliderAdapter sliderAdapter = new SliderAdapter(getSupportFragmentManager());
-        sliderAdapter.addFragment(new RegistrationSocietyStepTwoWingDetailsFragment());
-        sliderAdapter.addFragment(new RegistrationSocietyStepTwoAmenitiesDetailsFragment());
-        sliderAdapter.addFragment(new RegistrationSocietyStepTwoAdminLoginDetailsFragment());
+        sliderAdapter.addFragment(new RegistrationSocietyStepTwoWingDetailsFragment(), "");
+        sliderAdapter.addFragment(new RegistrationSocietyStepTwoAmenitiesDetailsFragment(), "");
+        sliderAdapter.addFragment(new RegistrationSocietyStepTwoAdminLoginDetailsFragment(), "");
 
         mSlideViewPager = (ViewPager) findViewById(R.id.slideViewPager);
         mSlideViewPager.setAdapter(sliderAdapter);
