@@ -73,28 +73,28 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
         View view = inflater.inflate(R.layout.fragment_registration_society_step_two_admin_login_details, container, false);
         // Inflate the layout for this fragment
 
-        admin_number_picker = view.findViewById(R.id.admin_number_picker);
-        admin_number_picker.setMinValue(0);
-        admin_number_picker.setMaxValue(99);
-        admin_number_picker.setFormatter(new NumberPicker.Formatter() {
-            @Override
-            public String format(int i) {
-                return String.format("%01d", i);
-            }
-        });
-        admin_number_picker.setOnValueChangedListener(this);
-
-
-        security_number_picker = view.findViewById(R.id.no_of_security_desks_numberpicker);
-        security_number_picker.setMinValue(0);
-        security_number_picker.setMaxValue(99);
-        security_number_picker.setFormatter(new NumberPicker.Formatter() {
-            @Override
-            public String format(int i) {
-                return String.format("%01d", i);
-            }
-        });
-        security_number_picker.setOnValueChangedListener(this);
+//        admin_number_picker = view.findViewById(R.id.admin_number_picker);
+//        admin_number_picker.setMinValue(0);
+//        admin_number_picker.setMaxValue(99);
+//        admin_number_picker.setFormatter(new NumberPicker.Formatter() {
+//            @Override
+//            public String format(int i) {
+//                return String.format("%01d", i);
+//            }
+//        });
+//        admin_number_picker.setOnValueChangedListener(this);
+//
+//
+//        security_number_picker = view.findViewById(R.id.security_number_picker);
+//        security_number_picker.setMinValue(0);
+//        security_number_picker.setMaxValue(99);
+//        security_number_picker.setFormatter(new NumberPicker.Formatter() {
+//            @Override
+//            public String format(int i) {
+//                return String.format("%01d", i);
+//            }
+//        });
+//        security_number_picker.setOnValueChangedListener(this);
 
         return view;
     }

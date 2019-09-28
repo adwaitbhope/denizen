@@ -35,7 +35,7 @@ public class RegistrationStepsActivity extends AppCompatActivity {
         registrationStepTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RegistrationStepsActivity.this, RegistrationSocietyStepTwo.class);
+                Intent intent = new Intent(RegistrationStepsActivity.this, RegistrationStepTwoStatusActivity.class);
                 startActivity(intent);
             }
         });
