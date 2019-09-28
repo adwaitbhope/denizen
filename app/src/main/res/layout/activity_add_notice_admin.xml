@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddNoticeAdminActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/add_notice_admin_app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/add_notice_admin_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_notice_upload_document_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:paddingLeft="8dp"
+        android:text="@string/upload_documents"
+        app:icon="@drawable/ic_file_upload_black_24dp"
+        app:iconPadding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout7" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_notice_publish_notice_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:paddingLeft="8dp"
+        android:text="Publish Notice"
+        app:icon="@drawable/ic_send_black_24dp"
+        app:iconPadding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_notice_admin_app_bar_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_title_black_24dp"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/secondaryColor"
+            android:hint="Title"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout6">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"
+            android:drawableLeft="@drawable/ic_description_black_24dp"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/secondaryColor"
+            android:paddingLeft="10dp"
+            android:textSize="14sp"
+            android:inputType="textMultiLine"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Filter Visibility"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_notice_upload_document_button" />
+
+    <com.google.android.material.chip.ChipGroup
+        style="@style/AppChipGroupStyle"
+        android:id="@+id/chipGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11"
+        app:checkedIconTint="@color/secondaryTextColor">
+
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip6"
+            style="@style/AppChipFilterStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Everyone"
+            android:textAppearance="@style/chipTextAppearance" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip7"
+            style="@style/AppChipFilterStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Admins Only"
+            android:textAppearance="@style/chipTextAppearance"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip8"
+            style="@style/AppChipFilterStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wing A"
+            android:textAppearance="@style/chipTextAppearance"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip9"
+            style="@style/AppChipFilterStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wing B"
+            android:textAppearance="@style/chipTextAppearance"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip10"
+            style="@style/AppChipFilterStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wing C"
+            android:textAppearance="@style/chipTextAppearance"/>
+
+    </com.google.android.material.chip.ChipGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

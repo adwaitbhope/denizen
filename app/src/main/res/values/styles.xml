@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light">
@@ -14,6 +14,8 @@
         <item name="materialCardViewStyle">@style/AppCardView</item>
         <item name="popupMenuStyle">@style/AppPopupMenu</item>
         <item name="materialAlertDialogTheme">@style/AppAlertDialogTheme</item>
+        <item name="chipGroupStyle">@style/AppChipGroupStyle</item>
+        <item name="chipStyle">@style/AppChipFilterStyle</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -37,11 +39,6 @@
         <item name="hintTextColor">@color/secondaryColor</item>
     </style>
 
-    <style name="AppPopupMenu" parent="Widget.MaterialComponents.PopupMenu"></style>
-
-
-    <style name="AppBottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView"></style>
-
     <style name="AppCardView" parent="Widget.MaterialComponents.CardView">
         <item name="strokeColor">@color/primaryDarkColor</item>
         <item name="strokeWidth">2dp</item>
@@ -50,8 +47,37 @@
         <item name="cardElevation">0dp</item>
     </style>
 
-    <style name="AppAlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog"></style>
+    <style name="chipTextAppearance" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="fontFamily">@font/roboto_mono</item>
+        <item name="android:fontFamily">@font/roboto_mono</item>
+        <item name="android:textColor">@color/secondaryTextColor</item>
+    </style>
 
+    <style name="AppChipGroupStyle" parent="Widget.MaterialComponents.ChipGroup">
+        <item name="fontFamily">@font/roboto_mono</item>
+    </style>
+
+    <style name="AppChipFilterStyle" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="fontFamily">@font/roboto_mono</item>
+<!--        <item name="chipStrokeColor">@color/primaryDarkColor</item>-->
+<!--        <item name="chipStrokeWidth">2dp</item>-->
+        <item name="chipBackgroundColor">@color/chip_color_selector</item>
+<!--        <item name="chipSurfaceColor">@color/secondaryTextColor</item>-->
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="chipIconTint">@color/secondaryTextColor</item>
+        <item name="checkedIcon">@drawable/ic_check_white_24dp</item>
+
+    </style>
+
+    <style name="AppChipChoiceStyle" parent="Widget.MaterialComponents.Chip.Choice"></style>
+    <style name="AppChipActionStyle" parent="Widget.MaterialComponents.Chip.Action"></style>
+    <style name="AppChipEntryStyle" parent="Widget.MaterialComponents.Chip.Entry"></style>
+
+    <style name="AppPopupMenu" parent="Widget.MaterialComponents.PopupMenu"></style>
+
+    <style name="AppBottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView"></style>
+
+    <style name="AppAlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog"></style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
