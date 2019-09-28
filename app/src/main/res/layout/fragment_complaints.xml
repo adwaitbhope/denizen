@@ -26,8 +26,7 @@
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_arrow_forward_black_24dp"
-        tools:ignore="VectorDrawableCompat" />
+        android:src="@drawable/ic_add_circle_outline_black_24dp"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/complaints_tab_layout"
@@ -38,7 +37,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tabIndicatorColor="@android:color/white"
-        app:tabTextColor="@color/secondaryDarkColor">
+        app:tabTextColor="@android:color/white">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/pending_tab"
