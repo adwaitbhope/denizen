@@ -43,7 +43,7 @@
     <style name="AppBottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView"></style>
 
     <style name="AppCardView" parent="Widget.MaterialComponents.CardView">
-        <item name="strokeColor">@color/secondaryColor</item>
+        <item name="strokeColor">@color/primaryDarkColor</item>
         <item name="strokeWidth">2dp</item>
         <item name="fontFamily">@font/roboto_mono</item>
         <item name="cardCornerRadius">12dp</item>
