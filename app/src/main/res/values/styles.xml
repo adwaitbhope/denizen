@@ -75,7 +75,12 @@
 
     <style name="AppPopupMenu" parent="Widget.MaterialComponents.PopupMenu"></style>
 
-    <style name="AppBottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView"></style>
+    <style name="AppBottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconTint">@color/bottom_nav_color_selector</item>
+        <item name="itemTextColor">@color/bottom_nav_color_selector</item>
+        <item name="labelVisibilityMode">selected</item>
+        <item name="itemHorizontalTranslationEnabled">true</item>
+    </style>
 
     <style name="AppAlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog"></style>
 
