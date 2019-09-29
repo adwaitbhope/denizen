@@ -44,7 +44,7 @@
         <item name="strokeWidth">2dp</item>
         <item name="fontFamily">@font/roboto_mono</item>
         <item name="cardCornerRadius">12dp</item>
-        <item name="cardElevation">0dp</item>
+        <item name="cardElevation">1dp</item>
     </style>
 
     <style name="chipTextAppearance" parent="TextAppearance.MaterialComponents.Chip">
