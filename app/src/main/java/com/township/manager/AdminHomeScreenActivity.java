@@ -52,6 +52,10 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         adminDesignation.setText(cursor.getString(desCol));
         adminName.setText(cursor.getString(firstNameCol) + " " + cursor.getString(lastNameCol));
 
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.admin_home_screen_fragment_area, new NoticeBoardFragment());
+        transaction.commit();
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.admin_bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

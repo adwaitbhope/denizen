@@ -14,6 +14,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
 public class ResidentHomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,6 +47,10 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         cursor.moveToFirst();
         residentFlatNo.setText(cursor.getString(wingNoCol) +" " +cursor.getString(flatNoCol));
         residentName.setText(cursor.getString(firstNameCol) + "  " + cursor.getString(lastNameCol));
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.resident_home_screen_fragment_area, new NoticeBoardFragment());
+        transaction.commit();
     }
 
     @Override
