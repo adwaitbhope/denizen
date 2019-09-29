@@ -55,7 +55,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/amenities_details_cardView" />
+            app:layout_constraintTop_toBottomOf="@+id/amenities_details_cardView"
+            app:layout_constraintVertical_bias="0.0" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/amenities_details_cardView"
@@ -72,7 +73,6 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/amenity_name_textinput"
