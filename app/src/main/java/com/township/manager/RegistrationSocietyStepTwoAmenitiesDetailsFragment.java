@@ -85,7 +85,7 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
                         BILLING_PERIOD);
 
         AutoCompleteTextView editTextFilledExposedDropdown =
-                view.findViewById(R.id.billing_period__details_filled_exposed_dropdown);
+                view.findViewById(R.id.billing_period_details_filled_exposed_dropdown);
         editTextFilledExposedDropdown.setAdapter(adapter);
 
 

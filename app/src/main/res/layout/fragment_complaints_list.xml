@@ -16,15 +16,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/filter_complaints_textinput">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true">
 
                 <Button
                     android:id="@+id/resolve_complaint_button"
@@ -33,7 +34,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
-                    android:text="Resolve Complaint"
+                    android:text="Mark as resolved"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -71,24 +72,60 @@
 
                 <com.borjabravo.readmoretextview.ReadMoreTextView
                     android:id="@+id/complaint_description_textview"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-
-
                     android:layout_marginTop="16dp"
-                    android:paddingEnd="16dp"
+                    android:layout_marginEnd="16dp"
                     android:text="The parking bulb is not working anymore. I suggest you to change the damaged one as it becomes difficult at night times. Images are attached herewith. Thank you."
                     app:colorClickableText="@color/colorBlue"
-
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/flat_no_textview"
                     app:layout_constraintTop_toBottomOf="@+id/flat_no_textview"
                     app:trimCollapsedText="@string/read_more"
                     app:trimExpandedText="@string/read_less"
                     app:trimLines="1"
                     app:trimMode="trimModeLine" />
-                <!--                android:ellipsize="end"-->
-                <!--                android:maxLines="1"-->
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/by_date_filter_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/by_date"
+            app:layout_constraintBottom_toBottomOf="@+id/by_wing_filter_chip"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/by_wing_filter_chip" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/by_wing_filter_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/by_wing"
+            app:layout_constraintBottom_toBottomOf="@+id/filter_complaints_textinput"
+            app:layout_constraintStart_toEndOf="@+id/by_date_filter_chip"
+            app:layout_constraintTop_toTopOf="@+id/filter_complaints_textinput" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/filter_complaints_textinput"
+            style="@style/AppTextField.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="200dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:hint="@string/filter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <AutoCompleteTextView
+                android:id="@+id/complaints_filter_exposed_dropdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

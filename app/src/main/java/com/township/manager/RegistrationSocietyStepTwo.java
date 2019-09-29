@@ -4,7 +4,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.text.Html;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -33,9 +35,9 @@ public class RegistrationSocietyStepTwo extends AppCompatActivity implements Reg
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         SliderAdapter sliderAdapter = new SliderAdapter(getSupportFragmentManager());
-        sliderAdapter.addFragment(new RegistrationSocietyStepTwoWingDetailsFragment());
-        sliderAdapter.addFragment(new RegistrationSocietyStepTwoAmenitiesDetailsFragment());
-        sliderAdapter.addFragment(new RegistrationSocietyStepTwoAdminLoginDetailsFragment());
+        sliderAdapter.addFragment(new RegistrationSocietyStepTwoWingDetailsFragment(), "");
+        sliderAdapter.addFragment(new RegistrationSocietyStepTwoAmenitiesDetailsFragment(), "");
+        sliderAdapter.addFragment(new RegistrationSocietyStepTwoAdminLoginDetailsFragment(), "");
 
         mSlideViewPager = (ViewPager) findViewById(R.id.slideViewPager);
         mSlideViewPager.setAdapter(sliderAdapter);

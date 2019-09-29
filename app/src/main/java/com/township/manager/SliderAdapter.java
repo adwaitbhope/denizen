@@ -12,20 +12,16 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 public class SliderAdapter extends FragmentStatePagerAdapter {
 
     private final List<Fragment> mFragmentList = new ArrayList<>();
+    private final List<String> mFragmentTites = new ArrayList<>();
 
     public SliderAdapter(@NonNull FragmentManager fm) {
         super(fm, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     }
 
-//    public SliderAdapter(@NonNull FragmentManager fm) {
-//        super(fm);
-//    }
-
-
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return super.getPageTitle(position);
+        return mFragmentTites.get(position);
     }
 
     @NonNull
@@ -34,8 +30,9 @@ public class SliderAdapter extends FragmentStatePagerAdapter {
         return mFragmentList.get(position);
     }
 
-    public void addFragment(Fragment fragment) {
+    public void addFragment(Fragment fragment, String name) {
         mFragmentList.add(fragment);
+        mFragmentTites.add(name);
     }
 
     @Override
