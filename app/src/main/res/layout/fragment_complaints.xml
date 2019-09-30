@@ -6,29 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ComplaintsFragment">
 
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/complaints_tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/pending_tab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pending" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/resolved_tab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/resolved" />
-
-    </com.google.android.material.tabs.TabLayout>
-
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/complaints_view_pager"
         android:layout_width="0dp"
@@ -36,5 +13,44 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/complaints_tab_layout" />
+        app:layout_constraintTop_toBottomOf="@id/complaints_tab_layout" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_new_complaint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_add_circle_outline_black_24dp"/>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/complaints_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabIndicatorColor="@android:color/white"
+        app:tabTextColor="@android:color/white">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/pending_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pending" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/resolved_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Resolved" />
+
+    </com.google.android.material.tabs.TabLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

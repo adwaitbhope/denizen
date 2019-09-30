@@ -9,14 +9,9 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -32,7 +27,6 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.lang.String;
 import java.util.Objects;
 
 public class LoginScreenActivity extends FragmentActivity {
@@ -138,16 +132,18 @@ public class LoginScreenActivity extends FragmentActivity {
                 final String password = passwordEditText.getText().toString();
 
                 if (TextUtils.isEmpty(username)) {
-                    usernameTextLayout.setError("Please enter your username.");
+                    usernameTextLayout.setError("Please enter your username");
                     usernameTextLayout.setErrorEnabled(true);
                     usernameTextLayout.requestFocus();
+                    usernameTextLayout.setErrorIconDrawable(null);
                     return;
                 }
 
                 if (TextUtils.isEmpty(password)) {
-                    passwordTextLayout.setError("Please enter your password.");
+                    passwordTextLayout.setError("Please enter your password");
                     passwordTextLayout.setErrorEnabled(true);
                     passwordTextLayout.requestFocus();
+                    passwordTextLayout.setErrorIconDrawable(null);
                     return;
                 }
 

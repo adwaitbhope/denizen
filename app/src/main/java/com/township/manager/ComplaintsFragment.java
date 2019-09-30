@@ -1,6 +1,7 @@
 package com.township.manager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
@@ -76,8 +78,8 @@ public class ComplaintsFragment extends Fragment {
         SliderAdapter sliderAdapter = new SliderAdapter(Objects.requireNonNull(getActivity()).getSupportFragmentManager());
 
         // TODO: Change the fragments that are loading here
-        sliderAdapter.addFragment(new ComplaintsListFragment());
-        sliderAdapter.addFragment(new RegistrationSocietyStepTwoAdminLoginDetailsFragment());
+        sliderAdapter.addFragment(new ComplaintsListFragment(), "Pending");
+        sliderAdapter.addFragment(new ComplaintsListFragment(), "Resolved");
 
         ViewPager mSlideViewPager = (ViewPager) view.findViewById(R.id.complaints_view_pager);
         mSlideViewPager.setAdapter(sliderAdapter);
@@ -86,14 +88,16 @@ public class ComplaintsFragment extends Fragment {
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.complaints_tab_layout);
         tabLayout.setupWithViewPager(mSlideViewPager);
 
-        return view;
-    }
+        FloatingActionButton button = view.findViewById(R.id.add_new_complaint);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), RegisterComplaintActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        return view;
     }
 
     @Override
