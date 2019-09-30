@@ -88,10 +88,11 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_intercom_admin) {
-            // Handle the camera action
+
         } else if (id == R.id.nav_maintenance_admin) {
 
         } else if (id == R.id.nav_visitor_history_admin) {
+            
 
         } else if (id == R.id.nav_admin_info_admin) {
 
