@@ -17,7 +17,7 @@
             android:layout_marginStart="48dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="48dp"
-            android:src="@drawable/ic_pool_darkgreen_80dp"
+            app:srcCompat="@drawable/ic_pool_darkgreen_80dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

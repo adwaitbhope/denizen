@@ -1,6 +1,7 @@
 package com.township.manager;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -92,7 +93,6 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_maintenance_admin) {
 
         } else if (id == R.id.nav_visitor_history_admin) {
-            
 
         } else if (id == R.id.nav_admin_info_admin) {
 
@@ -103,6 +103,9 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_wing_details_admin) {
 
         } else if (id == R.id.nav_amenities_admin) {
+            Intent intent = new
+                    Intent(AdminHomeScreenActivity.this, AmenitiesAdminContainerActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_logout_admin) {
             LogOutDialog logOutDialog = new LogOutDialog();

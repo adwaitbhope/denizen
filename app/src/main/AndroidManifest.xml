@@ -18,7 +18,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AmenitiesAdminContainerActivity"></activity>
+        <activity android:name=".AmenitiesAdminContainerActivity"
+            android:label="Amenities"
+            android:parentActivityName=".AdminHomeScreenActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity android:name=".RegisterComplaintActivity"></activity>
         <activity android:name=".EditProfileActivity"></activity>
         <activity
