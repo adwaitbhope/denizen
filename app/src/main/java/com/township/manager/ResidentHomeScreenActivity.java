@@ -45,8 +45,8 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         flatNoCol = cursor.getColumnIndexOrThrow("Apartment");
         wingNoCol = cursor.getColumnIndexOrThrow("Wing");
         cursor.moveToFirst();
-        residentFlatNo.setText(cursor.getString(wingNoCol) +" " +cursor.getString(flatNoCol));
-        residentName.setText(cursor.getString(firstNameCol) + "  " + cursor.getString(lastNameCol));
+        residentName.setText(cursor.getString(firstNameCol) + " " + cursor.getString(lastNameCol));
+        residentFlatNo.setText(cursor.getString(wingNoCol) + "/" +cursor.getString(flatNoCol));
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.resident_home_screen_fragment_area, new NoticeBoardFragment());
