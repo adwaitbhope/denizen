@@ -25,6 +25,7 @@ class RegistrationWingsAdapter extends RecyclerView.Adapter<RegistrationWingsAda
         this.context = context;
     }
 
+
     @NonNull
     @Override
     public RegistrationWingsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

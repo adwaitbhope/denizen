@@ -7,13 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 /**
@@ -33,6 +36,10 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    RecyclerView recyclerView;
+    RecyclerView.Adapter recyclerViewAdapter;
+    RecyclerView.LayoutManager layoutManager;
 
     public SwitchCompat switchCompat;
 
@@ -76,33 +83,31 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_registration_society_step_two_amenities_details, container, false);
 
-        String[] BILLING_PERIOD = new String[] {"Hourly", "Daily"};
+        recyclerView = view.findViewById(R.id.registration_amenities_recycler);
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
 
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(
-                        getContext(),
-                        R.layout.dropdown_menu_popup_item,
-                        BILLING_PERIOD);
+        final ArrayList<Amenity> dataset = new ArrayList<>();
+        dataset.add(new Amenity());
+        recyclerViewAdapter = new RegistrationAmenetisAdapter(dataset, getContext());
+        recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.setHasFixedSize(true);
 
-        AutoCompleteTextView editTextFilledExposedDropdown =
-                view.findViewById(R.id.billing_period_details_filled_exposed_dropdown);
-        editTextFilledExposedDropdown.setAdapter(adapter);
+        recyclerView.setItemViewCacheSize(20);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
+        recyclerView.setNestedScrollingEnabled(true);
 
+        Button button = view.findViewById(R.id.add_amenity_button);
 
-        String[] MEMBERS_FREE = new String[] {"Yes", "No"};
-
-        ArrayAdapter<String> adapter1 =
-                new ArrayAdapter<>(
-                        getContext(),
-                        R.layout.dropdown_menu_popup_item,
-                        MEMBERS_FREE);
-
-        AutoCompleteTextView editTextFilledExposedDropdown1 =
-                view.findViewById(R.id.free_for_members_filled_exposed_dropdown);
-        editTextFilledExposedDropdown1.setAdapter(adapter1);
-
-
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dataset.add(new Amenity());
+                recyclerViewAdapter.notifyItemInserted(dataset.size()-1);
+            }
+        });
 
 //        switchCompat = (SwitchCompat) view.findViewById(R.id.free_for_members_switch);
 //        switchCompat.setOnCheckedChangeListener(this);
