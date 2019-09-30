@@ -17,10 +17,12 @@
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
+        android:layout_gravity="start|left"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_admin_home_screen"
-        app:menu="@menu/activity_admin_home_screen_drawer" >
+        app:menu="@menu/activity_admin_home_screen_drawer"
+        app:itemTextColor="@color/material_on_surface_emphasis_high_type"
+        app:itemIconTint="@color/secondaryColor">
 
     </com.google.android.material.navigation.NavigationView>
 
