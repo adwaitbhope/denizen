@@ -10,9 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/registration_step_one_app_bar_layout"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="-160dp">
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -23,8 +24,12 @@
                 android:id="@+id/registration_step_one_location_error"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:text="Please select the location"
-                app:layout_constraintStart_toStartOf="@id/fragment_embedded_map"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_embedded_map"
                 app:layout_goneMarginStart="0dp"
                 app:layout_goneMarginTop="4dp" />
@@ -33,8 +38,8 @@
                 android:id="@+id/registration_step_one_set_location_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:paddingLeft="8dp"
                 android:text="Set Location"
                 app:icon="@drawable/ic_add_location_black_24dp"
@@ -48,8 +53,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                app:layout_goneMarginTop="16dp"
                 android:paddingLeft="8dp"
                 android:text="Upload Documents"
                 app:icon="@drawable/ic_file_upload_black_24dp"
@@ -57,13 +62,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/registration_step_one_file_message"
-                tools:layout_editor_absoluteY="749dp" />
+                app:layout_goneMarginTop="16dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/registration_step_one_submit_form_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="300dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="48dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="24dp"
@@ -118,11 +123,11 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_contact_phone_black_24dp"
                     android:drawablePadding="10dp"
-                    android:maxLength="10"
                     android:drawableTint="@color/secondaryColor"
                     android:fontFamily="@font/roboto_mono"
                     android:hint="Administrator Phone Number"
                     android:inputType="phone"
+                    android:maxLength="10"
                     android:paddingLeft="10dp"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -219,8 +224,8 @@
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/secondaryColor"
                     android:hint="Society Phone Number"
-                    android:maxLength="10"
                     android:inputType="phone"
+                    android:maxLength="10"
                     android:paddingLeft="10dp"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -245,8 +250,8 @@
                     android:drawableTint="@color/secondaryColor"
                     android:hint="Society Address"
                     android:inputType="textMultiLine"
-                    android:scrollbars="vertical"
                     android:paddingLeft="10dp"
+                    android:scrollbars="vertical"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -273,7 +278,9 @@
                 android:id="@+id/registration_step_one_file_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:text="TextView"
                 app:layout_constraintEnd_toEndOf="@id/fragment_embedded_map"
                 app:layout_constraintStart_toStartOf="@id/fragment_embedded_map"
@@ -288,6 +295,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar

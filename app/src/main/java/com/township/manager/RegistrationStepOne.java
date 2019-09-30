@@ -231,8 +231,8 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
 
         Retrofit retrofit = builder.build();
 
-        FileUploadService fileUploadService = retrofit.create(FileUploadService.class);
-        Call<ResponseBody> call = fileUploadService.registerApplicant(createPartFromString(adminName),
+        RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
+        Call<ResponseBody> call = retrofitServerAPI.registerApplicant(createPartFromString(adminName),
                 createPartFromString(adminPhone),
                 createPartFromString(adminEmail),
                 createPartFromString(adminDesignation),

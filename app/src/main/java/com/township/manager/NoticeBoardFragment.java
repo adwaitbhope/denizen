@@ -9,23 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabLayout;
-
-import java.util.Objects;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ComplaintsFragment.OnFragmentInteractionListener} interface
+ * {@link NoticeBoardFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ComplaintsFragment#newInstance} factory method to
+ * Use the {@link NoticeBoardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ComplaintsFragment extends Fragment {
+public class NoticeBoardFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -37,7 +33,7 @@ public class ComplaintsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ComplaintsFragment() {
+    public NoticeBoardFragment() {
         // Required empty public constructor
     }
 
@@ -47,11 +43,11 @@ public class ComplaintsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ComplaintsFragment.
+     * @return A new instance of fragment NoticeBoardFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ComplaintsFragment newInstance(String param1, String param2) {
-        ComplaintsFragment fragment = new ComplaintsFragment();
+    public static NoticeBoardFragment newInstance(String param1, String param2) {
+        NoticeBoardFragment fragment = new NoticeBoardFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -62,6 +58,9 @@ public class ComplaintsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -71,33 +70,26 @@ public class ComplaintsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_complaints, container, false);
+        View view = inflater.inflate(R.layout.fragment_notice_board, container, false);
 
-        SliderAdapter sliderAdapter = new SliderAdapter(Objects.requireNonNull(getActivity()).getSupportFragmentManager());
-
-        // TODO: Change the fragments that are loading here
-        sliderAdapter.addFragment(new ComplaintsListFragment(), "Pending");
-        sliderAdapter.addFragment(new ComplaintsListFragment(), "Resolved");
-
-        ViewPager mSlideViewPager = (ViewPager) view.findViewById(R.id.complaints_view_pager);
-        mSlideViewPager.setAdapter(sliderAdapter);
-        mSlideViewPager.setOffscreenPageLimit(1);
-
-        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.complaints_tab_layout);
-        tabLayout.setupWithViewPager(mSlideViewPager);
-
-        FloatingActionButton button = view.findViewById(R.id.add_new_complaint);
-        button.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton addNoticeButton = view.findViewById(R.id.notice_board_add_notice_fab);
+        addNoticeButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), RegisterComplaintActivity.class);
-                getContext().startActivity(intent);
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), AddNoticeAdminActivity.class);
+                startActivity(intent);
             }
         });
-
+        // Inflate the layout for this fragment
         return view;
+    }
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
     }
 
     @Override
