@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -70,17 +68,6 @@ public class ComplaintsListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_complaints_list, container, false);
 
-        String[] COMPLAINT_FILTER = new String[] {"By Date", "By Wing"};
-
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(
-                        getContext(),
-                        R.layout.dropdown_menu_popup_item,
-                        COMPLAINT_FILTER);
-
-        AutoCompleteTextView editTextFilledExposedDropdown =
-                view.findViewById(R.id.complaints_filter_exposed_dropdown);
-        editTextFilledExposedDropdown.setAdapter(adapter);
         return view;
 
     }

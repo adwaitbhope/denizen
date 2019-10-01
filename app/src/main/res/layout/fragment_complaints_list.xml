@@ -10,17 +10,78 @@
         android:layout_height="wrap_content"
         tools:context=".ComplaintsListFragment">
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textView111"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:text="Filter"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingTop="4dp"/>
+
+        <HorizontalScrollView
+            android:id="@+id/horizontalScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="16dp"
+            android:scrollbars="none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView111"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:singleLine="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip6"
+                    style="@style/AppChipFilterStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Everyone"
+                    android:textAppearance="@style/chipTextAppearance" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip7"
+                    style="@style/AppChipFilterStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Admins Only"
+                    android:textAppearance="@style/chipTextAppearance" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip107"
+                    style="@style/AppChipFilterStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Admins Only"
+                    android:textAppearance="@style/chipTextAppearance" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip77"
+                    style="@style/AppChipFilterStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Admins Only"
+                    android:textAppearance="@style/chipTextAppearance" />
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/pending_complaint_cardview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/filter_complaints_textinput">
+            app:layout_constraintTop_toBottomOf="@+id/textView111">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -88,44 +149,5 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/by_date_filter_chip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@string/by_date"
-            app:layout_constraintBottom_toBottomOf="@+id/by_wing_filter_chip"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/by_wing_filter_chip" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/by_wing_filter_chip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@string/by_wing"
-            app:layout_constraintBottom_toBottomOf="@+id/filter_complaints_textinput"
-            app:layout_constraintStart_toEndOf="@+id/by_date_filter_chip"
-            app:layout_constraintTop_toTopOf="@+id/filter_complaints_textinput" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/filter_complaints_textinput"
-            style="@style/AppTextField.ExposedDropdownMenu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="200dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:hint="@string/filter"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-
-            <AutoCompleteTextView
-                android:id="@+id/complaints_filter_exposed_dropdown"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
