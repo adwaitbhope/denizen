@@ -83,6 +83,10 @@
     <string name="address_status">Address:</string>
     <string name="status_status">Status:</string>
     <string name="pandurang_d_souza">Pandurang D\' Souza</string>
+    <string name="gate">Gate No.</string>
+    <string name="name">Name</string>
+    <string name="desks">Desks</string>
+    <string name="personnel">Personnel</string>
 
     <string-array name="naming_convention_array">
         <item>A-1 to A-36</item>

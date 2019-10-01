@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ComplaintsFragment">
+    tools:context=".SecurityActivity">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/security_view_pager"
@@ -43,13 +43,13 @@
             android:id="@+id/desk_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pending" />
+            android:text="@string/desks" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/personnel_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Resolved" />
+            android:text="@string/personnel" />
 
     </com.google.android.material.tabs.TabLayout>
 

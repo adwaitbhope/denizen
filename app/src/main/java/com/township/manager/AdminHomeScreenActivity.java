@@ -1,6 +1,7 @@
 package com.township.manager;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -96,7 +97,8 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_admin_info_admin) {
 
         } else if (id == R.id.nav_security_list_admin) {
-
+            Intent intent = new Intent(AdminHomeScreenActivity.this, SecurityActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_vendors_admin) {
 
         } else if (id == R.id.nav_wing_details_admin) {
