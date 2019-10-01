@@ -3,13 +3,32 @@ package com.township.manager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.JsonArray;
+import com.paytm.pgsdk.PaytmPGService;
+import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Set;
 
 import androidx.fragment.app.Fragment;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
@@ -20,7 +39,7 @@ import androidx.fragment.app.Fragment;
  * Use the {@link RegistrationSocietyStepTwoAdminLoginDetailsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragment implements NumberPicker.OnValueChangeListener{
+public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragment implements NumberPicker.OnValueChangeListener, PaytmPaymentTransactionCallback {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,6 +54,7 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
     public NumberPicker admin_number_picker, security_number_picker;
 
     private OnFragmentInteractionListener mListener;
+    private Button proceedPaymentButton;
 
     public RegistrationSocietyStepTwoAdminLoginDetailsFragment() {
         // Required empty public constructor
@@ -96,7 +116,93 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
 //        });
 //        security_number_picker.setOnValueChangedListener(this);
 
+        proceedPaymentButton = view.findViewById(R.id.registration_step_two_proceed_payment_button);
+
+        proceedPaymentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Paytm.PaytmOrder paytmOrder = new Paytm.PaytmOrder();
+                paytmOrder.setTXN_AMOUNT("100");
+                generateChecksumFromServer(paytmOrder);
+            }
+        });
         return view;
+    }
+
+    private void generateChecksumFromServer(final Paytm.PaytmOrder paytmOrder) {
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(getString(R.string.server_addr))
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit retrofit = builder.build();
+
+        RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
+
+        Call<JsonArray> call = retrofitServerAPI.getChecksum(
+                Paytm.CHANNEL_ID,
+                Paytm.WEBSITE,
+                Paytm.CALLBACK_URL,
+                Paytm.INDUSTRY_TYPE_ID,
+                paytmOrder.getTXN_AMOUNT()
+        );
+
+        call.enqueue(new Callback<JsonArray>() {
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                String jsonstring = response.body().getAsJsonArray().toString();
+                try {
+                    JSONArray jsonArray = new JSONArray(jsonstring);
+                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+                    paytmOrder.setORDER_ID(jsonObject.getString("ORDER_ID"));
+                    paytmOrder.setCUST_ID(jsonObject.getString("CUST_ID"));
+                    paytmOrder.setCHECKSUMHASH(jsonObject.getString("CHECKSUMHASH"));
+
+                    initializePayment(paytmOrder);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable throwable) {
+                Log.d("Init call failure", throwable.toString() + " " + call.toString());
+
+            }
+        });
+
+    }
+
+    private void initializePayment(Paytm.PaytmOrder paytmOrder) {
+
+        PaytmPGService Service = PaytmPGService.getStagingService();
+
+        //use this when using for production
+        //PaytmPGService Service = PaytmPGService.getProductionService();
+
+        //creating a hashmap and adding all the values required
+        HashMap<String, String> paramMap = new HashMap<>();
+        paramMap.put("MID", Paytm.MID);
+        paramMap.put("CHANNEL_ID", Paytm.CHANNEL_ID);
+        paramMap.put("WEBSITE", Paytm.WEBSITE);
+        paramMap.put("INDUSTRY_TYPE_ID", Paytm.INDUSTRY_TYPE_ID);
+        paramMap.put("ORDER_ID", paytmOrder.getORDER_ID());
+        paramMap.put("CUST_ID", paytmOrder.getCUST_ID());
+        paramMap.put("TXN_AMOUNT", paytmOrder.getTXN_AMOUNT());
+        paramMap.put("CALLBACK_URL", Paytm.CALLBACK_URL + paytmOrder.getORDER_ID());
+        paramMap.put("CHECKSUMHASH", paytmOrder.getCHECKSUMHASH());
+
+        //creating a paytm order object using the hashmap
+        com.paytm.pgsdk.PaytmOrder order = new com.paytm.pgsdk.PaytmOrder(paramMap);
+
+        //intializing the paytm service
+        Service.initialize(order, null);
+
+        //finally starting the payment transaction
+        Service.startPaymentTransaction(getActivity(), true, true, this);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -126,6 +232,102 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
     @Override
     public void onValueChange(NumberPicker numberPicker, int i, int i1) {
 
+    }
+
+    @Override
+    public void onTransactionResponse(Bundle inResponse) {
+        // Toast.makeText(getActivity(), inResponse.toString(), Toast.LENGTH_LONG).show();
+
+        JSONObject jsonObject = new JSONObject();
+        Set<String> keys = inResponse.keySet();
+        try {
+            for (String key : keys) {
+                jsonObject.put(key, JSONObject.wrap(inResponse.get(key)));
+            }
+            if (jsonObject.getString("STATUS").equals("TXN_SUCCESS")) {
+                Toast.makeText(getActivity(), "Transaction completed, awaiting verification", Toast.LENGTH_SHORT).show();
+                verifyTransactionStatusFromServer(jsonObject.getString("ORDERID"));
+            } else {
+                Toast.makeText(getActivity(), jsonObject.getString("STATUS"), Toast.LENGTH_SHORT).show();
+            }
+
+        } catch (JSONException e) {
+            Log.d("JsonException", e.toString());
+        }
+
+    }
+
+    private void verifyTransactionStatusFromServer(String orderId) {
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(getString(R.string.server_addr))
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit retrofit = builder.build();
+
+        RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
+
+        Call<JsonArray> call = retrofitServerAPI.verifyChecksum(
+                orderId
+        );
+
+        call.enqueue(new Callback<JsonArray>() {
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                assert response.body() != null;
+                String jsonstring = response.body().getAsJsonArray().toString();
+                try {
+                    JSONArray jsonArray = new JSONArray(jsonstring);
+                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+                    if (jsonObject.getString("STATUS").equals("TXN_SUCCESS")) {
+                        Toast.makeText(getActivity(), "Transaction verification: SUCCESSFUL", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), "Transaction verification: FAILURE", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.d("JsonException", e.toString());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable throwable) {
+                Log.d("Verif. call failure", throwable.toString());
+            }
+        });
+    }
+
+    @Override
+    public void networkNotAvailable() {
+        Toast.makeText(getActivity(), "Network error", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void clientAuthenticationFailed(String inErrorMessage) {
+        Toast.makeText(getActivity(), inErrorMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void someUIErrorOccurred(String inErrorMessage) {
+        Toast.makeText(getActivity(), inErrorMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onErrorLoadingWebPage(int iniErrorCode, String inErrorMessage, String inFailingUrl) {
+        Toast.makeText(getActivity(), inErrorMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onBackPressedCancelTransaction() {
+        Toast.makeText(getActivity(), "Back Pressed", Toast.LENGTH_LONG).show();
+
+    }
+
+    @Override
+    public void onTransactionCancel(String inErrorMessage, Bundle inResponse) {
+        Toast.makeText(getActivity(), inErrorMessage + inResponse.toString(), Toast.LENGTH_LONG).show();
     }
 
     /**

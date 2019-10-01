@@ -32,14 +32,14 @@
             android:layout_marginStart="48dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="48dp"
-            android:src="@drawable/ic_group_add_darkgreen_80dp"
+            app:srcCompat="@drawable/ic_group_add_darkgreen_80dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/proceed_payment_button"
+        <Button
+            android:id="@+id/registration_step_two_proceed_payment_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

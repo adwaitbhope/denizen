@@ -21,7 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class AdminHomeScreenActivity extends AppCompatActivity
-        implements ComplaintsListFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener, ComplaintsFragment.OnFragmentInteractionListener, RegistrationSocietyStepTwoAmenitiesDetailsFragment.OnFragmentInteractionListener, RegistrationSocietyStepTwoAdminLoginDetailsFragment.OnFragmentInteractionListener {
+        implements NoticeBoardFragment.OnFragmentInteractionListener, ComplaintsListFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener, ComplaintsFragment.OnFragmentInteractionListener, RegistrationSocietyStepTwoAmenitiesDetailsFragment.OnFragmentInteractionListener, RegistrationSocietyStepTwoAdminLoginDetailsFragment.OnFragmentInteractionListener {
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -53,6 +53,10 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         adminDesignation.setText(cursor.getString(desCol));
         adminName.setText(cursor.getString(firstNameCol) + " " + cursor.getString(lastNameCol));
 
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.admin_home_screen_fragment_area, new NoticeBoardFragment());
+        transaction.commit();
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.admin_bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -60,6 +64,13 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                 FragmentTransaction transaction;
 
                 switch (menuItem.getItemId()) {
+
+                    case R.id.admin_notice_board:
+                        transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.admin_home_screen_fragment_area, new NoticeBoardFragment());
+                        transaction.commit();
+                        return true;
+
                     case R.id.admin_complaints:
                         transaction = getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.admin_home_screen_fragment_area, new ComplaintsFragment());
@@ -89,7 +100,7 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_intercom_admin) {
-            // Handle the camera action
+
         } else if (id == R.id.nav_maintenance_admin) {
 
         } else if (id == R.id.nav_visitor_history_admin) {
@@ -104,6 +115,9 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_wing_details_admin) {
 
         } else if (id == R.id.nav_amenities_admin) {
+            Intent intent = new
+                    Intent(AdminHomeScreenActivity.this, AmenitiesAdminContainerActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_logout_admin) {
             LogOutDialog logOutDialog = new LogOutDialog();

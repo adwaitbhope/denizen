@@ -96,5 +96,9 @@
         <item>Per hour</item>
         <item>Per day</item>
     </string-array>
+    <string name="title_activity_notice_board_admin_fragment">NoticeBoardAdminFragment</string>
+    <string name="title_activity_notice_board_admin">NoticeBoardAdmin</string>
+    <string name="title_activity_notice_board_fragment">NoticeBoardFragment</string>
+    <string name="title_activity_notice_board">NoticeBoard</string>
 
 </resources>

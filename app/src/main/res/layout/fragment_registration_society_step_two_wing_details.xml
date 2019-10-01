@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="48dp"
             android:drawableTint="@color/secondaryColor"
-            android:src="@drawable/ic_domain_darkgreen_80dp"
+            app:srcCompat="@drawable/ic_domain_darkgreen_80dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,135 +29,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="64dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="64dp"
             android:text="@string/wing_details"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/wing_details_cardView"
+            app:layout_constraintBottom_toBottomOf="@id/wing_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/wing_icon"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/wing_icon" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/wing_details_cardView"
-            android:layout_width="match_parent"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/registration_wings_recycler_view"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            android:minHeight="200dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/wing_icon">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/no_of_floors_textinput"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/wing_name_textinput">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/no_of_floors_textinput_child"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_view_headline_black_24dp"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/secondaryColor"
-                        android:hint="@string/no_of_floors"
-                        android:inputType="number"
-                        android:paddingLeft="10dp"
-                        android:textSize="14sp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/wing_name_textinput"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/wing_name_textinput_child"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_domain_black_24dp"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/secondaryColor"
-                        android:hint="@string/wing_name"
-                        android:inputType="text"
-                        android:paddingLeft="10dp"
-                        android:textSize="14sp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/flats_per_floor_textinput"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:hint="@string/no_of_flats_per_floor"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/no_of_floors_textinput">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/flats_per_floor_textinput_child"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_view_module_black_24dp"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/secondaryColor"
-                        android:inputType="number"
-                        android:paddingLeft="10dp"
-                        android:textSize="14sp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/AppTextField.ExposedDropdownMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="24dp"
-                    android:hint="@string/naming_convention"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/flats_per_floor_textinput">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/naming_convention_filled_exposed_dropdown"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_font_download_black_24dp"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/secondaryColor"
-                        android:editable="false"
-                        android:paddingLeft="10dp"
-                        android:textSize="14sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </com.google.android.material.card.MaterialCardView>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/wing_icon"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_wing_button"
@@ -175,7 +65,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/wing_details_cardView" />
+            app:layout_constraintTop_toBottomOf="@+id/registration_wings_recycler_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>
