@@ -38,20 +38,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tabIndicatorColor="@android:color/white"
-            app:tabTextColor="@android:color/white">
+            app:tabInlineLabel="true">
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/pending_tab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pending" />
+                android:text="Pending"
+                android:icon="@drawable/ic_assignment_late_black_24dp" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/resolved_tab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Resolved" />
+                android:text="Resolved"
+                android:icon="@drawable/ic_assignment_turned_in_black_24dp" />
 
         </com.google.android.material.tabs.TabLayout>
 

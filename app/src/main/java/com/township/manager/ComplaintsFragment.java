@@ -88,7 +88,7 @@ public class ComplaintsFragment extends Fragment {
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.complaints_tab_layout);
         tabLayout.setupWithViewPager(mSlideViewPager);
 
-        FloatingActionButton button = view.findViewById(R.id.add_new_complaint);
+        FloatingActionButton button = view.findViewById(R.id.complaints_add_complaint_fab);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
