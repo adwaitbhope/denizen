@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
@@ -104,13 +103,9 @@ public class LoginScreenActivity extends AppCompatActivity {
         error(usernameTextLayout);
         error(passwordTextLayout);
 
-        BasicAWSCredentials credentials = new BasicAWSCredentials("AKIAZHII7RTSOERAA6TI", "i/p56yjJP7T+z74sok0epli1DLjsOjnHxISIEzuE");
-//        AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-//                                .withCredentials(new AWSStaticCredentialsProvider(credentials))
-//                                .build();
-//        s3Client.setRegion(Region.getRegion(Regions.AP_SOUTHEAST_1));
-//        s3Client.putObject("township-manager", "notice", "Pay the maintenance amount");
+    }
 
+    public void uploadToS3() {
         new Thread() {
             public void run() {
                 CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
@@ -121,7 +116,7 @@ public class LoginScreenActivity extends AppCompatActivity {
 
                 AmazonS3 s3Client = new AmazonS3Client(credentialsProvider);
 
-                s3Client.putObject("township-manager", "notice", "Pay the maintenance amount");
+                s3Client.putObject("township-manager", "townships/notices/maintenance", "Pay the maintenance amount");
             }
         }.start();
     }
