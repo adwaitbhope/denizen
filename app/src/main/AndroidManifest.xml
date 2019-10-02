@@ -30,7 +30,10 @@
             android:parentActivityName=".AddNoticeAdminActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".RegisterComplaintActivity" />
+        <activity android:name=".RegisterComplaintActivity"
+            android:label="Register Complaint"
+            android:parentActivityName=".RegistrationStepsActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".EditProfileActivity" />
 

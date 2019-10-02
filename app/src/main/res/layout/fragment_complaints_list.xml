@@ -7,7 +7,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         tools:context=".ComplaintsListFragment">
 
         <com.google.android.material.textview.MaterialTextView
@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:paddingTop="4dp"
             android:text="Filter"
             android:textSize="14sp"
@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:scrollbars="none"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView111"
@@ -43,7 +43,7 @@
                     style="@style/AppChipFilterStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Everyone"
+                    android:text="By Date"
                     android:textAppearance="@style/chipTextAppearance" />
 
                 <com.google.android.material.chip.Chip
@@ -51,7 +51,7 @@
                     style="@style/AppChipFilterStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Admins Only"
+                    android:text="By Wing"
                     android:textAppearance="@style/chipTextAppearance" />
 
                 <com.google.android.material.chip.Chip
@@ -59,16 +59,9 @@
                     style="@style/AppChipFilterStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Admins Only"
+                    android:text="By Flat"
                     android:textAppearance="@style/chipTextAppearance" />
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip77"
-                    style="@style/AppChipFilterStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Admins Only"
-                    android:textAppearance="@style/chipTextAppearance" />
             </com.google.android.material.chip.ChipGroup>
         </HorizontalScrollView>
 
@@ -77,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -152,7 +145,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/complaint_image_button"
-                        android:layout_width="wrap_content"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
