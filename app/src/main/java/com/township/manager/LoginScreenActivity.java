@@ -24,6 +24,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.pusher.pushnotifications.BeamsCallback;
+import com.pusher.pushnotifications.PushNotifications;
+import com.pusher.pushnotifications.PusherCallbackError;
+import com.pusher.pushnotifications.auth.AuthData;
+import com.pusher.pushnotifications.auth.AuthDataGetter;
+import com.pusher.pushnotifications.auth.BeamsTokenProvider;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -102,6 +108,38 @@ public class LoginScreenActivity extends AppCompatActivity {
         logIn();
         error(usernameTextLayout);
         error(passwordTextLayout);
+
+        PushNotifications.start(this, "f464fd4f-7e2f-4f42-91cf-8a8ef1a67acb");
+        PushNotifications.addDeviceInterest("hello");
+
+        BeamsTokenProvider tokenProvider = new BeamsTokenProvider(
+                getString(R.string.server_addr) + "/beams/get_token/",
+                new AuthDataGetter() {
+                    @Override
+                    public AuthData getAuthData() {
+                        HashMap<String, String> headers = new HashMap<>();
+                        headers.put("username", "adwait");
+                        headers.put("password", "bhope");
+                        HashMap<String, String> queryParams = new HashMap<>();
+                        return new AuthData(
+                                headers,
+                                queryParams
+                        );
+                    }
+                }
+        );
+
+        PushNotifications.setUserId("adwait", tokenProvider, new BeamsCallback<Void, PusherCallbackError>(){
+            @Override
+            public void onSuccess(Void... values) {
+                Log.i("PusherBeams", "Successfully authenticated with Pusher Beams");
+            }
+
+            @Override
+            public void onFailure(PusherCallbackError error) {
+                Log.i("PusherBeams", "Pusher Beams authentication failed: " + error.getMessage());
+            }
+        });
 
     }
 
