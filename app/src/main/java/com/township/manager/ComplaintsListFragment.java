@@ -6,6 +6,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+
+import com.borjabravo.readmoretextview.ReadMoreTextView;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textview.MaterialTextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -28,6 +34,7 @@ public class ComplaintsListFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    boolean complaintExpanded = false;
     private OnFragmentInteractionListener mListener;
 
     public ComplaintsListFragment() {
@@ -69,8 +76,28 @@ public class ComplaintsListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_complaints_list, container, false);
+        final View view = inflater.inflate(R.layout.fragment_complaints_list, container, false);
+        final ImageView expandButton = view.findViewById(R.id.complaint_expand_button);
+        View clickArea = view.findViewById(R.id.complaint_card_click_area);
+        clickArea.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                if (complaintExpanded) {
+                    expandButton.setImageResource(R.drawable.ic_keyboard_arrow_down_black_24dp);
+                    ((MaterialButton) view.findViewById(R.id.resolve_complaint_button)).setVisibility(View.GONE);
+                    ((MaterialTextView) view.findViewById(R.id.complaint_description_textview)).setVisibility(View.GONE);
+                    ((ImageButton) view.findViewById(R.id.complaint_image_button)).setVisibility(View.GONE);
+                    complaintExpanded = false;
+                } else {
+                    expandButton.setImageResource(R.drawable.ic_keyboard_arrow_up_black_24dp);
+                    ((MaterialButton) view.findViewById(R.id.resolve_complaint_button)).setVisibility(View.VISIBLE);
+                    ((MaterialTextView) view.findViewById(R.id.complaint_description_textview)).setVisibility(View.VISIBLE);
+                    ((ImageButton) view.findViewById(R.id.complaint_image_button)).setVisibility(View.VISIBLE);
+                    complaintExpanded = true;
+                }
+            }
+        });
         return view;
 
     }

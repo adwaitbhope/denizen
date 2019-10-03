@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -62,19 +63,26 @@ public class AdminHomeScreenActivity extends AppCompatActivity
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 FragmentTransaction transaction;
+                Fragment fragment;
 
                 switch (menuItem.getItemId()) {
 
                     case R.id.admin_notice_board:
-                        transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.admin_home_screen_fragment_area, new NoticeBoardFragment());
-                        transaction.commit();
+                        fragment = getSupportFragmentManager().findFragmentById(R.id.admin_home_screen_fragment_area);
+                        if (! (fragment instanceof NoticeBoardFragment)) {
+                            transaction = getSupportFragmentManager().beginTransaction();
+                            transaction.replace(R.id.admin_home_screen_fragment_area, new NoticeBoardFragment());
+                            transaction.commit();
+                        }
                         return true;
 
                     case R.id.admin_complaints:
-                        transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.admin_home_screen_fragment_area, new ComplaintsFragment());
-                        transaction.commit();
+                        fragment = getSupportFragmentManager().findFragmentById(R.id.admin_home_screen_fragment_area);
+                        if (! (fragment instanceof ComplaintsFragment)) {
+                            transaction = getSupportFragmentManager().beginTransaction();
+                            transaction.replace(R.id.admin_home_screen_fragment_area, new ComplaintsFragment());
+                            transaction.commit();
+                        }
                         return true;
                 }
                 return false;

@@ -87,7 +87,6 @@
         <item name="tabIconTint">@android:color/white</item>
         <item name="tabIndicatorColor">@android:color/white</item>
         <item name="tabTextColor">@android:color/white</item>
-        <item name="tabIndicatorHeight">4dp</item>
     </style>
 
 
