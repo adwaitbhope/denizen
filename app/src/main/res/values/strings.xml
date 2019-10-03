@@ -84,6 +84,10 @@
     <string name="status_status">Status:</string>
     <string name="pandurang_d_souza">Pandurang D\' Souza</string>
 
+    <string name="title_activity_notice_board_admin_fragment">NoticeBoardAdminFragment</string>
+    <string name="title_activity_notice_board_admin">NoticeBoardAdmin</string>
+    <string name="title_activity_notice_board_fragment">NoticeBoardFragment</string>
+    <string name="title_activity_notice_board">NoticeBoard</string>
     <string-array name="naming_convention_array">
         <item>A-1 to A-36</item>
         <item>A-101 to A-904</item>
@@ -92,9 +96,5 @@
         <item>Per hour</item>
         <item>Per day</item>
     </string-array>
-    <string name="title_activity_notice_board_admin_fragment">NoticeBoardAdminFragment</string>
-    <string name="title_activity_notice_board_admin">NoticeBoardAdmin</string>
-    <string name="title_activity_notice_board_fragment">NoticeBoardFragment</string>
-    <string name="title_activity_notice_board">NoticeBoard</string>
 
 </resources>

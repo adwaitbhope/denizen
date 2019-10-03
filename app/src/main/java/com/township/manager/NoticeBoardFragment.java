@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 
@@ -72,6 +73,14 @@ public class NoticeBoardFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_notice_board, container, false);
+
+        ImageView imageView = view.findViewById(R.id.imageView);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), FullScreenImageViewActivity.class));
+            }
+        });
 
         FloatingActionButton addNoticeButton = view.findViewById(R.id.notice_board_add_notice_fab);
         addNoticeButton.setOnClickListener(new View.OnClickListener() {
