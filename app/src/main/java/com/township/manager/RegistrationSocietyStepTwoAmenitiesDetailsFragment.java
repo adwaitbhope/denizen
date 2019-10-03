@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * Use the {@link RegistrationSocietyStepTwoAmenitiesDetailsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment implements AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
+public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -156,16 +156,13 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
-
-    @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        if (switchCompat.isChecked()) {
-            Toast.makeText(getContext(), "Yes", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getContext(), "No", Toast.LENGTH_SHORT).show();
-        }
-
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
     }
+
+
+}
 
     /**
      * This interface must be implemented by activities that contain this
@@ -177,8 +174,5 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
-}
+
+

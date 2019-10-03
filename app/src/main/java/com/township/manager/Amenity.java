@@ -1,6 +1,6 @@
 package com.township.manager;
 
-public class Amenity {
+ class Amenity {
     String name,billingperiod,freeornot;
 
 

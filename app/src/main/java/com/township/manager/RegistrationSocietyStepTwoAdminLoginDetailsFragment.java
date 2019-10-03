@@ -1,6 +1,7 @@
 package com.township.manager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,6 +56,16 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
 
     private OnFragmentInteractionListener mListener;
     private Button proceedPaymentButton;
+
+    public String getApplication_id() {
+        return application_id;
+    }
+
+    public void setApplication_id(String application_id) {
+        this.application_id = application_id;
+    }
+
+    private String application_id;
 
     public RegistrationSocietyStepTwoAdminLoginDetailsFragment() {
         // Required empty public constructor
@@ -115,6 +126,7 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
 //            }
 //        });
 //        security_number_picker.setOnValueChangedListener(this);
+        RegistrationSocietyStepTwo registrationSocietyStepTwo=new RegistrationSocietyStepTwo();
 
         proceedPaymentButton = view.findViewById(R.id.registration_step_two_proceed_payment_button);
 
@@ -138,16 +150,19 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
         RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
 
         Call<JsonArray> call = retrofitServerAPI.getChecksum(
+                application_id,
                 Paytm.CHANNEL_ID,
+                paytmOrder.getTXN_AMOUNT(),
                 Paytm.WEBSITE,
                 Paytm.CALLBACK_URL,
-                Paytm.INDUSTRY_TYPE_ID,
-                paytmOrder.getTXN_AMOUNT()
+                Paytm.INDUSTRY_TYPE_ID
         );
 
         call.enqueue(new Callback<JsonArray>() {
             @Override
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                assert response.body() != null;
+                Log.d("toea",response.toString());
                 String jsonstring = response.body().getAsJsonArray().toString();
                 try {
                     JSONArray jsonArray = new JSONArray(jsonstring);

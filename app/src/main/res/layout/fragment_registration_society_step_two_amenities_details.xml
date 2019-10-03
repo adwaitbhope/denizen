@@ -33,7 +33,7 @@
             android:layout_marginBottom="64dp"
             android:text="@string/amenities_details"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/amenities_details_cardView"
+            app:layout_constraintBottom_toBottomOf="@+id/amenities_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/amenities_icon"

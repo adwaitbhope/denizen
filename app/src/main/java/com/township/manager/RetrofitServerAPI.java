@@ -12,9 +12,12 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface RetrofitServerAPI {
     @Multipart
@@ -36,11 +39,13 @@ public interface RetrofitServerAPI {
     @FormUrlEncoded
     @POST("/payment/paytm/initiate/")
     Call<JsonArray> getChecksum(
+            @Field("application_id") String application_id,
             @Field("CHANNEL_ID") String channelId,
+            @Field("TXN_AMOUNT") String txnAmount,
             @Field("WEBSITE") String website,
             @Field("CALLBACK_URL") String callbackUrl,
-            @Field("INDUSTRY_TYPE_ID") String industryTypeId,
-            @Field("TXN_AMOUNT") String txnAmount
+            @Field("INDUSTRY_TYPE_ID") String industryTypeId
+
     );
 
     @FormUrlEncoded
@@ -49,5 +54,10 @@ public interface RetrofitServerAPI {
             @Field("ORDER_ID") String ORDER_ID
     );
 
+    @GET("/register/check_verification/")
+    Call<JsonArray>checkstatus(
+            @Query("application_id") String application_id,
+            @Query("email") String email
+    );
 
 }

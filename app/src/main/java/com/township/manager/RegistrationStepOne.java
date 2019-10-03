@@ -142,13 +142,13 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                adminName = usernameTextLayout.getEditText().getText().toString();
-//                adminPhone = administratorPhoneNumberTextLayout.getEditText().getText().toString();
-//                adminDesignation = designationTextLayout.getEditText().getText().toString();
-//                adminEmail = emailTextLayout.getEditText().getText().toString();
-//                societyName = societyNameTextLayout.getEditText().getText().toString();
-//                societyAddress = societyAddressTextLayout.getEditText().getText().toString();
-//                societyPhone = societyPhoneNumberTextLayout.getEditText().getText().toString();
+                adminName = usernameTextLayout.getEditText().getText().toString();
+                adminPhone = administratorPhoneNumberTextLayout.getEditText().getText().toString();
+                adminDesignation = designationTextLayout.getEditText().getText().toString();
+                adminEmail = emailTextLayout.getEditText().getText().toString();
+                societyName = societyNameTextLayout.getEditText().getText().toString();
+                societyAddress = societyAddressTextLayout.getEditText().getText().toString();
+                societyPhone = societyPhoneNumberTextLayout.getEditText().getText().toString();
 
                 if (TextUtils.isEmpty(adminName)) {
                     usernameTextLayout.setError("This field is required");

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class RegistrationAmenetisAdapter extends RecyclerView.Adapter<RegistrationAmenetisAdapter.MyViewHolder> {
+class RegistrationAmenetisAdapter extends RecyclerView.Adapter<RegistrationAmenetisAdapter.MyViewHolder> {
 
     ArrayList<Amenity> dataset;
     Context context;

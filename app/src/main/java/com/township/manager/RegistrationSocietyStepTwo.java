@@ -1,7 +1,9 @@
 package com.township.manager;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.text.Html;
@@ -21,6 +23,7 @@ public class RegistrationSocietyStepTwo extends AppCompatActivity implements Reg
     private ViewPager mSlideViewPager;
     private LinearLayout mDotLayout;
     private TabLayout tabLayout;
+    String application_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +37,11 @@ public class RegistrationSocietyStepTwo extends AppCompatActivity implements Reg
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        RegistrationSocietyStepTwoAdminLoginDetailsFragment registrationSocietyStepTwoAdminLoginDetailsFragment = new RegistrationSocietyStepTwoAdminLoginDetailsFragment();
         SliderAdapter sliderAdapter = new SliderAdapter(getSupportFragmentManager());
         sliderAdapter.addFragment(new RegistrationSocietyStepTwoWingDetailsFragment(), "");
         sliderAdapter.addFragment(new RegistrationSocietyStepTwoAmenitiesDetailsFragment(), "");
-        sliderAdapter.addFragment(new RegistrationSocietyStepTwoAdminLoginDetailsFragment(), "");
+        sliderAdapter.addFragment(registrationSocietyStepTwoAdminLoginDetailsFragment, "");
 
         mSlideViewPager = (ViewPager) findViewById(R.id.slideViewPager);
         mSlideViewPager.setAdapter(sliderAdapter);
@@ -49,26 +53,32 @@ public class RegistrationSocietyStepTwo extends AppCompatActivity implements Reg
         mDotLayout = (LinearLayout) findViewById(R.id.dotsLayout);
         addDotsIndicator(0);
         mSlideViewPager.addOnPageChangeListener(viewListener);
+        Intent intent = getIntent();
+        application_id = intent.getStringExtra("application_id");
+        registrationSocietyStepTwoAdminLoginDetailsFragment.setApplication_id(application_id);
+
 
     }
-    public void addDotsIndicator(int position){
+
+    public void addDotsIndicator(int position) {
 
 
         mDots = new ImageView[3];
         mDotLayout.removeAllViews();
 
-        for (int i = 0; i < mDots.length; i++){
+        for (int i = 0; i < mDots.length; i++) {
 
             mDots[i] = new ImageView(this);
             mDots[i].setImageResource(R.drawable.ic_dot_outlined);
-            mDots[i].setPadding(4,0,4,0);
+            mDots[i].setPadding(4, 0, 4, 0);
             mDotLayout.addView(mDots[i]);
         }
 
-        if(mDots.length > 0){
+        if (mDots.length > 0) {
             mDots[position].setImageResource(R.drawable.ic_dot_filled);
         }
     }
+
     ViewPager.OnPageChangeListener viewListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -91,4 +101,6 @@ public class RegistrationSocietyStepTwo extends AppCompatActivity implements Reg
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+
 }
