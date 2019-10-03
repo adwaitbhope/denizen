@@ -38,7 +38,6 @@ public class DBManager {
         DatabaseHelperUser(Context context) {
             super(context, DBName, null, DBVersion);
             this.context = context;
-            // Toast.makeText(context,"Table ",Toast.LENGTH_SHORT).show();
 
         }
 
@@ -46,7 +45,6 @@ public class DBManager {
         public void onCreate(SQLiteDatabase sqLiteDatabase) {
             Log.d("oncreate", "1");
             sqLiteDatabase.execSQL(CreateTabLogin);
-            Toast.makeText(context, "Table is created", Toast.LENGTH_SHORT).show();
 
         }
 
@@ -70,16 +68,18 @@ public class DBManager {
             long id = sqLiteDatabase.insertOrThrow(TabNameLogin, null, values);
             return id;
         } catch (SQLException e) {
-            Log.    d("Insert", e.getMessage());
+            Log.d("Insert", e.getMessage());
         }
         return 0;
     }
-    public Cursor getDataLogin(){
-        Cursor cursor=sqLiteDatabase.rawQuery("select * from " +TabNameLogin,null);
+
+    public Cursor getDataLogin() {
+        Cursor cursor = sqLiteDatabase.rawQuery("select * from " + TabNameLogin, null);
         return cursor;
     }
-    public void deleteAll(){
-        sqLiteDatabase.execSQL("delete from "+ TabNameLogin);
+
+    public void deleteAll() {
+        sqLiteDatabase.execSQL("delete from " + TabNameLogin);
     }
 
 }

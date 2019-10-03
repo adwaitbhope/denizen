@@ -109,38 +109,6 @@ public class LoginScreenActivity extends AppCompatActivity {
         error(usernameTextLayout);
         error(passwordTextLayout);
 
-        PushNotifications.start(this, "f464fd4f-7e2f-4f42-91cf-8a8ef1a67acb");
-        PushNotifications.addDeviceInterest("hello");
-
-        BeamsTokenProvider tokenProvider = new BeamsTokenProvider(
-                getString(R.string.server_addr) + "/beams/get_token/",
-                new AuthDataGetter() {
-                    @Override
-                    public AuthData getAuthData() {
-                        HashMap<String, String> headers = new HashMap<>();
-                        headers.put("username", "adwait");
-                        headers.put("password", "bhope");
-                        HashMap<String, String> queryParams = new HashMap<>();
-                        return new AuthData(
-                                headers,
-                                queryParams
-                        );
-                    }
-                }
-        );
-
-        PushNotifications.setUserId("adwait", tokenProvider, new BeamsCallback<Void, PusherCallbackError>(){
-            @Override
-            public void onSuccess(Void... values) {
-                Log.i("PusherBeams", "Successfully authenticated with Pusher Beams");
-            }
-
-            @Override
-            public void onFailure(PusherCallbackError error) {
-                Log.i("PusherBeams", "Pusher Beams authentication failed: " + error.getMessage());
-            }
-        });
-
     }
 
     public void uploadToS3() {
@@ -239,6 +207,39 @@ public class LoginScreenActivity extends AppCompatActivity {
                                         contentValues.put(DBManager.ColTownship, user.getTownship());
                                         contentValues.put(DBManager.ColType, user.getLoginType());
                                         //   Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
+
+                                        PushNotifications.start(getApplicationContext(), "f464fd4f-7e2f-4f42-91cf-8a8ef1a67acb");
+
+                                        BeamsTokenProvider tokenProvider = new BeamsTokenProvider(
+                                                getString(R.string.server_addr) + "/beams/get_token/",
+                                                new AuthDataGetter() {
+                                                    @Override
+                                                    public AuthData getAuthData() {
+                                                        HashMap<String, String> headers = new HashMap<>();
+                                                        headers.put("username", username);
+                                                        headers.put("password", password);
+                                                        HashMap<String, String> queryParams = new HashMap<>();
+                                                        return new AuthData(
+                                                                headers,
+                                                                queryParams
+                                                        );
+                                                    }
+                                                }
+                                        );
+
+                                        PushNotifications.setUserId(username, tokenProvider, new BeamsCallback<Void, PusherCallbackError>(){
+                                            @Override
+                                            public void onSuccess(Void... values) {
+                                                Log.i("PusherBeams", "Successfully authenticated with Pusher Beams");
+                                            }
+
+                                            @Override
+                                            public void onFailure(PusherCallbackError error) {
+                                                Log.i("PusherBeams", "Pusher Beams authentication failed: " + error.getMessage());
+                                            }
+                                        });
+
+
                                         Log.d("response", response);
                                         switch (user.getLoginType()) {
 
@@ -246,6 +247,7 @@ public class LoginScreenActivity extends AppCompatActivity {
                                                 user.setDesignation(jsonObjectLoginInfo.getString("designation"));
                                                 contentValues.put(DBManager.ColDesignation, user.getDesignation());
                                                 long id = dbManager.Insert(contentValues);
+                                                PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-admins");
                                                 startActivity(new Intent(LoginScreenActivity.this, AdminHomeScreenActivity.class));
                                                 finish();
                                                 break;
@@ -253,6 +255,7 @@ public class LoginScreenActivity extends AppCompatActivity {
                                             case "security": {
                                                 long id = dbManager.Insert(contentValues);
                                                 startActivity(new Intent(LoginScreenActivity.this, SecurityHomeScreenActivity.class));
+                                                PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-security");
                                                 finish();
                                                 break;
                                             }
@@ -260,6 +263,8 @@ public class LoginScreenActivity extends AppCompatActivity {
                                                 user.setWing(jsonObjectLoginInfo.getString("wing"));
                                                 contentValues.put(DBManager.ColWing, user.getWing());
                                                 user.setApartment(jsonObjectLoginInfo.getString("apartment"));
+                                                PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-residents");
+                                                PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-" + jsonObjectLogin.getString("wing_id") + "-residents");
                                                 contentValues.put(DBManager.ColApartment, user.getApartment());
                                                 long id = dbManager.Insert(contentValues);
 
