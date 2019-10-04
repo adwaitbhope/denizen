@@ -81,6 +81,7 @@ public class NoticeBoardFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
         // Inflate the layout for this fragment
         return view;
     }
