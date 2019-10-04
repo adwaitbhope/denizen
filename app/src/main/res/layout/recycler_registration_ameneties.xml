@@ -37,7 +37,7 @@
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/secondaryColor"
                 android:hint="@string/name_of_amenity"
-                android:inputType="text"
+                android:inputType="textCapWords"
                 android:paddingLeft="10dp"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>

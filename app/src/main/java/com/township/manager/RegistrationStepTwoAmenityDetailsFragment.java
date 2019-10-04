@@ -83,7 +83,7 @@ public class RegistrationStepTwoAmenityDetailsFragment extends Fragment implemen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_registration_society_step_two_amenities_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_registration_step_two_amenity_details, container, false);
 
         recyclerView = view.findViewById(R.id.registration_amenities_recycler);
         layoutManager = new LinearLayoutManager(getContext());

@@ -237,8 +237,8 @@ public class LoginScreenActivity extends FragmentActivity {
                             return params;
                         }
                     };
-                    ((GlobalVariables) getApplication()).getQueue().add(stringRequest);
 
+                    ((GlobalVariables) getApplication()).getQueue().add(stringRequest);
 
             }
         });

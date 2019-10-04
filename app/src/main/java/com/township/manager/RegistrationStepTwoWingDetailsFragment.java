@@ -79,7 +79,7 @@ public class RegistrationStepTwoWingDetailsFragment extends Fragment implements 
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_registration_society_step_two_wing_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_registration_step_two_wing_details, container, false);
 
         recyclerView = view.findViewById(R.id.registration_wings_recycler_view);
         layoutManager = new LinearLayoutManager(getContext());

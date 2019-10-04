@@ -32,7 +32,7 @@ public class RegistrationStepTwoActivity extends AppCompatActivity implements Re
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration_society_step_two);
+        setContentView(R.layout.activity_registration_step_two);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.registration_step_two_toolbar);
         setSupportActionBar(toolbar);

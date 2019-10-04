@@ -211,6 +211,7 @@
             android:drawablePadding="10dp"
             android:drawableTint="@color/secondaryColor"
             android:hint="@string/application_number"
+            android:maxLength="10"
             android:inputType="number"
             android:paddingLeft="10dp"
             android:textSize="14sp" />

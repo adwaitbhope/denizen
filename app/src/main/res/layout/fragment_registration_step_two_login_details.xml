@@ -19,12 +19,10 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="32dp"
             android:paddingStart="8dp"
             android:text="@string/proceed_to_pay"
             app:icon="@drawable/ic_check_circle_black_24dp"
             app:iconPadding="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -105,6 +103,19 @@
                 android:paddingLeft="10dp"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <ProgressBar
+            android:id="@+id/registration_initiate_payment_progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:layout_marginBottom="32dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registration_step_two_proceed_payment_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
