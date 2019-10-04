@@ -91,7 +91,6 @@
     <style name="AppAlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog"></style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" >
-            <item name="android:iconTint">@android:color/white</item>
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
