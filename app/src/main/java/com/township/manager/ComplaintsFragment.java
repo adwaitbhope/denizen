@@ -14,6 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 
@@ -71,15 +72,34 @@ public class ComplaintsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
         View view = inflater.inflate(R.layout.fragment_complaints, container, false);
 
         SliderAdapter sliderAdapter = new SliderAdapter(Objects.requireNonNull(getActivity()).getSupportFragmentManager());
 
-        // TODO: Change the fragments that are loading here
-        sliderAdapter.addFragment(new ComplaintsListFragment(), "Pending");
-        sliderAdapter.addFragment(new ComplaintsListFragment(), "Resolved");
+        ComplaintsListFragment pendingListFragment = ComplaintsListFragment.newInstance(false);
+        ComplaintsListFragment resolvedListFragment = ComplaintsListFragment.newInstance(true);
+
+        sliderAdapter.addFragment(pendingListFragment, "Pending");
+        sliderAdapter.addFragment(resolvedListFragment, "Resolved");
+
+        // temporary dataset here
+        ArrayList<Complaint> dataset = new ArrayList<>();
+        Complaint complaint = new Complaint();
+        complaint.setFirstName("Adwait");
+        complaint.setLastName("Bhope");
+        complaint.setWing("B3");
+        complaint.setApartment("702");
+        complaint.setTitle("Lift broken");
+        complaint.setDescription("The only elevator in the building has stopped working. It becomes difficult for people living on the higher floors.");
+        dataset.add(complaint);
+        dataset.add(complaint);
+
+        ArrayList<Complaint> pendingComplaints = getPendingComplaintsFromDatabase();
+        ArrayList<Complaint> resolvedComplaints = getResolvedComplaintsFromDatabase();
+
+        // pass these two lists as parameters below
+        pendingListFragment.setDataset(dataset);
+        resolvedListFragment.setDataset(dataset);
 
         ViewPager mSlideViewPager = (ViewPager) view.findViewById(R.id.complaints_view_pager);
         mSlideViewPager.setAdapter(sliderAdapter);
@@ -100,6 +120,22 @@ public class ComplaintsFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private ArrayList<Complaint> getPendingComplaintsFromDatabase() {
+        ArrayList<Complaint> complaints = new ArrayList<>();
+
+        // get pending complaints from database
+
+        return complaints;
+    }
+
+    private ArrayList<Complaint> getResolvedComplaintsFromDatabase() {
+        ArrayList<Complaint> complaints = new ArrayList<>();
+
+        // get resolved complaints from database
+
+        return complaints;
     }
 
     @Override

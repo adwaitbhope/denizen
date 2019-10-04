@@ -17,6 +17,9 @@
         <item name="chipGroupStyle">@style/AppChipGroupStyle</item>
         <item name="chipStyle">@style/AppChipFilterStyle</item>
         <item name="tabStyle">@style/AppTabLayoutStyle</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.TransparentStatusBar" parent="AppTheme.NoActionBar">
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
