@@ -28,7 +28,11 @@ public class LogOutDialog extends AppCompatDialogFragment {
                 getActivity().finish();
                 DBManager dbManager = new DBManager(getContext());
                 dbManager.deleteAll();
-                PushNotifications.clearAllState();
+                try {
+                    PushNotifications.clearAllState();
+                } catch (IllegalStateException e) {
+                    e.printStackTrace();
+                }
                 startActivity(new Intent(getContext(), LoginScreenActivity.class));
 
             }
