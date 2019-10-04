@@ -16,7 +16,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
-public class RegistrationSocietyStepTwoActivity extends AppCompatActivity implements RegistrationStepTwoWingDetailsFragment.OnFragmentInteractionListener, RegistrationStepTwoAmenityDetailsFragment.OnFragmentInteractionListener, RegistrationStepTwoLoginDetailsFragment.OnFragmentInteractionListener {
+public class RegistrationStepTwoActivity extends AppCompatActivity implements RegistrationStepTwoWingDetailsFragment.OnFragmentInteractionListener, RegistrationStepTwoAmenityDetailsFragment.OnFragmentInteractionListener, RegistrationStepTwoLoginDetailsFragment.OnFragmentInteractionListener {
 
     public Button login;
     private ImageView[] mDots;

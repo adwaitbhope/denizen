@@ -34,7 +34,7 @@
             android:parentActivityName=".LoginScreenActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".RegistrationSocietyStepTwoActivity"
+            android:name=".RegistrationStepTwoActivity"
             android:label="Society Details"
             android:parentActivityName=".RegistrationStepsActivity"
             android:theme="@style/AppTheme.NoActionBar" />

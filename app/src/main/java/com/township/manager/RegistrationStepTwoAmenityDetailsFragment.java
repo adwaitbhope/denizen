@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Toast;
@@ -16,6 +17,8 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 
 /**
@@ -104,20 +107,16 @@ public class RegistrationStepTwoAmenityDetailsFragment extends Fragment implemen
             @Override
             public void onClick(View view) {
                 dataset.add(new Amenity());
-                recyclerViewAdapter.notifyItemInserted(dataset.size()-1);
+                try {
+                    InputMethodManager manager = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
+                    manager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                recyclerViewAdapter.notifyItemInserted(dataset.size() - 1);
             }
         });
 
-//        switchCompat = (SwitchCompat) view.findViewById(R.id.free_for_members_switch);
-//        switchCompat.setOnCheckedChangeListener(this);
-
-
-//        Spinner spinner = view.findViewById(R.id.billing_period_spinner);
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-//                R.array.billing_period_array, android.R.layout.simple_spinner_item);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinner.setAdapter(adapter);
-//        spinner.setOnItemSelectedListener(this);
         return view;
     }
 
@@ -127,12 +126,15 @@ public class RegistrationStepTwoAmenityDetailsFragment extends Fragment implemen
             mListener.onFragmentInteraction(uri);
         }
     }
-    public ArrayList<Amenity> getAmenityDataFromAdapter(){
+
+    public ArrayList<Amenity> getAmenityDataFromAdapter() {
         return recyclerViewAdapter.getAmenityData();
     }
-    public Boolean getAmenitiesError(){
-        return  recyclerViewAdapter.getAmenitiesError();
+
+    public Boolean getAmenitiesError() {
+        return recyclerViewAdapter.getAmenitiesError();
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -150,7 +152,6 @@ public class RegistrationStepTwoAmenityDetailsFragment extends Fragment implemen
         mListener = null;
     }
 
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
         String text = parent.getItemAtPosition(position).toString();
@@ -161,24 +162,13 @@ public class RegistrationStepTwoAmenityDetailsFragment extends Fragment implemen
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
 
     }
 
-
 }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
 
 

@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -46,7 +48,6 @@ public class LoginScreenActivity extends FragmentActivity {
         Cursor cursor = dbManager.getDataLogin();
         if (cursor.getCount()!=0) {
             int columntypeindex = cursor.getColumnIndexOrThrow("Type");
-            //  Log.d("hikr","hello");
             cursor.moveToFirst();
             switch (cursor.getString(columntypeindex)){
                 case "admin":
@@ -158,8 +159,6 @@ public class LoginScreenActivity extends FragmentActivity {
                                         User user = new User();
                                         user.setLogin(jsonObjectLogin.getInt("login"));
 
-
-
                                         if (user.getLogin() == 1) {
                                             JSONObject jsonObjectLoginInfo = jsonArray.getJSONObject(1);
                                             user.setLoginType(jsonObjectLoginInfo.getString("type"));
@@ -182,8 +181,9 @@ public class LoginScreenActivity extends FragmentActivity {
                                             contentValues.put(DBManager.ColProfileUpdated, user.getProfileUpdated());
                                             contentValues.put(DBManager.ColTownship, user.getTownship());
                                             contentValues.put(DBManager.ColType, user.getLoginType());
-                                            //   Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
+
                                             Log.d("response", response);
+
                                             switch (user.getLoginType()) {
 
                                                 case "admin": {
@@ -202,8 +202,8 @@ public class LoginScreenActivity extends FragmentActivity {
                                                 }
                                                 case "resident": {
                                                     user.setWing(jsonObjectLoginInfo.getString("wing"));
-                                                    contentValues.put(DBManager.ColWing, user.getWing());
                                                     user.setApartment(jsonObjectLoginInfo.getString("apartment"));
+                                                    contentValues.put(DBManager.ColWing, user.getWing());
                                                     contentValues.put(DBManager.ColApartment,user.getApartment());
                                                     long id = dbManager.Insert(contentValues);
 
@@ -243,12 +243,17 @@ public class LoginScreenActivity extends FragmentActivity {
             }
         });
 
-
     }
 
     public void openDialog() {
-        ContactUsDialog exampleDialog = new ContactUsDialog();
-        exampleDialog.show(getSupportFragmentManager(), "example dialog");
+//        ContactUsDialog exampleDialog = new ContactUsDialog();
+//        exampleDialog.show(getSupportFragmentManager(), "example dialog");
+
+        MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(this);
+        materialAlertDialogBuilder.setTitle("Contact us")
+                .setMessage("\nE-mail: support@denizen.io\n\nPhone: +91 94054 38914")
+                .setPositiveButton("Close", null)
+                .show();
     }
 
     public void openRegisterSocietyScreen() {

@@ -96,7 +96,7 @@ public class RegistrationStepTwoStatusActivity extends AppCompatActivity {
         proceedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RegistrationStepTwoStatusActivity.this, RegistrationSocietyStepTwoActivity.class);
+                Intent intent = new Intent(RegistrationStepTwoStatusActivity.this, RegistrationStepTwoActivity.class);
                 intent.putExtra("application_id", applicationId);
                 startActivity(intent);
             }
