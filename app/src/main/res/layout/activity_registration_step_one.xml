@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:focusableInTouchMode="true">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -100,8 +101,8 @@
                     android:drawableLeft="@drawable/ic_person_black_24dp"
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/secondaryColor"
-                    android:hint="Username"
-                    android:inputType="textPersonName|text"
+                    android:hint="Administrator Name"
+                    android:inputType="textPersonName|textCapWords"
                     android:paddingLeft="10dp"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -151,7 +152,7 @@
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/secondaryColor"
                     android:hint="Administrator Designation"
-                    android:inputType="text"
+                    android:inputType="textCapWords"
                     android:paddingLeft="10dp"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -200,7 +201,7 @@
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/secondaryColor"
                     android:hint="Society Name"
-                    android:inputType="text"
+                    android:inputType="textCapWords"
                     android:paddingLeft="10dp"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -249,7 +250,7 @@
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/secondaryColor"
                     android:hint="Society Address"
-                    android:inputType="textMultiLine"
+                    android:inputType="textMultiLine|textCapWords"
                     android:paddingLeft="10dp"
                     android:scrollbars="vertical"
                     android:textSize="14sp" />
