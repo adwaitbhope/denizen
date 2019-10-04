@@ -8,7 +8,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".RegistrationSocietyStepTwoAmenitiesDetailsFragment">
+        android:focusableInTouchMode="true"
+        tools:context=".RegistrationStepTwoAmenityDetailsFragment">
 
         <ImageView
             android:id="@+id/amenities_icon"
@@ -28,16 +29,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="64dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="64dp"
             android:text="@string/amenities_details"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/amenities_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/amenities_icon"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/amenities_icon" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/registration_amenities_recycler"

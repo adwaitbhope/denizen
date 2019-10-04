@@ -44,7 +44,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RegistrationStepOne extends AppCompatActivity implements OnMapReadyCallback {
+public class RegistrationStepOneActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final int REQUEST_WRITE_STORAGE = 112;
     private static final int PERMISSIONS_REQUEST_CODE = 42;
@@ -88,7 +88,7 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
         setLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RegistrationStepOne.this, MapsActivityStepOne.class);
+                Intent intent = new Intent(RegistrationStepOneActivity.this, MapsActivityStepOne.class);
                 startActivityForResult(intent, LOCATION_REQUEST_CODE);
             }
         });
@@ -247,7 +247,7 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Toast.makeText(RegistrationStepOne.this, "Application submitted!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegistrationStepOneActivity.this, "Application submitted!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -277,7 +277,7 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
 
     public void openFilePicker() {
         new MaterialFilePicker()
-                .withActivity(RegistrationStepOne.this)
+                .withActivity(RegistrationStepOneActivity.this)
                 .withRequestCode(10)
                 .withHiddenFiles(false)
                 .withFilter(Pattern.compile(".*\\.pdf$"))

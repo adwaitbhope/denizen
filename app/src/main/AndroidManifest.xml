@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RegistrationPaymentDetails"></activity>
+        <activity android:name=".RegistrationPaymentDetailsActivity"></activity>
         <activity
             android:name=".AddNoticeAdminActivity"
             android:label="New Notice"
@@ -34,7 +34,7 @@
             android:parentActivityName=".LoginScreenActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".RegistrationSocietyStepTwo"
+            android:name=".RegistrationSocietyStepTwoActivity"
             android:label="Society Details"
             android:parentActivityName=".RegistrationStepsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -49,7 +49,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegistrationStepOne"
+            android:name=".RegistrationStepOneActivity"
             android:label="Society Details"
             android:parentActivityName=".RegistrationStepsActivity"
             android:theme="@style/AppTheme.NoActionBar" />

@@ -8,35 +8,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".RegistrationSocietyStepTwoAdminLoginDetailsFragment">
+        android:focusableInTouchMode="true"
+        tools:context=".RegistrationStepTwoLoginDetailsFragment">
 
-
-        <TextView
-            android:id="@+id/login_details_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="64dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/other_details"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/login_icon"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/login_icon"
-            android:layout_width="106dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="48dp"
-            app:srcCompat="@drawable/ic_group_add_darkgreen_80dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/registration_step_two_proceed_payment_button"
@@ -46,15 +20,42 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="32dp"
+            android:paddingStart="8dp"
             android:text="@string/proceed_to_pay"
+            app:icon="@drawable/ic_check_circle_black_24dp"
+            app:iconPadding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registration_step2_admin_no_of_security"
-            android:paddingStart="8dp"
-            app:icon="@drawable/ic_check_circle_black_24dp"
-            app:iconPadding="8dp"/>
+            app:layout_constraintTop_toBottomOf="@+id/registration_step2_admin_no_of_security" />
+
+        <ImageView
+            android:id="@+id/login_icon"
+            android:layout_width="106dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_group_add_darkgreen_80dp" />
+
+        <TextView
+            android:id="@+id/login_details_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/other_details"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/login_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/login_icon"
+            app:layout_constraintTop_toTopOf="@+id/login_icon" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/registration_step2_admin_no_of_admins"
@@ -95,14 +96,14 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/no_of_security_desks"
-                android:inputType="number"
+                android:drawableLeft="@drawable/ic_security_black_24dp"
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/secondaryColor"
                 android:editable="false"
+                android:hint="@string/no_of_security_desks"
+                android:inputType="number"
                 android:paddingLeft="10dp"
-                android:textSize="14sp"
-                android:drawableLeft="@drawable/ic_security_black_24dp" />
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

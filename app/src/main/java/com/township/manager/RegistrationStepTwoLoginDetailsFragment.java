@@ -2,8 +2,6 @@ package com.township.manager;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.icu.text.DateFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -26,7 +24,6 @@ import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,12 +42,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link RegistrationSocietyStepTwoAdminLoginDetailsFragment.OnFragmentInteractionListener} interface
+ * {@link RegistrationStepTwoLoginDetailsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link RegistrationSocietyStepTwoAdminLoginDetailsFragment#newInstance} factory method to
+ * Use the {@link RegistrationStepTwoLoginDetailsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragment implements NumberPicker.OnValueChangeListener, PaytmPaymentTransactionCallback {
+public class RegistrationStepTwoLoginDetailsFragment extends Fragment implements NumberPicker.OnValueChangeListener, PaytmPaymentTransactionCallback {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -81,7 +78,7 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
     private String application_id;
     private TextInputLayout noOfAdmin, noOfSecurityDesks;
 
-    public RegistrationSocietyStepTwoAdminLoginDetailsFragment() {
+    public RegistrationStepTwoLoginDetailsFragment() {
         // Required empty public constructor
     }
 
@@ -91,11 +88,11 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment RegistrationSocietyStepTwoAdminLoginDetailsFragment.
+     * @return A new instance of fragment RegistrationStepTwoLoginDetailsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static RegistrationSocietyStepTwoAdminLoginDetailsFragment newInstance(String param1, String param2) {
-        RegistrationSocietyStepTwoAdminLoginDetailsFragment fragment = new RegistrationSocietyStepTwoAdminLoginDetailsFragment();
+    public static RegistrationStepTwoLoginDetailsFragment newInstance(String param1, String param2) {
+        RegistrationStepTwoLoginDetailsFragment fragment = new RegistrationStepTwoLoginDetailsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

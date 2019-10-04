@@ -18,7 +18,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".RegistrationStepOne">
+            tools:context=".RegistrationStepOneActivity">
 
             <TextView
                 android:id="@+id/registration_step_one_location_error"

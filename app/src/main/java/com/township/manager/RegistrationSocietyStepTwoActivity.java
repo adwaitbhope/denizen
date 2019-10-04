@@ -3,12 +3,10 @@ package com.township.manager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.text.Html;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,7 +16,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
-public class RegistrationSocietyStepTwo extends AppCompatActivity implements RegistrationSocietyStepTwoWingDetailsFragment.OnFragmentInteractionListener, RegistrationSocietyStepTwoAmenitiesDetailsFragment.OnFragmentInteractionListener, RegistrationSocietyStepTwoAdminLoginDetailsFragment.OnFragmentInteractionListener {
+public class RegistrationSocietyStepTwoActivity extends AppCompatActivity implements RegistrationStepTwoWingDetailsFragment.OnFragmentInteractionListener, RegistrationStepTwoAmenityDetailsFragment.OnFragmentInteractionListener, RegistrationStepTwoLoginDetailsFragment.OnFragmentInteractionListener {
 
     public Button login;
     private ImageView[] mDots;
@@ -27,9 +25,9 @@ public class RegistrationSocietyStepTwo extends AppCompatActivity implements Reg
     private TabLayout tabLayout;
     String application_id;
 
-    RegistrationSocietyStepTwoWingDetailsFragment wingDetailsFragment;
-    RegistrationSocietyStepTwoAmenitiesDetailsFragment amenitiesDetailsFragment;
-    RegistrationSocietyStepTwoAdminLoginDetailsFragment adminLoginDetailsFragment;
+    RegistrationStepTwoWingDetailsFragment wingDetailsFragment;
+    RegistrationStepTwoAmenityDetailsFragment amenitiesDetailsFragment;
+    RegistrationStepTwoLoginDetailsFragment adminLoginDetailsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +35,15 @@ public class RegistrationSocietyStepTwo extends AppCompatActivity implements Reg
         setContentView(R.layout.activity_registration_society_step_two);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.registration_step_two_toolbar);
-//        toolbar.setTitleTextColor(getColor(R.color.secondaryColor));
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Society Details");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        wingDetailsFragment = new RegistrationSocietyStepTwoWingDetailsFragment();
-        amenitiesDetailsFragment = new RegistrationSocietyStepTwoAmenitiesDetailsFragment();
-        adminLoginDetailsFragment = new RegistrationSocietyStepTwoAdminLoginDetailsFragment();
+        wingDetailsFragment = new RegistrationStepTwoWingDetailsFragment();
+        amenitiesDetailsFragment = new RegistrationStepTwoAmenityDetailsFragment();
+        adminLoginDetailsFragment = new RegistrationStepTwoLoginDetailsFragment();
+
         SliderAdapter sliderAdapter = new SliderAdapter(getSupportFragmentManager());
         sliderAdapter.addFragment(wingDetailsFragment, "");
         sliderAdapter.addFragment(amenitiesDetailsFragment, "");
@@ -55,9 +53,6 @@ public class RegistrationSocietyStepTwo extends AppCompatActivity implements Reg
         mSlideViewPager.setAdapter(sliderAdapter);
         mSlideViewPager.setOffscreenPageLimit(2);
 
-//        tabLayout = findViewById(R.id.registration_step_two_tab_dots);
-//        tabLayout.setupWithViewPager(mSlideViewPager, true);
-
         mDotLayout = (LinearLayout) findViewById(R.id.dotsLayout);
         addDotsIndicator(0);
         mSlideViewPager.addOnPageChangeListener(viewListener);
@@ -65,13 +60,9 @@ public class RegistrationSocietyStepTwo extends AppCompatActivity implements Reg
         application_id = intent.getStringExtra("application_id");
         adminLoginDetailsFragment.setApplication_id(application_id);
 
-
-
     }
 
     public void addDotsIndicator(int position) {
-
-
         mDots = new ImageView[3];
         mDotLayout.removeAllViews();
 
@@ -97,7 +88,12 @@ public class RegistrationSocietyStepTwo extends AppCompatActivity implements Reg
         @Override
         public void onPageSelected(int position) {
             addDotsIndicator(position);
-
+            try {
+                InputMethodManager manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         @Override

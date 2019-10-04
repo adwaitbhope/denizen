@@ -11,29 +11,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-class RegistrationAmenetisAdapter extends RecyclerView.Adapter<RegistrationAmenetisAdapter.MyViewHolder> {
+class RegistrationAmenitiesAdapter extends RecyclerView.Adapter<RegistrationAmenitiesAdapter.MyViewHolder> {
 
     ArrayList<Amenity> dataset;
     Context context;
-    ArrayList<RegistrationAmenetisAdapter.MyViewHolder> viewHolders;
+    ArrayList<RegistrationAmenitiesAdapter.MyViewHolder> viewHolders;
     Boolean checkAmenitiesError=false;
     Integer billingperiod;
 
 
-    public RegistrationAmenetisAdapter(ArrayList<Amenity> dataset, Context context) {
+    public RegistrationAmenitiesAdapter(ArrayList<Amenity> dataset, Context context) {
         this.dataset = dataset;
         this.context = context;
         viewHolders = new ArrayList<>();
@@ -41,7 +38,7 @@ class RegistrationAmenetisAdapter extends RecyclerView.Adapter<RegistrationAmene
 
     @NonNull
     @Override
-    public RegistrationAmenetisAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RegistrationAmenitiesAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_registration_ameneties, parent, false);
         MyViewHolder myViewHolder = new MyViewHolder(view);
         viewHolders.add(myViewHolder);
@@ -53,7 +50,7 @@ class RegistrationAmenetisAdapter extends RecyclerView.Adapter<RegistrationAmene
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RegistrationAmenetisAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RegistrationAmenitiesAdapter.MyViewHolder holder, int position) {
 
         String[] BILLING_PERIOD = new String[]{"Hourly", "Daily"};
 
@@ -116,7 +113,7 @@ class RegistrationAmenetisAdapter extends RecyclerView.Adapter<RegistrationAmene
     public int getItemCount() {
         return dataset.size();
     }
-    private boolean checkErrorAmenities(RegistrationAmenetisAdapter.MyViewHolder viewHolder) {
+    private boolean checkErrorAmenities(RegistrationAmenitiesAdapter.MyViewHolder viewHolder) {
         boolean error=false;
 
         if(TextUtils.isEmpty(viewHolder.amenityName.getText().toString())){
