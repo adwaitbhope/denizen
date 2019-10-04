@@ -64,7 +64,8 @@
             android:name=".MapsActivityStepOne"
             android:label="@string/title_activity_maps_step_one" />
 
-        <activity android:name=".LoginScreenActivity">
+        <activity android:name=".LoginScreenActivity"
+            android:theme="@style/AppTheme.NoActionBar">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
