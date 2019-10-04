@@ -7,13 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 /**
@@ -24,7 +27,7 @@ import androidx.fragment.app.Fragment;
  * Use the {@link RegistrationSocietyStepTwoAmenitiesDetailsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment implements AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
+public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -33,6 +36,10 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    RecyclerView recyclerView;
+    RegistrationAmenetisAdapter recyclerViewAdapter;
+    RecyclerView.LayoutManager layoutManager;
 
     public SwitchCompat switchCompat;
 
@@ -76,33 +83,31 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_registration_society_step_two_amenities_details, container, false);
 
-        String[] BILLING_PERIOD = new String[] {"Hourly", "Daily"};
+        recyclerView = view.findViewById(R.id.registration_amenities_recycler);
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
 
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(
-                        getContext(),
-                        R.layout.dropdown_menu_popup_item,
-                        BILLING_PERIOD);
+        final ArrayList<Amenity> dataset = new ArrayList<>();
+        dataset.add(new Amenity());
+        recyclerViewAdapter = new RegistrationAmenetisAdapter(dataset, getContext());
+        recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.setHasFixedSize(true);
 
-        AutoCompleteTextView editTextFilledExposedDropdown =
-                view.findViewById(R.id.billing_period_details_filled_exposed_dropdown);
-        editTextFilledExposedDropdown.setAdapter(adapter);
+        recyclerView.setItemViewCacheSize(20);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
+        recyclerView.setNestedScrollingEnabled(true);
 
+        Button button = view.findViewById(R.id.add_amenity_button);
 
-        String[] MEMBERS_FREE = new String[] {"Yes", "No"};
-
-        ArrayAdapter<String> adapter1 =
-                new ArrayAdapter<>(
-                        getContext(),
-                        R.layout.dropdown_menu_popup_item,
-                        MEMBERS_FREE);
-
-        AutoCompleteTextView editTextFilledExposedDropdown1 =
-                view.findViewById(R.id.free_for_members_filled_exposed_dropdown);
-        editTextFilledExposedDropdown1.setAdapter(adapter1);
-
-
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dataset.add(new Amenity());
+                recyclerViewAdapter.notifyItemInserted(dataset.size()-1);
+            }
+        });
 
 //        switchCompat = (SwitchCompat) view.findViewById(R.id.free_for_members_switch);
 //        switchCompat.setOnCheckedChangeListener(this);
@@ -123,7 +128,12 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
             mListener.onFragmentInteraction(uri);
         }
     }
-
+    public ArrayList<Amenity> getAmenityDataFromAdapter(){
+        return recyclerViewAdapter.getAmenityData();
+    }
+    public Boolean getAmenitiesError(){
+        return  recyclerViewAdapter.getAmenitiesError();
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -141,6 +151,7 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
         mListener = null;
     }
 
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
         String text = parent.getItemAtPosition(position).toString();
@@ -151,16 +162,13 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
-
-    @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        if (switchCompat.isChecked()) {
-            Toast.makeText(getContext(), "Yes", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getContext(), "No", Toast.LENGTH_SHORT).show();
-        }
-
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
     }
+
+
+}
 
     /**
      * This interface must be implemented by activities that contain this
@@ -172,8 +180,5 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
-}
+
+

@@ -21,8 +21,10 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
+
 public class AdminHomeScreenActivity extends AppCompatActivity
-        implements NoticeBoardFragment.OnFragmentInteractionListener, ComplaintsListFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener, ComplaintsFragment.OnFragmentInteractionListener, RegistrationSocietyStepTwoAmenitiesDetailsFragment.OnFragmentInteractionListener, RegistrationSocietyStepTwoAdminLoginDetailsFragment.OnFragmentInteractionListener {
+        implements NoticeBoardFragment.OnFragmentInteractionListener, ComplaintsListFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener, ComplaintsFragment.OnFragmentInteractionListener {
 
     @SuppressLint("SetTextI18n")
     @Override
