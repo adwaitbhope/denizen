@@ -248,6 +248,12 @@ public class RegistrationStepOneActivity extends AppCompatActivity implements On
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Toast.makeText(RegistrationStepOneActivity.this, "Application submitted!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(RegistrationStepOneActivity.this, RegistrationSuccessfulActivity.class);
+                intent.putExtra("title", "Application status");
+                intent.putExtra("heading", "Application submitted!");
+                intent.putExtra("description", "Thank you for registering!\nWe've received your application and we'll be reviewing it as soon as possible. Once it's verified, you we'll notify you via email, so you can proceed to complete the registration process.");
+                finish();
+                startActivity(intent);
             }
 
             @Override

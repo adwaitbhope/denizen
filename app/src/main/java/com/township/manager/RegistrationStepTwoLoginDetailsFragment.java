@@ -324,7 +324,6 @@ public class RegistrationStepTwoLoginDetailsFragment extends Fragment implements
                 jsonObject.put(key, JSONObject.wrap(inResponse.get(key)));
             }
             if (jsonObject.getString("STATUS").equals("TXN_SUCCESS")) {
-                Toast.makeText(getActivity(), "Transaction completed, awaiting verification", Toast.LENGTH_SHORT).show();
                 verifyTransactionStatusFromServer(jsonObject.getString("ORDERID"));
             } else {
                 Toast.makeText(getActivity(), jsonObject.getString("STATUS"), Toast.LENGTH_SHORT).show();
@@ -359,9 +358,12 @@ public class RegistrationStepTwoLoginDetailsFragment extends Fragment implements
                     JSONObject jsonObject = jsonArray.getJSONObject(0);
 
                     if (jsonObject.getString("STATUS").equals("TXN_SUCCESS")) {
-                        Toast.makeText(getActivity(), "Transaction verification: SUCCESSFUL", Toast.LENGTH_SHORT).show();
                         getActivity().finish();
-                        getActivity().startActivity(new Intent(getActivity(), RegistrationSuccessfulActivity.class));
+                        Intent intent = new Intent(getActivity(), RegistrationSuccessfulActivity.class);
+                        intent.putExtra("title", "Registration status");
+                        intent.putExtra("heading", "Registration completed!");
+                        intent.putExtra("description", "We've emailed you login credentials for your residents. You can distribute them and get onboard!");
+                        getActivity().startActivity(intent);
                     } else {
                         Toast.makeText(getActivity(), "Transaction verification: FAILURE", Toast.LENGTH_SHORT).show();
                     }
