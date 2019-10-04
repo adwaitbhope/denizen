@@ -30,6 +30,7 @@ class RegistrationAmenetisAdapter extends RecyclerView.Adapter<RegistrationAmene
     Context context;
     ArrayList<RegistrationAmenetisAdapter.MyViewHolder> viewHolders;
     Boolean checkAmenitiesError=false;
+    Integer billingperiod;
 
 
     public RegistrationAmenetisAdapter(ArrayList<Amenity> dataset, Context context) {
@@ -84,16 +85,23 @@ class RegistrationAmenetisAdapter extends RecyclerView.Adapter<RegistrationAmene
         Amenity amenity = null;
         MyViewHolder myViewHolder;
         for (int i = 0; i < viewHolders.size(); i++) {
+            checkAmenitiesError=false;
             boolean bool = false;
             myViewHolder = viewHolders.get(i);
             amenity=new Amenity();
-            if(checkError(myViewHolder)) {
+            if(checkErrorAmenities(myViewHolder)) {
                 checkAmenitiesError=true;
                 break;
             }
+            if(myViewHolder.billingPeriod.getText().toString().equals("Hourly"))
+                billingperiod=1;
+            else
+                billingperiod=2;
+
+            if (myViewHolder.freeOrNot.getText().toString().equals("Yes"))
+                bool=true;
             amenity.setAmenityrate(Integer.valueOf(myViewHolder.rateAmenity.getText().toString()));
-            amenity.setBillingperiod(myViewHolder.billingPeriod.getId() + 1);
-            if (myViewHolder.freeOrNot.getId() == 1) bool = true;
+            amenity.setBillingperiod(billingperiod);
             amenity.setFreeornot(bool);
             amenity.setName(myViewHolder.amenityName.getText().toString());
 
@@ -108,11 +116,11 @@ class RegistrationAmenetisAdapter extends RecyclerView.Adapter<RegistrationAmene
     public int getItemCount() {
         return dataset.size();
     }
-    private boolean checkError(RegistrationAmenetisAdapter.MyViewHolder viewHolder) {
+    private boolean checkErrorAmenities(RegistrationAmenetisAdapter.MyViewHolder viewHolder) {
         boolean error=false;
 
         if(TextUtils.isEmpty(viewHolder.amenityName.getText().toString())){
-            viewHolder.amenityNameIIL.setError("Please enter your username");
+            viewHolder.amenityNameIIL.setError("Required");
             viewHolder.amenityNameIIL.setErrorEnabled(true);
             viewHolder.amenityNameIIL.requestFocus();
             viewHolder.amenityNameIIL.setErrorIconDrawable(null);
@@ -120,17 +128,8 @@ class RegistrationAmenetisAdapter extends RecyclerView.Adapter<RegistrationAmene
             error=true;
             return error;
         }
-        if(TextUtils.isEmpty(String.valueOf(viewHolder.billingPeriod.getId()))){
-            viewHolder.billingPeriodTIL.setError("Please enter your username");
-            viewHolder.billingPeriodTIL.setErrorEnabled(true);
-            viewHolder.billingPeriodTIL.requestFocus();
-            viewHolder.billingPeriodTIL.setErrorIconDrawable(null);
-            Log.d("val6",String.valueOf(error));
-            error=true;
-            return error;
-        }
         if(TextUtils.isEmpty(viewHolder.rateAmenity.getText().toString())){
-            viewHolder.rateAmenityTIL.setError("Please enter your username");
+            viewHolder.rateAmenityTIL.setError("Required");
             viewHolder.rateAmenityTIL.setErrorEnabled(true);
             viewHolder.rateAmenityTIL.requestFocus();
             viewHolder.rateAmenityTIL.setErrorIconDrawable(null);
@@ -138,8 +137,17 @@ class RegistrationAmenetisAdapter extends RecyclerView.Adapter<RegistrationAmene
             error=true;
             return error;
         }
-        if(TextUtils.isEmpty(String.valueOf(viewHolder.freeOrNot.getId()))){
-            viewHolder.freeOrNotTIL.setError("Please enter your username");
+        if(TextUtils.isEmpty(viewHolder.billingPeriod.getText().toString())){
+            viewHolder.billingPeriodTIL.setError("Required");
+            viewHolder.billingPeriodTIL.setErrorEnabled(true);
+            viewHolder.billingPeriodTIL.requestFocus();
+            viewHolder.billingPeriodTIL.setErrorIconDrawable(null);
+            Log.d("val6",String.valueOf(error));
+            error=true;
+            return error;
+        }
+        if(TextUtils.isEmpty(viewHolder.freeOrNot.getText().toString())){
+            viewHolder.freeOrNotTIL.setError("Required");
             viewHolder.freeOrNotTIL.setErrorEnabled(true);
             viewHolder.freeOrNotTIL.requestFocus();
             viewHolder.freeOrNotTIL.setErrorIconDrawable(null);

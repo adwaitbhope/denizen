@@ -72,12 +72,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:hint="@string/billing_period"
+            app:layout_constraintBottom_toBottomOf="@+id/amenities_rate_til"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/amenities_rate_til"
-            app:layout_constraintTop_toBottomOf="@+id/amenity_name_til">
+            app:layout_constraintTop_toTopOf="@+id/amenities_rate_til">
 
             <AutoCompleteTextView
                 android:id="@+id/billing_period_details_filled_exposed_dropdown"

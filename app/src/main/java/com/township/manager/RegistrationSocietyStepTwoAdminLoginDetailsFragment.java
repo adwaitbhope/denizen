@@ -117,7 +117,7 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_registration_society_step_two_admin_login_details, container, false);
-        noOfAdmin = view.findViewById(R.id.registration_step2_admin_no_of_security);
+        noOfAdmin = view.findViewById(R.id.registration_step2_admin_no_of_admins);
         noOfSecurityDesks = view.findViewById(R.id.registration_step2_admin_no_of_security);
 
         // Inflate the layout for this fragment
@@ -154,6 +154,7 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
             public void onClick(View view) {
 
                 wings = mListener.getWingsData();
+                amenities = mListener.getAmenitiesData();
                 if(mListener.getWingsError())
                 {
                     Toast.makeText(getContext(),"Fill wing details",Toast.LENGTH_SHORT).show();
@@ -167,7 +168,7 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
                    Toast.makeText(getContext(),"Fill Login Error",Toast.LENGTH_SHORT).show();
                    return;
                 }
-                amenities = mListener.getAmenitiesData();
+
                 Map<String, Object> amenitymap = null, wingmap = null;
                 wingmap = new HashMap<>();
                 for (int i = 0; i < wings.size(); i++) {
@@ -189,6 +190,7 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
                 Paytm.PaytmOrder paytmOrder = new Paytm.PaytmOrder();
                 paytmOrder.setTXN_AMOUNT("100");
                 generateChecksumFromServer(paytmOrder, wingmap, amenitymap);
+                Log.d("a","a");
             }
         });
         return view;
@@ -197,7 +199,7 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
     private boolean getLoginError() {
         boolean error=false;
         if(TextUtils.isEmpty(noOfAdmin.getEditText().getText().toString())){
-            noOfAdmin.setError("Please enter your username");
+            noOfAdmin.setError("Required");
             noOfAdmin.setErrorEnabled(true);
             noOfAdmin.requestFocus();
             noOfAdmin.setErrorIconDrawable(null);
@@ -205,7 +207,7 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
             return error;
         }
         if(TextUtils.isEmpty(noOfSecurityDesks.getEditText().getText().toString())){
-            noOfSecurityDesks.setError("Please enter your username");
+            noOfSecurityDesks.setError("Required");
             noOfSecurityDesks.setErrorEnabled(true);
             noOfSecurityDesks.requestFocus();
             noOfSecurityDesks.setErrorIconDrawable(null);
@@ -224,7 +226,7 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
         Integer noofadmins = Integer.valueOf(noOfAdmin.getEditText().getText().toString());
         Integer noofseurity = Integer.valueOf(noOfSecurityDesks.getEditText().getText().toString());
         RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
-
+        Log.d("b","b");
         Call<JsonArray> call = retrofitServerAPI.registrationStep2(
                 application_id,
                 Paytm.CHANNEL_ID,
@@ -257,6 +259,7 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Log.d("pay",e.toString());
 
                 }
 

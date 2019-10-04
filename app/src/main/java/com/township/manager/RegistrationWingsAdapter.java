@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
@@ -30,6 +31,7 @@ class RegistrationWingsAdapter extends RecyclerView.Adapter<RegistrationWingsAda
     ArrayList<RegistrationWingsAdapter.MyViewHolder> viewsHolder;
     Context context;
     Boolean checkWingsError=false;
+    int namingposition;
 
     public RegistrationWingsAdapter(ArrayList<Wing> dataset, Context context) {
         this.dataset = dataset;
@@ -71,15 +73,21 @@ class RegistrationWingsAdapter extends RecyclerView.Adapter<RegistrationWingsAda
         ArrayList<Wing> wings = new ArrayList<>();
         Wing wing = null;
         MyViewHolder viewHolder;
+
         for (int i = 0; i < viewsHolder.size(); i++) {
+            checkWingsError=false;
             viewHolder = viewsHolder.get(i);
             wing = new Wing();
-            if(checkError(viewHolder)){
+            if(checkErrorWings(viewHolder)){
                 checkWingsError=true;
                 break;
             }
+            if(viewHolder.namingConvention.getText().toString().equals("A-1 to A-36"))
+                namingposition=1;
+            else
+                namingposition=2;
             wing.setName(viewHolder.wingName.getText().toString());
-            wing.setNamingConvention(viewHolder.namingConvention.getId()+1);
+            wing.setNamingConvention(namingposition);
             wing.setNumberOfFloors(Integer.valueOf(viewHolder.numberOfFloors.getText().toString()));
             wing.setNumberOfApartmentsPerFloor(Integer.valueOf(viewHolder.numberOfApartmentsPerFloor.getText().toString()));
             // TODO
@@ -90,11 +98,12 @@ class RegistrationWingsAdapter extends RecyclerView.Adapter<RegistrationWingsAda
     public Boolean getWingsError(){
         return checkWingsError;
     }
-    private boolean checkError(MyViewHolder viewHolder) {
+
+    private boolean checkErrorWings(MyViewHolder viewHolder) {
         boolean error=false;
 
         if(TextUtils.isEmpty(viewHolder.wingName.getText().toString())){
-            viewHolder.wingNameTIL.setError("Please enter your username");
+            viewHolder.wingNameTIL.setError("Required");
             viewHolder.wingNameTIL.setErrorEnabled(true);
             viewHolder.wingNameTIL.requestFocus();
             viewHolder.wingNameTIL.setErrorIconDrawable(null);
@@ -102,18 +111,8 @@ class RegistrationWingsAdapter extends RecyclerView.Adapter<RegistrationWingsAda
             error=true;
             return error;
         }
-        if(TextUtils.isEmpty(String.valueOf(viewHolder.namingConvention.getId()))){
-            Log.d("naming",String.valueOf(viewHolder.namingConvention.getId()));
-            viewHolder.namingConvetionTIL.setError("Please enter your username");
-            viewHolder.namingConvetionTIL.setErrorEnabled(true);
-            viewHolder.namingConvetionTIL.requestFocus();
-            viewHolder.namingConvetionTIL.setErrorIconDrawable(null);
-            Log.d("val2",String.valueOf(error));
-            error=true;
-            return error;
-        }
         if(TextUtils.isEmpty(viewHolder.numberOfFloors.getText().toString())){
-            viewHolder.numberOfFloorsTIL.setError("Please enter your username");
+            viewHolder.numberOfFloorsTIL.setError("Required");
             viewHolder.numberOfFloorsTIL.setErrorEnabled(true);
             viewHolder.numberOfFloorsTIL.requestFocus();
             viewHolder.numberOfFloorsTIL.setErrorIconDrawable(null);
@@ -122,11 +121,20 @@ class RegistrationWingsAdapter extends RecyclerView.Adapter<RegistrationWingsAda
             return error;
         }
         if(TextUtils.isEmpty(viewHolder.numberOfApartmentsPerFloor.getText().toString())){
-            viewHolder.numberOfApartmentsPerFloorTIL.setError("Please enter your username");
+            viewHolder.numberOfApartmentsPerFloorTIL.setError("Required");
             viewHolder.numberOfApartmentsPerFloorTIL.setErrorEnabled(true);
             viewHolder.numberOfApartmentsPerFloorTIL.requestFocus();
             viewHolder.numberOfApartmentsPerFloorTIL.setErrorIconDrawable(null);
             Log.d("val4",String.valueOf(error));
+            error=true;
+            return error;
+        }
+        if(TextUtils.isEmpty(viewHolder.namingConvention.getText().toString())){
+            viewHolder.namingConvetionTIL.setError("Required");
+            viewHolder.namingConvetionTIL.setErrorEnabled(true);
+            viewHolder.namingConvetionTIL.requestFocus();
+            viewHolder.namingConvetionTIL.setErrorIconDrawable(null);
+            Log.d("val2",String.valueOf(error));
             error=true;
             return error;
         }
