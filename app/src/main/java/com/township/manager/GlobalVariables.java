@@ -1,11 +1,11 @@
 package com.township.manager;
 
-import android.app.Application;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
-public class GlobalVariables extends Application {
+import androidx.multidex.MultiDexApplication;
+
+public class GlobalVariables extends MultiDexApplication {
     private RequestQueue queue;
 
     public RequestQueue getQueue() {

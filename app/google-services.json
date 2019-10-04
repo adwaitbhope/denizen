@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "449963814401",
+    "firebase_url": "https://township-manager-a04c5.firebaseio.com",
+    "project_id": "township-manager-a04c5",
+    "storage_bucket": "township-manager-a04c5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:449963814401:android:9b8605c2d4d736c1f51a00",
+        "android_client_info": {
+          "package_name": "com.township.manager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "449963814401-0ueivf86bo3ovvprdfn5m0r9aqlg7so0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOs-VBSMqj1fo80GBrXr2NgO2QaMtcxT0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "449963814401-0ueivf86bo3ovvprdfn5m0r9aqlg7so0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
