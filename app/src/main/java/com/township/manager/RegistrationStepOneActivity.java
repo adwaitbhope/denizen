@@ -137,11 +137,12 @@ public class RegistrationStepOneActivity extends AppCompatActivity implements On
 
     private void submit() {
 
-        submitButton.setText("Submitting...");
-
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                submitButton.setText("Submitting...");
+
                 adminName = usernameTextLayout.getEditText().getText().toString();
                 adminPhone = administratorPhoneNumberTextLayout.getEditText().getText().toString();
                 adminDesignation = designationTextLayout.getEditText().getText().toString();
@@ -251,7 +252,7 @@ public class RegistrationStepOneActivity extends AppCompatActivity implements On
                 Intent intent = new Intent(RegistrationStepOneActivity.this, RegistrationSuccessfulActivity.class);
                 intent.putExtra("title", "Application status");
                 intent.putExtra("heading", "Application submitted!");
-                intent.putExtra("description", "Thank you for registering!\nWe've received your application and we'll be reviewing it as soon as possible. Once it's verified, you we'll notify you via email, so you can proceed to complete the registration process.");
+                intent.putExtra("description", "Thank you for registering!\nWe've received your application and we'll be reviewing it as soon as possible.\n\nOnce it's verified, you we'll notify you via email, so you can proceed to complete the registration process.");
                 finish();
                 startActivity(intent);
             }

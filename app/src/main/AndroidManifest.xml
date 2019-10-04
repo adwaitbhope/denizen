@@ -28,7 +28,7 @@
             android:label="Amenities"
             android:parentActivityName=".AdminHomeScreenActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".RegistrationPaymentDetails"></activity>
+        <activity android:name=".RegistrationPaymentDetailsActivity"></activity>
         <activity
             android:name=".AddNoticeAdminActivity"
             android:label="New Notice"
@@ -58,7 +58,7 @@
             android:parentActivityName=".LoginScreenActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".RegistrationSocietyStepTwo"
+        <activity android:name=".RegistrationStepTwoActivity"
             android:label="Society Details"
             android:parentActivityName=".RegistrationStepsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
