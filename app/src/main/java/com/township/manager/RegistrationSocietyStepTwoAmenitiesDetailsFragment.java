@@ -38,7 +38,7 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
     private String mParam2;
 
     RecyclerView recyclerView;
-    RecyclerView.Adapter recyclerViewAdapter;
+    RegistrationAmenetisAdapter recyclerViewAdapter;
     RecyclerView.LayoutManager layoutManager;
 
     public SwitchCompat switchCompat;
@@ -128,7 +128,12 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
             mListener.onFragmentInteraction(uri);
         }
     }
-
+    public ArrayList<Amenity> getAmenityDataFromAdapter(){
+        return recyclerViewAdapter.getAmenityData();
+    }
+    public Boolean getAmenitiesError(){
+        return  recyclerViewAdapter.getAmenitiesError();
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -145,6 +150,7 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
         super.onDetach();
         mListener = null;
     }
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {

@@ -15,7 +15,7 @@ public class LogOutDialog extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder =new AlertDialog.Builder(getActivity());
-        builder.setMessage("Do you want to log out");
+        builder.setMessage("Do you want to log out ?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -28,7 +28,6 @@ public class LogOutDialog extends AppCompatDialogFragment {
         builder.setNegativeButton("Cancel" ,new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
                 dismiss();
             }
         });

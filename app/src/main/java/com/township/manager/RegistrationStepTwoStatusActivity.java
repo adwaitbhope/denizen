@@ -1,6 +1,8 @@
 package com.township.manager;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -70,7 +72,7 @@ public class RegistrationStepTwoStatusActivity extends AppCompatActivity {
         applicationEmailTil=findViewById(R.id.registration_step_two_status_email_til);
         applicationNumberTil=findViewById(R.id.registration_step_two_status_application_til);
 
-//        proceedButton.setVisibility(View.INVISIBLE);
+        proceedButton.setVisibility(View.INVISIBLE);
         if(!visibility) {
             invisible(appplicationStatusHeading);
             invisible(nameKey);
@@ -167,6 +169,7 @@ public class RegistrationStepTwoStatusActivity extends AppCompatActivity {
         Call<JsonArray> call=retrofitServerAPI.checkstatus(applicationnumber,applicationemail);
 
         call.enqueue(new Callback<JsonArray>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
                 assert response.body() != null;
@@ -186,8 +189,16 @@ public class RegistrationStepTwoStatusActivity extends AppCompatActivity {
                     nameValue.setText(jsonObject.getString("name"));
                     phoneValue.setText(jsonObject.getString("phone"));
                     addressValue.setText(jsonObject.getString("address"));
-                    statusValue.setText(String.valueOf(jsonObject.getBoolean("verified")));
                     visibility=true;
+                    if(jsonObject.getBoolean("verified")){
+                        statusValue.setText("Verified");
+                        statusValue.setTextColor(Color.rgb(0,128,0));
+                    }
+                    else{
+                        statusValue.setText("Pending");
+                        statusValue.setTextColor(Color.RED);
+                    }
+
                     visible(appplicationStatusHeading);
                     visible(nameKey);
                     visible(nameValue);
@@ -197,6 +208,10 @@ public class RegistrationStepTwoStatusActivity extends AppCompatActivity {
                     visible(addressValue);
                     visible(statusKey);
                     visible(statusValue);
+                    if(jsonObject.getBoolean("verified")){
+                        proceedButton.setVisibility(View.VISIBLE);
+
+                    }
                     if(jsonObject.getBoolean("verified")){
                         proceedButton.setVisibility(View.VISIBLE);
                     }

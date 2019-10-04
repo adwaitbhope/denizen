@@ -16,6 +16,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
+
 public class RegistrationSocietyStepTwo extends AppCompatActivity implements RegistrationSocietyStepTwoWingDetailsFragment.OnFragmentInteractionListener, RegistrationSocietyStepTwoAmenitiesDetailsFragment.OnFragmentInteractionListener, RegistrationSocietyStepTwoAdminLoginDetailsFragment.OnFragmentInteractionListener {
 
     public Button login;
@@ -24,6 +26,10 @@ public class RegistrationSocietyStepTwo extends AppCompatActivity implements Reg
     private LinearLayout mDotLayout;
     private TabLayout tabLayout;
     String application_id;
+
+    RegistrationSocietyStepTwoWingDetailsFragment wingDetailsFragment;
+    RegistrationSocietyStepTwoAmenitiesDetailsFragment amenitiesDetailsFragment;
+    RegistrationSocietyStepTwoAdminLoginDetailsFragment adminLoginDetailsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +43,13 @@ public class RegistrationSocietyStepTwo extends AppCompatActivity implements Reg
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        RegistrationSocietyStepTwoAdminLoginDetailsFragment registrationSocietyStepTwoAdminLoginDetailsFragment = new RegistrationSocietyStepTwoAdminLoginDetailsFragment();
+        wingDetailsFragment = new RegistrationSocietyStepTwoWingDetailsFragment();
+        amenitiesDetailsFragment = new RegistrationSocietyStepTwoAmenitiesDetailsFragment();
+        adminLoginDetailsFragment = new RegistrationSocietyStepTwoAdminLoginDetailsFragment();
         SliderAdapter sliderAdapter = new SliderAdapter(getSupportFragmentManager());
-        sliderAdapter.addFragment(new RegistrationSocietyStepTwoWingDetailsFragment(), "");
-        sliderAdapter.addFragment(new RegistrationSocietyStepTwoAmenitiesDetailsFragment(), "");
-        sliderAdapter.addFragment(registrationSocietyStepTwoAdminLoginDetailsFragment, "");
+        sliderAdapter.addFragment(wingDetailsFragment, "");
+        sliderAdapter.addFragment(amenitiesDetailsFragment, "");
+        sliderAdapter.addFragment(adminLoginDetailsFragment, "");
 
         mSlideViewPager = (ViewPager) findViewById(R.id.slideViewPager);
         mSlideViewPager.setAdapter(sliderAdapter);
@@ -55,7 +63,8 @@ public class RegistrationSocietyStepTwo extends AppCompatActivity implements Reg
         mSlideViewPager.addOnPageChangeListener(viewListener);
         Intent intent = getIntent();
         application_id = intent.getStringExtra("application_id");
-        registrationSocietyStepTwoAdminLoginDetailsFragment.setApplication_id(application_id);
+        adminLoginDetailsFragment.setApplication_id(application_id);
+
 
 
     }
@@ -102,5 +111,24 @@ public class RegistrationSocietyStepTwo extends AppCompatActivity implements Reg
 
     }
 
+    @Override
+    public ArrayList<Wing> getWingsData() {
+        return wingDetailsFragment.getWingsFromAdapter();
+    }
+
+    @Override
+    public ArrayList<Amenity> getAmenitiesData() {
+        return amenitiesDetailsFragment.getAmenityDataFromAdapter();
+    }
+
+    @Override
+    public Boolean getWingsError() {
+        return wingDetailsFragment.getWingsError();
+    }
+
+    @Override
+    public Boolean getAmenitiesError() {
+        return amenitiesDetailsFragment.getAmenitiesError();
+    }
 
 }

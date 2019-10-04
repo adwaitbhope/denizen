@@ -2,6 +2,7 @@ package com.township.manager;
 
 import android.content.Context;
 import android.net.Uri;
+import android.net.wifi.p2p.WifiP2pGroup;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,7 +41,7 @@ public class RegistrationSocietyStepTwoWingDetailsFragment extends Fragment impl
 
     private OnFragmentInteractionListener mListener;
     RecyclerView recyclerView;
-    RecyclerView.Adapter recyclerViewAdapter;
+    RegistrationWingsAdapter recyclerViewAdapter;
     RecyclerView.LayoutManager layoutManager;
 
     public RegistrationSocietyStepTwoWingDetailsFragment() {
@@ -91,7 +92,6 @@ public class RegistrationSocietyStepTwoWingDetailsFragment extends Fragment impl
         recyclerViewAdapter = new RegistrationWingsAdapter(dataset, getContext());
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setHasFixedSize(true);
-
         recyclerView.setItemViewCacheSize(20);
         recyclerView.setDrawingCacheEnabled(true);
         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
@@ -117,10 +117,16 @@ public class RegistrationSocietyStepTwoWingDetailsFragment extends Fragment impl
         }
     }
 
+    public ArrayList<Wing> getWingsFromAdapter() {
+        return recyclerViewAdapter.getWingsData();
+    }
+
+    public Boolean getWingsError(){return recyclerViewAdapter.getWingsError();}
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
+            if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()

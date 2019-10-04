@@ -1,9 +1,14 @@
 package com.township.manager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.icu.text.DateFormat;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +18,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.JsonArray;
 import com.paytm.pgsdk.PaytmPGService;
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
@@ -20,8 +26,12 @@ import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import androidx.fragment.app.Fragment;
@@ -49,6 +59,9 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    ArrayList<Wing> wings;
+    ArrayList<Amenity> amenities;
+
 
     public TextView tvShowNumbers;
 
@@ -66,6 +79,7 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
     }
 
     private String application_id;
+    private TextInputLayout noOfAdmin, noOfSecurityDesks;
 
     public RegistrationSocietyStepTwoAdminLoginDetailsFragment() {
         // Required empty public constructor
@@ -98,10 +112,14 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
         }
     }
 
+    @SuppressLint("CutPasteId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_registration_society_step_two_admin_login_details, container, false);
+        noOfAdmin = view.findViewById(R.id.registration_step2_admin_no_of_security);
+        noOfSecurityDesks = view.findViewById(R.id.registration_step2_admin_no_of_security);
+
         // Inflate the layout for this fragment
 
 //        admin_number_picker = view.findViewById(R.id.admin_number_picker);
@@ -126,47 +144,110 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
 //            }
 //        });
 //        security_number_picker.setOnValueChangedListener(this);
-        RegistrationSocietyStepTwo registrationSocietyStepTwo=new RegistrationSocietyStepTwo();
 
+        error(noOfAdmin);
+        error(noOfSecurityDesks);
         proceedPaymentButton = view.findViewById(R.id.registration_step_two_proceed_payment_button);
 
         proceedPaymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                wings = mListener.getWingsData();
+                if(mListener.getWingsError())
+                {
+                    Toast.makeText(getContext(),"Fill wing details",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(mListener.getAmenitiesError()){
+                    Toast.makeText(getContext(),"Fill amenity details",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(getLoginError()){
+                   Toast.makeText(getContext(),"Fill Login Error",Toast.LENGTH_SHORT).show();
+                   return;
+                }
+                amenities = mListener.getAmenitiesData();
+                Map<String, Object> amenitymap = null, wingmap = null;
+                wingmap = new HashMap<>();
+                for (int i = 0; i < wings.size(); i++) {
+                    Wing wing = wings.get(i);
+                    wingmap.put("wing_" + i + "_name", wing.getName());
+                    wingmap.put("wing_" + i + "_floors", wing.getNumberOfFloors());
+                    wingmap.put("wing_" + i + "_apts_per_floor", wing.getNumberOfApartmentsPerFloor());
+                    wingmap.put("wing_" + i + "_naming_convention", wing.getNamingConvention());
+                }
+                amenitymap = new HashMap<>();
+                for (int j = 0; j < amenities.size(); j++) {
+                    Amenity amenity = amenities.get(j);
+
+                    amenitymap.put("amenity_" + j + "_name", amenity.getName());
+                    amenitymap.put("amenity_" + j + "_rate", amenity.getAmenityrate());
+                    amenitymap.put("amenity_" + j + "_time_period", amenity.getBillingperiod());
+                    amenitymap.put("amenity_" + j + "_free_for_members", amenity.getFreeornot());
+                }
                 Paytm.PaytmOrder paytmOrder = new Paytm.PaytmOrder();
                 paytmOrder.setTXN_AMOUNT("100");
-                generateChecksumFromServer(paytmOrder);
+                generateChecksumFromServer(paytmOrder, wingmap, amenitymap);
             }
         });
         return view;
     }
 
-    private void generateChecksumFromServer(final Paytm.PaytmOrder paytmOrder) {
+    private boolean getLoginError() {
+        boolean error=false;
+        if(TextUtils.isEmpty(noOfAdmin.getEditText().getText().toString())){
+            noOfAdmin.setError("Please enter your username");
+            noOfAdmin.setErrorEnabled(true);
+            noOfAdmin.requestFocus();
+            noOfAdmin.setErrorIconDrawable(null);
+            error=true;
+            return error;
+        }
+        if(TextUtils.isEmpty(noOfSecurityDesks.getEditText().getText().toString())){
+            noOfSecurityDesks.setError("Please enter your username");
+            noOfSecurityDesks.setErrorEnabled(true);
+            noOfSecurityDesks.requestFocus();
+            noOfSecurityDesks.setErrorIconDrawable(null);
+            error=true;
+            return error;
+        }
+        return error;
+    }
+
+
+    private void generateChecksumFromServer(final Paytm.PaytmOrder paytmOrder, Map<String, Object> wingmap, Map<String, Object> amenitymap) {
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(getString(R.string.server_addr))
                 .addConverterFactory(GsonConverterFactory.create());
         Retrofit retrofit = builder.build();
-
+        Integer noofadmins = Integer.valueOf(noOfAdmin.getEditText().getText().toString());
+        Integer noofseurity = Integer.valueOf(noOfSecurityDesks.getEditText().getText().toString());
         RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
 
-        Call<JsonArray> call = retrofitServerAPI.getChecksum(
+        Call<JsonArray> call = retrofitServerAPI.registrationStep2(
                 application_id,
                 Paytm.CHANNEL_ID,
                 paytmOrder.getTXN_AMOUNT(),
                 Paytm.WEBSITE,
                 Paytm.CALLBACK_URL,
-                Paytm.INDUSTRY_TYPE_ID
+                Paytm.INDUSTRY_TYPE_ID,
+                wingmap,
+                amenitymap,
+                noofadmins,
+                noofseurity,
+                wings.size(),
+                amenities.size()
         );
 
         call.enqueue(new Callback<JsonArray>() {
             @Override
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
                 assert response.body() != null;
-                Log.d("toea",response.toString());
                 String jsonstring = response.body().getAsJsonArray().toString();
                 try {
                     JSONArray jsonArray = new JSONArray(jsonstring);
-                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+                    JSONObject jsonObject = jsonArray.getJSONObject(1);
 
                     paytmOrder.setORDER_ID(jsonObject.getString("ORDER_ID"));
                     paytmOrder.setCUST_ID(jsonObject.getString("CUST_ID"));
@@ -189,6 +270,25 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
             }
         });
 
+    }
+    private void error(final TextInputLayout textInputLayout) {
+        Objects.requireNonNull(textInputLayout.getEditText()).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                textInputLayout.setError(null);
+                textInputLayout.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     private void initializePayment(Paytm.PaytmOrder paytmOrder) {
@@ -281,6 +381,7 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
         RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
 
         Call<JsonArray> call = retrofitServerAPI.verifyChecksum(
+                application_id,
                 orderId
         );
 
@@ -358,5 +459,12 @@ public class RegistrationSocietyStepTwoAdminLoginDetailsFragment extends Fragmen
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+
+        ArrayList<Wing> getWingsData();
+
+        ArrayList<Amenity> getAmenitiesData();
+        Boolean getWingsError();
+        Boolean getAmenitiesError();
+
     }
 }

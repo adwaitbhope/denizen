@@ -1,8 +1,9 @@
 package com.township.manager;
 
  class Amenity {
-    String name,billingperiod,freeornot;
-
+    int billingperiod,amenityrate;
+    String name;
+    Boolean freeornot;
 
 
 
@@ -14,19 +15,19 @@ package com.township.manager;
         this.name = name;
     }
 
-    public String getBillingperiod() {
+    public Integer getBillingperiod() {
         return billingperiod;
     }
 
-    public void setBillingperiod(String billingperiod) {
+    public void setBillingperiod(Integer billingperiod) {
         this.billingperiod = billingperiod;
     }
 
-    public String getFreeornot() {
+    public Boolean getFreeornot() {
         return freeornot;
     }
 
-    public void setFreeornot(String freeornot) {
+    public void setFreeornot(Boolean freeornot) {
         this.freeornot = freeornot;
     }
 
@@ -38,5 +39,5 @@ package com.township.manager;
         this.amenityrate = amenityrate;
     }
 
-    int amenityrate;
+
 }
