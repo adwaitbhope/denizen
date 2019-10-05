@@ -26,6 +26,10 @@ import java.util.ArrayList;
 public class AdminHomeScreenActivity extends AppCompatActivity
         implements NoticeBoardFragment.OnFragmentInteractionListener, ComplaintsListFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener, ComplaintsFragment.OnFragmentInteractionListener {
 
+
+    NoticeBoardFragment noticeBoardFragment;
+    ComplaintsFragment complaintsFragment;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +60,11 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         adminDesignation.setText(cursor.getString(desCol));
         adminName.setText(cursor.getString(firstNameCol) + " " + cursor.getString(lastNameCol));
 
+        noticeBoardFragment = new NoticeBoardFragment();
+        complaintsFragment = new ComplaintsFragment();
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.admin_home_screen_fragment_area, new NoticeBoardFragment());
+        transaction.replace(R.id.admin_home_screen_fragment_area, noticeBoardFragment);
         transaction.commit();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.admin_bottom_nav);
@@ -73,7 +80,7 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                         fragment = getSupportFragmentManager().findFragmentById(R.id.admin_home_screen_fragment_area);
                         if (! (fragment instanceof NoticeBoardFragment)) {
                             transaction = getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.admin_home_screen_fragment_area, new NoticeBoardFragment());
+                            transaction.replace(R.id.admin_home_screen_fragment_area, noticeBoardFragment);
                             transaction.commit();
                         }
                         return true;
@@ -85,6 +92,12 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                             transaction.replace(R.id.admin_home_screen_fragment_area, new ComplaintsFragment());
                             transaction.commit();
                         }
+                        return true;
+
+                    case R.id.admin_group_chat:
+                        return true;
+
+                    case R.id.admin_finances:
                         return true;
                 }
                 return false;

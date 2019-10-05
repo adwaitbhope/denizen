@@ -117,6 +117,12 @@ public class NoticeBoardFragment extends Fragment {
         return notices;
     }
 
+    public void updateRecyclerView() {
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
