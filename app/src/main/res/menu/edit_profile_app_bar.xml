@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/edit_profile_save_changes_button"
-        android:icon="@drawable/ic_check_black_24dp"
-        android:title="Save changes"
+        android:title="Save"
         android:iconTint="@color/white"
         app:showAsAction="always" />
 </menu>
