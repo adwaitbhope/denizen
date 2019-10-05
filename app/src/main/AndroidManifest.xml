@@ -38,14 +38,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddNoticeAdminActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RegistrationPaymentDetailsActivity" />
-
-        <activity
-            android:name=".AddNoticeAdminActivity"
             android:label="New Notice"
-            android:parentActivityName=".AddNoticeAdminActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".RegistrationPaymentDetailsActivity" />
 
         <activity
             android:name=".RegisterComplaintActivity"
