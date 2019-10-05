@@ -92,6 +92,7 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:minLines="1"
+                        android:textSize="12sp"
                         android:text="This is the latest comment commented by a resident."
                         app:layout_constraintBottom_toBottomOf="@+id/imageView5"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -111,7 +112,7 @@
                         app:srcCompat="@drawable/ic_comment_black_24dp" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/button"
+                        android:id="@+id/notice_board_view_all_comments_button"
                         style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

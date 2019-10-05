@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -78,6 +79,15 @@ public class NoticeBoardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), AddNoticeAdminActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        MaterialButton commentButton = view.findViewById(R.id.notice_board_view_all_comments_button);
+        commentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), NoticeBoardCommentActivity.class);
                 startActivity(intent);
             }
         });

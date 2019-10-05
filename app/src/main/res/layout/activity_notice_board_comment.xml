@@ -6,73 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".NoticeBoardCommentActivity">
 
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="I think this is very correct on the society's part."
-        app:layout_constraintBottom_toBottomOf="@+id/imageView9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView15"
-        app:layout_constraintTop_toTopOf="@+id/imageView9" />
-
-    <TextView
-        android:id="@+id/textView17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="I think this is very correct on the society's part."
-        app:layout_constraintBottom_toBottomOf="@+id/imageView10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView16"
-        app:layout_constraintTop_toTopOf="@+id/imageView10" />
-
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="D-202"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView10"
-        app:layout_constraintTop_toTopOf="@+id/imageView10"
-        tools:layout_editor_absoluteX="56dp" />
-
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="You"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView9"
-        app:layout_constraintStart_toEndOf="@+id/imageView9"
-        app:layout_constraintTop_toTopOf="@+id/imageView9" />
-
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView8"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_account_circle_black_32dp" />
-
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="458dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notice_board_comment_app_bar_layout"
-        app:srcCompat="@drawable/ic_account_circle_black_32dp" />
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/notice_board_comment_app_bar_layout"
         android:layout_width="match_parent"
@@ -98,25 +31,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="614dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notice_board_comment_app_bar_layout">
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_comment_black_24dp"
+            android:drawableEnd="@drawable/ic_send_black_24dp"
             android:drawablePadding="10dp"
             android:drawableTint="@color/secondaryColor"
             android:hint="Add a comment"
             android:inputType="text"
             android:paddingLeft="10dp"
-            android:textSize="14sp"
-            android:drawableEnd="@drawable/ic_send_black_24dp"/>
+            android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
@@ -124,33 +55,43 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout5"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_account_circle_black_32dp" />
+        app:srcCompat="@drawable/ic_account_circle_black_32dp"
+        tools:layout_editor_absoluteY="542dp" />
 
     <TextView
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:text="B-101"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView8"
-        app:layout_constraintStart_toEndOf="@+id/imageView8"
-        app:layout_constraintTop_toTopOf="@+id/imageView8" />
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView19"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView19"
+        app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
     <TextView
         android:id="@+id/textView14"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:text="I think this is very correct on the society's part."
-        app:layout_constraintBottom_toBottomOf="@+id/imageView8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView19"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="Bunty Kumar"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView13"
+        app:layout_constraintStart_toEndOf="@+id/imageView8"
         app:layout_constraintTop_toTopOf="@+id/imageView8" />
 
 
