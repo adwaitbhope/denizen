@@ -102,7 +102,7 @@
             android:drawableLeft="@drawable/ic_description_black_24dp"
             android:drawablePadding="10dp"
             android:drawableTint="@color/secondaryColor"
-            android:hint="Description"
+            android:hint="Description (Optional)"
             android:inputType="textMultiLine"
             android:paddingLeft="10dp"
             android:textSize="14sp"
