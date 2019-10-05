@@ -10,10 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 
 /**
@@ -35,6 +39,10 @@ public class NoticeBoardFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    RecyclerView recyclerView;
+    RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layoutManager;
 
     public NoticeBoardFragment() {
         // Required empty public constructor
@@ -62,8 +70,6 @@ public class NoticeBoardFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -76,14 +82,6 @@ public class NoticeBoardFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_notice_board, container, false);
 
-        ImageView imageView = view.findViewById(R.id.imageView);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), FullScreenImageViewActivity.class));
-            }
-        });
-
         FloatingActionButton addNoticeButton = view.findViewById(R.id.notice_board_add_notice_fab);
         addNoticeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,29 +91,31 @@ public class NoticeBoardFragment extends Fragment {
             }
         });
 
-        MaterialButton commentButton = view.findViewById(R.id.notice_board_view_all_comments_button);
-        commentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), NoticeBoardCommentActivity.class);
-                startActivity(intent);
-            }
-        });
+        recyclerView = view.findViewById(R.id.notice_board_recycler_view);
+        adapter = new NoticesAdapter(getNoticesFromDatabase(), getContext());
+        layoutManager = new LinearLayoutManager(getContext());
 
-        final MaterialCardView cardView = view.findViewById(R.id.notice_board_cardView);
-        cardView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                cardView.setChecked(!cardView.isChecked());
-                //cardView.toggle();
-                return true;
-            }
-        });
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
 
-        // Inflate the layout for this fragment
+        recyclerView.setItemViewCacheSize(20);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
         return view;
     }
 
+    private ArrayList<Notice> getNoticesFromDatabase() {
+        ArrayList<Notice> notices = new ArrayList<>();
+
+        // temporary dataset here
+        Notice notice = new Notice();
+        notice.setTitle("Diwali Celebration 2019");
+        notice.setDescription("Lorem ipsum dolor sit ametm consectetur adipiscin elit, sed do euismod tempor incideidunt ut labore et dolore mana aliqua.");
+        notices.add(notice);
+
+        return notices;
+    }
 
 
     // TODO: Rename method, update argument and hook method into UI event
