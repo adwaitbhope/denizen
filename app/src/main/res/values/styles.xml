@@ -16,7 +16,12 @@
         <item name="materialAlertDialogTheme">@style/AppAlertDialogTheme</item>
         <item name="chipGroupStyle">@style/AppChipGroupStyle</item>
         <item name="chipStyle">@style/AppChipFilterStyle</item>
+        <item name="tabStyle">@style/AppTabLayoutStyle</item>
         <item name="extendedFloatingActionButtonStyle">@style/AppExtendedFABStyle</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.TransparentStatusBar" parent="AppTheme.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -87,6 +92,13 @@
         <item name="android:textColor">@color/secondaryTextColor</item>
         <item name="iconTint">@color/secondaryTextColor</item>
     </style>
+
+    <style name="AppTabLayoutStyle" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabIconTint">@android:color/white</item>
+        <item name="tabIndicatorColor">@android:color/white</item>
+        <item name="tabTextColor">@android:color/white</item>
+    </style>
+
 
     <style name="AppAlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog"></style>
 

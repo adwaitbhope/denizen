@@ -1,9 +1,12 @@
 package com.township.manager;
 
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
+
+import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -12,9 +15,13 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 public interface RetrofitServerAPI {
     @Multipart
@@ -34,19 +41,34 @@ public interface RetrofitServerAPI {
     );
 
     @FormUrlEncoded
-    @POST("/payment/paytm/initiate/")
-    Call<JsonArray> getChecksum(
+    @POST("/register/existing/initiate/")
+    Call<JsonArray> registrationStep2(
+            @Field("application_id") String application_id,
             @Field("CHANNEL_ID") String channelId,
+            @Field("TXN_AMOUNT") String txnAmount,
             @Field("WEBSITE") String website,
             @Field("CALLBACK_URL") String callbackUrl,
             @Field("INDUSTRY_TYPE_ID") String industryTypeId,
-            @Field("TXN_AMOUNT") String txnAmount
+            @QueryMap Map<String,Object> wingdata,
+            @QueryMap Map<String,Object> amenitydata,
+            @Field("admin_ids") Integer admin_ids,
+            @Field("security_ids") Integer security_ids,
+            @Field("wings_num") Integer wings_num,
+            @Field("amenities_num") Integer amenities_num
+
     );
 
     @FormUrlEncoded
-    @POST("/payment/paytm/verify/")
+    @POST("/register/existing/verify/")
     Call<JsonArray> verifyChecksum(
+            @Field("application_id") String application_id,
             @Field("ORDER_ID") String ORDER_ID
+    );
+
+    @GET("/register/check_verification/")
+    Call<JsonArray>checkstatus(
+            @Query("application_id") String application_id,
+            @Query("email") String email
     );
 
 

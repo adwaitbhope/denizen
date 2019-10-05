@@ -6,25 +6,29 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.CompoundButton;
+import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.SwitchCompat;
+import java.util.ArrayList;
+
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link RegistrationSocietyStepTwoAmenitiesDetailsFragment.OnFragmentInteractionListener} interface
+ * {@link RegistrationStepTwoWingDetailsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link RegistrationSocietyStepTwoAmenitiesDetailsFragment#newInstance} factory method to
+ * Use the {@link RegistrationStepTwoWingDetailsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment implements AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
+public class RegistrationStepTwoWingDetailsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -34,12 +38,12 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
     private String mParam1;
     private String mParam2;
 
-    public SwitchCompat switchCompat;
-
-
     private OnFragmentInteractionListener mListener;
+    RecyclerView recyclerView;
+    RegistrationWingsAdapter recyclerViewAdapter;
+    RecyclerView.LayoutManager layoutManager;
 
-    public RegistrationSocietyStepTwoAmenitiesDetailsFragment() {
+    public RegistrationStepTwoWingDetailsFragment() {
         // Required empty public constructor
     }
 
@@ -49,11 +53,11 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment RegistrationSocietyStepTwoAmenitiesDetailsFragment.
+     * @return A new instance of fragment RegistrationStepTwoWingDetailsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static RegistrationSocietyStepTwoAmenitiesDetailsFragment newInstance(String param1, String param2) {
-        RegistrationSocietyStepTwoAmenitiesDetailsFragment fragment = new RegistrationSocietyStepTwoAmenitiesDetailsFragment();
+    public static RegistrationStepTwoWingDetailsFragment newInstance(String param1, String param2) {
+        RegistrationStepTwoWingDetailsFragment fragment = new RegistrationStepTwoWingDetailsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -74,46 +78,40 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_registration_society_step_two_amenities_details, container, false);
 
-        String[] BILLING_PERIOD = new String[] {"Hourly", "Daily"};
+        View view = inflater.inflate(R.layout.fragment_registration_step_two_wing_details, container, false);
 
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(
-                        getContext(),
-                        R.layout.dropdown_menu_popup_item,
-                        BILLING_PERIOD);
+        recyclerView = view.findViewById(R.id.registration_wings_recycler_view);
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
 
-        AutoCompleteTextView editTextFilledExposedDropdown =
-                view.findViewById(R.id.billing_period_details_filled_exposed_dropdown);
-        editTextFilledExposedDropdown.setAdapter(adapter);
+        final ArrayList<Wing> dataset = new ArrayList<>();
+        dataset.add(new Wing());
 
+        recyclerViewAdapter = new RegistrationWingsAdapter(dataset, getContext());
+        recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemViewCacheSize(20);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
+        recyclerView.setNestedScrollingEnabled(true);
 
-        String[] MEMBERS_FREE = new String[] {"Yes", "No"};
+        Button button = view.findViewById(R.id.add_wing_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dataset.add(new Wing());
+                try {
+                    InputMethodManager manager = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
+                    manager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                recyclerViewAdapter.notifyItemInserted(dataset.size() -1);
+            }
+        });
 
-        ArrayAdapter<String> adapter1 =
-                new ArrayAdapter<>(
-                        getContext(),
-                        R.layout.dropdown_menu_popup_item,
-                        MEMBERS_FREE);
-
-        AutoCompleteTextView editTextFilledExposedDropdown1 =
-                view.findViewById(R.id.free_for_members_filled_exposed_dropdown);
-        editTextFilledExposedDropdown1.setAdapter(adapter1);
-
-
-
-//        switchCompat = (SwitchCompat) view.findViewById(R.id.free_for_members_switch);
-//        switchCompat.setOnCheckedChangeListener(this);
-
-
-//        Spinner spinner = view.findViewById(R.id.billing_period_spinner);
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-//                R.array.billing_period_array, android.R.layout.simple_spinner_item);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinner.setAdapter(adapter);
-//        spinner.setOnItemSelectedListener(this);
         return view;
     }
 
@@ -124,10 +122,16 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
         }
     }
 
+    public ArrayList<Wing> getWingsFromAdapter() {
+        return recyclerViewAdapter.getWingsData();
+    }
+
+    public Boolean getWingsError(){return recyclerViewAdapter.getWingsError();}
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
+            if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
@@ -145,20 +149,11 @@ public class RegistrationSocietyStepTwoAmenitiesDetailsFragment extends Fragment
     public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
         String text = parent.getItemAtPosition(position).toString();
         Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        if (switchCompat.isChecked()) {
-            Toast.makeText(getContext(), "Yes", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getContext(), "No", Toast.LENGTH_SHORT).show();
-        }
 
     }
 

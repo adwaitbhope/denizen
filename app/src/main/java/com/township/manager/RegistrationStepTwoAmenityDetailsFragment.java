@@ -3,32 +3,33 @@ package com.township.manager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link RegistrationSocietyStepTwoWingDetailsFragment.OnFragmentInteractionListener} interface
+ * {@link RegistrationStepTwoAmenityDetailsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link RegistrationSocietyStepTwoWingDetailsFragment#newInstance} factory method to
+ * Use the {@link RegistrationStepTwoAmenityDetailsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegistrationSocietyStepTwoWingDetailsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class RegistrationStepTwoAmenityDetailsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -38,12 +39,16 @@ public class RegistrationSocietyStepTwoWingDetailsFragment extends Fragment impl
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
     RecyclerView recyclerView;
-    RecyclerView.Adapter recyclerViewAdapter;
+    RegistrationAmenitiesAdapter recyclerViewAdapter;
     RecyclerView.LayoutManager layoutManager;
 
-    public RegistrationSocietyStepTwoWingDetailsFragment() {
+    public SwitchCompat switchCompat;
+
+
+    private OnFragmentInteractionListener mListener;
+
+    public RegistrationStepTwoAmenityDetailsFragment() {
         // Required empty public constructor
     }
 
@@ -53,11 +58,11 @@ public class RegistrationSocietyStepTwoWingDetailsFragment extends Fragment impl
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment RegistrationSocietyStepTwoWingDetailsFragment.
+     * @return A new instance of fragment RegistrationStepTwoAmenityDetailsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static RegistrationSocietyStepTwoWingDetailsFragment newInstance(String param1, String param2) {
-        RegistrationSocietyStepTwoWingDetailsFragment fragment = new RegistrationSocietyStepTwoWingDetailsFragment();
+    public static RegistrationStepTwoAmenityDetailsFragment newInstance(String param1, String param2) {
+        RegistrationStepTwoAmenityDetailsFragment fragment = new RegistrationStepTwoAmenityDetailsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -78,17 +83,15 @@ public class RegistrationSocietyStepTwoWingDetailsFragment extends Fragment impl
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_registration_step_two_amenity_details, container, false);
 
-        View view = inflater.inflate(R.layout.fragment_registration_society_step_two_wing_details, container, false);
-
-        recyclerView = view.findViewById(R.id.registration_wings_recycler_view);
+        recyclerView = view.findViewById(R.id.registration_amenities_recycler);
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        final ArrayList<Wing> dataset = new ArrayList<>();
-        dataset.add(new Wing());
-
-        recyclerViewAdapter = new RegistrationWingsAdapter(dataset, getContext());
+        final ArrayList<Amenity> dataset = new ArrayList<>();
+        dataset.add(new Amenity());
+        recyclerViewAdapter = new RegistrationAmenitiesAdapter(dataset, getContext());
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setHasFixedSize(true);
 
@@ -98,12 +101,19 @@ public class RegistrationSocietyStepTwoWingDetailsFragment extends Fragment impl
 
         recyclerView.setNestedScrollingEnabled(true);
 
-        Button button = view.findViewById(R.id.add_wing_button);
+        Button button = view.findViewById(R.id.add_amenity_button);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                dataset.add(new Wing());
-                recyclerViewAdapter.notifyItemInserted(dataset.size() -1);
+            public void onClick(View view) {
+                dataset.add(new Amenity());
+                try {
+                    InputMethodManager manager = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
+                    manager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                recyclerViewAdapter.notifyItemInserted(dataset.size() - 1);
             }
         });
 
@@ -115,6 +125,14 @@ public class RegistrationSocietyStepTwoWingDetailsFragment extends Fragment impl
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    public ArrayList<Amenity> getAmenityDataFromAdapter() {
+        return recyclerViewAdapter.getAmenityData();
+    }
+
+    public Boolean getAmenitiesError() {
+        return recyclerViewAdapter.getAmenitiesError();
     }
 
     @Override
@@ -138,7 +156,6 @@ public class RegistrationSocietyStepTwoWingDetailsFragment extends Fragment impl
     public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
         String text = parent.getItemAtPosition(position).toString();
         Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
@@ -146,18 +163,12 @@ public class RegistrationSocietyStepTwoWingDetailsFragment extends Fragment impl
 
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+
     }
+
 }
+
+

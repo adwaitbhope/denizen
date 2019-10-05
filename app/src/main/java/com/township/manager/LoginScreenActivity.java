@@ -8,18 +8,30 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
+import com.amazonaws.auth.CognitoCachingCredentialsProvider;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.pusher.pushnotifications.BeamsCallback;
+import com.pusher.pushnotifications.PushNotifications;
+import com.pusher.pushnotifications.PusherCallbackError;
+import com.pusher.pushnotifications.auth.AuthData;
+import com.pusher.pushnotifications.auth.AuthDataGetter;
+import com.pusher.pushnotifications.auth.BeamsTokenProvider;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,7 +41,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class LoginScreenActivity extends FragmentActivity {
+public class LoginScreenActivity extends AppCompatActivity {
     public com.google.android.material.button.MaterialButton forgotpasswordButton, registersociety, contactus, loginButton;
 
     public TextInputEditText usernameEditText, passwordEditText;
@@ -44,21 +56,20 @@ public class LoginScreenActivity extends FragmentActivity {
 
         dbManager = new DBManager(this);
         Cursor cursor = dbManager.getDataLogin();
-        if (cursor.getCount()!=0) {
+        if (cursor.getCount() != 0) {
             int columntypeindex = cursor.getColumnIndexOrThrow("Type");
-            //  Log.d("hikr","hello");
             cursor.moveToFirst();
-            switch (cursor.getString(columntypeindex)){
+            switch (cursor.getString(columntypeindex)) {
                 case "admin":
-                    startActivity(new Intent(LoginScreenActivity.this,AdminHomeScreenActivity.class));
+                    startActivity(new Intent(LoginScreenActivity.this, AdminHomeScreenActivity.class));
                     finish();
                     break;
                 case "security":
-                    startActivity(new Intent(LoginScreenActivity.this,SecurityHomeScreenActivity.class));
+                    startActivity(new Intent(LoginScreenActivity.this, SecurityHomeScreenActivity.class));
                     finish();
                     break;
                 case "resident":
-                    startActivity(new Intent(LoginScreenActivity.this,ResidentHomeScreenActivity.class));
+                    startActivity(new Intent(LoginScreenActivity.this, ResidentHomeScreenActivity.class));
                     finish();
                     break;
             }
@@ -68,7 +79,7 @@ public class LoginScreenActivity extends FragmentActivity {
         forgotpasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginScreenActivity.this,ForgotPassword.class));
+                startActivity(new Intent(LoginScreenActivity.this, ForgotPassword.class));
             }
         });
 
@@ -99,7 +110,22 @@ public class LoginScreenActivity extends FragmentActivity {
         error(usernameTextLayout);
         error(passwordTextLayout);
 
+    }
 
+    public void uploadToS3() {
+        new Thread() {
+            public void run() {
+                CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
+                        getApplicationContext(),
+                        "ap-southeast-1:9dad92cc-b78c-43e3-925c-1b18b7f6eb9a", // Identity pool ID
+                        Regions.AP_SOUTHEAST_1 // Region
+                );
+
+                AmazonS3 s3Client = new AmazonS3Client(credentialsProvider);
+
+                s3Client.putObject("township-manager", "townships/notices/maintenance", "Pay the maintenance amount");
+            }
+        }.start();
     }
 
     private void error(final TextInputLayout textInputLayout) {
@@ -147,108 +173,149 @@ public class LoginScreenActivity extends FragmentActivity {
                     return;
                 }
 
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, getString(R.string.server_addr) + "/login/",
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    try {
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, getString(R.string.server_addr) + "/login/",
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
 
-                                        JSONArray jsonArray = new JSONArray(response);
-                                        JSONObject jsonObjectLogin = jsonArray.getJSONObject(0);
-                                        User user = new User();
-                                        user.setLogin(jsonObjectLogin.getInt("login"));
+                                    JSONArray jsonArray = new JSONArray(response);
+                                    JSONObject jsonObjectLogin = jsonArray.getJSONObject(0);
+                                    User user = new User();
+                                    user.setLogin(jsonObjectLogin.getInt("login"));
 
 
+                                    if (user.getLogin() == 1) {
+                                        JSONObject jsonObjectLoginInfo = jsonArray.getJSONObject(1);
+                                        user.setLoginType(jsonObjectLoginInfo.getString("type"));
+                                        user.setUserName(jsonObjectLoginInfo.getString("username"));
+                                        user.setPassword(password);
+                                        user.setFirstName(jsonObjectLoginInfo.getString("first_name"));
+                                        user.setLastName(jsonObjectLoginInfo.getString("last_name"));
+                                        user.setPhoneNumber(jsonObjectLoginInfo.getString("phone"));
+                                        user.setEmail(jsonObjectLoginInfo.getString("email"));
+                                        user.setProfileUpdated(jsonObjectLoginInfo.getBoolean("profile_updated"));
+                                        user.setTownship(jsonObjectLoginInfo.getString("township"));
 
-                                        if (user.getLogin() == 1) {
-                                            JSONObject jsonObjectLoginInfo = jsonArray.getJSONObject(1);
-                                            user.setLoginType(jsonObjectLoginInfo.getString("type"));
-                                            user.setUserName(jsonObjectLoginInfo.getString("username"));
-                                            user.setPassword(password);
-                                            user.setFirstName(jsonObjectLoginInfo.getString("first_name"));
-                                            user.setLastName(jsonObjectLoginInfo.getString("last_name"));
-                                            user.setPhoneNumber(jsonObjectLoginInfo.getString("phone"));
-                                            user.setEmail(jsonObjectLoginInfo.getString("email"));
-                                            user.setProfileUpdated(jsonObjectLoginInfo.getBoolean("profile_updated"));
-                                            user.setTownship(jsonObjectLoginInfo.getString("township"));
+                                        ContentValues contentValues = new ContentValues();
+                                        contentValues.put(DBManager.ColUsername, user.getUserName());
+                                        contentValues.put(DBManager.ColPassword, user.getPassword());
+                                        contentValues.put(DBManager.ColFirstName, user.getFirstName());
+                                        contentValues.put(DBManager.ColLastName, user.getLastName());
+                                        contentValues.put(DBManager.ColPhone, user.getPhoneNumber());
+                                        contentValues.put(DBManager.ColEmail, user.getEmail());
+                                        contentValues.put(DBManager.ColProfileUpdated, user.getProfileUpdated());
+                                        contentValues.put(DBManager.ColTownship, user.getTownship());
+                                        contentValues.put(DBManager.ColType, user.getLoginType());
+                                        //   Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
 
-                                            ContentValues contentValues = new ContentValues();
-                                            contentValues.put(DBManager.ColUsername, user.getUserName());
-                                            contentValues.put(DBManager.ColPassword, user.getPassword());
-                                            contentValues.put(DBManager.ColFirstName, user.getFirstName());
-                                            contentValues.put(DBManager.ColLastName, user.getLastName());
-                                            contentValues.put(DBManager.ColPhone, user.getPhoneNumber());
-                                            contentValues.put(DBManager.ColEmail, user.getEmail());
-                                            contentValues.put(DBManager.ColProfileUpdated, user.getProfileUpdated());
-                                            contentValues.put(DBManager.ColTownship, user.getTownship());
-                                            contentValues.put(DBManager.ColType, user.getLoginType());
-                                            //   Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
-                                            Log.d("response", response);
-                                            switch (user.getLoginType()) {
+                                        PushNotifications.start(getApplicationContext(), "f464fd4f-7e2f-4f42-91cf-8a8ef1a67acb");
 
-                                                case "admin": {
-                                                    user.setDesignation(jsonObjectLoginInfo.getString("designation"));
-                                                    contentValues.put(DBManager.ColDesignation, user.getDesignation());
-                                                    long id = dbManager.Insert(contentValues);
-                                                    startActivity(new Intent(LoginScreenActivity.this, AdminHomeScreenActivity.class));
-                                                    finish();
-                                                    break;
+                                        BeamsTokenProvider tokenProvider = new BeamsTokenProvider(
+                                                getString(R.string.server_addr) + "/beams/get_token/",
+                                                new AuthDataGetter() {
+                                                    @Override
+                                                    public AuthData getAuthData() {
+                                                        HashMap<String, String> headers = new HashMap<>();
+                                                        headers.put("username", username);
+                                                        headers.put("password", password);
+                                                        HashMap<String, String> queryParams = new HashMap<>();
+                                                        return new AuthData(
+                                                                headers,
+                                                                queryParams
+                                                        );
+                                                    }
                                                 }
-                                                case "security": {
-                                                    long id = dbManager.Insert(contentValues);
-                                                    startActivity(new Intent(LoginScreenActivity.this, SecurityHomeScreenActivity.class));
-                                                    finish();
-                                                    break;
-                                                }
-                                                case "resident": {
-                                                    user.setWing(jsonObjectLoginInfo.getString("wing"));
-                                                    contentValues.put(DBManager.ColWing, user.getWing());
-                                                    user.setApartment(jsonObjectLoginInfo.getString("apartment"));
-                                                    contentValues.put(DBManager.ColApartment,user.getApartment());
-                                                    long id = dbManager.Insert(contentValues);
+                                        );
 
-                                                    startActivity(new Intent(LoginScreenActivity.this, ResidentHomeScreenActivity.class));
-                                                    finish();
-                                                    break;
-                                                }
-
+                                        PushNotifications.setUserId(username, tokenProvider, new BeamsCallback<Void, PusherCallbackError>(){
+                                            @Override
+                                            public void onSuccess(Void... values) {
+                                                Log.i("PusherBeams", "Successfully authenticated with Pusher Beams");
                                             }
 
-                                        } else {
-                                            Log.d("login", "failed");
-                                        }
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            }) {
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String, String> params = new HashMap<>();
-                            params.put("username", username);
-                            params.put("password", password);
-                            return params;
-                        }
-                    };
-                    ((GlobalVariables) getApplication()).getQueue().add(stringRequest);
+                                            @Override
+                                            public void onFailure(PusherCallbackError error) {
+                                                Log.i("PusherBeams", "Pusher Beams authentication failed: " + error.getMessage());
+                                            }
+                                        });
 
+
+                                        Log.d("response", response);
+                                        switch (user.getLoginType()) {
+
+                                            case "admin": {
+                                                user.setDesignation(jsonObjectLoginInfo.getString("designation"));
+                                                contentValues.put(DBManager.ColDesignation, user.getDesignation());
+                                                long id = dbManager.Insert(contentValues);
+                                                PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-admins");
+                                                startActivity(new Intent(LoginScreenActivity.this, AdminHomeScreenActivity.class));
+                                                finish();
+                                                break;
+                                            }
+                                            case "security": {
+                                                long id = dbManager.Insert(contentValues);
+                                                startActivity(new Intent(LoginScreenActivity.this, SecurityHomeScreenActivity.class));
+                                                PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-security");
+                                                finish();
+                                                break;
+                                            }
+                                            case "resident": {
+                                                user.setWing(jsonObjectLoginInfo.getString("wing"));
+                                                contentValues.put(DBManager.ColWing, user.getWing());
+                                                user.setApartment(jsonObjectLoginInfo.getString("apartment"));
+                                                PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-residents");
+                                                PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-" + jsonObjectLogin.getString("wing_id") + "-residents");
+                                                contentValues.put(DBManager.ColApartment, user.getApartment());
+                                                long id = dbManager.Insert(contentValues);
+
+                                                startActivity(new Intent(LoginScreenActivity.this, ResidentHomeScreenActivity.class));
+                                                finish();
+                                                break;
+                                            }
+
+                                        }
+
+                                    } else {
+                                        Log.d("login", "failed");
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("username", username);
+                        params.put("password", password);
+                        return params;
+                    }
+                };
+
+                ((GlobalVariables) getApplication()).getQueue().add(stringRequest);
 
             }
         });
 
-
     }
 
     public void openDialog() {
-        ContactUsDialog exampleDialog = new ContactUsDialog();
-        exampleDialog.show(getSupportFragmentManager(), "example dialog");
+//        ContactUsDialog exampleDialog = new ContactUsDialog();
+//        exampleDialog.show(getSupportFragmentManager(), "example dialog");
+
+        MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(this);
+        materialAlertDialogBuilder.setTitle("Contact us")
+                .setMessage("\nE-mail: support@denizen.io\n\nPhone: +91 94054 38914")
+                .setPositiveButton("Close", null)
+                .show();
     }
 
     public void openRegisterSocietyScreen() {
