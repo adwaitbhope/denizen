@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,14 +46,25 @@ public class AdminHomeScreenActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
         View header = navigationView.getHeaderView(0);
-        TextView adminName, adminDesignation;
-        adminDesignation = header.findViewById(R.id.navheader_admin_home_screen_designation_textview);
-        adminName = header.findViewById(R.id.navheader_admin_home_screen_name_textview);
+        TextView adminDesignation = header.findViewById(R.id.navheader_admin_home_screen_designation_textview);
+        TextView adminName = header.findViewById(R.id.navheader_admin_home_screen_name_textview);
+        ImageButton editProfile = header.findViewById(R.id.admin_home_nav_header_edit_profile_button);
+
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminHomeScreenActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
         firstNameCol = cursor.getColumnIndexOrThrow("First_Name");
         lastNameCol = cursor.getColumnIndexOrThrow("Last_Name");
         desCol = cursor.getColumnIndexOrThrow("Designation");
         cursor.moveToFirst();
+
         adminDesignation.setText(cursor.getString(desCol));
         adminName.setText(cursor.getString(firstNameCol) + " " + cursor.getString(lastNameCol));
 

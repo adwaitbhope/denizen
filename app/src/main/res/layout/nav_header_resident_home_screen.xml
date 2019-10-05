@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
@@ -12,25 +12,41 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
+    <ImageButton
+        android:id="@+id/resident_home_nav_header_edit_profile_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:padding="8dp"
+        android:src="@android:drawable/ic_menu_edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/resident_home_nav_header_profile_image" />
+
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/resident_home_nav_header_profile_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/nav_header_desc"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        app:srcCompat="@mipmap/ic_launcher_round"
+        app:layout_constraintBottom_toTopOf="@id/resident_home_nav_header_name"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/navheader_resident_home_screen_name_textview"
+        android:id="@+id/resident_home_nav_header_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="Resident Name"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/resident_home_nav_header_flat_no" />
 
     <TextView
-        android:id="@+id/navheader_resident_home_screen_flatno_textview"
+        android:id="@+id/resident_home_nav_header_flat_no"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Flat No." />
-</LinearLayout>
+        android:text="Flat No."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

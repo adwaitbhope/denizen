@@ -1,10 +1,12 @@
 package com.township.manager;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
@@ -32,19 +34,32 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        int flatNoCol, firstNameCol, lastNameCol, wingNoCol;
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View header = navigationView.getHeaderView(0);
-        TextView residentName, residentFlatNo;
-        residentFlatNo = header.findViewById(R.id.navheader_resident_home_screen_flatno_textview);
-        residentName = header.findViewById(R.id.navheader_resident_home_screen_name_textview);
+
+        TextView residentFlatNo = header.findViewById(R.id.resident_home_nav_header_flat_no);
+        TextView residentName = header.findViewById(R.id.resident_home_nav_header_name);
+
+        ImageButton editProfile = header.findViewById(R.id.resident_home_nav_header_edit_profile_button);
+
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ResidentHomeScreenActivity.this, EditProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        int flatNoCol, firstNameCol, lastNameCol, wingNoCol;
         Cursor cursor = dbManager.getDataLogin();
         firstNameCol = cursor.getColumnIndexOrThrow("First_Name");
         lastNameCol = cursor.getColumnIndexOrThrow("Last_Name");
         flatNoCol = cursor.getColumnIndexOrThrow("Apartment");
         wingNoCol = cursor.getColumnIndexOrThrow("Wing");
         cursor.moveToFirst();
+
         residentName.setText(cursor.getString(firstNameCol) + " " + cursor.getString(lastNameCol));
         residentFlatNo.setText(cursor.getString(wingNoCol) + "/" +cursor.getString(flatNoCol));
 
@@ -70,7 +85,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_intercom_resident) {
-            // Handle the camera action
+
         } else if (id == R.id.nav_vendors_resident) {
 
         } else if (id == R.id.nav_admin_info_resident) {
