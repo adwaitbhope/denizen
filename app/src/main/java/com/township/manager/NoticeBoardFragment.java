@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -92,9 +93,21 @@ public class NoticeBoardFragment extends Fragment {
             }
         });
 
+        final MaterialCardView cardView = view.findViewById(R.id.notice_board_cardView);
+        cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                cardView.setChecked(!cardView.isChecked());
+                //cardView.toggle();
+                return true;
+            }
+        });
+
         // Inflate the layout for this fragment
         return view;
     }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -134,4 +147,5 @@ public class NoticeBoardFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

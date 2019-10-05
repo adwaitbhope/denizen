@@ -25,7 +25,12 @@
             tools:context=".NoticeBoardFragment">
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/wing_details_cardView"
+                android:checkable="true"
+                android:clickable="true"
+                android:focusable="true"
+                app:checkedIcon="@drawable/ic_check_circle_black_24dp"
+                app:checkedIconTint="@color/primaryDarkColor"
+                android:id="@+id/notice_board_cardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -85,15 +90,14 @@
 
                     <TextView
                         android:id="@+id/textView10"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:minLines="1"
-                        android:textSize="12sp"
                         android:text="This is the latest comment commented by a resident."
+                        android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView5"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
