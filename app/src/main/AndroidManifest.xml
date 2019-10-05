@@ -18,12 +18,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NoticeBoardCommentActivity"></activity>
+        <activity android:name=".NoticeBoardCommentActivity"
+            android:label="Comments"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity
             android:name=".AmenitiesAdminContainerActivity"
             android:label="Amenities"
             android:parentActivityName=".AdminHomeScreenActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddNoticeAdminActivity"
             android:label="New Notice"
@@ -35,7 +38,7 @@
             android:name=".RegistrationStepTwoStatusActivity"
             android:label="Application Status"
             android:parentActivityName=".RegistrationStepsActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RegistrationStepsActivity"
             android:label="Registration Steps"
