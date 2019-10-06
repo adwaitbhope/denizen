@@ -16,22 +16,22 @@ class Notice {
     @PrimaryKey
     String notice_id;
 
-    @ColumnInfo (name = "title")
+    @ColumnInfo(name = "title")
     String title;
 
-    @ColumnInfo (name = "description")
+    @ColumnInfo(name = "description")
     String description;
 
-    @ColumnInfo (name = "timestamp")
+    @ColumnInfo(name = "timestamp")
     String timestamp;
 
-    @ColumnInfo (name = "posted_by_first_name")
+    @ColumnInfo(name = "posted_by_first_name")
     String posted_by_first_name;
 
-    @ColumnInfo (name = "posted_by_last_name")
+    @ColumnInfo(name = "posted_by_last_name")
     String posted_by_last_name;
 
-    @ColumnInfo (name = "posted_by_designation")
+    @ColumnInfo(name = "posted_by_designation")
     String posted_by_designation;
 
     @Ignore
@@ -40,7 +40,7 @@ class Notice {
     @Ignore
     ArrayList<Comment> comments;
 
-    Notice (String title, String description) {
+    Notice(String title, String description) {
         this.title = title;
         this.description = description;
     }
@@ -48,14 +48,6 @@ class Notice {
     @NonNull
     public String getNotice_id() {
         return notice_id;
-    }
-
-    public void setNotice_id(@NonNull String notice_id) {
-        this.notice_id = notice_id;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getTitle() {
@@ -66,92 +58,73 @@ class Notice {
         return description;
     }
 
-    public void setWings(ArrayList<Wing> wings) {
-        this.wings = wings;
+    public ArrayList<Comment> getComments() {
+        return comments;
     }
 
     public ArrayList<Wing> getWings() {
         return wings;
     }
 
+    public void setWings(ArrayList<Wing> wings) {
+        this.wings = wings;
+    }
+
     public void setComments(ArrayList<Comment> comments) {
         this.comments = comments;
     }
 
-    public ArrayList<Comment> getComments() {
-        return comments;
+    public void setNotice_id(@NonNull String notice_id) {
+        this.notice_id = notice_id;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-
-    @Entity (foreignKeys = {
+    @Entity(foreignKeys = {
             @ForeignKey(entity = Notice.class,
-            parentColumns = "notice_id",
-            childColumns = "notice_id")
+                    parentColumns = "notice_id",
+                    childColumns = "notice_id")
     })
     public static class Comment {
 
         @NonNull
-        @PrimaryKey (autoGenerate = true)
-        int comment_id;
+        @PrimaryKey
+        String comment_id;
 
         String notice_id;
 
-        @ColumnInfo (name = "posted_by_user_id")
+        @ColumnInfo(name = "posted_by_user_id")
         String posted_by_user_id;
 
-        @ColumnInfo (name = "posted_by_first_name")
+        @ColumnInfo(name = "posted_by_first_name")
         String posted_by_first_name;
 
-        @ColumnInfo (name = "posted_by_last_name")
+        @ColumnInfo(name = "posted_by_last_name")
         String posted_by_last_name;
 
-        @ColumnInfo (name = "posted_by_wing")
+        @ColumnInfo(name = "posted_by_wing")
         String posted_by_wing;
 
-        @ColumnInfo (name = "posted_by_apartment")
+        @ColumnInfo(name = "posted_by_apartment")
         String posted_by_apartment;
 
-        @ColumnInfo (name = "content")
+        @ColumnInfo(name = "posted_by_designation")
+        String posted_by_designation;
+
+        @ColumnInfo(name = "content")
         String content;
 
-        @ColumnInfo (name = "timestamp")
+        @ColumnInfo(name = "timestamp")
         String timestamp;
 
-        public void setPosted_by_first_name(String posted_by_first_name) {
-            this.posted_by_first_name = posted_by_first_name;
-        }
-
-        public void setNotice_id(String notice_id) {
-            this.notice_id = notice_id;
+        public String getComment_id() {
+            return comment_id;
         }
 
         public String getNotice_id() {
             return notice_id;
-        }
-
-        public void setTimestamp(String timestamp) {
-            this.timestamp = timestamp;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-
-        public void setPosted_by_apartment(String posted_by_apartment) {
-            this.posted_by_apartment = posted_by_apartment;
-        }
-
-        public void setPosted_by_last_name(String posted_by_last_name) {
-            this.posted_by_last_name = posted_by_last_name;
-        }
-
-        public void setPosted_by_user_id(String posted_by_user_id) {
-            this.posted_by_user_id = posted_by_user_id;
-        }
-
-        public void setPosted_by_wing(String posted_by_wing) {
-            this.posted_by_wing = posted_by_wing;
         }
 
         public String getPosted_by_first_name() {
@@ -180,6 +153,50 @@ class Notice {
 
         public String getTimestamp() {
             return timestamp;
+        }
+
+        public String getPosted_by_designation() {
+            return posted_by_designation;
+        }
+
+        public void setPosted_by_designation(String posted_by_designation) {
+            this.posted_by_designation = posted_by_designation;
+        }
+
+        public void setPosted_by_first_name(String posted_by_first_name) {
+            this.posted_by_first_name = posted_by_first_name;
+        }
+
+        public void setComment_id(@NonNull String comment_id) {
+            this.comment_id = comment_id;
+        }
+
+        public void setNotice_id(String notice_id) {
+            this.notice_id = notice_id;
+        }
+
+        public void setTimestamp(String timestamp) {
+            this.timestamp = timestamp;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        public void setPosted_by_apartment(String posted_by_apartment) {
+            this.posted_by_apartment = posted_by_apartment;
+        }
+
+        public void setPosted_by_last_name(String posted_by_last_name) {
+            this.posted_by_last_name = posted_by_last_name;
+        }
+
+        public void setPosted_by_user_id(String posted_by_user_id) {
+            this.posted_by_user_id = posted_by_user_id;
+        }
+
+        public void setPosted_by_wing(String posted_by_wing) {
+            this.posted_by_wing = posted_by_wing;
         }
     }
 

@@ -13,6 +13,7 @@ import com.pusher.pushnotifications.PushNotifications;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.room.Room;
 
 public class LogOutDialog extends AppCompatDialogFragment {
     @NonNull
@@ -26,13 +27,30 @@ public class LogOutDialog extends AppCompatDialogFragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 getActivity().finish();
+
                 DBManager dbManager = new DBManager(getContext());
                 dbManager.deleteAll();
+
+                new Thread() {
+                    public void run() {
+                        AppDatabase appDatabase = Room.databaseBuilder(getContext().getApplicationContext(),
+                                AppDatabase.class, "app-database")
+                                .fallbackToDestructiveMigration()
+                                .build();
+
+                        appDatabase.commentDao().deleteAll();
+                        appDatabase.noticeDao().deleteAll();
+                        appDatabase.noticeWingsDao().deleteAll();
+                        appDatabase.wingDao().deleteAll();
+                    }
+                }.start();
+
                 try {
                     PushNotifications.clearAllState();
                 } catch (IllegalStateException e) {
                     e.printStackTrace();
                 }
+
                 startActivity(new Intent(getContext(), LoginScreenActivity.class));
 
             }

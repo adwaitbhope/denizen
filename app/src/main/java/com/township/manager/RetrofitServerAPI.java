@@ -75,5 +75,14 @@ public interface RetrofitServerAPI {
         @Field("timestamp") String timestamp
     );
 
+    @FormUrlEncoded
+    @POST("/notices/comments/new/")
+    Call<JsonArray> addCommentToNotice(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("notice_id") String notice_id,
+            @Field("content") String comment
+    );
+
 
 }

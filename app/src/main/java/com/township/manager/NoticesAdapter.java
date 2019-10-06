@@ -40,9 +40,7 @@ public class NoticesAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         final ViewHolder viewHolder = (ViewHolder) holder;
-        Notice notice = dataset.get(position);
-
-        Log.d("notice in adapter", notice.getTitle());
+        final Notice notice = dataset.get(position);
 
         viewHolder.image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +53,7 @@ public class NoticesAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, NoticeBoardCommentActivity.class);
+                intent.putExtra("notice_id", notice.getNotice_id());
                 context.startActivity(intent);
             }
         });
@@ -67,11 +66,25 @@ public class NoticesAdapter extends RecyclerView.Adapter {
             }
         });
 
-        viewHolder.title.setText(notice.getTitle() + " " + notice.getWings().get(0).getName());
-        viewHolder.description.setText(notice.getDescription());
-        viewHolder.latestComment.setText("I think this is correct");
-        viewHolder.latestComment.setText(notice.getComments().get(0).getContent());
+        String title = notice.getTitle();
+        if (notice.getWings().size() != 0) {
+            title += " ( ";
+            for (Wing wing : notice.getWings()) {
+                title += wing.getName() + " ";
+            }
+            title += ")";
+        }
 
+        viewHolder.title.setText(title);
+        viewHolder.description.setText(notice.getDescription());
+        viewHolder.latestComment.setText("No comments yet.");
+
+        ArrayList<Notice.Comment> comments = notice.getComments();
+        if (comments.size() == 0) {
+            viewHolder.latestComment.setVisibility(View.GONE);
+        } else {
+            viewHolder.latestComment.setText(comments.get(comments.size() -1).getContent());
+        }
     }
 
     @Override

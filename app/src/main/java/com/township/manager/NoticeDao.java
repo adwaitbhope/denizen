@@ -20,13 +20,17 @@ public interface NoticeDao {
     List<Wing> getWings(String notice_id);
 
     @Query("SELECT * FROM Comment\n" +
-            "WHERE Comment.notice_id = :notice_id")
+            "WHERE Comment.notice_id = :notice_id\n" +
+            "ORDER BY timestamp")
     List<Notice.Comment> getComments(String notice_id);
 
-    @Insert (onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Notice... notices);
 
     @Delete
     void delete(Notice notice);
+
+    @Query("DELETE FROM Notice")
+    void deleteAll();
 
 }

@@ -20,4 +20,7 @@ public interface WingDao {
     @Delete
     void delete(Wing wing);
 
+    @Query("DELETE FROM Wing")
+    void deleteAll();
+
 }

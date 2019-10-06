@@ -87,7 +87,7 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         adminDesignation = header.findViewById(R.id.navheader_admin_home_screen_designation_textview);
         adminName = header.findViewById(R.id.navheader_admin_home_screen_name_textview);
 
-        int firstNameCol, desCol, lastNameCol, usernameCol, passwordCol, asswordCol;
+        int firstNameCol, desCol, lastNameCol, usernameCol, passwordCol;
         firstNameCol = cursor.getColumnIndexOrThrow("First_Name");
         lastNameCol = cursor.getColumnIndexOrThrow("Last_Name");
         desCol = cursor.getColumnIndexOrThrow("Designation");
@@ -253,12 +253,8 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                             JSONArray jsonComments = jsonNotice.getJSONArray("comments");
 
                             for (int j = 0; j < jsonComments.length(); j++) {
-                                Log.d("comment json", jsonComments.toString());
                                 comment = gson.fromJson(jsonComments.getString(j), Notice.Comment.class);
                                 comment.setNotice_id(notice.getNotice_id());
-                                if (j == 0) {
-
-                                }
                                 comments.add(comment);
                             }
                             notice.setComments(comments);

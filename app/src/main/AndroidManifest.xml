@@ -21,6 +21,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".NoticeBoardCommentActivity"
             android:label="Comments"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".RegistrationSuccessfulActivity"
