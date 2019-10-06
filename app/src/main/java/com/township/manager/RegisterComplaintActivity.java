@@ -151,7 +151,7 @@ public class RegisterComplaintActivity extends AppCompatActivity {
             error=true;
         }
         if(TextUtils.isEmpty(description)){
-            descriptiontil.setError("Please enter the title");
+            descriptiontil.setError("Please enter the description");
             descriptiontil.setErrorEnabled(true);
             descriptiontil.requestFocus();
             descriptiontil.setErrorIconDrawable(null);
