@@ -2,7 +2,9 @@ package com.township.manager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.Objects;
+
 
 
 /**
@@ -82,6 +85,12 @@ public class ComplaintsFragment extends Fragment {
         sliderAdapter.addFragment(pendingListFragment, "Pending");
         sliderAdapter.addFragment(resolvedListFragment, "Resolved");
 
+        DBManager dbManager=new DBManager(getApplicationContext());
+        Cursor cursor=dbManager.getDataLogin();
+        cursor.moveToFirst();
+        int typeCol;
+        typeCol=cursor.getColumnIndexOrThrow("Type");
+
         // temporary dataset here
         ArrayList<Complaint> dataset = new ArrayList<>();
         Complaint complaint = new Complaint();
@@ -110,6 +119,7 @@ public class ComplaintsFragment extends Fragment {
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_assignment_late_black_24dp);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_assignment_turned_in_black_24dp);
 
+
         FloatingActionButton button = view.findViewById(R.id.complaints_add_complaint_fab);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +128,10 @@ public class ComplaintsFragment extends Fragment {
                 getContext().startActivity(intent);
             }
         });
+        button.setVisibility(View.GONE);
+        if(cursor.getString(typeCol).equals("resident")){
+             button.setVisibility(View.VISIBLE);
+        }
 
         return view;
     }

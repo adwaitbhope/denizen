@@ -49,5 +49,14 @@ public interface RetrofitServerAPI {
             @Field("ORDER_ID") String ORDER_ID
     );
 
+    @FormUrlEncoded
+    @POST("/complaints/new/")
+    Call<JsonArray> addComplaint(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("title") String title,
+            @Field("description") String description
+    );
+
 
 }
