@@ -19,6 +19,10 @@ public interface NoticeDao {
             "WHERE NoticeWing.notice_id = :notice_id")
     List<Wing> getWings(String notice_id);
 
+    @Query("SELECT * FROM Comment\n" +
+            "WHERE Comment.notice_id = :notice_id")
+    List<Notice.Comment> getComments(String notice_id);
+
     @Insert (onConflict = OnConflictStrategy.REPLACE)
     void insert(Notice... notices);
 

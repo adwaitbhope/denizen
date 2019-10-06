@@ -43,11 +43,16 @@ public class AdminHomeScreenActivity extends AppCompatActivity
     String username, password;
     NoticeBoardFragment noticeBoardFragment;
     ComplaintsFragment complaintsFragment;
+
     AppDatabase appDatabase;
+
     NoticeDao noticeDao;
     NoticeWingDao noticeWingDao;
+    CommentDao commentDao;
+
     NoticeWing[] noticeWingArray;
     Notice[] noticesArray;
+    Notice.Comment[] commentsArray;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -250,6 +255,10 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                             for (int j = 0; j < jsonComments.length(); j++) {
                                 Log.d("comment json", jsonComments.toString());
                                 comment = gson.fromJson(jsonComments.getString(j), Notice.Comment.class);
+                                comment.setNotice_id(notice.getNotice_id());
+                                if (j == 0) {
+
+                                }
                                 comments.add(comment);
                             }
                             notice.setComments(comments);
@@ -280,17 +289,22 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         new Thread() {
             public void run() {
                 noticeDao = appDatabase.noticeDao();
+                noticeWingDao = appDatabase.noticeWingsDao();
+                commentDao = appDatabase.commentDao();
+
                 noticesArray = new Notice[notices.size()];
 
-                noticeWingDao = appDatabase.noticeWingsDao();
-
-                int noticeWingsLength = 0;
+                int noticeWingsLength = 0, commentsLength = 0;
                 for (Notice notice : notices) {
-                    noticeWingsLength += notice.wings.size();
+                    noticeWingsLength += notice.getWings().size();
+                    commentsLength += notice.getComments().size();
                 }
+
                 noticeWingArray = new NoticeWing[noticeWingsLength];
+                commentsArray = new Notice.Comment[commentsLength];
 
                 ArrayList<NoticeWing> noticeWings = new ArrayList<>();
+                ArrayList<Notice.Comment> comments = new ArrayList<>();
                 NoticeWing noticeWing;
 
                 for (Notice notice : notices) {
@@ -300,10 +314,12 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                         noticeWing.setNotice_id(notice.getNotice_id());
                         noticeWings.add(noticeWing);
                     }
+                    comments.addAll(notice.getComments());
                 }
 
                 notices.toArray(noticesArray);
                 noticeWings.toArray(noticeWingArray);
+                comments.toArray(commentsArray);
 
                 NoticesAsyncTask asyncTask = new NoticesAsyncTask();
                 asyncTask.execute();
@@ -327,6 +343,7 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         protected Void doInBackground(Void... voids) {
             noticeDao.insert(noticesArray);
             noticeWingDao.insert(noticeWingArray);
+            commentDao.insert(commentsArray);
             return null;
         }
 

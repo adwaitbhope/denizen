@@ -105,7 +105,6 @@ public class NoticeBoardFragment extends Fragment {
         updateRecyclerView();
 
         recyclerView = view.findViewById(R.id.notice_board_recycler_view);
-//        Log.d("notices from database", dataset.toString());
         adapter = new NoticesAdapter(dataset, getContext());
         layoutManager = new LinearLayoutManager(getContext());
 
@@ -182,6 +181,7 @@ public class NoticeBoardFragment extends Fragment {
 
             for (Notice notice : dataset) {
                 notice.setWings((ArrayList<Wing>) noticeDao.getWings(notice.getNotice_id()));
+                notice.setComments((ArrayList<Notice.Comment>) noticeDao.getComments(notice.getNotice_id()));
             }
 
             return null;

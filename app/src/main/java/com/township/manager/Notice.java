@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
@@ -81,12 +82,52 @@ class Notice {
         return comments;
     }
 
+
+
+    @Entity (foreignKeys = {
+            @ForeignKey(entity = Notice.class,
+            parentColumns = "notice_id",
+            childColumns = "notice_id")
+    })
     public static class Comment {
-        String posted_by_first_name, posted_by_last_name, posted_by_user_id, posted_by_wing, posted_by_apartment;
-        String content, timestamp;
+
+        @NonNull
+        @PrimaryKey (autoGenerate = true)
+        int comment_id;
+
+        String notice_id;
+
+        @ColumnInfo (name = "posted_by_user_id")
+        String posted_by_user_id;
+
+        @ColumnInfo (name = "posted_by_first_name")
+        String posted_by_first_name;
+
+        @ColumnInfo (name = "posted_by_last_name")
+        String posted_by_last_name;
+
+        @ColumnInfo (name = "posted_by_wing")
+        String posted_by_wing;
+
+        @ColumnInfo (name = "posted_by_apartment")
+        String posted_by_apartment;
+
+        @ColumnInfo (name = "content")
+        String content;
+
+        @ColumnInfo (name = "timestamp")
+        String timestamp;
 
         public void setPosted_by_first_name(String posted_by_first_name) {
             this.posted_by_first_name = posted_by_first_name;
+        }
+
+        public void setNotice_id(String notice_id) {
+            this.notice_id = notice_id;
+        }
+
+        public String getNotice_id() {
+            return notice_id;
         }
 
         public void setTimestamp(String timestamp) {
