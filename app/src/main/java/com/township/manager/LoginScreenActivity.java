@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.regions.Regions;
@@ -123,7 +124,7 @@ public class LoginScreenActivity extends AppCompatActivity {
 
                 AmazonS3 s3Client = new AmazonS3Client(credentialsProvider);
 
-                s3Client.putObject("township-manager", "townships/notices/maintenance", "Pay the maintenance amount");
+                s3Client.putObject("township-manager", "townships/dataset/maintenance", "Pay the maintenance amount");
             }
         }.start();
     }
@@ -265,7 +266,7 @@ public class LoginScreenActivity extends AppCompatActivity {
                                                 contentValues.put(DBManager.ColWing, user.getWing());
                                                 user.setApartment(jsonObjectLoginInfo.getString("apartment"));
                                                 PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-residents");
-                                                PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-" + jsonObjectLogin.getString("wing_id") + "-residents");
+                                                PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-" + jsonObjectLoginInfo.getString("wing_id") + "-residents");
                                                 contentValues.put(DBManager.ColApartment, user.getApartment());
                                                 long id = dbManager.Insert(contentValues);
 

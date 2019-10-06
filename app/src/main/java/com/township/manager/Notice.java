@@ -2,27 +2,50 @@ package com.township.manager;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity
 class Notice {
 
-    String noticeId, postedByFirstName, PostedByLastName, postedByDesignation;
-    String title, description, timestamp;
+    @NonNull
+    @PrimaryKey
+    String notice_id;
+
+    @ColumnInfo (name = "title")
+    String title;
+
+    @ColumnInfo (name = "description")
+    String description;
+
+    @ColumnInfo (name = "timestamp")
+    String timestamp;
+
+    @ColumnInfo (name = "posted_by_first_name")
+    String posted_by_first_name;
+
+    @ColumnInfo (name = "posted_by_last_name")
+    String posted_by_last_name;
+
+    @ColumnInfo (name = "posted_by_designation")
+    String posted_by_designation;
+
+    @Ignore
     ArrayList<String> wings;
+
+    @Ignore
     ArrayList<Comment> comments;
 
-    public void setTitle(String title) {
+    Notice (String title, String description) {
         this.title = title;
-    }
-
-    public void setDescription(String description) {
         this.description = description;
     }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public String getTimestamp() {
-        return timestamp;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getTitle() {
@@ -33,40 +56,8 @@ class Notice {
         return description;
     }
 
-    public void setPostedByLastName(String getPostedByLastName) {
-        this.PostedByLastName = getPostedByLastName;
-    }
-
-    public void setNoticeId(String noticeId) {
-        this.noticeId = noticeId;
-    }
-
-    public void setPostedByDesignation(String postedByDesignation) {
-        this.postedByDesignation = postedByDesignation;
-    }
-
-    public void setPostedByFirstName(String postedByFirstName) {
-        this.postedByFirstName = postedByFirstName;
-    }
-
     public void setWings(ArrayList<String> wings) {
         this.wings = wings;
-    }
-
-    public String getPostedByLastName() {
-        return PostedByLastName;
-    }
-
-    public String getNoticeId() {
-        return noticeId;
-    }
-
-    public String getPostedByDesignation() {
-        return postedByDesignation;
-    }
-
-    public String getPostedByFirstName() {
-        return postedByFirstName;
     }
 
     public ArrayList<String> getWings() {
@@ -82,11 +73,11 @@ class Notice {
     }
 
     public static class Comment {
-        String postedByFirstName, postedByLastName, postedByUserId, postedByWing, postedByApartment;
+        String posted_by_first_name, posted_by_last_name, posted_by_user_id, posted_by_wing, posted_by_apartment;
         String content, timestamp;
 
-        public void setPostedByFirstName(String postedByFirstName) {
-            this.postedByFirstName = postedByFirstName;
+        public void setPosted_by_first_name(String posted_by_first_name) {
+            this.posted_by_first_name = posted_by_first_name;
         }
 
         public void setTimestamp(String timestamp) {
@@ -97,44 +88,44 @@ class Notice {
             this.content = content;
         }
 
-        public void setPostedByApartment(String postedByApartment) {
-            this.postedByApartment = postedByApartment;
+        public void setPosted_by_apartment(String posted_by_apartment) {
+            this.posted_by_apartment = posted_by_apartment;
         }
 
-        public void setPostedByLastName(String postedByLastName) {
-            this.postedByLastName = postedByLastName;
+        public void setPosted_by_last_name(String posted_by_last_name) {
+            this.posted_by_last_name = posted_by_last_name;
         }
 
-        public void setPostedByUserId(String postedByUserId) {
-            this.postedByUserId = postedByUserId;
+        public void setPosted_by_user_id(String posted_by_user_id) {
+            this.posted_by_user_id = posted_by_user_id;
         }
 
-        public void setPostedByWing(String postedByWing) {
-            this.postedByWing = postedByWing;
+        public void setPosted_by_wing(String posted_by_wing) {
+            this.posted_by_wing = posted_by_wing;
         }
 
-        public String getPostedByFirstName() {
-            return postedByFirstName;
+        public String getPosted_by_first_name() {
+            return posted_by_first_name;
         }
 
-        public String getPostedByApartment() {
-            return postedByApartment;
+        public String getPosted_by_apartment() {
+            return posted_by_apartment;
         }
 
         public String getContent() {
             return content;
         }
 
-        public String getPostedByLastName() {
-            return postedByLastName;
+        public String getPosted_by_last_name() {
+            return posted_by_last_name;
         }
 
-        public String getPostedByUserId() {
-            return postedByUserId;
+        public String getPosted_by_user_id() {
+            return posted_by_user_id;
         }
 
-        public String getPostedByWing() {
-            return postedByWing;
+        public String getPosted_by_wing() {
+            return posted_by_wing;
         }
 
         public String getTimestamp() {

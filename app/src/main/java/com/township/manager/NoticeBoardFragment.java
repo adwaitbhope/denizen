@@ -3,21 +3,22 @@ package com.township.manager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -43,6 +44,10 @@ public class NoticeBoardFragment extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layoutManager;
+
+    AppDatabase appDatabase;
+    ArrayList<Notice> dataset = new ArrayList<>();
+    NoticeDao noticeDao;
 
     public NoticeBoardFragment() {
         // Required empty public constructor
@@ -74,6 +79,10 @@ public class NoticeBoardFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        appDatabase = Room.databaseBuilder(getContext().getApplicationContext(),
+                AppDatabase.class, "app-database").build();
+        noticeDao = appDatabase.noticeDao();
     }
 
     @Override
@@ -91,8 +100,11 @@ public class NoticeBoardFragment extends Fragment {
             }
         });
 
+        getNoticesFromDatabase();
+
         recyclerView = view.findViewById(R.id.notice_board_recycler_view);
-        adapter = new NoticesAdapter(getNoticesFromDatabase(), getContext());
+//        Log.d("notices from database", dataset.toString());
+        adapter = new NoticesAdapter(dataset, getContext());
         layoutManager = new LinearLayoutManager(getContext());
 
         recyclerView.setLayoutManager(layoutManager);
@@ -105,22 +117,24 @@ public class NoticeBoardFragment extends Fragment {
         return view;
     }
 
-    private ArrayList<Notice> getNoticesFromDatabase() {
-        ArrayList<Notice> notices = new ArrayList<>();
+//    private ArrayList<Notice> getNoticesFromDatabase() {
+//        ArrayList<Notice> dataset = new ArrayList<>();
+//
+//         temporary dataset here
+//        Notice notice = new Notice("Diwali Celebration 2019", "Lorem ipsum dolor sit ametm consectetur adipiscin elit, sed do euismod tempor incideidunt ut labore et dolore mana aliqua.");
+//        dataset.add(notice);
+//
+//
+//        return dataset;
+//    }
 
-        // temporary dataset here
-        Notice notice = new Notice();
-        notice.setTitle("Diwali Celebration 2019");
-        notice.setDescription("Lorem ipsum dolor sit ametm consectetur adipiscin elit, sed do euismod tempor incideidunt ut labore et dolore mana aliqua.");
-        notices.add(notice);
-
-        return notices;
-    }
-
-    public void updateRecyclerView() {
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
-        }
+    public void getNoticesFromDatabase() {
+        new Thread() {
+            public void run() {
+                NoticesAsyncTask asyncTask = new NoticesAsyncTask();
+                asyncTask.execute();
+            }
+        }.start();
     }
 
 
@@ -161,6 +175,30 @@ public class NoticeBoardFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private class NoticesAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            dataset.clear();
+            dataset.addAll(noticeDao.getAll());
+            dataset.addAll(noticeDao.getAll());
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            if (adapter != null) {
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
 
 }

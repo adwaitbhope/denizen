@@ -2,6 +2,7 @@ package com.township.manager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,9 @@ public class NoticesAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         final ViewHolder viewHolder = (ViewHolder) holder;
+        Notice notice = dataset.get(position);
+
+        Log.d("notice in adapter", notice.getTitle());
 
         viewHolder.image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +66,11 @@ public class NoticesAdapter extends RecyclerView.Adapter {
                 return true;
             }
         });
+
+        viewHolder.title.setText(notice.getTitle());
+        viewHolder.description.setText(notice.getDescription());
+        viewHolder.latestComment.setText("I think this is correct");
+
     }
 
     @Override

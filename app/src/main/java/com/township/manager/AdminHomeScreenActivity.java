@@ -4,10 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -17,28 +20,49 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.room.Room;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdminHomeScreenActivity extends AppCompatActivity
         implements NoticeBoardFragment.OnFragmentInteractionListener, ComplaintsListFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener, ComplaintsFragment.OnFragmentInteractionListener {
 
-
+    String username, password;
     NoticeBoardFragment noticeBoardFragment;
     ComplaintsFragment complaintsFragment;
+    AppDatabase appDatabase;
+    NoticeDao noticeDao;
+    Notice[] noticesArray;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
         DBManager dbManager = new DBManager(getApplicationContext());
         Cursor cursor = dbManager.getDataLogin();
         cursor.moveToFirst();
-        int firstNameCol, desCol, lastNameCol;
-        super.onCreate(savedInstanceState);
+
+        appDatabase = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "app-database").build();
+
         setContentView(R.layout.activity_admin_home_screen);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -49,19 +73,32 @@ public class AdminHomeScreenActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
         View header = navigationView.getHeaderView(0);
         TextView adminName, adminDesignation;
+
         adminDesignation = header.findViewById(R.id.navheader_admin_home_screen_designation_textview);
         adminName = header.findViewById(R.id.navheader_admin_home_screen_name_textview);
+
+        int firstNameCol, desCol, lastNameCol, usernameCol, passwordCol, asswordCol;
         firstNameCol = cursor.getColumnIndexOrThrow("First_Name");
         lastNameCol = cursor.getColumnIndexOrThrow("Last_Name");
         desCol = cursor.getColumnIndexOrThrow("Designation");
+        usernameCol = cursor.getColumnIndexOrThrow("Username");
+        passwordCol = cursor.getColumnIndexOrThrow("Password");
         cursor.moveToFirst();
+
+        username = cursor.getString(usernameCol);
+        password = cursor.getString(passwordCol);
+
         adminDesignation.setText(cursor.getString(desCol));
         adminName.setText(cursor.getString(firstNameCol) + " " + cursor.getString(lastNameCol));
 
+
         noticeBoardFragment = new NoticeBoardFragment();
-        complaintsFragment = new ComplaintsFragment();
+//        complaintsFragment = new ComplaintsFragment();
+
+        getNoticesFromServer();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.admin_home_screen_fragment_area, noticeBoardFragment);
@@ -89,7 +126,8 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                         fragment = getSupportFragmentManager().findFragmentById(R.id.admin_home_screen_fragment_area);
                         if (! (fragment instanceof ComplaintsFragment)) {
                             transaction = getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.admin_home_screen_fragment_area, new ComplaintsFragment());
+                            complaintsFragment = new ComplaintsFragment();
+                            transaction.replace(R.id.admin_home_screen_fragment_area, complaintsFragment);
                             transaction.commit();
                         }
                         return true;
@@ -156,4 +194,121 @@ public class AdminHomeScreenActivity extends AppCompatActivity
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+    public void getNoticesFromServer() {
+
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(getString(R.string.server_addr))
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit retrofit = builder.build();
+
+        RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
+
+        Call<JsonArray> call = retrofitServerAPI.getNotices(
+                username,
+                password,
+                null
+        );
+
+        call.enqueue(new Callback<JsonArray>() {
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                assert response.body() != null;
+                Log.d("response", response.body().toString());
+                String responseString = response.body().getAsJsonArray().toString();
+                try {
+                    JSONArray jsonArray = new JSONArray(responseString);
+                    JSONObject loginResponse = jsonArray.getJSONObject(0);
+
+                    if (loginResponse.getInt("login_status") == 1) {
+                        JSONArray jsonNotices = jsonArray.getJSONArray(1);
+
+                        JSONObject jsonNotice;
+                        ArrayList<Notice> notices = new ArrayList<>();
+                        Notice notice;
+                        Notice.Comment comment;
+                        Gson gson = new Gson();
+
+                        for (int i = 0; i < jsonNotices.length(); i++) {
+                            jsonNotice = jsonNotices.getJSONObject(i);
+                            notice = gson.fromJson(jsonNotice.toString(), Notice.class);
+
+                            ArrayList<String> wings = new ArrayList<>();
+                            JSONArray jsonWings = jsonNotice.getJSONArray("wings");
+                            for (int j = 0; j < jsonWings.length(); j++) {
+                                wings.add((jsonWings.getString(j)));
+                            }
+                            notice.setWings(wings);
+
+                            ArrayList<Notice.Comment> comments = new ArrayList<>();
+                            JSONArray jsonComments = jsonNotice.getJSONArray("comments");
+
+                            for (int j = 0; j < jsonComments.length(); j++) {
+                                Log.d("comment json", jsonComments.toString());
+                                comment = gson.fromJson(jsonComments.getString(j), Notice.Comment.class);
+                                comments.add(comment);
+                            }
+                            notice.setComments(comments);
+
+                            notices.add(notice);
+                        }
+
+                        addNoticesToDatabase(notices);
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    public void addNoticesToDatabase(ArrayList<Notice> notices) {
+
+        noticeDao = appDatabase.noticeDao();
+        noticesArray = new Notice[notices.size()];
+        notices.toArray(noticesArray);
+        Log.d("notices array", noticesArray[0].getTitle());
+
+        new Thread() {
+            public void run() {
+                NoticesAsyncTask asyncTask = new NoticesAsyncTask();
+                asyncTask.execute();
+            }
+        }.start();
+
+    }
+
+    public void getComplaintsFromServer() {
+
+    }
+
+    private class NoticesAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            noticeDao.insert(noticesArray);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            noticeBoardFragment.getNoticesFromDatabase();
+            super.onPostExecute(aVoid);
+        }
+    }
+
 }

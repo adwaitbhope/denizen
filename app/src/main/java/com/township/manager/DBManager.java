@@ -30,7 +30,16 @@ public class DBManager {
 
     static final int DBVersion = 1;
 
+    static final String TABLE_WINGS = "Wings";
+    static final String TABLE_NOTICES = "Notices";
+    static final String TABLE_NOTICE_WINGS = "NoticeWings";
+
     static final String CreateTabLogin = "CREATE TABLE IF NOT EXISTS " + TabNameLogin + "(ID INTEGER PRIMARY KEY AUTOINCREMENT," + ColUsername + " TEXT," + ColPassword + " TEXT," + ColFirstName + " TEXT," + ColLastName + " TEXT," + ColPhone + " TEXT," + ColEmail + " TEXT," + ColTownship + " TEXT," + ColWing + " TEXT," + ColApartment + " TEXT," + ColDesignation + " TEXT," + ColProfileUpdated + " INTEGER," + ColType + " TEXT);";
+
+    static final String CreateWingsTable = "CREATE TABLE IF NOT EXISTS " + TABLE_WINGS + " (id INTEGER PRIMARY KEY AUTOINCREMENT, wing_id TEXT, name TEXT)";
+    static final String CreateNoticesTable = "CREATE TABLE IF NOT EXISTS " + TABLE_NOTICES + " (id INTEGER PRIMARY KEY AUTOINCREMENT, notice_id TEXT, posted_by_first_name TEXT, posted_by_last_name TEXT, posted_by_designation TEXT, title TEXT, description TEXT, timestamp TEXT)";
+    static final String CreateNoticeWingsTable = "CREATE TABLE IF NOT EXISTS " + TABLE_NOTICE_WINGS + " (id INTEGER PRIMARY KEY AUTOINCREMENT, notice_id TEXT, wing_id TEXT)";
+
 
     static class DatabaseHelperUser extends SQLiteOpenHelper {
         Context context;
@@ -43,14 +52,12 @@ public class DBManager {
 
         @Override
         public void onCreate(SQLiteDatabase sqLiteDatabase) {
-            Log.d("oncreate", "1");
             sqLiteDatabase.execSQL(CreateTabLogin);
 
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-            Log.d("onupgrade", "2");
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TabNameLogin);
             onCreate(sqLiteDatabase);
         }

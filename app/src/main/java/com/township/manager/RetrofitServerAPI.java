@@ -1,10 +1,6 @@
 package com.township.manager;
 
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
-import org.json.JSONArray;
 
 import java.util.Map;
 
@@ -69,6 +65,14 @@ public interface RetrofitServerAPI {
     Call<JsonArray>checkstatus(
             @Query("application_id") String application_id,
             @Query("email") String email
+    );
+
+    @FormUrlEncoded
+    @POST("/notices/")
+    Call<JsonArray> getNotices(
+        @Field("username") String username,
+        @Field("password") String password,
+        @Field("timestamp") String timestamp
     );
 
 
