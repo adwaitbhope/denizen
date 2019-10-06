@@ -3,6 +3,7 @@ package com.township.manager;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -27,6 +28,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 import com.pusher.pushnotifications.BeamsCallback;
 import com.pusher.pushnotifications.PushNotifications;
 import com.pusher.pushnotifications.PusherCallbackError;
@@ -49,11 +51,17 @@ public class LoginScreenActivity extends AppCompatActivity {
     public TextInputLayout usernameTextLayout, passwordTextLayout;
 
     DBManager dbManager;
+    private AppDatabase appDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
+
+        appDatabase = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "app-database")
+                .fallbackToDestructiveMigration()
+                .build();
 
         dbManager = new DBManager(this);
         Cursor cursor = dbManager.getDataLogin();
@@ -182,12 +190,16 @@ public class LoginScreenActivity extends AppCompatActivity {
 
                                     JSONArray jsonArray = new JSONArray(response);
                                     JSONObject jsonObjectLogin = jsonArray.getJSONObject(0);
+
+                                    Log.d("login response", jsonArray.toString());
+
                                     User user = new User();
                                     user.setLogin(jsonObjectLogin.getInt("login"));
 
 
                                     if (user.getLogin() == 1) {
                                         JSONObject jsonObjectLoginInfo = jsonArray.getJSONObject(1);
+
                                         user.setLoginType(jsonObjectLoginInfo.getString("type"));
                                         user.setUserName(jsonObjectLoginInfo.getString("username"));
                                         user.setPassword(password);
@@ -209,6 +221,21 @@ public class LoginScreenActivity extends AppCompatActivity {
                                         contentValues.put(DBManager.ColTownship, user.getTownship());
                                         contentValues.put(DBManager.ColType, user.getLoginType());
                                         //   Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
+
+                                        JSONArray jsonWings = jsonArray.getJSONArray(2);
+                                        Gson gson = new Gson();
+                                        final Wing[] wings = new Wing[jsonWings.length()];
+                                        for (int i = 0; i < jsonWings.length(); i++) {
+                                            JSONObject jsonWing = jsonWings.getJSONObject(i);
+                                            wings[i] = gson.fromJson(jsonWing.toString(), Wing.class);
+                                        }
+
+                                        new Thread() {
+                                            public void run() {
+                                                WingDao wingDao = appDatabase.wingDao();
+                                                wingDao.insert(wings);
+                                            }
+                                        }.start();
 
                                         PushNotifications.start(getApplicationContext(), "f464fd4f-7e2f-4f42-91cf-8a8ef1a67acb");
 
@@ -323,4 +350,5 @@ public class LoginScreenActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginScreenActivity.this, RegistrationStepsActivity.class);
         startActivity(intent);
     }
+
 }

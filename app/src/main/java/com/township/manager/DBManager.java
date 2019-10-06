@@ -32,7 +32,7 @@ public class DBManager {
 
     static final String TABLE_WINGS = "Wings";
     static final String TABLE_NOTICES = "Notices";
-    static final String TABLE_NOTICE_WINGS = "NoticeWings";
+    static final String TABLE_NOTICE_WINGS = "NoticeWing";
 
     static final String CreateTabLogin = "CREATE TABLE IF NOT EXISTS " + TabNameLogin + "(ID INTEGER PRIMARY KEY AUTOINCREMENT," + ColUsername + " TEXT," + ColPassword + " TEXT," + ColFirstName + " TEXT," + ColLastName + " TEXT," + ColPhone + " TEXT," + ColEmail + " TEXT," + ColTownship + " TEXT," + ColWing + " TEXT," + ColApartment + " TEXT," + ColDesignation + " TEXT," + ColProfileUpdated + " INTEGER," + ColType + " TEXT);";
 

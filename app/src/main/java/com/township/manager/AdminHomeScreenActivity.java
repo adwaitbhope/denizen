@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -37,7 +36,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class AdminHomeScreenActivity extends AppCompatActivity
         implements NoticeBoardFragment.OnFragmentInteractionListener, ComplaintsListFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener, ComplaintsFragment.OnFragmentInteractionListener {
@@ -47,6 +45,8 @@ public class AdminHomeScreenActivity extends AppCompatActivity
     ComplaintsFragment complaintsFragment;
     AppDatabase appDatabase;
     NoticeDao noticeDao;
+    NoticeWingDao noticeWingDao;
+    NoticeWing[] noticeWingArray;
     Notice[] noticesArray;
 
     @SuppressLint("SetTextI18n")
@@ -59,7 +59,9 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         cursor.moveToFirst();
 
         appDatabase = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "app-database").build();
+                AppDatabase.class, "app-database")
+                .fallbackToDestructiveMigration()
+                .build();
 
         setContentView(R.layout.activity_admin_home_screen);
 
@@ -115,7 +117,7 @@ public class AdminHomeScreenActivity extends AppCompatActivity
 
                     case R.id.admin_notice_board:
                         fragment = getSupportFragmentManager().findFragmentById(R.id.admin_home_screen_fragment_area);
-                        if (! (fragment instanceof NoticeBoardFragment)) {
+                        if (!(fragment instanceof NoticeBoardFragment)) {
                             transaction = getSupportFragmentManager().beginTransaction();
                             transaction.replace(R.id.admin_home_screen_fragment_area, noticeBoardFragment);
                             transaction.commit();
@@ -124,7 +126,7 @@ public class AdminHomeScreenActivity extends AppCompatActivity
 
                     case R.id.admin_complaints:
                         fragment = getSupportFragmentManager().findFragmentById(R.id.admin_home_screen_fragment_area);
-                        if (! (fragment instanceof ComplaintsFragment)) {
+                        if (!(fragment instanceof ComplaintsFragment)) {
                             transaction = getSupportFragmentManager().beginTransaction();
                             complaintsFragment = new ComplaintsFragment();
                             transaction.replace(R.id.admin_home_screen_fragment_area, complaintsFragment);
@@ -227,16 +229,18 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                         ArrayList<Notice> notices = new ArrayList<>();
                         Notice notice;
                         Notice.Comment comment;
+                        Wing wing;
                         Gson gson = new Gson();
 
                         for (int i = 0; i < jsonNotices.length(); i++) {
                             jsonNotice = jsonNotices.getJSONObject(i);
                             notice = gson.fromJson(jsonNotice.toString(), Notice.class);
 
-                            ArrayList<String> wings = new ArrayList<>();
+                            ArrayList<Wing> wings = new ArrayList<>();
                             JSONArray jsonWings = jsonNotice.getJSONArray("wings");
                             for (int j = 0; j < jsonWings.length(); j++) {
-                                wings.add((jsonWings.getString(j)));
+                                wing = gson.fromJson(jsonWings.getJSONObject(j).toString(), Wing.class);
+                                wings.add(wing);
                             }
                             notice.setWings(wings);
 
@@ -261,7 +265,7 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                     e.printStackTrace();
                 }
 
-                }
+            }
 
             @Override
             public void onFailure(Call<JsonArray> call, Throwable t) {
@@ -271,15 +275,36 @@ public class AdminHomeScreenActivity extends AppCompatActivity
 
     }
 
-    public void addNoticesToDatabase(ArrayList<Notice> notices) {
-
-        noticeDao = appDatabase.noticeDao();
-        noticesArray = new Notice[notices.size()];
-        notices.toArray(noticesArray);
-        Log.d("notices array", noticesArray[0].getTitle());
+    public void addNoticesToDatabase(final ArrayList<Notice> notices) {
 
         new Thread() {
             public void run() {
+                noticeDao = appDatabase.noticeDao();
+                noticesArray = new Notice[notices.size()];
+
+                noticeWingDao = appDatabase.noticeWingsDao();
+
+                int noticeWingsLength = 0;
+                for (Notice notice : notices) {
+                    noticeWingsLength += notice.wings.size();
+                }
+                noticeWingArray = new NoticeWing[noticeWingsLength];
+
+                ArrayList<NoticeWing> noticeWings = new ArrayList<>();
+                NoticeWing noticeWing;
+
+                for (Notice notice : notices) {
+                    for (Wing wing : notice.getWings()) {
+                        noticeWing = new NoticeWing();
+                        noticeWing.setWing_id(wing.getWing_id());
+                        noticeWing.setNotice_id(notice.getNotice_id());
+                        noticeWings.add(noticeWing);
+                    }
+                }
+
+                notices.toArray(noticesArray);
+                noticeWings.toArray(noticeWingArray);
+
                 NoticesAsyncTask asyncTask = new NoticesAsyncTask();
                 asyncTask.execute();
             }
@@ -301,12 +326,13 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         @Override
         protected Void doInBackground(Void... voids) {
             noticeDao.insert(noticesArray);
+            noticeWingDao.insert(noticeWingArray);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            noticeBoardFragment.getNoticesFromDatabase();
+            noticeBoardFragment.updateRecyclerView();
             super.onPostExecute(aVoid);
         }
     }

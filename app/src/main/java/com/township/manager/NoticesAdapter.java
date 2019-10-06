@@ -67,7 +67,7 @@ public class NoticesAdapter extends RecyclerView.Adapter {
             }
         });
 
-        viewHolder.title.setText(notice.getTitle());
+        viewHolder.title.setText(notice.getTitle() + " " + notice.getWings().get(0).getName());
         viewHolder.description.setText(notice.getDescription());
         viewHolder.latestComment.setText("I think this is correct");
 

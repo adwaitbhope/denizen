@@ -18,7 +18,6 @@ import androidx.room.Room;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -81,7 +80,10 @@ public class NoticeBoardFragment extends Fragment {
         }
 
         appDatabase = Room.databaseBuilder(getContext().getApplicationContext(),
-                AppDatabase.class, "app-database").build();
+                AppDatabase.class, "app-database")
+                .fallbackToDestructiveMigration()
+                .build();
+
         noticeDao = appDatabase.noticeDao();
     }
 
@@ -100,7 +102,7 @@ public class NoticeBoardFragment extends Fragment {
             }
         });
 
-        getNoticesFromDatabase();
+        updateRecyclerView();
 
         recyclerView = view.findViewById(R.id.notice_board_recycler_view);
 //        Log.d("notices from database", dataset.toString());
@@ -117,18 +119,7 @@ public class NoticeBoardFragment extends Fragment {
         return view;
     }
 
-//    private ArrayList<Notice> getNoticesFromDatabase() {
-//        ArrayList<Notice> dataset = new ArrayList<>();
-//
-//         temporary dataset here
-//        Notice notice = new Notice("Diwali Celebration 2019", "Lorem ipsum dolor sit ametm consectetur adipiscin elit, sed do euismod tempor incideidunt ut labore et dolore mana aliqua.");
-//        dataset.add(notice);
-//
-//
-//        return dataset;
-//    }
-
-    public void getNoticesFromDatabase() {
+    public void updateRecyclerView() {
         new Thread() {
             public void run() {
                 NoticesAsyncTask asyncTask = new NoticesAsyncTask();
@@ -188,7 +179,11 @@ public class NoticeBoardFragment extends Fragment {
         protected Void doInBackground(Void... voids) {
             dataset.clear();
             dataset.addAll(noticeDao.getAll());
-            dataset.addAll(noticeDao.getAll());
+
+            for (Notice notice : dataset) {
+                notice.setWings((ArrayList<Wing>) noticeDao.getWings(notice.getNotice_id()));
+            }
+
             return null;
         }
 

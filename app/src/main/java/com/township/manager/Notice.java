@@ -34,7 +34,7 @@ class Notice {
     String posted_by_designation;
 
     @Ignore
-    ArrayList<String> wings;
+    ArrayList<Wing> wings;
 
     @Ignore
     ArrayList<Comment> comments;
@@ -42,6 +42,15 @@ class Notice {
     Notice (String title, String description) {
         this.title = title;
         this.description = description;
+    }
+
+    @NonNull
+    public String getNotice_id() {
+        return notice_id;
+    }
+
+    public void setNotice_id(@NonNull String notice_id) {
+        this.notice_id = notice_id;
     }
 
     public void setTitle(String title) {
@@ -56,11 +65,11 @@ class Notice {
         return description;
     }
 
-    public void setWings(ArrayList<String> wings) {
+    public void setWings(ArrayList<Wing> wings) {
         this.wings = wings;
     }
 
-    public ArrayList<String> getWings() {
+    public ArrayList<Wing> getWings() {
         return wings;
     }
 
