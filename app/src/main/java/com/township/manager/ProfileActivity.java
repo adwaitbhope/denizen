@@ -1,14 +1,13 @@
 package com.township.manager;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.view.MenuItem;
-import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -24,7 +23,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        editButton = findViewById(R.id.edit_profile_floatingActionButton);
+        editButton = findViewById(R.id.edit_profile_fab);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
