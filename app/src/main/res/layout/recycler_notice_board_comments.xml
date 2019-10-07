@@ -49,5 +49,16 @@
         app:layout_constraintStart_toEndOf="@+id/comment_image"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/comment_status_icon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:tint="@color/material_on_primary_emphasis_medium"
+        app:layout_constraintBottom_toBottomOf="@+id/comment_apartment"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/comment_content"
+        app:layout_constraintTop_toTopOf="@+id/comment_apartment"
+        app:srcCompat="@drawable/ic_access_time_black_24dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

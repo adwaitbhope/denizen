@@ -118,6 +118,12 @@ public class NoticeBoardFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateRecyclerView();
+    }
+
     public void updateRecyclerView() {
         new Thread() {
             public void run() {

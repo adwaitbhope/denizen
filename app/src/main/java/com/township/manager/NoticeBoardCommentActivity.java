@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
@@ -35,7 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NoticeBoardCommentActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
+    CommentsAdapter adapter;
     LinearLayoutManager layoutManager;
 
     String notice_id;
@@ -61,28 +62,11 @@ public class NoticeBoardCommentActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        DBManager dbManager = new DBManager(getApplicationContext());
-        Cursor cursor = dbManager.getDataLogin();
-        cursor.moveToFirst();
-
-        int firstNameCol, lastNameCol, usernameCol, passwordCol, wingCol, apartmentCol, designationCol;
-        firstNameCol = cursor.getColumnIndexOrThrow("First_Name");
-        lastNameCol = cursor.getColumnIndexOrThrow("Last_Name");
-        usernameCol = cursor.getColumnIndexOrThrow("Username");
-        passwordCol = cursor.getColumnIndexOrThrow("Password");
-        wingCol = cursor.getColumnIndexOrThrow("Wing");
-        apartmentCol = cursor.getColumnIndexOrThrow("Apartment");
-        designationCol = cursor.getColumnIndexOrThrow("Designation");
-
-        username = cursor.getString(usernameCol);
-        password = cursor.getString(passwordCol);
-        firstName = cursor.getString(firstNameCol);
-        lastName = cursor.getString(lastNameCol);
-        wing = cursor.getString(wingCol);
-        apartment = cursor.getString(apartmentCol);
-        designation = cursor.getString(designationCol);
-
-        cursor.moveToFirst();
+        new Thread() {
+            public void run() {
+                getUserDataFromDatabase();
+            }
+        }.start();
 
         appDatabase = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "app-database")
@@ -91,8 +75,6 @@ public class NoticeBoardCommentActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         notice_id = intent.getStringExtra("notice_id");
-
-        // retrieve username, pwd and others from sqlite database
 
         recyclerView = findViewById(R.id.notice_board_comments_recycler_view);
         adapter = new CommentsAdapter(dataset, this);
@@ -104,13 +86,14 @@ public class NoticeBoardCommentActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.scrollToPosition(adapter.getItemCount() -1);
 
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                recyclerView.scrollToPosition(adapter.getItemCount() -1);
-//            }
-//        }, 400);
-
+        recyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                if (bottom < oldBottom) {
+                    recyclerView.smoothScrollToPosition(adapter.getItemCount());
+                }
+            }
+        });
 
         final TextInputEditText addComment = findViewById(R.id.add_comment_edittext);
         addComment.setOnTouchListener(new View.OnTouchListener() {
@@ -140,6 +123,29 @@ public class NoticeBoardCommentActivity extends AppCompatActivity {
 
     }
 
+    private void getUserDataFromDatabase() {
+        DBManager dbManager = new DBManager(getApplicationContext());
+        Cursor cursor = dbManager.getDataLogin();
+        cursor.moveToFirst();
+
+        int firstNameCol, lastNameCol, usernameCol, passwordCol, wingCol, apartmentCol, designationCol;
+        firstNameCol = cursor.getColumnIndexOrThrow("First_Name");
+        lastNameCol = cursor.getColumnIndexOrThrow("Last_Name");
+        usernameCol = cursor.getColumnIndexOrThrow("Username");
+        passwordCol = cursor.getColumnIndexOrThrow("Password");
+        wingCol = cursor.getColumnIndexOrThrow("Wing");
+        apartmentCol = cursor.getColumnIndexOrThrow("Apartment");
+        designationCol = cursor.getColumnIndexOrThrow("Designation");
+
+        username = cursor.getString(usernameCol);
+        password = cursor.getString(passwordCol);
+        firstName = cursor.getString(firstNameCol);
+        lastName = cursor.getString(lastNameCol);
+        wing = cursor.getString(wingCol);
+        apartment = cursor.getString(apartmentCol);
+        designation = cursor.getString(designationCol);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -159,9 +165,9 @@ public class NoticeBoardCommentActivity extends AppCompatActivity {
         comment.setTimestamp("now");
 
         dataset.add(comment);
-        // update UI, show sending
         adapter.notifyItemInserted(dataset.size() -1);
         recyclerView.scrollToPosition(adapter.getItemCount() -1);
+//        adapter.showSending((CommentsAdapter.ViewHolder) recyclerView.findViewHolderForLayoutPosition(-1));
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(getString(R.string.server_addr))
@@ -187,15 +193,20 @@ public class NoticeBoardCommentActivity extends AppCompatActivity {
 
                     if (responseJson.getInt("login_status") == 1) {
                         if (responseJson.getInt("request_status") == 1) {
+                            Gson gson = new Gson();
+                            comment = gson.fromJson(responseArray.getJSONObject(1).toString(), Notice.Comment.class);
 
-                            // Comment posted
-                            comment.setComment_id(responseArray.getJSONObject(1).getString("comment_id"));
-                            comment.setTimestamp(responseArray.getJSONObject(1).getString("timestamp"));
+                            dataset.set(dataset.size() -1, comment);
                             adapter.notifyItemChanged(dataset.size() -1);
+//                            adapter.showSent(adapter.new ViewHolder(layoutManager.findViewByPosition(adapter.getItemCount() -1)));
                             recyclerView.scrollToPosition(adapter.getItemCount() -1);
 
-                            // update UI, show sent
-                            new AddCommentsAsyncTask().execute();
+                            new Thread() {
+                                public void run() {
+                                    commentDao = appDatabase.commentDao();
+                                    commentDao.insert(comment);
+                                }
+                            }.start();
                         }
                     }
                     else {
@@ -235,7 +246,6 @@ public class NoticeBoardCommentActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             noticeDao = appDatabase.noticeDao();
-            Log.d("dataset", "cleared dataset and fetched new comments");
             dataset.clear();
             dataset.addAll(noticeDao.getComments(notice_id));
             return null;
@@ -248,42 +258,6 @@ public class NoticeBoardCommentActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 recyclerView.scrollToPosition(adapter.getItemCount() -1);
             }
-        }
-    }
-
-    private class AddCommentsAsyncTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            commentDao = appDatabase.commentDao();
-            noticeDao = appDatabase.noticeDao();
-            commentDao.insert(comment);
-            Log.d("data insert", "new comment inserted in db");
-
-            tempDataset = new ArrayList<>();
-            tempDataset.addAll(noticeDao.getComments(notice_id));
-
-//            try {
-//                Thread.sleep(1500);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            // update UI, hide sent
-            Log.d("on post", "inserted in db, notifying adapter");
-            dataset = tempDataset;
-            adapter.notifyDataSetChanged();
-            recyclerView.scrollToPosition(adapter.getItemCount() -1);
         }
     }
 
