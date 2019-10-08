@@ -137,12 +137,13 @@ public class NoticeBoardFragment extends Fragment {
     }
 
     public void updateRecyclerView() {
-        new Thread() {
-            public void run() {
-                NoticesAsyncTask asyncTask = new NoticesAsyncTask();
-                asyncTask.execute();
-            }
-        }.start();
+//        new Thread() {
+//            public void run() {
+//                NoticesAsyncTask asyncTask = new NoticesAsyncTask();
+//                asyncTask.execute();
+//            }
+//        }.start();
+        new NoticesAsyncTask().execute();
     }
 
 

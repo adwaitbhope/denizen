@@ -1,12 +1,18 @@
 package com.township.manager;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipDrawable;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -36,10 +42,16 @@ public class AddNoticeAdminActivity extends AppCompatActivity {
     AppDatabase appDatabase;
 
     NoticeDao noticeDao;
+    WingDao wingDao;
     NoticeWingDao noticeWingDao;
 
     Notice notice;
     NoticeWing[] noticeWingArray;
+
+    ArrayList<Wing> wings;
+    Map<String, Boolean> wing_selected;
+
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +68,10 @@ public class AddNoticeAdminActivity extends AppCompatActivity {
                 AppDatabase.class, "app-database")
                 .fallbackToDestructiveMigration()
                 .build();
+
+        context = this;
+        wing_selected = new HashMap<>();
+        new GetWingChipsFromDatabase().execute();
 
         DBManager dbManager = new DBManager(getApplicationContext());
         Cursor cursor = dbManager.getDataLogin();
@@ -79,7 +95,14 @@ public class AddNoticeAdminActivity extends AppCompatActivity {
         title = ((TextInputEditText) findViewById(R.id.add_notice_title_edittext)).getText().toString();
         description = ((TextInputEditText) findViewById(R.id.add_notice_description_edittext)).getText().toString();
         final Map<String, String> wing_ids = new HashMap<>();
-        wing_ids.put("wing_0_id", "20");
+
+        int counter = 0;
+        for (Map.Entry entry : wing_selected.entrySet()) {
+            if ((Boolean) entry.getValue()) {
+                wing_ids.put("wing_" + String.valueOf(counter) + "_id", (String) entry.getKey());
+                counter++;
+            }
+        }
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(getString(R.string.server_addr))
@@ -167,6 +190,43 @@ public class AddNoticeAdminActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             finish();
+            super.onPostExecute(aVoid);
+        }
+    }
+
+    private class GetWingChipsFromDatabase extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            wingDao = appDatabase.wingDao();
+            wings = (ArrayList<Wing>) wingDao.getAll();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
+            ChipGroup chipGroup = findViewById(R.id.add_notice_visibility_chip_group);
+            Chip chip;
+            for (Wing wing : wings) {
+                chip = new Chip(context);
+                chip.setChipDrawable(ChipDrawable.createFromResource(context, R.xml.chip));
+                chip.setHint(wing.getWing_id());
+                chip.setText("Wing " + wing.getName());
+                chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        wing_selected.put(buttonView.getHint().toString(), isChecked);
+                    }
+                });
+                chipGroup.addView(chip);
+            }
+
             super.onPostExecute(aVoid);
         }
     }

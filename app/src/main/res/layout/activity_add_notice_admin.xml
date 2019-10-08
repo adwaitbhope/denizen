@@ -127,7 +127,7 @@
 
     <com.google.android.material.chip.ChipGroup
         style="@style/AppChipGroupStyle"
-        android:id="@+id/chipGroup"
+        android:id="@+id/add_notice_visibility_chip_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -156,30 +156,30 @@
             android:text="Admins Only"
             android:textAppearance="@style/chipTextAppearance"/>
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip8"
-            style="@style/AppChipFilterStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wing A"
-            android:textAppearance="@style/chipTextAppearance"/>
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip9"
-            style="@style/AppChipFilterStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wing B"
-            android:textAppearance="@style/chipTextAppearance"/>
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip10"
-            style="@style/AppChipFilterStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wing C"
-            android:textAppearance="@style/chipTextAppearance"/>
-
+<!--        <com.google.android.material.chip.Chip-->
+<!--            android:id="@+id/chip8"-->
+<!--            style="@style/AppChipFilterStyle"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Wing A"-->
+<!--            android:textAppearance="@style/chipTextAppearance"/>-->
+<!---->
+<!--        <com.google.android.material.chip.Chip-->
+<!--            android:id="@+id/chip9"-->
+<!--            style="@style/AppChipFilterStyle"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Wing B"-->
+<!--            android:textAppearance="@style/chipTextAppearance"/>-->
+<!---->
+<!--        <com.google.android.material.chip.Chip-->
+<!--            android:id="@+id/chip10"-->
+<!--            style="@style/AppChipFilterStyle"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Wing C"-->
+<!--            android:textAppearance="@style/chipTextAppearance"/>-->
+<!---->
     </com.google.android.material.chip.ChipGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
