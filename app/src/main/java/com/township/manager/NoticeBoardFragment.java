@@ -2,6 +2,7 @@ package com.township.manager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -48,6 +49,8 @@ public class NoticeBoardFragment extends Fragment {
     ArrayList<Notice> dataset = new ArrayList<>();
     NoticeDao noticeDao;
 
+    String userType;
+
     public NoticeBoardFragment() {
         // Required empty public constructor
     }
@@ -84,6 +87,11 @@ public class NoticeBoardFragment extends Fragment {
                 .fallbackToDestructiveMigration()
                 .build();
 
+        DBManager dbManager = new DBManager(getContext().getApplicationContext());
+        Cursor cursor = dbManager.getDataLogin();
+        cursor.moveToFirst();
+
+        userType = cursor.getString(cursor.getColumnIndexOrThrow("Type"));
         noticeDao = appDatabase.noticeDao();
     }
 
@@ -93,14 +101,17 @@ public class NoticeBoardFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_notice_board, container, false);
 
-        FloatingActionButton addNoticeButton = view.findViewById(R.id.notice_board_add_notice_fab);
-        addNoticeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), AddNoticeAdminActivity.class);
-                startActivity(intent);
-            }
-        });
+        if (userType.equals("admin")) {
+            FloatingActionButton addNoticeButton = view.findViewById(R.id.notice_board_add_notice_fab);
+            addNoticeButton.setVisibility(View.VISIBLE);
+            addNoticeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), AddNoticeAdminActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
 
         updateRecyclerView();
 

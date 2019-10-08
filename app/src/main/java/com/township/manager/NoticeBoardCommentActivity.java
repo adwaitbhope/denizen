@@ -109,8 +109,10 @@ public class NoticeBoardCommentActivity extends AppCompatActivity {
 
                         try {
                             String comment = addComment.getText().toString();
-                            addComment.setText("");
-                            sendCommentToServer(comment);
+                            if (!comment.equals("")) {
+                                addComment.setText("");
+                                sendCommentToServer(comment);
+                            }
                         } catch (NullPointerException e) {
                             e.printStackTrace();
                         }

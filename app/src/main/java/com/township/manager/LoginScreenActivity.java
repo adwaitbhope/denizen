@@ -31,6 +31,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.pusher.pushnotifications.BeamsCallback;
 import com.pusher.pushnotifications.PushNotifications;
+import com.pusher.pushnotifications.PusherAlreadyRegisteredAnotherUserIdException;
 import com.pusher.pushnotifications.PusherCallbackError;
 import com.pusher.pushnotifications.auth.AuthData;
 import com.pusher.pushnotifications.auth.AuthDataGetter;
@@ -237,8 +238,6 @@ public class LoginScreenActivity extends AppCompatActivity {
                                             }
                                         }.start();
 
-                                        PushNotifications.start(getApplicationContext(), "f464fd4f-7e2f-4f42-91cf-8a8ef1a67acb");
-
                                         BeamsTokenProvider tokenProvider = new BeamsTokenProvider(
                                                 getString(R.string.server_addr) + "/beams/get_token/",
                                                 new AuthDataGetter() {
@@ -255,18 +254,37 @@ public class LoginScreenActivity extends AppCompatActivity {
                                                     }
                                                 }
                                         );
+                                        PushNotifications.start(getApplicationContext(), "f464fd4f-7e2f-4f42-91cf-8a8ef1a67acb");
 
-                                        PushNotifications.setUserId(username, tokenProvider, new BeamsCallback<Void, PusherCallbackError>(){
-                                            @Override
-                                            public void onSuccess(Void... values) {
-                                                Log.i("PusherBeams", "Successfully authenticated with Pusher Beams");
-                                            }
+                                        try {
+                                            PushNotifications.setUserId(username, tokenProvider, new BeamsCallback<Void, PusherCallbackError>() {
+                                                @Override
+                                                public void onSuccess(Void... values) {
+                                                    Log.i("PusherBeams", "Successfully authenticated with Pusher Beams");
+                                                }
 
-                                            @Override
-                                            public void onFailure(PusherCallbackError error) {
-                                                Log.i("PusherBeams", "Pusher Beams authentication failed: " + error.getMessage());
-                                            }
-                                        });
+                                                @Override
+                                                public void onFailure(PusherCallbackError error) {
+                                                    Log.i("PusherBeams", "Pusher Beams authentication failed: " + error.getMessage());
+                                                }
+                                            });
+                                        } catch (PusherAlreadyRegisteredAnotherUserIdException e) {
+                                            PushNotifications.clearAllState();
+                                            PushNotifications.stop();
+                                            PushNotifications.start(getApplicationContext(), "f464fd4f-7e2f-4f42-91cf-8a8ef1a67acb");
+                                            PushNotifications.setUserId(username, tokenProvider, new BeamsCallback<Void, PusherCallbackError>() {
+                                                @Override
+                                                public void onSuccess(Void... values) {
+                                                    Log.i("PusherBeams", "Successfully authenticated with Pusher Beams");
+                                                }
+
+                                                @Override
+                                                public void onFailure(PusherCallbackError error) {
+                                                    Log.i("PusherBeams", "Pusher Beams authentication failed: " + error.getMessage());
+                                                }
+                                            });
+
+                                        }
 
 
                                         Log.d("response", response);

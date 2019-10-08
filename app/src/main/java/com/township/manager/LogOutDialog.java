@@ -39,14 +39,15 @@ public class LogOutDialog extends AppCompatDialogFragment {
                                 .build();
 
                         appDatabase.commentDao().deleteAll();
-                        appDatabase.noticeDao().deleteAll();
                         appDatabase.noticeWingsDao().deleteAll();
+                        appDatabase.noticeDao().deleteAll();
                         appDatabase.wingDao().deleteAll();
                     }
                 }.start();
 
                 try {
                     PushNotifications.clearAllState();
+                    PushNotifications.stop();
                 } catch (IllegalStateException e) {
                     e.printStackTrace();
                 }
