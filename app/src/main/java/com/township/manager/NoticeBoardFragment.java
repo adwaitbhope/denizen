@@ -133,6 +133,7 @@ public class NoticeBoardFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updateRecyclerView();
+        recyclerView.smoothScrollToPosition(0);
     }
 
     public void updateRecyclerView() {

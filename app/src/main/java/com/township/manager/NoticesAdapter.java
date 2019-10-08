@@ -81,7 +81,7 @@ public class NoticesAdapter extends RecyclerView.Adapter {
 
         ArrayList<Notice.Comment> comments = notice.getComments();
         if (comments.size() == 0) {
-            viewHolder.latestComment.setVisibility(View.GONE);
+//            viewHolder.latestComment.setVisibility(View.GONE);
         } else {
             viewHolder.latestComment.setText(comments.get(comments.size() -1).getContent());
         }

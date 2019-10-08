@@ -84,5 +84,16 @@ public interface RetrofitServerAPI {
             @Field("content") String comment
     );
 
+    @FormUrlEncoded
+    @POST("notices/new/")
+    Call<JsonArray> addNotice(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("title") String title,
+            @Field("description") String description,
+            @Field("num_wings") String num_wings,
+            @QueryMap Map<String, String> wing_ids
+    );
+
 
 }

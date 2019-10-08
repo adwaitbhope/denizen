@@ -11,7 +11,8 @@ import androidx.room.Query;
 @Dao
 public interface NoticeDao {
 
-    @Query("SELECT * FROM Notice")
+    @Query("SELECT * FROM Notice\n" +
+            "ORDER BY timestamp DESC")
     List<Notice> getAll();
 
     @Query("SELECT * FROM Wing\n" +

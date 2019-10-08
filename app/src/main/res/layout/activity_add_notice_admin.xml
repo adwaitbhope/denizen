@@ -72,13 +72,14 @@
         app:counterMaxLength="40">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/add_notice_title_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_title_black_24dp"
             android:drawablePadding="10dp"
             android:drawableTint="@color/secondaryColor"
             android:hint="Title"
-            android:inputType="text"
+            android:inputType="text|textCapWords"
             android:paddingLeft="10dp"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -97,13 +98,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout6">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/add_notice_description_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_description_black_24dp"
             android:drawablePadding="10dp"
             android:drawableTint="@color/secondaryColor"
             android:hint="Description (Optional)"
-            android:inputType="textMultiLine"
+            android:inputType="textMultiLine|textCapSentences"
             android:paddingLeft="10dp"
             android:textSize="14sp"
             />
