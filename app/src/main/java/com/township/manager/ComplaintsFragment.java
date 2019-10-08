@@ -85,7 +85,7 @@ public class ComplaintsFragment extends Fragment {
         sliderAdapter.addFragment(pendingListFragment, "Pending");
         sliderAdapter.addFragment(resolvedListFragment, "Resolved");
 
-        DBManager dbManager=new DBManager(getApplicationContext());
+        DBManager dbManager=new DBManager(getContext());
         Cursor cursor=dbManager.getDataLogin();
         cursor.moveToFirst();
         int typeCol;

@@ -264,7 +264,7 @@ public class LoginScreenActivity extends AppCompatActivity {
                                                 contentValues.put(DBManager.ColWing, user.getWing());
                                                 user.setApartment(jsonObjectLoginInfo.getString("apartment"));
                                                 PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-residents");
-                                                PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-" + jsonObjectLogin.getString("wing_id") + "-residents");
+                                                PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-" + jsonObjectLoginInfo.getString("wing_id") + "-residents");
                                                 contentValues.put(DBManager.ColApartment, user.getApartment());
                                                 long id = dbManager.Insert(contentValues);
 

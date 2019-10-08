@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -51,6 +52,7 @@ public class RegisterComplaintActivity extends AppCompatActivity {
     DBManager dbManager;
     int usernameCol,passwordCol;
     String username,password;
+    TextInputEditText complaintTitle,complaintDescription;
 
 
     @Override
@@ -63,8 +65,11 @@ public class RegisterComplaintActivity extends AppCompatActivity {
         titleTil=findViewById(R.id.register_complaint_title_textinput);
         descriptiontil=findViewById(R.id.register_complaint_description_textinput);
         uploadComplaintPhotoButton=findViewById(R.id.register_complaint_upload_photos_button);
-        title=titleTil.getEditText().getText().toString();
-        description=descriptiontil.getEditText().getText().toString();
+
+        complaintTitle=(TextInputEditText) findViewById(R.id.register_complaint_title_textinput_child);
+        complaintDescription=(TextInputEditText) findViewById(R.id.register_complaint_description_textinput_child);
+
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.register_complaint_toolbar);
         setSupportActionBar(toolbar);
@@ -80,8 +85,6 @@ public class RegisterComplaintActivity extends AppCompatActivity {
         username=cursor.getString(usernameCol);
         password=cursor.getString(passwordCol);
 
-        title=findViewById(R.id.register_complaint_description_textinput_child);
-        description=findViewById(R.id.register_complaint_description_textinput_child);
 
         error(descriptiontil);
         error(titleTil);
@@ -90,8 +93,23 @@ public class RegisterComplaintActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // query to register a new complaint
-                if(checkError()){
+//                 query to register a new complaint
+
+                title=complaintTitle.getText().toString();
+                description=complaintDescription.getText().toString();
+
+                if(TextUtils.isEmpty(title)){
+                    titleTil.setError("Please enter the title");
+                    titleTil.setErrorEnabled(true);
+                    titleTil.requestFocus();
+                    titleTil.setErrorIconDrawable(null);
+                    return;
+                }
+                if(TextUtils.isEmpty(description)){
+                    descriptiontil.setError("Please enter the description");
+                    descriptiontil.setErrorEnabled(true);
+                    descriptiontil.requestFocus();
+                    descriptiontil.setErrorIconDrawable(null);
                     return;
                 }
                 Retrofit.Builder builder=new Retrofit.Builder()
@@ -99,19 +117,18 @@ public class RegisterComplaintActivity extends AppCompatActivity {
                         .addConverterFactory(GsonConverterFactory.create());
 
                 Retrofit retrofit=builder.build();
-
                 RetrofitServerAPI retrofitServerAPI=retrofit.create(RetrofitServerAPI.class);
-
                 Call<JsonArray> call=retrofitServerAPI.addComplaint(username,password,title,description);
                 call.enqueue(new Callback<JsonArray>() {
                     @Override
                     public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
-
+                        Log.d("sent",response.body().toString());
+                        Toast.makeText(RegisterComplaintActivity.this,title,Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onFailure(Call<JsonArray> call, Throwable t) {
-
+                        Log.d("notsent",t.toString());
                     }
                 });
 
@@ -141,25 +158,8 @@ public class RegisterComplaintActivity extends AppCompatActivity {
         });
     }
 
-    private boolean checkError() {
-        boolean error=false;
-        if(TextUtils.isEmpty(title)){
-            titleTil.setError("Please enter the title");
-            titleTil.setErrorEnabled(true);
-            titleTil.requestFocus();
-            titleTil.setErrorIconDrawable(null);
-            error=true;
-        }
-        if(TextUtils.isEmpty(description)){
-            descriptiontil.setError("Please enter the description");
-            descriptiontil.setErrorEnabled(true);
-            descriptiontil.requestFocus();
-            descriptiontil.setErrorIconDrawable(null);
-            error=true;
-        }
 
-        return error;
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

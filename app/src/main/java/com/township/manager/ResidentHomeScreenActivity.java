@@ -1,7 +1,9 @@
 package com.township.manager;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +19,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
 public class ResidentHomeScreenActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, NoticeBoardFragment.OnFragmentInteractionListener {
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -47,7 +49,13 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         cursor.moveToFirst();
         residentName.setText(cursor.getString(firstNameCol) + " " + cursor.getString(lastNameCol));
         residentFlatNo.setText(cursor.getString(wingNoCol) + "/" +cursor.getString(flatNoCol));
-
+        navigationView.getMenu().getItem(4).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                startActivity(new Intent(ResidentHomeScreenActivity.this,RegisterComplaintActivity.class));
+                return false;
+            }
+        });
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.resident_home_screen_fragment_area, new NoticeBoardFragment());
         transaction.commit();
@@ -88,5 +96,10 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

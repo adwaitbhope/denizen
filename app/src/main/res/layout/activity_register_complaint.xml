@@ -43,6 +43,34 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/register_complaint_title_textinput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_complaint_app_bar_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/register_complaint_title_textinput_child"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_title_black_24dp"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/secondaryColor"
+            android:hint="Title"
+            android:maxLength="30"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/register_complaint_description_textinput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,36 +92,12 @@
             android:drawableTint="@color/secondaryColor"
             android:gravity="start"
             android:hint="Description"
+            android:maxLength="150"
             android:inputType="textMultiLine"
             android:paddingLeft="10dp"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/register_complaint_title_textinput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        app:counterEnabled="true"
-        app:counterMaxLength="30"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_complaint_app_bar_layout">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/register_complaint_title_textinput_child"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_title_black_24dp"
-            android:drawablePadding="10dp"
-            android:drawableTint="@color/secondaryColor"
-            android:hint="Title"
-            android:inputType="text"
-            android:paddingLeft="10dp"
-            android:textSize="14sp" />
-    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/register_complaint_button"
