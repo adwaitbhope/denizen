@@ -137,24 +137,24 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notice_title"
-        app:checkedIconTint="@color/secondaryTextColor">
+        app:checkedIconTint="@color/secondaryTextColor"
+        app:chipSpacingVertical="4dp">
 
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip6"
-            style="@style/AppChipFilterStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Everyone"
-            android:textAppearance="@style/chipTextAppearance" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip7"
-            style="@style/AppChipFilterStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Admins Only"
-            android:textAppearance="@style/chipTextAppearance"/>
+<!--        <com.google.android.material.chip.Chip-->
+<!--            android:id="@+id/chip6"-->
+<!--            style="@style/AppChipFilterStyle"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Everyone"-->
+<!--            android:textAppearance="@style/chipTextAppearance" />-->
+<!---->
+<!--        <com.google.android.material.chip.Chip-->
+<!--            android:id="@+id/chip7"-->
+<!--            style="@style/AppChipFilterStyle"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Admins Only"-->
+<!--            android:textAppearance="@style/chipTextAppearance"/>-->
 
 <!--        <com.google.android.material.chip.Chip-->
 <!--            android:id="@+id/chip8"-->

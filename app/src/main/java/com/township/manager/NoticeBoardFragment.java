@@ -137,12 +137,6 @@ public class NoticeBoardFragment extends Fragment {
     }
 
     public void updateRecyclerView() {
-//        new Thread() {
-//            public void run() {
-//                NoticesAsyncTask asyncTask = new NoticesAsyncTask();
-//                asyncTask.execute();
-//            }
-//        }.start();
         new NoticesAsyncTask().execute();
     }
 
@@ -200,6 +194,12 @@ public class NoticeBoardFragment extends Fragment {
 
             for (Notice notice : dataset) {
                 notice.setWings((ArrayList<Wing>) noticeDao.getWings(notice.getNotice_id()));
+
+                try {
+                    Log.d("notice wings", notice.getTitle() + " " + noticeDao.getWings(notice.getNotice_id()).get(0).getName());
+                } catch (IndexOutOfBoundsException e) {
+
+                }
                 notice.setComments((ArrayList<Notice.Comment>) noticeDao.getComments(notice.getNotice_id()));
             }
 

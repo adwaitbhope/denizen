@@ -51,6 +51,9 @@ public class AddNoticeAdminActivity extends AppCompatActivity {
     ArrayList<Wing> wings;
     Map<String, Boolean> wing_selected;
 
+    final ArrayList<Chip> chips = new ArrayList<>();
+    private static final int FILTER_CHIP_ID = 6420;
+
     Context context;
 
     @Override
@@ -210,11 +213,39 @@ public class AddNoticeAdminActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-
-            ChipGroup chipGroup = findViewById(R.id.add_notice_visibility_chip_group);
+            final ChipGroup chipGroup = findViewById(R.id.add_notice_visibility_chip_group);
             Chip chip;
+
+            chip = new Chip(context);
+            chip.setText("Admins");
+            chip.setChecked(true);
+            chip.setChipDrawable(ChipDrawable.createFromResource(context, R.xml.chip));
+            chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    buttonView.setChecked(!isChecked);
+                }
+            });
+            chips.add(chip);
+
+            chip = new Chip(context);
+            chip.setText("Everyone");
+            chip.setChipDrawable(ChipDrawable.createFromResource(context, R.xml.chip));
+            chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    for (int i = 1; i < chips.size(); i++) {
+                        chips.get(i).setChecked(isChecked);
+                    }
+                }
+            });
+            chips.add(chip);
+
+            int counter = 1;
             for (Wing wing : wings) {
                 chip = new Chip(context);
+                chip.setId(FILTER_CHIP_ID + counter);
+                counter++;
                 chip.setChipDrawable(ChipDrawable.createFromResource(context, R.xml.chip));
                 chip.setHint(wing.getWing_id());
                 chip.setText("Wing " + wing.getName());
@@ -222,13 +253,29 @@ public class AddNoticeAdminActivity extends AppCompatActivity {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         wing_selected.put(buttonView.getHint().toString(), isChecked);
+                        manageChipVisibility();
+
                     }
                 });
-                chipGroup.addView(chip);
+                chips.add(chip);
+            }
+
+            for (Chip c : chips) {
+                chipGroup.addView(c);
             }
 
             super.onPostExecute(aVoid);
         }
+    }
+
+    public void manageChipVisibility() {
+        boolean allChecked = true;
+        for (int i = 2; i < chips.size(); i++) {
+            if (!chips.get(i).isChecked()) {
+                allChecked = false;
+            }
+        }
+        chips.get(1).setChecked(allChecked);
     }
 
 }

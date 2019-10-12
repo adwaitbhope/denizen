@@ -16,8 +16,8 @@ public interface NoticeDao {
     List<Notice> getAll();
 
     @Query("SELECT * FROM Wing\n" +
-            "INNER JOIN NoticeWing ON NoticeWing.wing_id = Wing.wing_id\n" +
-            "WHERE NoticeWing.notice_id = :notice_id")
+            "JOIN NoticeWing ON Wing.wing_id = NoticeWing.wing_id\n" +
+            "AND NoticeWing.notice_id = :notice_id")
     List<Wing> getWings(String notice_id);
 
     @Query("SELECT * FROM Comment\n" +
