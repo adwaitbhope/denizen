@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,14 +43,18 @@ public class NoticeBoardFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
+    NoticesAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
 
     AppDatabase appDatabase;
     ArrayList<Notice> dataset = new ArrayList<>();
+    ArrayList<Notice> temporaryDataset = new ArrayList<>();
     NoticeDao noticeDao;
 
-    String userType;
+    String userType, townshipId;
+
+    public static final int ADD_NOTICE_REQUEST = 69;
+    public static final int ADD_NOTICE_RESULT = 70;
 
     public NoticeBoardFragment() {
         // Required empty public constructor
@@ -92,6 +97,7 @@ public class NoticeBoardFragment extends Fragment {
         cursor.moveToFirst();
 
         userType = cursor.getString(cursor.getColumnIndexOrThrow("Type"));
+        townshipId = cursor.getString(cursor.getColumnIndexOrThrow("TownshipId"));
         noticeDao = appDatabase.noticeDao();
     }
 
@@ -108,7 +114,7 @@ public class NoticeBoardFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), AddNoticeAdminActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent, ADD_NOTICE_REQUEST);
                 }
             });
         }
@@ -117,15 +123,16 @@ public class NoticeBoardFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.notice_board_recycler_view);
         adapter = new NoticesAdapter(dataset, getContext());
+
+        adapter.TOWNSHIP_ID = townshipId;
         layoutManager = new LinearLayoutManager(getContext());
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        recyclerView.setItemViewCacheSize(20);
+        recyclerView.setItemViewCacheSize(15);
         recyclerView.setDrawingCacheEnabled(true);
         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-
         return view;
     }
 
@@ -133,7 +140,18 @@ public class NoticeBoardFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updateRecyclerView();
-        recyclerView.smoothScrollToPosition(0);
+//        recyclerView.smoothScrollToPosition(0);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_NOTICE_REQUEST) {
+            if (resultCode == ADD_NOTICE_RESULT) {
+                updateRecyclerView();
+                recyclerView.smoothScrollToPosition(0);
+            }
+        }
     }
 
     public void updateRecyclerView() {
@@ -189,14 +207,13 @@ public class NoticeBoardFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            dataset.clear();
-            dataset.addAll(noticeDao.getAll());
+            temporaryDataset.clear();
+            temporaryDataset.addAll(noticeDao.getAll());
 
-            for (Notice notice : dataset) {
+            for (Notice notice : temporaryDataset) {
                 notice.setWings((ArrayList<Wing>) noticeDao.getWings(notice.getNotice_id()));
 
                 try {
-                    Log.d("notice wings", notice.getTitle() + " " + noticeDao.getWings(notice.getNotice_id()).get(0).getName());
                 } catch (IndexOutOfBoundsException e) {
 
                 }
@@ -209,6 +226,8 @@ public class NoticeBoardFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            dataset.clear();
+            dataset.addAll(temporaryDataset);
             if (adapter != null) {
                 adapter.notifyDataSetChanged();
             }

@@ -221,6 +221,7 @@ public class LoginScreenActivity extends AppCompatActivity {
                                         contentValues.put(DBManager.ColProfileUpdated, user.getProfileUpdated());
                                         contentValues.put(DBManager.ColTownship, user.getTownship());
                                         contentValues.put(DBManager.ColType, user.getLoginType());
+                                        contentValues.put(DBManager.ColTownshipId, jsonObjectLoginInfo.getString("township_id"));
                                         //   Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
 
                                         JSONArray jsonWings = jsonArray.getJSONArray(2);

@@ -26,6 +26,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
@@ -70,7 +71,8 @@ public class AdminHomeScreenActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_admin_home_screen);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -123,6 +125,7 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                     case R.id.admin_notice_board:
                         fragment = getSupportFragmentManager().findFragmentById(R.id.admin_home_screen_fragment_area);
                         if (!(fragment instanceof NoticeBoardFragment)) {
+                            appBarLayout.setElevation(4);
                             transaction = getSupportFragmentManager().beginTransaction();
                             transaction.replace(R.id.admin_home_screen_fragment_area, noticeBoardFragment);
                             transaction.commit();
@@ -132,6 +135,7 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                     case R.id.admin_complaints:
                         fragment = getSupportFragmentManager().findFragmentById(R.id.admin_home_screen_fragment_area);
                         if (!(fragment instanceof ComplaintsFragment)) {
+                            appBarLayout.setElevation(0);
                             transaction = getSupportFragmentManager().beginTransaction();
                             complaintsFragment = new ComplaintsFragment();
                             transaction.replace(R.id.admin_home_screen_fragment_area, complaintsFragment);
@@ -140,9 +144,11 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                         return true;
 
                     case R.id.admin_group_chat:
+//                        appBarLayout.setElevation(4);
                         return true;
 
                     case R.id.admin_finances:
+//                        appBarLayout.setElevation(4);
                         return true;
                 }
                 return false;
@@ -337,6 +343,9 @@ public class AdminHomeScreenActivity extends AppCompatActivity
 
         @Override
         protected Void doInBackground(Void... voids) {
+            appDatabase.commentDao().deleteAll();
+            appDatabase.noticeWingsDao().deleteAll();
+            appDatabase.noticeDao().deleteAll();
             noticeDao.insert(noticesArray);
             noticeWingDao.insert(noticeWingArray);
             commentDao.insert(commentsArray);

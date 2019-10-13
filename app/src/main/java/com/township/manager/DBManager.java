@@ -23,6 +23,7 @@ public class DBManager {
     static final String ColEmail = "Email";
     static final String ColProfileUpdated = "Profile_Updated";
     static final String ColTownship = "Township";
+    static final String ColTownshipId = "TownshipId";
     static final String ColWing = "Wing";
     static final String ColApartment = "Apartment";
     static final String ColDesignation = "Designation";
@@ -30,15 +31,7 @@ public class DBManager {
 
     static final int DBVersion = 1;
 
-    static final String TABLE_WINGS = "Wings";
-    static final String TABLE_NOTICES = "Notices";
-    static final String TABLE_NOTICE_WINGS = "NoticeWing";
-
-    static final String CreateTabLogin = "CREATE TABLE IF NOT EXISTS " + TabNameLogin + "(ID INTEGER PRIMARY KEY AUTOINCREMENT," + ColUsername + " TEXT," + ColPassword + " TEXT," + ColFirstName + " TEXT," + ColLastName + " TEXT," + ColPhone + " TEXT," + ColEmail + " TEXT," + ColTownship + " TEXT," + ColWing + " TEXT," + ColApartment + " TEXT," + ColDesignation + " TEXT," + ColProfileUpdated + " INTEGER," + ColType + " TEXT);";
-
-    static final String CreateWingsTable = "CREATE TABLE IF NOT EXISTS " + TABLE_WINGS + " (id INTEGER PRIMARY KEY AUTOINCREMENT, wing_id TEXT, name TEXT)";
-    static final String CreateNoticesTable = "CREATE TABLE IF NOT EXISTS " + TABLE_NOTICES + " (id INTEGER PRIMARY KEY AUTOINCREMENT, notice_id TEXT, posted_by_first_name TEXT, posted_by_last_name TEXT, posted_by_designation TEXT, title TEXT, description TEXT, timestamp TEXT)";
-    static final String CreateNoticeWingsTable = "CREATE TABLE IF NOT EXISTS " + TABLE_NOTICE_WINGS + " (id INTEGER PRIMARY KEY AUTOINCREMENT, notice_id TEXT, wing_id TEXT)";
+    static final String CreateTabLogin = "CREATE TABLE IF NOT EXISTS " + TabNameLogin + "(ID INTEGER PRIMARY KEY AUTOINCREMENT," + ColUsername + " TEXT," + ColPassword + " TEXT," + ColFirstName + " TEXT," + ColLastName + " TEXT," + ColPhone + " TEXT," + ColEmail + " TEXT," + ColTownship + " TEXT," + ColWing + " TEXT," + ColApartment + " TEXT," + ColDesignation + " TEXT," + ColProfileUpdated + " INTEGER," + ColType + " TEXT," + ColTownshipId + " TEXT)";
 
 
     static class DatabaseHelperUser extends SQLiteOpenHelper {

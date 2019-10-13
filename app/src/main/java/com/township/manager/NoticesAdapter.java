@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.squareup.picasso.Picasso;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
@@ -19,8 +21,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class NoticesAdapter extends RecyclerView.Adapter {
 
+    String TOWNSHIP_ID;
     ArrayList<Notice> dataset;
     Context context;
+    InputStream stream = null;
 
     public NoticesAdapter(ArrayList<Notice> dataset, Context context) {
         this.dataset = dataset;
@@ -42,10 +46,22 @@ public class NoticesAdapter extends RecyclerView.Adapter {
         final ViewHolder viewHolder = (ViewHolder) holder;
         final Notice notice = dataset.get(position);
 
-        viewHolder.image.setOnClickListener(new View.OnClickListener() {
+//        Object[] params = new Object[2];
+//        params[0] = notice;
+//        params[1] = viewHolder;
+//        new GetPDF().execute(params);
+
+        final String url = "https://township-manager.s3.ap-south-1.amazonaws.com/townships/" + TOWNSHIP_ID + "/notices/" + notice.getNotice_id() + ".png";
+        Picasso.get()
+                .load(url)
+                .into(viewHolder.imageView);
+
+        viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, FullScreenImageViewActivity.class));
+                Intent intent = new Intent(context, FullScreenImageViewActivity.class);
+                intent.putExtra("url", url);
+                context.startActivity(intent);
             }
         });
 
@@ -83,7 +99,7 @@ public class NoticesAdapter extends RecyclerView.Adapter {
         if (comments.size() == 0) {
 //            viewHolder.latestComment.setVisibility(View.GONE);
         } else {
-            viewHolder.latestComment.setText(comments.get(comments.size() -1).getContent());
+            viewHolder.latestComment.setText(comments.get(comments.size() - 1).getContent());
         }
     }
 
@@ -92,22 +108,54 @@ public class NoticesAdapter extends RecyclerView.Adapter {
         return dataset.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         MaterialCardView cardView;
         TextView title, description, latestComment;
-        ImageView image;
+        ImageView imageView;
         MaterialButton viewAllComments;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.notice_title);
-            image = itemView.findViewById(R.id.notice_image);
+            imageView = itemView.findViewById(R.id.notice_image);
             description = itemView.findViewById(R.id.notice_description);
             latestComment = itemView.findViewById(R.id.notice_latest_comment);
             viewAllComments = itemView.findViewById(R.id.notice_view_all_comments_button);
             cardView = itemView.findViewById(R.id.notice_board_card_view);
         }
     }
+
+//    private class GetPDF extends AsyncTask<Object, Void, ViewHolder> {
+//
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//        }
+//
+//        @Override
+//        protected ViewHolder doInBackground(Object... params) {
+//            String url = "https://township-manager.s3.ap-south-1.amazonaws.com/townships/" + TOWNSHIP_ID + "/notices/" + ((Notice) params[0]).getNotice_id() + ".pdf";
+//            try {
+//                stream = new URL(url).openStream();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return (ViewHolder) params[1];
+//        }
+//
+//        @Override
+//        protected void onPostExecute(ViewHolder viewHolder) {
+//            super.onPostExecute(viewHolder);
+//            viewHolder.pdfView.fromStream(stream)
+//                    .pages(0)
+//                    .enableSwipe(false)
+//                    .enableDoubletap(false)
+//                    .defaultPage(1)
+//                    .enableAnnotationRendering(false)
+//                    .password(null)
+//                    .load();
+//        }
+//    }
 
 }
