@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
@@ -143,7 +144,7 @@ public class AddNoticeAdminActivity extends AppCompatActivity {
     }
 
     private void publishNotice() {
-
+        ((ProgressBar) findViewById(R.id.add_notice_progress_bar)).setVisibility(View.VISIBLE);
         title = ((TextInputEditText) findViewById(R.id.add_notice_title_edittext)).getText().toString();
         description = ((TextInputEditText) findViewById(R.id.add_notice_description_edittext)).getText().toString();
         final Map<String, String> wing_ids = new HashMap<>();
