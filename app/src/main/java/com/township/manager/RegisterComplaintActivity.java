@@ -46,13 +46,13 @@ import androidx.fragment.app.FragmentTransaction;
 
 public class RegisterComplaintActivity extends AppCompatActivity {
 
-    TextInputLayout titleTil,descriptiontil;
+    TextInputLayout titleTil, descriptiontil;
     Button uploadComplaintPhotoButton;
-    String title,description;
+    String title, description;
     DBManager dbManager;
-    int usernameCol,passwordCol;
-    String username,password;
-    TextInputEditText complaintTitle,complaintDescription;
+    int usernameCol, passwordCol;
+    String username, password;
+    TextInputEditText complaintTitle, complaintDescription;
 
 
     @Override
@@ -61,14 +61,12 @@ public class RegisterComplaintActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_complaint);
 
 
+        titleTil = findViewById(R.id.register_complaint_title_textinput);
+        descriptiontil = findViewById(R.id.register_complaint_description_textinput);
+        uploadComplaintPhotoButton = findViewById(R.id.register_complaint_upload_photos_button);
 
-        titleTil=findViewById(R.id.register_complaint_title_textinput);
-        descriptiontil=findViewById(R.id.register_complaint_description_textinput);
-        uploadComplaintPhotoButton=findViewById(R.id.register_complaint_upload_photos_button);
-
-        complaintTitle=(TextInputEditText) findViewById(R.id.register_complaint_title_textinput_child);
-        complaintDescription=(TextInputEditText) findViewById(R.id.register_complaint_description_textinput_child);
-
+        complaintTitle = (TextInputEditText) findViewById(R.id.register_complaint_title_textinput_child);
+        complaintDescription = (TextInputEditText) findViewById(R.id.register_complaint_description_textinput_child);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.register_complaint_toolbar);
@@ -77,65 +75,68 @@ public class RegisterComplaintActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        dbManager=new DBManager(getApplicationContext());
-        Cursor cursor=dbManager.getDataLogin();
-        usernameCol=cursor.getColumnIndexOrThrow("Username");
-        passwordCol=cursor.getColumnIndexOrThrow("Password");
+        dbManager = new DBManager(getApplicationContext());
+        Cursor cursor = dbManager.getDataLogin();
+        usernameCol = cursor.getColumnIndexOrThrow("Username");
+        passwordCol = cursor.getColumnIndexOrThrow("Password");
         cursor.moveToFirst();
-        username=cursor.getString(usernameCol);
-        password=cursor.getString(passwordCol);
-
+        username = cursor.getString(usernameCol);
+        password = cursor.getString(passwordCol);
 
         error(descriptiontil);
         error(titleTil);
+
         MaterialButton registerComplaintButton = findViewById(R.id.register_complaint_button);
         registerComplaintButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                 query to register a new complaint
-
-                title=complaintTitle.getText().toString();
-                description=complaintDescription.getText().toString();
-
-                if(TextUtils.isEmpty(title)){
-                    titleTil.setError("Please enter the title");
-                    titleTil.setErrorEnabled(true);
-                    titleTil.requestFocus();
-                    titleTil.setErrorIconDrawable(null);
-                    return;
-                }
-                if(TextUtils.isEmpty(description)){
-                    descriptiontil.setError("Please enter the description");
-                    descriptiontil.setErrorEnabled(true);
-                    descriptiontil.requestFocus();
-                    descriptiontil.setErrorIconDrawable(null);
-                    return;
-                }
-                Retrofit.Builder builder=new Retrofit.Builder()
-                        .baseUrl(getString(R.string.server_addr))
-                        .addConverterFactory(GsonConverterFactory.create());
-
-                Retrofit retrofit=builder.build();
-                RetrofitServerAPI retrofitServerAPI=retrofit.create(RetrofitServerAPI.class);
-                Call<JsonArray> call=retrofitServerAPI.addComplaint(username,password,title,description);
-                call.enqueue(new Callback<JsonArray>() {
-                    @Override
-                    public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
-                        Log.d("sent",response.body().toString());
-                        Toast.makeText(RegisterComplaintActivity.this,title,Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onFailure(Call<JsonArray> call, Throwable t) {
-                        Log.d("notsent",t.toString());
-                    }
-                });
-
+                addComplaint();
             }
         });
 
     }
+
+    public void addComplaint() {
+        title = complaintTitle.getText().toString();
+        description = complaintDescription.getText().toString();
+
+        if (TextUtils.isEmpty(title)) {
+            titleTil.setError("Please enter the title");
+            titleTil.setErrorEnabled(true);
+            titleTil.requestFocus();
+            titleTil.setErrorIconDrawable(null);
+            return;
+        }
+        if (TextUtils.isEmpty(description)) {
+            descriptiontil.setError("Please enter the description");
+            descriptiontil.setErrorEnabled(true);
+            descriptiontil.requestFocus();
+            descriptiontil.setErrorIconDrawable(null);
+            return;
+        }
+
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(getString(R.string.server_addr))
+                .addConverterFactory(GsonConverterFactory.create());
+
+        Retrofit retrofit = builder.build();
+        RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
+        Call<JsonArray> call = retrofitServerAPI.addComplaint(username, password, title, description);
+        call.enqueue(new Callback<JsonArray>() {
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                Log.d("sent", response.body().toString());
+                Toast.makeText(RegisterComplaintActivity.this, title, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+                Log.d("notsent", t.toString());
+            }
+        });
+
+    }
+
 
     private void error(final TextInputLayout textInputLayout) {
 
@@ -157,8 +158,6 @@ public class RegisterComplaintActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
 
     @Override

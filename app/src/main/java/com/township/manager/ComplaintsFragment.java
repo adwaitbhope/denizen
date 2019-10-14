@@ -121,6 +121,11 @@ public class ComplaintsFragment extends Fragment {
 
 
         FloatingActionButton button = view.findViewById(R.id.complaints_add_complaint_fab);
+
+        if(cursor.getString(typeCol).equals("resident")){
+            button.setVisibility(View.VISIBLE);
+        }
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,10 +133,6 @@ public class ComplaintsFragment extends Fragment {
                 getContext().startActivity(intent);
             }
         });
-        button.setVisibility(View.GONE);
-        if(cursor.getString(typeCol).equals("resident")){
-             button.setVisibility(View.VISIBLE);
-        }
 
         return view;
     }
