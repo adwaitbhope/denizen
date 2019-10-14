@@ -103,14 +103,6 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         noticeBoardFragment = new NoticeBoardFragment();
         getNoticesFromServer();
 
-        navigationView.getMenu().getItem(4).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                startActivity(new Intent(ResidentHomeScreenActivity.this,RegisterComplaintActivity.class));
-                return false;
-            }
-        });
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.resident_home_screen_fragment_area, noticeBoardFragment);
         transaction.commit();
@@ -168,13 +160,12 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_admin_info_resident) {
 
         } else if (id == R.id.nav_complaints_resident) {
-
+            startActivity(new Intent(ResidentHomeScreenActivity.this, ComplaintsResidentContainerActivity.class));
         } else if (id == R.id.nav_security_list_resident) {
 
         } else if (id == R.id.nav_logout_resident) {
             LogOutDialog logOutDialog = new LogOutDialog();
             logOutDialog.show(getSupportFragmentManager(), "Logout");
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

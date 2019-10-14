@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -85,11 +84,11 @@ public class ComplaintsFragment extends Fragment {
         sliderAdapter.addFragment(pendingListFragment, "Pending");
         sliderAdapter.addFragment(resolvedListFragment, "Resolved");
 
-        DBManager dbManager=new DBManager(getContext());
-        Cursor cursor=dbManager.getDataLogin();
+        DBManager dbManager = new DBManager(getContext());
+        Cursor cursor = dbManager.getDataLogin();
         cursor.moveToFirst();
         int typeCol;
-        typeCol=cursor.getColumnIndexOrThrow("Type");
+        typeCol = cursor.getColumnIndexOrThrow("Type");
 
         // temporary dataset here
         ArrayList<Complaint> dataset = new ArrayList<>();
@@ -122,7 +121,7 @@ public class ComplaintsFragment extends Fragment {
 
         FloatingActionButton button = view.findViewById(R.id.complaints_add_complaint_fab);
 
-        if(cursor.getString(typeCol).equals("resident")){
+        if (cursor.getString(typeCol).equals("resident")) {
             button.setVisibility(View.VISIBLE);
         }
 
