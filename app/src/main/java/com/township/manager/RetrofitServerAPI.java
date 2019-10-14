@@ -1,9 +1,8 @@
 package com.township.manager;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
-import org.json.JSONArray;
+import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -12,9 +11,13 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 public interface RetrofitServerAPI {
     @Multipart
@@ -34,18 +37,27 @@ public interface RetrofitServerAPI {
     );
 
     @FormUrlEncoded
-    @POST("/payment/paytm/initiate/")
-    Call<JsonArray> getChecksum(
+    @POST("/register/existing/initiate/")
+    Call<JsonArray> registrationStep2(
+            @Field("application_id") String application_id,
             @Field("CHANNEL_ID") String channelId,
+            @Field("TXN_AMOUNT") String txnAmount,
             @Field("WEBSITE") String website,
             @Field("CALLBACK_URL") String callbackUrl,
             @Field("INDUSTRY_TYPE_ID") String industryTypeId,
-            @Field("TXN_AMOUNT") String txnAmount
+            @QueryMap Map<String,Object> wingdata,
+            @QueryMap Map<String,Object> amenitydata,
+            @Field("admin_ids") Integer admin_ids,
+            @Field("security_ids") Integer security_ids,
+            @Field("wings_num") Integer wings_num,
+            @Field("amenities_num") Integer amenities_num
+
     );
 
     @FormUrlEncoded
-    @POST("/payment/paytm/verify/")
+    @POST("/register/existing/verify/")
     Call<JsonArray> verifyChecksum(
+            @Field("application_id") String application_id,
             @Field("ORDER_ID") String ORDER_ID
     );
 
@@ -56,6 +68,40 @@ public interface RetrofitServerAPI {
             @Field("password") String password,
             @Field("title") String title,
             @Field("description") String description
+    );
+
+    @GET("/register/check_verification/")
+    Call<JsonArray>checkstatus(
+            @Query("application_id") String application_id,
+            @Query("email") String email
+    );
+
+    @FormUrlEncoded
+    @POST("/notices/")
+    Call<JsonArray> getNotices(
+        @Field("username") String username,
+        @Field("password") String password,
+        @Field("timestamp") String timestamp
+    );
+
+    @FormUrlEncoded
+    @POST("/notices/comments/new/")
+    Call<JsonArray> addCommentToNotice(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("notice_id") String notice_id,
+            @Field("content") String comment
+    );
+
+    @FormUrlEncoded
+    @POST("notices/new/")
+    Call<JsonArray> addNotice(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("title") String title,
+            @Field("description") String description,
+            @Field("num_wings") String num_wings,
+            @QueryMap Map<String, String> wing_ids
     );
 
 

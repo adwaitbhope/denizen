@@ -26,6 +26,26 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <ImageView
+        android:id="@+id/add_notice_preview_image"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayout7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/add_notice_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/add_notice_visibility_chip_group"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/add_notice_upload_document_button"
@@ -40,7 +60,7 @@
         app:iconPadding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout7" />
+        app:layout_constraintTop_toBottomOf="@+id/add_notice_preview_image" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/add_notice_publish_notice_button"
@@ -72,13 +92,14 @@
         app:counterMaxLength="40">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/add_notice_title_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_title_black_24dp"
             android:drawablePadding="10dp"
             android:drawableTint="@color/secondaryColor"
             android:hint="Title"
-            android:inputType="text"
+            android:inputType="text|textCapWords"
             android:paddingLeft="10dp"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -97,20 +118,20 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout6">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/add_notice_description_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_description_black_24dp"
             android:drawablePadding="10dp"
             android:drawableTint="@color/secondaryColor"
-            android:hint="Description"
-            android:inputType="textMultiLine"
+            android:hint="Description (Optional)"
+            android:inputType="textMultiLine|textCapSentences"
             android:paddingLeft="10dp"
-            android:textSize="14sp"
-            />
+            android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textView11"
+        android:id="@+id/notice_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -125,7 +146,7 @@
 
     <com.google.android.material.chip.ChipGroup
         style="@style/AppChipGroupStyle"
-        android:id="@+id/chipGroup"
+        android:id="@+id/add_notice_visibility_chip_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -134,50 +155,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11"
-        app:checkedIconTint="@color/secondaryTextColor">
-
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip6"
-            style="@style/AppChipFilterStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Everyone"
-            android:textAppearance="@style/chipTextAppearance" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip7"
-            style="@style/AppChipFilterStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Admins Only"
-            android:textAppearance="@style/chipTextAppearance"/>
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip8"
-            style="@style/AppChipFilterStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wing A"
-            android:textAppearance="@style/chipTextAppearance"/>
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip9"
-            style="@style/AppChipFilterStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wing B"
-            android:textAppearance="@style/chipTextAppearance"/>
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip10"
-            style="@style/AppChipFilterStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wing C"
-            android:textAppearance="@style/chipTextAppearance"/>
-
-    </com.google.android.material.chip.ChipGroup>
+        app:layout_constraintTop_toBottomOf="@+id/notice_title"
+        app:checkedIconTint="@color/secondaryTextColor"
+        app:chipSpacingVertical="4dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

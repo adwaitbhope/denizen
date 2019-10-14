@@ -3,15 +3,18 @@ package com.township.manager;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.regions.Regions;
@@ -22,10 +25,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 import com.pusher.pushnotifications.BeamsCallback;
 import com.pusher.pushnotifications.PushNotifications;
+import com.pusher.pushnotifications.PusherAlreadyRegisteredAnotherUserIdException;
 import com.pusher.pushnotifications.PusherCallbackError;
 import com.pusher.pushnotifications.auth.AuthData;
 import com.pusher.pushnotifications.auth.AuthDataGetter;
@@ -46,17 +52,22 @@ public class LoginScreenActivity extends AppCompatActivity {
     public TextInputLayout usernameTextLayout, passwordTextLayout;
 
     DBManager dbManager;
+    private AppDatabase appDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
 
+        appDatabase = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "app-database")
+                .fallbackToDestructiveMigration()
+                .build();
+
         dbManager = new DBManager(this);
         Cursor cursor = dbManager.getDataLogin();
         if (cursor.getCount() != 0) {
             int columntypeindex = cursor.getColumnIndexOrThrow("Type");
-            //  Log.d("hikr","hello");
             cursor.moveToFirst();
             switch (cursor.getString(columntypeindex)) {
                 case "admin":
@@ -122,7 +133,7 @@ public class LoginScreenActivity extends AppCompatActivity {
 
                 AmazonS3 s3Client = new AmazonS3Client(credentialsProvider);
 
-                s3Client.putObject("township-manager", "townships/notices/maintenance", "Pay the maintenance amount");
+                s3Client.putObject("township-manager", "townships/dataset/maintenance", "Pay the maintenance amount");
             }
         }.start();
     }
@@ -180,12 +191,16 @@ public class LoginScreenActivity extends AppCompatActivity {
 
                                     JSONArray jsonArray = new JSONArray(response);
                                     JSONObject jsonObjectLogin = jsonArray.getJSONObject(0);
+
+                                    Log.d("login response", jsonArray.toString());
+
                                     User user = new User();
                                     user.setLogin(jsonObjectLogin.getInt("login"));
 
 
                                     if (user.getLogin() == 1) {
                                         JSONObject jsonObjectLoginInfo = jsonArray.getJSONObject(1);
+
                                         user.setLoginType(jsonObjectLoginInfo.getString("type"));
                                         user.setUserName(jsonObjectLoginInfo.getString("username"));
                                         user.setPassword(password);
@@ -206,9 +221,23 @@ public class LoginScreenActivity extends AppCompatActivity {
                                         contentValues.put(DBManager.ColProfileUpdated, user.getProfileUpdated());
                                         contentValues.put(DBManager.ColTownship, user.getTownship());
                                         contentValues.put(DBManager.ColType, user.getLoginType());
+                                        contentValues.put(DBManager.ColTownshipId, jsonObjectLoginInfo.getString("township_id"));
                                         //   Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
 
-                                        PushNotifications.start(getApplicationContext(), "f464fd4f-7e2f-4f42-91cf-8a8ef1a67acb");
+                                        JSONArray jsonWings = jsonArray.getJSONArray(2);
+                                        Gson gson = new Gson();
+                                        final Wing[] wings = new Wing[jsonWings.length()];
+                                        for (int i = 0; i < jsonWings.length(); i++) {
+                                            JSONObject jsonWing = jsonWings.getJSONObject(i);
+                                            wings[i] = gson.fromJson(jsonWing.toString(), Wing.class);
+                                        }
+
+                                        new Thread() {
+                                            public void run() {
+                                                WingDao wingDao = appDatabase.wingDao();
+                                                wingDao.insert(wings);
+                                            }
+                                        }.start();
 
                                         BeamsTokenProvider tokenProvider = new BeamsTokenProvider(
                                                 getString(R.string.server_addr) + "/beams/get_token/",
@@ -226,18 +255,37 @@ public class LoginScreenActivity extends AppCompatActivity {
                                                     }
                                                 }
                                         );
+                                        PushNotifications.start(getApplicationContext(), "f464fd4f-7e2f-4f42-91cf-8a8ef1a67acb");
 
-                                        PushNotifications.setUserId(username, tokenProvider, new BeamsCallback<Void, PusherCallbackError>(){
-                                            @Override
-                                            public void onSuccess(Void... values) {
-                                                Log.i("PusherBeams", "Successfully authenticated with Pusher Beams");
-                                            }
+                                        try {
+                                            PushNotifications.setUserId(username, tokenProvider, new BeamsCallback<Void, PusherCallbackError>() {
+                                                @Override
+                                                public void onSuccess(Void... values) {
+                                                    Log.i("PusherBeams", "Successfully authenticated with Pusher Beams");
+                                                }
 
-                                            @Override
-                                            public void onFailure(PusherCallbackError error) {
-                                                Log.i("PusherBeams", "Pusher Beams authentication failed: " + error.getMessage());
-                                            }
-                                        });
+                                                @Override
+                                                public void onFailure(PusherCallbackError error) {
+                                                    Log.i("PusherBeams", "Pusher Beams authentication failed: " + error.getMessage());
+                                                }
+                                            });
+                                        } catch (PusherAlreadyRegisteredAnotherUserIdException e) {
+                                            PushNotifications.clearAllState();
+                                            PushNotifications.stop();
+                                            PushNotifications.start(getApplicationContext(), "f464fd4f-7e2f-4f42-91cf-8a8ef1a67acb");
+                                            PushNotifications.setUserId(username, tokenProvider, new BeamsCallback<Void, PusherCallbackError>() {
+                                                @Override
+                                                public void onSuccess(Void... values) {
+                                                    Log.i("PusherBeams", "Successfully authenticated with Pusher Beams");
+                                                }
+
+                                                @Override
+                                                public void onFailure(PusherCallbackError error) {
+                                                    Log.i("PusherBeams", "Pusher Beams authentication failed: " + error.getMessage());
+                                                }
+                                            });
+
+                                        }
 
 
                                         Log.d("response", response);
@@ -301,20 +349,25 @@ public class LoginScreenActivity extends AppCompatActivity {
 
                 ((GlobalVariables) getApplication()).getQueue().add(stringRequest);
 
-
             }
         });
-
 
     }
 
     public void openDialog() {
-        ContactUsDialog exampleDialog = new ContactUsDialog();
-        exampleDialog.show(getSupportFragmentManager(), "example dialog");
+//        ContactUsDialog exampleDialog = new ContactUsDialog();
+//        exampleDialog.show(getSupportFragmentManager(), "example dialog");
+
+        MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(this);
+        materialAlertDialogBuilder.setTitle("Contact us")
+                .setMessage("\nE-mail: support@denizen.io\n\nPhone: +91 94054 38914")
+                .setPositiveButton("Close", null)
+                .show();
     }
 
     public void openRegisterSocietyScreen() {
         Intent intent = new Intent(LoginScreenActivity.this, RegistrationStepsActivity.class);
         startActivity(intent);
     }
+
 }

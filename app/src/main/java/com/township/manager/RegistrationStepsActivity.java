@@ -16,7 +16,6 @@ public class RegistrationStepsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registration_steps);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.registration_steps_toolbar);
-//        toolbar.setTitleTextColor(getColor(R.color.secondaryColor));
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Registration Steps");
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -26,7 +25,8 @@ public class RegistrationStepsActivity extends AppCompatActivity {
         registrationStepOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RegistrationStepsActivity.this, RegistrationStepOne.class);
+                Intent intent = new Intent(RegistrationStepsActivity.this, RegistrationStepOneActivity.class);
+                finish();
                 startActivity(intent);
             }
         });
@@ -36,6 +36,7 @@ public class RegistrationStepsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(RegistrationStepsActivity.this, RegistrationStepTwoStatusActivity.class);
+                finish();
                 startActivity(intent);
             }
         });

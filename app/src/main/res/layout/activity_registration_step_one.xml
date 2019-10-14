@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:focusableInTouchMode="true">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,7 +19,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".RegistrationStepOne">
+            tools:context=".RegistrationStepOneActivity">
 
             <TextView
                 android:id="@+id/registration_step_one_location_error"
@@ -83,7 +84,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/registration_step_one_upload_documents_button" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/rate_of_amenity_textview"
+                android:id="@+id/registration_step_one_username_til"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -100,8 +101,8 @@
                     android:drawableLeft="@drawable/ic_person_black_24dp"
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/secondaryColor"
-                    android:hint="Username"
-                    android:inputType="textPersonName|text"
+                    android:hint="Administrator Name"
+                    android:inputType="textPersonName|textCapWords"
                     android:paddingLeft="10dp"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -115,7 +116,7 @@
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rate_of_amenity_textview">
+                app:layout_constraintTop_toBottomOf="@+id/registration_step_one_username_til">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/registration_step_one_admin_phone_edit_text"
@@ -151,7 +152,7 @@
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/secondaryColor"
                     android:hint="Administrator Designation"
-                    android:inputType="text"
+                    android:inputType="textCapWords"
                     android:paddingLeft="10dp"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -200,7 +201,7 @@
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/secondaryColor"
                     android:hint="Society Name"
-                    android:inputType="text"
+                    android:inputType="textCapWords"
                     android:paddingLeft="10dp"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -249,7 +250,7 @@
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/secondaryColor"
                     android:hint="Society Address"
-                    android:inputType="textMultiLine"
+                    android:inputType="textMultiLine|textCapWords"
                     android:paddingLeft="10dp"
                     android:scrollbars="vertical"
                     android:textSize="14sp" />

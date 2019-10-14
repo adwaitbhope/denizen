@@ -44,12 +44,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RegistrationStepOne extends AppCompatActivity implements OnMapReadyCallback {
+public class RegistrationStepOneActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final int REQUEST_WRITE_STORAGE = 112;
     private static final int PERMISSIONS_REQUEST_CODE = 42;
+    private static final int FILE_PICKER_REQUEST_CODE = 10;
     private GoogleMap mMap;
-    private static int LOCATION_REQUEST_CODE = 1;
+    private static final int LOCATION_REQUEST_CODE = 1;
     private static final int DEFAULT_ZOOM = 15;
     Button documentUploadButton, submitButton;
     String filePath;
@@ -57,8 +58,8 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
     private double latitude, longitude;
     private String geoaddress;
     private String adminName, adminPhone, adminDesignation, adminEmail, societyName, societyAddress, societyPhone;
-    private Boolean locationSelected=false,fileSelected=false;
-    private TextView locationError,fileMessage;
+    private Boolean locationSelected = false, fileSelected = false;
+    private TextView locationError, fileMessage;
     private File orignalFile;
 
     @Override
@@ -80,16 +81,14 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
         societyNameTextLayout = findViewById(R.id.registration_step_one_society_name_til);
         societyAddressTextLayout = findViewById(R.id.registration_step_one_society_address_til);
         societyPhoneNumberTextLayout = findViewById(R.id.registration_step_one_society_phone_til);
-        locationError=findViewById(R.id.registration_step_one_location_error);
-        fileMessage=findViewById(R.id.registration_step_one_file_message);
-
+        locationError = findViewById(R.id.registration_step_one_location_error);
+        fileMessage = findViewById(R.id.registration_step_one_file_message);
 
 
         setLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RegistrationStepOne.this, MapsActivityStepOne.class);
-                startActivityForResult(intent, LOCATION_REQUEST_CODE);
+                checkPermissionsAndOpenLocationSelector();
             }
         });
 
@@ -129,19 +128,21 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
 
                 }
             });
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
 
     }
 
 
     private void submit() {
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                submitButton.setText("Submitting...");
+
                 adminName = usernameTextLayout.getEditText().getText().toString();
                 adminPhone = administratorPhoneNumberTextLayout.getEditText().getText().toString();
                 adminDesignation = designationTextLayout.getEditText().getText().toString();
@@ -199,13 +200,13 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
                     societyPhoneNumberTextLayout.setErrorIconDrawable(null);
                     return;
                 }
-                if(!locationSelected) {
+                if (!locationSelected) {
                     locationError.setText("Select a location");
                     locationError.setVisibility(View.VISIBLE);
                     locationError.setTextColor(Color.RED);
                     return;
                 }
-                if(!fileSelected) {
+                if (!fileSelected) {
                     fileMessage.setText("Please select a file");
                     fileMessage.setVisibility(View.VISIBLE);
                     fileMessage.setTextColor(Color.RED);
@@ -247,7 +248,13 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Toast.makeText(RegistrationStepOne.this, "Application submitted!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegistrationStepOneActivity.this, "Application submitted!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(RegistrationStepOneActivity.this, RegistrationSuccessfulActivity.class);
+                intent.putExtra("title", "Application status");
+                intent.putExtra("heading", "Application submitted!");
+                intent.putExtra("description", "Thank you for registering!\nWe've received your application and we'll be reviewing it as soon as possible.\n\nOnce it's verified, you we'll notify you via email, so you can proceed to complete the registration process.");
+                finish();
+                startActivity(intent);
             }
 
             @Override
@@ -277,8 +284,8 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
 
     public void openFilePicker() {
         new MaterialFilePicker()
-                .withActivity(RegistrationStepOne.this)
-                .withRequestCode(10)
+                .withActivity(RegistrationStepOneActivity.this)
+                .withRequestCode(FILE_PICKER_REQUEST_CODE)
                 .withHiddenFiles(false)
                 .withFilter(Pattern.compile(".*\\.pdf$"))
                 .withTitle("Select PDF")
@@ -299,6 +306,21 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
         }
     }
 
+    private void checkPermissionsAndOpenLocationSelector() {
+        String permission = Manifest.permission.ACCESS_FINE_LOCATION;
+
+        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                Toast.makeText(this, "Please allow location access", Toast.LENGTH_SHORT).show();
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{permission}, LOCATION_REQUEST_CODE);
+            }
+        } else {
+            Intent intent = new Intent(RegistrationStepOneActivity.this, MapsActivityStepOne.class);
+            startActivityForResult(intent, LOCATION_REQUEST_CODE);
+        }
+    }
+
     private void showError() {
         Toast.makeText(this, "Allow external storage reading", Toast.LENGTH_SHORT).show();
     }
@@ -315,6 +337,15 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
                     showError();
                 }
             }
+            case LOCATION_REQUEST_CODE: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Intent intent = new Intent(RegistrationStepOneActivity.this, MapsActivityStepOne.class);
+                    startActivityForResult(intent, LOCATION_REQUEST_CODE);
+                } else {
+                    showError();
+                }
+            }
         }
     }
 
@@ -326,51 +357,41 @@ public class RegistrationStepOne extends AppCompatActivity implements OnMapReady
                 Bundle extras = data.getExtras();
                 if (extras != null) {
                     LatLng currentLocation = data.getExtras().getParcelable("LatLong");
-                    locationSelected=data.getExtras().getBoolean("locationCheck");
+
+                    locationSelected = data.getExtras().getBoolean("locationCheck");
                     locationError.setVisibility(View.GONE);
+
                     mMap.clear();
                     mMap.addMarker(new MarkerOptions().position(currentLocation));
-                    mMap.moveCamera(CameraUpdateFactory
-                            .newLatLngZoom(currentLocation, DEFAULT_ZOOM));
-                    MarkerOptions markerOptions = new MarkerOptions();
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, DEFAULT_ZOOM));
+
                     latitude = currentLocation.latitude;
                     longitude = currentLocation.longitude;
-//                    Geocoder geocoder = null;
-//                    List<Address> addresses;
-//                    try {
-//                        addresses=geocoder.getFromLocation(latitude,longitude,1);
-//                        geoaddress=addresses.get(0).getAddressLine(0);
-//
-//                    }
-//                    catch (IOException e){
-//                       e.printStackTrace();;
-//                    }
                 }
             }
         }
 
-        if (requestCode == 10) {
+        if (requestCode == FILE_PICKER_REQUEST_CODE) {
             try {
                 filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
                 try {
                     orignalFile = new File(filePath);
 
                     if (orignalFile.exists()) {
-                        fileSelected=true;
+                        fileSelected = true;
                         fileMessage.setText(orignalFile.getName());
                         fileMessage.setTextColor(Color.BLACK);
                         documentUploadButton.setText("Select different document");
                         fileMessage.setVisibility(View.VISIBLE);
                     }
 
-                    if(orignalFile.length()>2*1024*1024){
-                        fileSelected=false;
+                    if (orignalFile.length() > 2 * 1024 * 1024) {
+                        fileSelected = false;
                         fileMessage.setText("Select a file less than 2 MB");
                         fileMessage.setTextColor(View.VISIBLE);
                         fileMessage.setTextColor(Color.RED);
                     }
-                }
-                catch (NullPointerException e){
+                } catch (NullPointerException e) {
 
                     e.printStackTrace();
                 }

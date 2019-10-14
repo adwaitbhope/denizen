@@ -20,6 +20,7 @@ public class DBManager {
     static final String ColEmail = "Email";
     static final String ColProfileUpdated = "Profile_Updated";
     static final String ColTownship = "Township";
+    static final String ColTownshipId = "TownshipId";
     static final String ColWing = "Wing";
     static final String ColApartment = "Apartment";
     static final String ColDesignation = "Designation";
@@ -30,7 +31,8 @@ public class DBManager {
 
     static final int DBVersion = 1;
 
-    static final String CreateTabLogin = "CREATE TABLE IF NOT EXISTS " + TabNameLogin + "(ID INTEGER PRIMARY KEY AUTOINCREMENT," + ColUsername + " TEXT," + ColPassword + " TEXT," + ColFirstName + " TEXT," + ColLastName + " TEXT," + ColPhone + " TEXT," + ColEmail + " TEXT," + ColTownship + " TEXT," + ColWing + " TEXT," + ColApartment + " TEXT," + ColDesignation + " TEXT," + ColProfileUpdated + " INTEGER," + ColType + " TEXT);";
+    static final String CreateTabLogin = "CREATE TABLE IF NOT EXISTS " + TabNameLogin + "(ID INTEGER PRIMARY KEY AUTOINCREMENT," + ColUsername + " TEXT," + ColPassword + " TEXT," + ColFirstName + " TEXT," + ColLastName + " TEXT," + ColPhone + " TEXT," + ColEmail + " TEXT," + ColTownship + " TEXT," + ColWing + " TEXT," + ColApartment + " TEXT," + ColDesignation + " TEXT," + ColProfileUpdated + " INTEGER," + ColType + " TEXT," + ColTownshipId + " TEXT)";
+
 
     static class DatabaseHelperUser extends SQLiteOpenHelper {
         Context context;

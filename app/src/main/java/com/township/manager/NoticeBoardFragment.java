@@ -2,16 +2,24 @@ package com.township.manager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 
 /**
@@ -33,6 +41,20 @@ public class NoticeBoardFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    RecyclerView recyclerView;
+    NoticesAdapter adapter;
+    RecyclerView.LayoutManager layoutManager;
+
+    AppDatabase appDatabase;
+    ArrayList<Notice> dataset = new ArrayList<>();
+    ArrayList<Notice> temporaryDataset = new ArrayList<>();
+    NoticeDao noticeDao;
+
+    String userType, townshipId;
+
+    public static final int ADD_NOTICE_REQUEST = 69;
+    public static final int ADD_NOTICE_RESULT = 70;
 
     public NoticeBoardFragment() {
         // Required empty public constructor
@@ -60,12 +82,23 @@ public class NoticeBoardFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        appDatabase = Room.databaseBuilder(getContext().getApplicationContext(),
+                AppDatabase.class, "app-database")
+                .fallbackToDestructiveMigration()
+                .build();
+
+        DBManager dbManager = new DBManager(getContext().getApplicationContext());
+        Cursor cursor = dbManager.getDataLogin();
+        cursor.moveToFirst();
+
+        userType = cursor.getString(cursor.getColumnIndexOrThrow("Type"));
+        townshipId = cursor.getString(cursor.getColumnIndexOrThrow("TownshipId"));
+        noticeDao = appDatabase.noticeDao();
     }
 
     @Override
@@ -74,25 +107,57 @@ public class NoticeBoardFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_notice_board, container, false);
 
-        ImageView imageView = view.findViewById(R.id.imageView);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), FullScreenImageViewActivity.class));
-            }
-        });
+        if (userType.equals("admin")) {
+            FloatingActionButton addNoticeButton = view.findViewById(R.id.notice_board_add_notice_fab);
+            addNoticeButton.setVisibility(View.VISIBLE);
+            addNoticeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), AddNoticeAdminActivity.class);
+                    startActivityForResult(intent, ADD_NOTICE_REQUEST);
+                }
+            });
+        }
 
-        FloatingActionButton addNoticeButton = view.findViewById(R.id.notice_board_add_notice_fab);
-        addNoticeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), AddNoticeAdminActivity.class);
-                startActivity(intent);
-            }
-        });
-        // Inflate the layout for this fragment
+        updateRecyclerView();
+
+        recyclerView = view.findViewById(R.id.notice_board_recycler_view);
+        adapter = new NoticesAdapter(dataset, getContext());
+
+        adapter.TOWNSHIP_ID = townshipId;
+        layoutManager = new LinearLayoutManager(getContext());
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+        recyclerView.setItemViewCacheSize(15);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateRecyclerView();
+//        recyclerView.smoothScrollToPosition(0);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_NOTICE_REQUEST) {
+            if (resultCode == ADD_NOTICE_RESULT) {
+                updateRecyclerView();
+                recyclerView.smoothScrollToPosition(0);
+            }
+        }
+    }
+
+    public void updateRecyclerView() {
+        new NoticesAsyncTask().execute();
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -132,4 +197,41 @@ public class NoticeBoardFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    private class NoticesAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            temporaryDataset.clear();
+            temporaryDataset.addAll(noticeDao.getAll());
+
+            for (Notice notice : temporaryDataset) {
+                notice.setWings((ArrayList<Wing>) noticeDao.getWings(notice.getNotice_id()));
+
+                try {
+                } catch (IndexOutOfBoundsException e) {
+
+                }
+                notice.setComments((ArrayList<Notice.Comment>) noticeDao.getComments(notice.getNotice_id()));
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            dataset.clear();
+            dataset.addAll(temporaryDataset);
+            if (adapter != null) {
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
+
 }

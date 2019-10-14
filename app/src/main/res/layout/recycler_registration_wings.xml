@@ -50,6 +50,8 @@
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -60,7 +62,7 @@
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/secondaryColor"
                 android:hint="@string/wing_name"
-                android:inputType="text"
+                android:inputType="textCapWords"
                 android:paddingLeft="10dp"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -90,8 +92,8 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/AppTextField.ExposedDropdownMenu"
             android:id="@+id/naming_convention_textinput"
+            style="@style/AppTextField.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -99,6 +101,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="24dp"
             android:hint="@string/naming_convention"
+            app:errorEnabled="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -1,13 +1,41 @@
 package com.township.manager;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity
 class Wing {
 
-    String name;
-    int numberOfFloors, numberOfApartmentsPerFloor;
+    @NonNull
+    @PrimaryKey
+    String wing_id;
+
+    @ColumnInfo (name = "name")
+    String wing_name;
+
+    @ColumnInfo (name = "naming_convention")
     int namingConvention;
 
+    @Ignore
+    int numberOfFloors;
+
+    @Ignore
+    int numberOfApartmentsPerFloor;
+
+    public void setWing_id(@NonNull String wing_id) {
+        this.wing_id = wing_id;
+    }
+
+    @NonNull
+    public String getWing_id() {
+        return wing_id;
+    }
+
     public void setName(String name) {
-        this.name = name;
+        this.wing_name = name;
     }
 
     public void setNamingConvention(int namingConvention) {
@@ -35,6 +63,6 @@ class Wing {
     }
 
     public String getName() {
-        return name;
+        return wing_name;
     }
 }

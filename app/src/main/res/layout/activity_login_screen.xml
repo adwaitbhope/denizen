@@ -4,14 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
+    android:clickable="true"
     tools:context=".LoginScreenActivity">
-<!--    android:focusable="true"-->
-<!--    android:focusableInTouchMode="true"-->
-<!--    android:clickable="true"-->
-
-
-
-
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/login_screen_login_button"

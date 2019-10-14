@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_booking_history_item"
+        android:title="Booking History"
+        android:icon="@drawable/ic_history_black_24dp"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_booking_list_item"
+        android:title="Camera"
+        android:icon="@drawable/ic_format_list_bulleted_black_24dp"
+        app:showAsAction="always" />
+</menu>
