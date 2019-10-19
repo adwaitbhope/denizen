@@ -1,6 +1,7 @@
 package com.township.manager;
 
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,10 +14,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
 
 public class SecurityHomeScreenActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, VisitorEntryFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,11 @@ public class SecurityHomeScreenActivity extends AppCompatActivity
         cursor.moveToFirst();
         securityPlace.setText(cursor.getString(placeCol));
         securityName.setText(cursor.getString(firstNameCol) + " " + cursor.getString(lastNameCol));
+
+        VisitorEntryFragment visitorEntryFragment = new VisitorEntryFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.security_home_screen_fragment_area, visitorEntryFragment);
+        transaction.commit();
     }
 
     @Override
@@ -78,5 +85,10 @@ public class SecurityHomeScreenActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
