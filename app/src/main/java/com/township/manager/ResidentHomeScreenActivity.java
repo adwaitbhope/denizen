@@ -40,11 +40,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ResidentHomeScreenActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, NoticeBoardFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, NoticeBoardFragment.OnFragmentInteractionListener, VisitorHistoryFragment.OnFragmentInteractionListener {
 
     String username, password;
 
     NoticeBoardFragment noticeBoardFragment;
+    VisitorHistoryFragment visitorHistoryFragment;
 
     AppDatabase appDatabase;
     NoticeDao noticeDao;
@@ -101,6 +102,8 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         residentFlatNo.setText(cursor.getString(wingNoCol) + "/" + cursor.getString(flatNoCol));
 
         noticeBoardFragment = new NoticeBoardFragment();
+        visitorHistoryFragment = new VisitorHistoryFragment();
+
         getNoticesFromServer();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -111,9 +114,10 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                FragmentTransaction transaction;
                 switch (item.getItemId()) {
                     case R.id.resident_notice_board:
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction = getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.resident_home_screen_fragment_area, noticeBoardFragment);
                         transaction.commit();
                         return true;
@@ -128,6 +132,9 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                         return true;
 
                     case R.id.resident_visitor_history:
+                        transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.resident_home_screen_fragment_area, visitorHistoryFragment);
+                        transaction.commit();
                         return true;
                 }
 

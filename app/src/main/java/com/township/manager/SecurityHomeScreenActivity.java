@@ -73,7 +73,6 @@ public class SecurityHomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_logout_security) {
             LogOutDialog logOutDialog = new LogOutDialog();
             logOutDialog.show(getSupportFragmentManager(), "Logout");
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
