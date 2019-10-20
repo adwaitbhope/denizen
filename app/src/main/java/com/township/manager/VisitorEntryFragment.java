@@ -220,6 +220,8 @@ public class VisitorEntryFragment extends Fragment {
                             ((ProgressBar) getView().findViewById(R.id.add_visitor_entry_progress_bar)).setVisibility(View.GONE);
                             getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
+                            ((SecurityHomeScreenActivity) getActivity()).getVisitorHistoryFromServer();
+
                             Toast.makeText(getContext(), "Entry successful", Toast.LENGTH_SHORT).show();
 
                             firstNameEditText.setText("");
