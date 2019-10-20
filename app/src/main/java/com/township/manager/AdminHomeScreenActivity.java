@@ -128,6 +128,7 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                             appBarLayout.setElevation(4);
                             transaction = getSupportFragmentManager().beginTransaction();
                             transaction.replace(R.id.admin_home_screen_fragment_area, noticeBoardFragment);
+                            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                             transaction.commit();
                         }
                         return true;
@@ -139,6 +140,7 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                             transaction = getSupportFragmentManager().beginTransaction();
                             complaintsFragment = new ComplaintsFragment();
                             transaction.replace(R.id.admin_home_screen_fragment_area, complaintsFragment);
+                            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                             transaction.commit();
                         }
                         return true;

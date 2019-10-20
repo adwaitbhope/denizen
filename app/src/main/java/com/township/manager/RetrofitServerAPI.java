@@ -116,5 +116,13 @@ public interface RetrofitServerAPI {
             @Field("apartment") String apartment
     );
 
+    @FormUrlEncoded
+    @POST("visitors/get/")
+    Call <JsonArray> getVisitorHistory(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("timestamp") String timestamp
+    );
+
 
 }

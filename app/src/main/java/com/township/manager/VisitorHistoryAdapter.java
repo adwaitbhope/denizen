@@ -34,8 +34,8 @@ public class VisitorHistoryAdapter extends RecyclerView.Adapter {
         ViewHolder viewHolder = (ViewHolder) holder;
         Visitor visitor = dataset.get(position);
         viewHolder.name.setText(visitor.getFirst_name() + " " + visitor.getLast_name());
-        viewHolder.date.setText(visitor.getInTimestamp().substring(0, 13));
-        viewHolder.time.setText(visitor.getInTimestamp().substring(14));
+        viewHolder.date.setText(visitor.getIn_timestamp().substring(0, 10));
+        viewHolder.time.setText(visitor.getIn_timestamp().substring(11, 19));
     }
 
     @Override

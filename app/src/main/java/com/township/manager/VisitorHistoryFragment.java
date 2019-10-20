@@ -2,15 +2,19 @@ package com.township.manager;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -39,7 +43,12 @@ public class VisitorHistoryFragment extends Fragment {
     VisitorHistoryAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
 
-    ArrayList<Visitor> dataset;
+    ArrayList<Visitor> dataset = new ArrayList<>();
+    ArrayList<Visitor> temporaryDataset;
+    AppDatabase appDatabase;
+
+    VisitorDao visitorDao;
+    Context context;
 
     public VisitorHistoryFragment() {
         // Required empty public constructor
@@ -71,16 +80,25 @@ public class VisitorHistoryFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        dataset = new ArrayList<>();
-        Visitor visitor = new Visitor();
-        visitor.setFirst_name("Adwait");
-        visitor.setLast_name("Bhope");
-        visitor.setId("1");
-        visitor.setPhone("9405438914");
-        visitor.setInTimestamp("18th Oct, '19 4:20 PM");
+//        Toast.makeText(context, "onCreate was called", Toast.LENGTH_SHORT).show();
+        Log.d("visitor", "onCreate was called");
 
-        dataset.add(visitor);
-        dataset.add(visitor);
+        appDatabase = Room.databaseBuilder(context.getApplicationContext(),
+                AppDatabase.class, "app-database")
+                .fallbackToDestructiveMigration()
+                .build();
+        visitorDao = appDatabase.visitorDao();
+
+        dataset = new ArrayList<>();
+//        Visitor visitor = new Visitor();
+//        visitor.setFirst_name("Adwait");
+//        visitor.setLast_name("Bhope");
+//        visitor.setId(1);
+//        visitor.setPhone("9405438914");
+//        visitor.setIn_timestamp("18th Oct, '19 4:20 PM");
+
+//        dataset.add(visitor);
+//        dataset.add(visitor);
 
         adapter = new VisitorHistoryAdapter(dataset, getContext());
         layoutManager = new LinearLayoutManager(getContext());
@@ -95,6 +113,8 @@ public class VisitorHistoryFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
 
+        updateRecyclerView();
+
         return view;
     }
 
@@ -108,6 +128,7 @@ public class VisitorHistoryFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        this.context = context;
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -120,6 +141,41 @@ public class VisitorHistoryFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void updateRecyclerView() {
+        new GetVisitorsFromDatabase().execute();
+    }
+
+    private class GetVisitorsFromDatabase extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if (appDatabase == null) {
+                appDatabase = Room.databaseBuilder(context.getApplicationContext(),
+                        AppDatabase.class, "app-database")
+                        .fallbackToDestructiveMigration()
+                        .build();
+            }
+            visitorDao = appDatabase.visitorDao();
+            temporaryDataset = (ArrayList<Visitor>) visitorDao.getAll();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            dataset.clear();
+            dataset.addAll(temporaryDataset);
+            if (adapter != null) {
+                adapter.notifyDataSetChanged();
+            }
+            super.onPostExecute(aVoid);
+        }
     }
 
     /**
