@@ -14,7 +14,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
@@ -138,6 +141,9 @@ public class VisitorEntryFragment extends Fragment {
         wingACTV = view.findViewById(R.id.visitor_entry_wing_drop_down);
         apartmentACTV = view.findViewById(R.id.visitor_entry_apartment_drop_down);
 
+        handleError(firstNameTIL);
+        handleError(lastNameTIL);
+
         apartmentsAdapter = new ArrayAdapter<>(
                 getContext(),
                 R.layout.dropdown_menu_popup_item,
@@ -154,6 +160,26 @@ public class VisitorEntryFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void handleError(final TextInputLayout textInputLayout) {
+        Objects.requireNonNull(textInputLayout.getEditText()).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                textInputLayout.setError(null);
+                textInputLayout.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     private void sendQueryForNewVisitor() {
