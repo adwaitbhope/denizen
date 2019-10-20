@@ -13,10 +13,10 @@ class Wing {
     @PrimaryKey
     String wing_id;
 
-    @ColumnInfo (name = "name")
+    @ColumnInfo(name = "name")
     String wing_name;
 
-    @ColumnInfo (name = "naming_convention")
+    @ColumnInfo(name = "naming_convention")
     int namingConvention;
 
     @Ignore

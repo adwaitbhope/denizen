@@ -2,6 +2,7 @@ package com.township.manager;
 
 import com.google.gson.JsonArray;
 
+import java.io.FileInputStream;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
@@ -102,6 +103,17 @@ public interface RetrofitServerAPI {
             @Field("description") String description,
             @Field("num_wings") String num_wings,
             @QueryMap Map<String, String> wing_ids
+    );
+
+    @FormUrlEncoded
+    @POST("/visitors/new/")
+    Call<JsonArray> addNewVisitor(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("first_name") String first_name,
+            @Field("last_name") String last_name,
+            @Field("wing_id") String wing_id,
+            @Field("apartment") String apartment
     );
 
 
