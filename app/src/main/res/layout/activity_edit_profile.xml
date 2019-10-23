@@ -75,7 +75,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/profile_photo_image"
@@ -200,19 +200,19 @@
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profile_photo_image">
+                app:layout_constraintTop_toBottomOf="@+id/edit_profile_last_name_til">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_profile_designation_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/designation"
-                    android:inputType="text"
                     android:drawableLeft="@drawable/ic_assignment_ind_black_24dp"
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/secondaryColor"
+                    android:hint="@string/designation"
+                    android:inputType="text"
                     android:paddingLeft="10dp"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
