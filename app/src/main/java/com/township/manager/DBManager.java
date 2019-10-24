@@ -12,6 +12,7 @@ public class DBManager {
     private SQLiteDatabase sqLiteDatabase;
     static final String DBName = "Township-Manager";
     static final String TabNameLogin = "Login";
+
     static final String ColUsername = "Username";
     static final String ColPassword = "Password";
     static final String ColFirstName = "First_Name";
@@ -25,8 +26,6 @@ public class DBManager {
     static final String ColApartment = "Apartment";
     static final String ColDesignation = "Designation";
     static final String ColType = "Type";
-
-
 
 
     static final int DBVersion = 1;
@@ -60,7 +59,6 @@ public class DBManager {
     public DBManager(Context context) {
         DatabaseHelperUser databaseHelperUser = new DatabaseHelperUser(context);
         sqLiteDatabase = databaseHelperUser.getWritableDatabase();
-
     }
 
     public long Insert(ContentValues values) {

@@ -56,14 +56,21 @@ public class AdminHomeScreenActivity extends AppCompatActivity
     Notice[] noticesArray;
     Notice.Comment[] commentsArray;
 
+    DBManager dbManager;
+    Cursor cursor;
+    View headerView;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        DBManager dbManager = new DBManager(getApplicationContext());
-        Cursor cursor = dbManager.getDataLogin();
+        dbManager = new DBManager(getApplicationContext());
+        cursor = dbManager.getDataLogin();
         cursor.moveToFirst();
+
+        username = cursor.getString(cursor.getColumnIndexOrThrow("Username"));
+        password = cursor.getString(cursor.getColumnIndexOrThrow("Password"));
 
         appDatabase = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "app-database")
@@ -83,16 +90,9 @@ public class AdminHomeScreenActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        headerView = navigationView.getHeaderView(0);
 
-        View header = navigationView.getHeaderView(0);
-        TextView adminName, adminDesignation;
-
-        adminDesignation = header.findViewById(R.id.navheader_admin_home_screen_designation_textview);
-        adminName = header.findViewById(R.id.navheader_admin_home_screen_name_textview);
-
-        int firstNameCol, desCol, lastNameCol, usernameCol, passwordCol;
-        ImageButton editProfile = header.findViewById(R.id.admin_home_nav_header_edit_profile_button);
-
+        ImageButton editProfile = headerView.findViewById(R.id.admin_home_nav_header_edit_profile_button);
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,20 +100,6 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-
-        firstNameCol = cursor.getColumnIndexOrThrow("First_Name");
-        lastNameCol = cursor.getColumnIndexOrThrow("Last_Name");
-        desCol = cursor.getColumnIndexOrThrow("Designation");
-        usernameCol = cursor.getColumnIndexOrThrow("Username");
-        passwordCol = cursor.getColumnIndexOrThrow("Password");
-        cursor.moveToFirst();
-
-        username = cursor.getString(usernameCol);
-        password = cursor.getString(passwordCol);
-
-        adminDesignation.setText(cursor.getString(desCol));
-        adminName.setText(cursor.getString(firstNameCol) + " " + cursor.getString(lastNameCol));
-
 
         noticeBoardFragment = new NoticeBoardFragment();
 //        complaintsFragment = new ComplaintsFragment();
@@ -168,6 +154,30 @@ public class AdminHomeScreenActivity extends AppCompatActivity
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
+    public void updateUI() {
+        cursor = dbManager.getDataLogin();
+        cursor.moveToFirst();
+
+        int firstNameCol, desCol, lastNameCol;
+        firstNameCol = cursor.getColumnIndexOrThrow("First_Name");
+        lastNameCol = cursor.getColumnIndexOrThrow("Last_Name");
+        desCol = cursor.getColumnIndexOrThrow("Designation");
+
+        TextView adminName, adminDesignation;
+
+        adminDesignation = headerView.findViewById(R.id.navheader_admin_home_screen_designation_textview);
+        adminName = headerView.findViewById(R.id.navheader_admin_home_screen_name_textview);
+
+        adminName.setText(cursor.getString(firstNameCol) + " " + cursor.getString(lastNameCol));
+        adminDesignation.setText(cursor.getString(desCol));
     }
 
     @Override

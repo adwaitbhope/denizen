@@ -59,6 +59,10 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
     Notice.Comment[] commentsArray;
     Visitor[] visitorsArray;
 
+    DBManager dbManager;
+    Cursor cursor;
+    View headerView;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +72,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DBManager dbManager = new DBManager(getApplicationContext());
+        dbManager = new DBManager(getApplicationContext());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -82,36 +86,25 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        View header = navigationView.getHeaderView(0);
+        headerView = navigationView.getHeaderView(0);
 
-        TextView residentFlatNo = header.findViewById(R.id.resident_home_nav_header_flat_no);
-        TextView residentName = header.findViewById(R.id.resident_home_nav_header_name);
-
-        ImageButton editProfile = header.findViewById(R.id.resident_home_nav_header_edit_profile_button);
+        ImageButton editProfile = headerView.findViewById(R.id.resident_home_nav_header_edit_profile_button);
 
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ResidentHomeScreenActivity.this, EditProfileActivity.class);
+                Intent intent = new Intent(ResidentHomeScreenActivity.this, ProfileActivity.class);
                 startActivity(intent);
             }
         });
 
-        int flatNoCol, firstNameCol, lastNameCol, wingNoCol;
-        Cursor cursor = dbManager.getDataLogin();
-
-        firstNameCol = cursor.getColumnIndexOrThrow("First_Name");
-        lastNameCol = cursor.getColumnIndexOrThrow("Last_Name");
-        flatNoCol = cursor.getColumnIndexOrThrow("Apartment");
-        wingNoCol = cursor.getColumnIndexOrThrow("Wing");
-
+        cursor = dbManager.getDataLogin();
         cursor.moveToFirst();
+
+        updateUI();
 
         username = cursor.getString(cursor.getColumnIndexOrThrow("Username"));
         password = cursor.getString(cursor.getColumnIndexOrThrow("Password"));
-
-        residentName.setText(cursor.getString(firstNameCol) + " " + cursor.getString(lastNameCol));
-        residentFlatNo.setText(cursor.getString(wingNoCol) + "/" + cursor.getString(flatNoCol));
 
         noticeBoardFragment = new NoticeBoardFragment();
         visitorHistoryFragment = new VisitorHistoryFragment();
@@ -157,6 +150,29 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         getNoticesFromServer();
         getVisitorHistoryFromServer();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
+    public void updateUI() {
+        cursor = dbManager.getDataLogin();
+        cursor.moveToFirst();
+
+        int flatNoCol, firstNameCol, lastNameCol, wingNoCol;
+        firstNameCol = cursor.getColumnIndexOrThrow("First_Name");
+        lastNameCol = cursor.getColumnIndexOrThrow("Last_Name");
+        flatNoCol = cursor.getColumnIndexOrThrow("Apartment");
+        wingNoCol = cursor.getColumnIndexOrThrow("Wing");
+
+        TextView residentFlatNo = headerView.findViewById(R.id.resident_home_nav_header_flat_no);
+        TextView residentName = headerView.findViewById(R.id.resident_home_nav_header_name);
+
+        residentName.setText(cursor.getString(firstNameCol) + " " + cursor.getString(lastNameCol));
+        residentFlatNo.setText(cursor.getString(wingNoCol) + "/" + cursor.getString(flatNoCol));
     }
 
     @Override

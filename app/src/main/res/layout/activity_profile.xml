@@ -44,7 +44,7 @@
             app:srcCompat="@drawable/ic_noice" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -58,15 +58,15 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/profile_user_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Treasurer"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/textView"
-            app:layout_constraintStart_toStartOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintEnd_toEndOf="@+id/profile_name"
+            app:layout_constraintStart_toStartOf="@+id/profile_name"
+            app:layout_constraintTop_toBottomOf="@+id/profile_name" />
 
         <TextView
             android:id="@+id/textView3"
@@ -82,10 +82,10 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/profile_user_info" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/profile_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -115,7 +115,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/profile_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -145,17 +145,17 @@
             android:drawableTint="@color/secondaryColor"
             android:text="Email"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView8"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_email"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView8"
+            app:layout_constraintTop_toTopOf="@+id/profile_email"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/profile_email"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:text="batliwalaenterprises@gmail.com"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -177,10 +177,10 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+            app:layout_constraintTop_toBottomOf="@+id/profile_email" />
 
         <TextView
-            android:id="@+id/textView10"
+            android:id="@+id/profile_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"

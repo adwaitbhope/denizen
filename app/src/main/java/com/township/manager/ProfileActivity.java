@@ -1,9 +1,11 @@
 package com.township.manager;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +19,10 @@ public class ProfileActivity extends AppCompatActivity {
     private static final int EDIT_PROFILE_REQUEST_CODE = 0;
     public static final int PROFILE_EDITED = 1;
     public static final int PROFILE_NOT_EDITED = -1;
+
+    Cursor cursor;
+    String username, firstName, lastName, userInfo, phone, email, type;
+    int profileUpdated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        getProfileDetailsFromDatabase();
+        updateUI();
 
     }
 
@@ -62,16 +68,37 @@ public class ProfileActivity extends AppCompatActivity {
                     break;
 
                 case PROFILE_EDITED:
-                    getProfileDetailsFromDatabase();
+                    updateUI();
                     break;
             }
         }
 
     }
 
-    private void getProfileDetailsFromDatabase() {
+    private void updateUI() {
         // get details from database
+        DBManager dbManager = new DBManager(getApplicationContext());
+        cursor = dbManager.getDataLogin();
+        cursor.moveToFirst();
 
-        // then update UI
+        username = cursor.getString(cursor.getColumnIndexOrThrow("Username"));
+        firstName = cursor.getString(cursor.getColumnIndexOrThrow("First_Name"));
+        lastName = cursor.getString(cursor.getColumnIndexOrThrow("Last_Name"));
+        email = cursor.getString(cursor.getColumnIndexOrThrow("Email"));
+        phone = cursor.getString(cursor.getColumnIndexOrThrow("Phone"));
+        type = cursor.getString(cursor.getColumnIndexOrThrow("Type"));
+        if (type.equals("resident")) {
+            userInfo = cursor.getString(cursor.getColumnIndexOrThrow("Wing"));
+            userInfo += "-" + cursor.getString(cursor.getColumnIndexOrThrow("Apartment"));
+        } else {
+            userInfo = cursor.getString(cursor.getColumnIndexOrThrow("Designation"));
+        }
+
+        ((TextView) findViewById(R.id.profile_name)).setText(firstName + " " + lastName);
+        ((TextView) findViewById(R.id.profile_user_info)).setText(userInfo);
+        ((TextView) findViewById(R.id.profile_username)).setText(username);
+        ((TextView) findViewById(R.id.profile_email)).setText(email);
+        ((TextView) findViewById(R.id.profile_phone)).setText(phone);
+
     }
 }

@@ -297,8 +297,9 @@ public class LoginScreenActivity extends AppCompatActivity {
 
                                         }
 
-
                                         Log.d("response", response);
+                                        dbManager.deleteAll();
+
                                         switch (jsonObjectLoginInfo.getString("type")) {
 
                                             case "admin": {
