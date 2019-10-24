@@ -91,8 +91,6 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         adminName = header.findViewById(R.id.navheader_admin_home_screen_name_textview);
 
         int firstNameCol, desCol, lastNameCol, usernameCol, passwordCol;
-        TextView adminDesignation = header.findViewById(R.id.navheader_admin_home_screen_designation_textview);
-        TextView adminName = header.findViewById(R.id.navheader_admin_home_screen_name_textview);
         ImageButton editProfile = header.findViewById(R.id.admin_home_nav_header_edit_profile_button);
 
         editProfile.setOnClickListener(new View.OnClickListener() {

@@ -100,8 +100,6 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         int flatNoCol, firstNameCol, lastNameCol, wingNoCol;
         Cursor cursor = dbManager.getDataLogin();
 
-        usernameCol = cursor.getColumnIndexOrThrow("Username");
-        passwordCol = cursor.getColumnIndexOrThrow("Password");
         firstNameCol = cursor.getColumnIndexOrThrow("First_Name");
         lastNameCol = cursor.getColumnIndexOrThrow("Last_Name");
         flatNoCol = cursor.getColumnIndexOrThrow("Apartment");
@@ -109,8 +107,8 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
 
         cursor.moveToFirst();
 
-        username = cursor.getString(usernameCol);
-        password = cursor.getString(passwordCol);
+        username = cursor.getString(cursor.getColumnIndexOrThrow("Username"));
+        password = cursor.getString(cursor.getColumnIndexOrThrow("Password"));
 
         residentName.setText(cursor.getString(firstNameCol) + " " + cursor.getString(lastNameCol));
         residentFlatNo.setText(cursor.getString(wingNoCol) + "/" + cursor.getString(flatNoCol));
