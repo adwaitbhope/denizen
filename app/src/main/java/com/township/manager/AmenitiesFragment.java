@@ -1,6 +1,7 @@
 package com.township.manager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 
 /**
@@ -68,6 +71,17 @@ public class AmenitiesFragment extends Fragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        View view = inflater.inflate(R.layout.fragment_amenities, container, false);
+        ExtendedFloatingActionButton membershipDetailsButton = view.findViewById(R.id.membership_details_ex_fab);
+        membershipDetailsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), MembershipDetailsActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return inflater.inflate(R.layout.fragment_amenities, container, false);
     }
 
