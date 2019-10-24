@@ -5,16 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/complaints_add_complaint_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
-        app:maxImageSize="32dp"
-        app:srcCompat="@drawable/ic_add_black_24dp"
-        app:tint="@android:color/white" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -35,27 +25,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/primaryColor"
+            android:elevation="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:elevation="4dp"
             app:tabInlineLabel="true">
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/pending_tab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pending"
-                android:icon="@drawable/ic_assignment_late_black_24dp" />
+                android:icon="@drawable/ic_assignment_late_black_24dp"
+                android:text="Pending" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/resolved_tab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Resolved"
-                android:icon="@drawable/ic_assignment_turned_in_black_24dp" />
+                android:icon="@drawable/ic_assignment_turned_in_black_24dp"
+                android:text="Resolved" />
 
         </com.google.android.material.tabs.TabLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/complaints_add_complaint_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:visibility="gone"
+        app:maxImageSize="32dp"
+        app:srcCompat="@drawable/ic_add_black_24dp"
+        app:tint="@android:color/white" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

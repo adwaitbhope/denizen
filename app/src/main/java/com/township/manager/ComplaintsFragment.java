@@ -2,7 +2,9 @@ package com.township.manager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,6 +84,12 @@ public class ComplaintsFragment extends Fragment {
         sliderAdapter.addFragment(pendingListFragment, "Pending");
         sliderAdapter.addFragment(resolvedListFragment, "Resolved");
 
+        DBManager dbManager = new DBManager(getContext());
+        Cursor cursor = dbManager.getDataLogin();
+        cursor.moveToFirst();
+        int typeCol;
+        typeCol = cursor.getColumnIndexOrThrow("Type");
+
         // temporary dataset here
         ArrayList<Complaint> dataset = new ArrayList<>();
         Complaint complaint = new Complaint();
@@ -110,7 +118,13 @@ public class ComplaintsFragment extends Fragment {
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_assignment_late_black_24dp);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_assignment_turned_in_black_24dp);
 
+
         FloatingActionButton button = view.findViewById(R.id.complaints_add_complaint_fab);
+
+        if (cursor.getString(typeCol).equals("resident")) {
+            button.setVisibility(View.VISIBLE);
+        }
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,7 +1,9 @@
 package com.township.manager;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -38,20 +40,23 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ResidentHomeScreenActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, NoticeBoardFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, NoticeBoardFragment.OnFragmentInteractionListener, VisitorHistoryFragment.OnFragmentInteractionListener {
 
     String username, password;
 
     NoticeBoardFragment noticeBoardFragment;
+    VisitorHistoryFragment visitorHistoryFragment;
 
     AppDatabase appDatabase;
     NoticeDao noticeDao;
     NoticeWingDao noticeWingDao;
     CommentDao commentDao;
+    VisitorDao visitorDao;
 
     Notice[] noticesArray;
     NoticeWing[] noticeWingArray;
     Notice.Comment[] commentsArray;
+    Visitor[] visitorsArray;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -99,7 +104,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         residentFlatNo.setText(cursor.getString(wingNoCol) + "/" + cursor.getString(flatNoCol));
 
         noticeBoardFragment = new NoticeBoardFragment();
-        getNoticesFromServer();
+        visitorHistoryFragment = new VisitorHistoryFragment();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.resident_home_screen_fragment_area, noticeBoardFragment);
@@ -109,10 +114,12 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                FragmentTransaction transaction;
                 switch (item.getItemId()) {
                     case R.id.resident_notice_board:
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction = getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.resident_home_screen_fragment_area, noticeBoardFragment);
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         transaction.commit();
                         return true;
 
@@ -126,12 +133,19 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                         return true;
 
                     case R.id.resident_visitor_history:
+                        transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.resident_home_screen_fragment_area, visitorHistoryFragment);
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                        transaction.commit();
                         return true;
                 }
 
                 return false;
             }
         });
+
+        getNoticesFromServer();
+        getVisitorHistoryFromServer();
 
     }
 
@@ -158,13 +172,12 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_admin_info_resident) {
 
         } else if (id == R.id.nav_complaints_resident) {
-
+            startActivity(new Intent(ResidentHomeScreenActivity.this, ComplaintsResidentContainerActivity.class));
         } else if (id == R.id.nav_security_list_resident) {
 
         } else if (id == R.id.nav_logout_resident) {
             LogOutDialog logOutDialog = new LogOutDialog();
             logOutDialog.show(getSupportFragmentManager(), "Logout");
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -298,8 +311,79 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
 
     }
 
+    public void getVisitorHistoryFromServer() {
+        RetrofitServerAPI retrofitServerAPI = new Retrofit.Builder()
+                .baseUrl(getString(R.string.server_addr))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(RetrofitServerAPI.class);
+
+        Call<JsonArray> call = retrofitServerAPI.getVisitorHistory(
+                username,
+                password,
+                null
+        );
+
+        call.enqueue(new Callback<JsonArray>() {
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                String responseString = response.body().toString();
+                try {
+                    JSONArray responseArray = new JSONArray(responseString);
+                    JSONObject loginData = responseArray.getJSONObject(0);
+
+                    if (loginData.getInt("login_status") == 1) {
+                        if (loginData.getInt("request_status") == 1) {
+
+                            JSONArray visitorsResponseArray = responseArray.getJSONArray(1);
+                            Gson gson = new Gson();
+                            visitorsArray = new Visitor[visitorsResponseArray.length()];
+                            for (int i = 0; i < visitorsResponseArray.length(); i++) {
+                                Visitor visitor = gson.fromJson(visitorsResponseArray.getJSONObject(i).toString(), Visitor.class);
+                                visitorsArray[i] = visitor;
+                            }
+                            new AddVisitorsToDatabase().execute();
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+
+            }
+        });
+    }
+
     public void getComplaintsFromServer() {
 
+    }
+
+    private class AddVisitorsToDatabase extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            visitorDao = appDatabase.visitorDao();
+            visitorDao.deleteAll();
+            visitorDao.insert(visitorsArray);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if (visitorHistoryFragment.getContext() != null) {
+                visitorHistoryFragment.updateRecyclerView();
+            }
+            super.onPostExecute(aVoid);
+        }
     }
 
     private class NoticesAsyncTask extends AsyncTask<Void, Void, Void> {

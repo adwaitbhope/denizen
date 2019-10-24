@@ -6,10 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-//import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
-import android.content.Context;
 
 public class DBManager {
     private SQLiteDatabase sqLiteDatabase;
@@ -28,6 +25,9 @@ public class DBManager {
     static final String ColApartment = "Apartment";
     static final String ColDesignation = "Designation";
     static final String ColType = "Type";
+
+
+
 
     static final int DBVersion = 1;
 

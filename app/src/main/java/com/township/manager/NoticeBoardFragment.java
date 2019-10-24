@@ -212,11 +212,6 @@ public class NoticeBoardFragment extends Fragment {
 
             for (Notice notice : temporaryDataset) {
                 notice.setWings((ArrayList<Wing>) noticeDao.getWings(notice.getNotice_id()));
-
-                try {
-                } catch (IndexOutOfBoundsException e) {
-
-                }
                 notice.setComments((ArrayList<Notice.Comment>) noticeDao.getComments(notice.getNotice_id()));
             }
 
