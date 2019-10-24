@@ -64,8 +64,6 @@ public class EditProfileActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.edit_profile_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Edit profile");
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         dbManager = new DBManager(getApplicationContext());
         cursor = dbManager.getDataLogin();
@@ -81,6 +79,11 @@ public class EditProfileActivity extends AppCompatActivity {
         phone = cursor.getString(cursor.getColumnIndexOrThrow("Phone"));
         type = cursor.getString(cursor.getColumnIndexOrThrow("Type"));
         profileUpdated = cursor.getInt(cursor.getColumnIndexOrThrow("Profile_Updated"));
+
+        if (profileUpdated == 1) {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         TextInputLayout[] layouts = new TextInputLayout[5];
         layouts[0] = ((TextInputLayout) findViewById(R.id.edit_profile_first_name_til));
@@ -115,14 +118,20 @@ public class EditProfileActivity extends AppCompatActivity {
             designation = cursor.getString(cursor.getColumnIndexOrThrow("Designation"));
         }
 
+
         ((TextInputEditText) findViewById(R.id.edit_profile_first_name_edit_text)).setText(firstName);
         ((TextInputEditText) findViewById(R.id.edit_profile_last_name_edit_text)).setText(lastName);
         ((TextInputEditText) findViewById(R.id.edit_profile_username_edit_text)).setText(username);
         ((TextInputEditText) findViewById(R.id.edit_profile_phone_edit_text)).setText(phone);
         ((TextInputEditText) findViewById(R.id.edit_profile_email_edit_text)).setText(email);
+
         if (!type.equals("resident")) {
             ((TextInputLayout) findViewById(R.id.edit_profile_designation_til)).setVisibility(View.VISIBLE);
             ((TextInputEditText) findViewById(R.id.edit_profile_designation_edit_text)).setText(designation);
+        }
+
+        if (phone == null) {
+            ((TextInputEditText) findViewById(R.id.edit_profile_phone_edit_text)).setText("");
         }
 
         int[][] states = new int[][]{
@@ -224,15 +233,27 @@ public class EditProfileActivity extends AppCompatActivity {
             designation = null;
         }
 
-        TextInputLayout[] layouts = new TextInputLayout[6];
+        TextInputLayout[] layouts = new TextInputLayout[5];
         layouts[0] = ((TextInputLayout) findViewById(R.id.edit_profile_first_name_til));
         layouts[1] = ((TextInputLayout) findViewById(R.id.edit_profile_last_name_til));
-        layouts[2] = ((TextInputLayout) findViewById(R.id.edit_profile_designation_til));
-        layouts[3] = ((TextInputLayout) findViewById(R.id.edit_profile_email_til));
-        layouts[4] = ((TextInputLayout) findViewById(R.id.edit_profile_phone_til));
-        layouts[5] = ((TextInputLayout) findViewById(R.id.edit_profile_username_til));
+        layouts[2] = ((TextInputLayout) findViewById(R.id.edit_profile_email_til));
+        layouts[3] = ((TextInputLayout) findViewById(R.id.edit_profile_phone_til));
+        layouts[4] = ((TextInputLayout) findViewById(R.id.edit_profile_username_til));
 
         for (TextInputLayout layout : layouts) {
+            if (layout.getEditText().getText().toString().isEmpty()) {
+                layout.setError("This field cannot be empty");
+                layout.setErrorEnabled(true);
+                layout.requestFocus();
+                layout.setErrorIconDrawable(null);
+                ((ProgressBar) findViewById(R.id.edit_profile_progress_bar)).setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                return;
+            }
+        }
+
+        if (!type.equals("resident")) {
+            TextInputLayout layout = ((TextInputLayout) findViewById(R.id.edit_profile_designation_til));
             if (layout.getEditText().getText().toString().isEmpty()) {
                 layout.setError("This field cannot be empty");
                 layout.setErrorEnabled(true);
@@ -309,7 +330,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 if (s.length() > 0) {
                     usernameTIL.setError(null);
-                    usernameTIL.setEnabled(false);
+                    usernameTIL.setErrorEnabled(false);
                 }
 
                 if (s.toString().equals(org_username) || s.toString().equals("")) {
