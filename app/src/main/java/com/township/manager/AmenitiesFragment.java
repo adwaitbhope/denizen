@@ -76,13 +76,14 @@ public class AmenitiesFragment extends Fragment implements View.OnClickListener 
         ExtendedFloatingActionButton membershipDetailsButton = view.findViewById(R.id.membership_details_ex_fab);
         membershipDetailsButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+
                 Intent intent = new Intent(getContext(), MembershipDetailsActivity.class);
                 startActivity(intent);
             }
         });
 
-        return inflater.inflate(R.layout.fragment_amenities, container, false);
+        return(view);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
