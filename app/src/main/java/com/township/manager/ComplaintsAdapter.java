@@ -2,6 +2,7 @@ package com.township.manager;
 
 import android.animation.LayoutTransition;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -25,6 +27,7 @@ import androidx.viewpager.widget.ViewPager;
 public class ComplaintsAdapter extends RecyclerView.Adapter {
 
     ArrayList<Complaint> dataset;
+    String TOWNSHIP_ID;
     Boolean resolved;
     Context context;
 
@@ -49,7 +52,9 @@ public class ComplaintsAdapter extends RecyclerView.Adapter {
                 Cursor cursor = dbManager.getDataLogin();
                 cursor.moveToFirst();
                 int typeCol;
+                String type;
                 typeCol = cursor.getColumnIndexOrThrow("Type");
+                TOWNSHIP_ID = cursor.getString(cursor.getColumnIndexOrThrow("TownshipId"));
                 if (complaintExpanded) {
                     viewHolder.expandButton.setImageResource(R.drawable.ic_keyboard_arrow_down_black_24dp);
                     viewHolder.complaintResolveButton.setVisibility(View.GONE);
@@ -87,7 +92,18 @@ public class ComplaintsAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
         MyViewHolder viewHolder = (MyViewHolder) holder;
         Complaint complaint = dataset.get(position);
-
+        final String url = "https://township-manager.s3.ap-south-1.amazonaws.com/townships/" + TOWNSHIP_ID + "/complaints/" + complaint.getComplaint_id() + ".png";
+        Picasso.get()
+                .load(url)
+                .into(viewHolder.complaintImageButton);
+        viewHolder.complaintImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, FullScreenImageViewActivity.class);
+                intent.putExtra("url", url);
+                context.startActivity(intent);
+            }
+        });
         viewHolder.complaintTitle.setText(complaint.getTitle());
         viewHolder.residentNameTextView.setText(complaint.getResident_first_name() + " " + complaint.getResident_last_name());
         viewHolder.residentApartmentTextView.setText(complaint.getResident_wing() + "/" + complaint.getResident_apartment());

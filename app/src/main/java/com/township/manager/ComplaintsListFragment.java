@@ -1,11 +1,17 @@
 package com.township.manager;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
+import android.widget.TextView;
+
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
 
@@ -68,6 +74,7 @@ public class    ComplaintsListFragment extends Fragment {
 
         layoutManager = new LinearLayoutManager(getContext());
         adapter = new ComplaintsAdapter(dataset, getContext(), resolved);
+
     }
 
     @Override
@@ -79,6 +86,21 @@ public class    ComplaintsListFragment extends Fragment {
         recyclerView = view.findViewById(R.id.complaints_recycler_view);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+        TextView filter;
+        HorizontalScrollView horizontalScrollView;
+        DBManager dbManager = new DBManager(getContext());
+        Cursor cursor = dbManager.getDataLogin();
+        cursor.moveToFirst();
+        int typeCol;
+        typeCol = cursor.getColumnIndexOrThrow("Type");
+
+        filter=view.findViewById(R.id.filtertv);
+        horizontalScrollView=view.findViewById(R.id.horizontalScrollView);
+
+        if(cursor.getString(typeCol).equals("admin")){
+            filter.setVisibility(View.VISIBLE);
+            horizontalScrollView.setVisibility(View.VISIBLE);
+        }
 
         recyclerView.setItemViewCacheSize(15);
         recyclerView.setDrawingCacheEnabled(true);
