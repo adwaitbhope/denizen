@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NavUtils;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -15,6 +16,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
+
 public class FullScreenImageViewActivity extends AppCompatActivity {
 
     private ScaleGestureDetector mScaleGestureDetector;
@@ -25,6 +28,14 @@ public class FullScreenImageViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_screen_image_view);
+
+        mImageView = (ImageView) findViewById(R.id.full_screen_image_view);
+
+        Intent intent = getIntent();
+        String url = intent.getStringExtra("url");
+        Picasso.get()
+                .load(url)
+                .into(mImageView);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -39,7 +50,6 @@ public class FullScreenImageViewActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mImageView = (ImageView) findViewById(R.id.full_screen_image_view);
         mScaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
 
     }

@@ -3,6 +3,7 @@ package com.township.manager;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -10,9 +11,11 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.regions.Regions;
@@ -26,8 +29,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 import com.pusher.pushnotifications.BeamsCallback;
 import com.pusher.pushnotifications.PushNotifications;
+import com.pusher.pushnotifications.PusherAlreadyRegisteredAnotherUserIdException;
 import com.pusher.pushnotifications.PusherCallbackError;
 import com.pusher.pushnotifications.auth.AuthData;
 import com.pusher.pushnotifications.auth.AuthDataGetter;
@@ -37,6 +42,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -48,11 +54,19 @@ public class LoginScreenActivity extends AppCompatActivity {
     public TextInputLayout usernameTextLayout, passwordTextLayout;
 
     DBManager dbManager;
+    private AppDatabase appDatabase;
+
+    Resident[] residentsArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
+
+        appDatabase = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "app-database")
+                .fallbackToDestructiveMigration()
+                .build();
 
         dbManager = new DBManager(this);
         Cursor cursor = dbManager.getDataLogin();
@@ -123,7 +137,7 @@ public class LoginScreenActivity extends AppCompatActivity {
 
                 AmazonS3 s3Client = new AmazonS3Client(credentialsProvider);
 
-                s3Client.putObject("township-manager", "townships/notices/maintenance", "Pay the maintenance amount");
+                s3Client.putObject("township-manager", "townships/dataset/maintenance", "Pay the maintenance amount");
             }
         }.start();
     }
@@ -154,6 +168,14 @@ public class LoginScreenActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                try {
+                    InputMethodManager manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 final String username = usernameEditText.getText().toString();
                 final String password = passwordEditText.getText().toString();
 
@@ -181,35 +203,51 @@ public class LoginScreenActivity extends AppCompatActivity {
 
                                     JSONArray jsonArray = new JSONArray(response);
                                     JSONObject jsonObjectLogin = jsonArray.getJSONObject(0);
-                                    User user = new User();
-                                    user.setLogin(jsonObjectLogin.getInt("login"));
 
+                                    Log.d("login response", jsonArray.toString());
 
-                                    if (user.getLogin() == 1) {
+                                    if (jsonObjectLogin.getInt("login") == 1) {
+
                                         JSONObject jsonObjectLoginInfo = jsonArray.getJSONObject(1);
-                                        user.setLoginType(jsonObjectLoginInfo.getString("type"));
-                                        user.setUserName(jsonObjectLoginInfo.getString("username"));
-                                        user.setPassword(password);
-                                        user.setFirstName(jsonObjectLoginInfo.getString("first_name"));
-                                        user.setLastName(jsonObjectLoginInfo.getString("last_name"));
-                                        user.setPhoneNumber(jsonObjectLoginInfo.getString("phone"));
-                                        user.setEmail(jsonObjectLoginInfo.getString("email"));
-                                        user.setProfileUpdated(jsonObjectLoginInfo.getBoolean("profile_updated"));
-                                        user.setTownship(jsonObjectLoginInfo.getString("township"));
 
                                         ContentValues contentValues = new ContentValues();
-                                        contentValues.put(DBManager.ColUsername, user.getUserName());
-                                        contentValues.put(DBManager.ColPassword, user.getPassword());
-                                        contentValues.put(DBManager.ColFirstName, user.getFirstName());
-                                        contentValues.put(DBManager.ColLastName, user.getLastName());
-                                        contentValues.put(DBManager.ColPhone, user.getPhoneNumber());
-                                        contentValues.put(DBManager.ColEmail, user.getEmail());
-                                        contentValues.put(DBManager.ColProfileUpdated, user.getProfileUpdated());
-                                        contentValues.put(DBManager.ColTownship, user.getTownship());
-                                        contentValues.put(DBManager.ColType, user.getLoginType());
-                                        //   Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
+                                        contentValues.put(DBManager.ColUsername, jsonObjectLoginInfo.getString("username"));
+                                        contentValues.put(DBManager.ColPassword, password);
+                                        contentValues.put(DBManager.ColFirstName, jsonObjectLoginInfo.getString("first_name"));
+                                        contentValues.put(DBManager.ColLastName, jsonObjectLoginInfo.getString("last_name"));
+                                        contentValues.put(DBManager.ColPhone, jsonObjectLoginInfo.getString("phone"));
+                                        contentValues.put(DBManager.ColEmail, jsonObjectLoginInfo.getString("email"));
+                                        contentValues.put(DBManager.ColProfileUpdated, jsonObjectLoginInfo.getBoolean("profile_updated"));
+                                        contentValues.put(DBManager.ColTownship, jsonObjectLoginInfo.getString("township"));
+                                        contentValues.put(DBManager.ColType, jsonObjectLoginInfo.getString("type"));
+                                        contentValues.put(DBManager.ColTownshipId, jsonObjectLoginInfo.getString("township_id"));
 
-                                        PushNotifications.start(getApplicationContext(), "f464fd4f-7e2f-4f42-91cf-8a8ef1a67acb");
+                                        JSONArray jsonWings = jsonArray.getJSONArray(2);
+                                        Gson gson = new Gson();
+                                        final Wing[] wings = new Wing[jsonWings.length()];
+                                        ArrayList<Resident> residents = new ArrayList<>();
+                                        for (int i = 0; i < jsonWings.length(); i++) {
+                                            JSONObject jsonWing = jsonWings.getJSONObject(i);
+                                            JSONArray jsonArrayWings = jsonWing.getJSONArray("apartments");
+                                            wings[i] = gson.fromJson(jsonWing.toString(), Wing.class);
+                                            for (int j = 0; j < jsonArrayWings.length(); j++) {
+                                                Resident resident = gson.fromJson(jsonArrayWings.getJSONObject(j).toString(), Resident.class);
+                                                resident.setWing_id(wings[i].getWing_id());
+                                                residents.add(resident);
+                                            }
+                                        }
+
+                                        residentsArray = new Resident[residents.size()];
+                                        residentsArray = residents.toArray(residentsArray);
+
+                                        new Thread() {
+                                            public void run() {
+                                                WingDao wingDao = appDatabase.wingDao();
+                                                ResidentDao residentDao = appDatabase.residentDao();
+                                                wingDao.insert(wings);
+                                                residentDao.insert(residentsArray);
+                                            }
+                                        }.start();
 
                                         BeamsTokenProvider tokenProvider = new BeamsTokenProvider(
                                                 getString(R.string.server_addr) + "/beams/get_token/",
@@ -227,26 +265,44 @@ public class LoginScreenActivity extends AppCompatActivity {
                                                     }
                                                 }
                                         );
+                                        PushNotifications.start(getApplicationContext(), "f464fd4f-7e2f-4f42-91cf-8a8ef1a67acb");
 
-                                        PushNotifications.setUserId(username, tokenProvider, new BeamsCallback<Void, PusherCallbackError>(){
-                                            @Override
-                                            public void onSuccess(Void... values) {
-                                                Log.i("PusherBeams", "Successfully authenticated with Pusher Beams");
-                                            }
+                                        try {
+                                            PushNotifications.setUserId(username, tokenProvider, new BeamsCallback<Void, PusherCallbackError>() {
+                                                @Override
+                                                public void onSuccess(Void... values) {
+                                                    Log.i("PusherBeams", "Successfully authenticated with Pusher Beams");
+                                                }
 
-                                            @Override
-                                            public void onFailure(PusherCallbackError error) {
-                                                Log.i("PusherBeams", "Pusher Beams authentication failed: " + error.getMessage());
-                                            }
-                                        });
+                                                @Override
+                                                public void onFailure(PusherCallbackError error) {
+                                                    Log.i("PusherBeams", "Pusher Beams authentication failed: " + error.getMessage());
+                                                }
+                                            });
+                                        } catch (PusherAlreadyRegisteredAnotherUserIdException e) {
+                                            PushNotifications.clearAllState();
+                                            PushNotifications.stop();
+                                            PushNotifications.start(getApplicationContext(), "f464fd4f-7e2f-4f42-91cf-8a8ef1a67acb");
+                                            PushNotifications.setUserId(username, tokenProvider, new BeamsCallback<Void, PusherCallbackError>() {
+                                                @Override
+                                                public void onSuccess(Void... values) {
+                                                    Log.i("PusherBeams", "Successfully authenticated with Pusher Beams");
+                                                }
+
+                                                @Override
+                                                public void onFailure(PusherCallbackError error) {
+                                                    Log.i("PusherBeams", "Pusher Beams authentication failed: " + error.getMessage());
+                                                }
+                                            });
+
+                                        }
 
 
                                         Log.d("response", response);
-                                        switch (user.getLoginType()) {
+                                        switch (jsonObjectLoginInfo.getString("type")) {
 
                                             case "admin": {
-                                                user.setDesignation(jsonObjectLoginInfo.getString("designation"));
-                                                contentValues.put(DBManager.ColDesignation, user.getDesignation());
+                                                contentValues.put(DBManager.ColDesignation, jsonObjectLoginInfo.getString("designation"));
                                                 long id = dbManager.Insert(contentValues);
                                                 PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-admins");
                                                 startActivity(new Intent(LoginScreenActivity.this, AdminHomeScreenActivity.class));
@@ -261,12 +317,10 @@ public class LoginScreenActivity extends AppCompatActivity {
                                                 break;
                                             }
                                             case "resident": {
-                                                user.setWing(jsonObjectLoginInfo.getString("wing"));
-                                                contentValues.put(DBManager.ColWing, user.getWing());
-                                                user.setApartment(jsonObjectLoginInfo.getString("apartment"));
+                                                contentValues.put(DBManager.ColWing, jsonObjectLoginInfo.getString("wing"));
                                                 PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-residents");
-                                                PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-" + jsonObjectLogin.getString("wing_id") + "-residents");
-                                                contentValues.put(DBManager.ColApartment, user.getApartment());
+                                                PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-" + jsonObjectLoginInfo.getString("wing_id") + "-residents");
+                                                contentValues.put(DBManager.ColApartment, jsonObjectLoginInfo.getString("apartment"));
                                                 long id = dbManager.Insert(contentValues);
 
                                                 startActivity(new Intent(LoginScreenActivity.this, ResidentHomeScreenActivity.class));
@@ -322,4 +376,5 @@ public class LoginScreenActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginScreenActivity.this, RegistrationStepsActivity.class);
         startActivity(intent);
     }
+
 }
