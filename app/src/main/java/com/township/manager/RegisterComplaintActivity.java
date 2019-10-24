@@ -48,7 +48,7 @@ public class RegisterComplaintActivity extends AppCompatActivity {
 
     TextInputLayout titleTil, descriptiontil;
     Button uploadComplaintPhotoButton;
-    String title, description;
+    private String title, description;
     DBManager dbManager;
     int usernameCol, passwordCol;
     String username, password;
@@ -126,7 +126,7 @@ public class RegisterComplaintActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
                 Log.d("sent", response.body().toString());
-                Toast.makeText(RegisterComplaintActivity.this, title, Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterComplaintActivity.this,"Complaint Registered",Toast.LENGTH_SHORT).show();
             }
 
             @Override

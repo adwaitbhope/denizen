@@ -2,6 +2,8 @@ package com.township.manager;
 
 import com.google.gson.JsonArray;
 
+import org.json.JSONArray;
+
 import java.util.Map;
 
 import okhttp3.MultipartBody;
@@ -102,6 +104,24 @@ public interface RetrofitServerAPI {
             @Field("description") String description,
             @Field("num_wings") String num_wings,
             @QueryMap Map<String, String> wing_ids
+    );
+
+    @FormUrlEncoded
+    @POST("/complaints/")
+    Call<JsonArray> getComplaints(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("timestamp") String timestamp,
+            @Field("resolved") Boolean resolved
+
+    );
+
+    @FormUrlEncoded
+    @POST("/complaints/resolve/")
+    Call<JsonArray> resolveComplaints(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("complaint_id") String complaint_id
     );
 
 

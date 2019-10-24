@@ -2,7 +2,9 @@ package com.township.manager;
 
 import android.animation.LayoutTransition;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +45,11 @@ public class ComplaintsAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 Boolean complaintExpanded = viewHolder.complaintExpanded;
+                DBManager dbManager = new DBManager(context);
+                Cursor cursor = dbManager.getDataLogin();
+                cursor.moveToFirst();
+                int typeCol;
+                typeCol = cursor.getColumnIndexOrThrow("Type");
                 if (complaintExpanded) {
                     viewHolder.expandButton.setImageResource(R.drawable.ic_keyboard_arrow_down_black_24dp);
                     viewHolder.complaintResolveButton.setVisibility(View.GONE);
@@ -51,11 +58,13 @@ public class ComplaintsAdapter extends RecyclerView.Adapter {
                     viewHolder.complaintExpanded = false;
                 } else {
                     viewHolder.expandButton.setImageResource(R.drawable.ic_keyboard_arrow_up_black_24dp);
+                    if (cursor.getString(typeCol).equals("admin"))
                     viewHolder.complaintResolveButton.setVisibility(View.VISIBLE);
                     viewHolder.complaintDescriptionTextView.setVisibility(View.VISIBLE);
                     viewHolder.complaintImageButton.setVisibility(View.VISIBLE);
                     viewHolder.complaintExpanded = true;
                 }
+
             }
         });
 
@@ -80,8 +89,8 @@ public class ComplaintsAdapter extends RecyclerView.Adapter {
         Complaint complaint = dataset.get(position);
 
         viewHolder.complaintTitle.setText(complaint.getTitle());
-        viewHolder.residentNameTextView.setText(complaint.getFirstName() + " " + complaint.getLastName());
-        viewHolder.residentApartmentTextView.setText(complaint.getWing() + "/" + complaint.getApartment());
+        viewHolder.residentNameTextView.setText(complaint.getResident_first_name() + " " + complaint.getResident_last_name());
+        viewHolder.residentApartmentTextView.setText(complaint.getResident_wing() + "/" + complaint.getResident_apartment());
         viewHolder.complaintDescriptionTextView.setText(complaint.getDescription());
 
     }
@@ -113,6 +122,10 @@ public class ComplaintsAdapter extends RecyclerView.Adapter {
             complaintDescriptionTextView = view.findViewById(R.id.complaint_description_textview);
             complaintResolveButton = view.findViewById(R.id.resolve_complaint_button);
             constraintLayout = view.findViewById(R.id.complaint_card_constraint_layout);
+
+
+
+
         }
 
     }

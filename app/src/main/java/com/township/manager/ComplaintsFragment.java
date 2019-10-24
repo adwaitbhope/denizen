@@ -1,16 +1,21 @@
 package com.township.manager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.opengl.Visibility;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -39,6 +44,17 @@ public class ComplaintsFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    AppDatabase appDatabase;
+    ArrayList<Complaint> pendingComplaintsDataset = new ArrayList<>();
+    ArrayList<Complaint> resolvedComplaintDataset = new ArrayList<>();
+    ArrayList<Complaint> temporaryPendingDataset = new ArrayList<>();
+    ArrayList<Complaint> temporaryResolvedDataset = new ArrayList<>();
+    ComplaintDao complaintDao;
+    ComplaintsListFragment pendingListFragment,resolvedListFragment;
+    ComplaintsAdapter pendingAdapter,resolvedAdapter;
+
+
 
     public ComplaintsFragment() {
         // Required empty public constructor
@@ -69,6 +85,12 @@ public class ComplaintsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        appDatabase = Room.databaseBuilder(getContext().getApplicationContext(),
+                AppDatabase.class, "app-database")
+                .fallbackToDestructiveMigration()
+                .build();
+        complaintDao=appDatabase.complaintDao();
     }
 
     @Override
@@ -78,8 +100,11 @@ public class ComplaintsFragment extends Fragment {
 
         SliderAdapter sliderAdapter = new SliderAdapter(Objects.requireNonNull(getActivity()).getSupportFragmentManager());
 
-        ComplaintsListFragment pendingListFragment = ComplaintsListFragment.newInstance(false);
-        ComplaintsListFragment resolvedListFragment = ComplaintsListFragment.newInstance(true);
+        pendingListFragment = ComplaintsListFragment.newInstance(false);
+        resolvedListFragment = ComplaintsListFragment.newInstance(true);
+
+        pendingAdapter=pendingListFragment.adapter;
+        resolvedAdapter=resolvedListFragment.adapter;
 
         sliderAdapter.addFragment(pendingListFragment, "Pending");
         sliderAdapter.addFragment(resolvedListFragment, "Resolved");
@@ -91,23 +116,12 @@ public class ComplaintsFragment extends Fragment {
         typeCol = cursor.getColumnIndexOrThrow("Type");
 
         // temporary dataset here
-        ArrayList<Complaint> dataset = new ArrayList<>();
-        Complaint complaint = new Complaint();
-        complaint.setFirstName("Adwait");
-        complaint.setLastName("Bhope");
-        complaint.setWing("B3");
-        complaint.setApartment("702");
-        complaint.setTitle("Lift broken");
-        complaint.setDescription("The only elevator in the building has stopped working. It becomes difficult for people living on the higher floors.");
-        dataset.add(complaint);
-        dataset.add(complaint);
 
-        ArrayList<Complaint> pendingComplaints = getPendingComplaintsFromDatabase();
-        ArrayList<Complaint> resolvedComplaints = getResolvedComplaintsFromDatabase();
 
-        // pass these two lists as parameters below
-        pendingListFragment.setDataset(dataset);
-        resolvedListFragment.setDataset(dataset);
+        updateRecyclerView();
+
+        pendingListFragment.setDataset(pendingComplaintsDataset);
+        resolvedListFragment.setDataset(resolvedComplaintDataset);
 
         ViewPager mSlideViewPager = (ViewPager) view.findViewById(R.id.complaints_view_pager);
         mSlideViewPager.setAdapter(sliderAdapter);
@@ -136,21 +150,10 @@ public class ComplaintsFragment extends Fragment {
         return view;
     }
 
-    private ArrayList<Complaint> getPendingComplaintsFromDatabase() {
-        ArrayList<Complaint> complaints = new ArrayList<>();
-
-        // get pending complaints from database
-
-        return complaints;
+    public void updateRecyclerView() {
+        new ComplaintsAsync().execute();
     }
 
-    private ArrayList<Complaint> getResolvedComplaintsFromDatabase() {
-        ArrayList<Complaint> complaints = new ArrayList<>();
-
-        // get resolved complaints from database
-
-        return complaints;
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -182,5 +185,40 @@ public class ComplaintsFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+    @SuppressLint("StaticFieldLeak")
+    private class ComplaintsAsync extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            temporaryPendingDataset.clear();
+            temporaryPendingDataset.addAll(complaintDao.getPendingComplaints());
+
+            temporaryResolvedDataset.clear();
+            temporaryResolvedDataset.addAll(complaintDao.getResolvedComplaints());
+
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            pendingComplaintsDataset.clear();
+            pendingComplaintsDataset.addAll(temporaryPendingDataset);
+            resolvedComplaintDataset.clear();
+            resolvedComplaintDataset.addAll(temporaryResolvedDataset);
+            if(pendingAdapter!=null){
+                pendingAdapter.notifyDataSetChanged();
+            }
+            if(resolvedAdapter!=null){
+                resolvedAdapter.notifyDataSetChanged();
+            }
+        }
     }
 }
