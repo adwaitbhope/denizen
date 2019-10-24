@@ -109,7 +109,7 @@ public class AdminHomeScreenActivity extends AppCompatActivity
 
 
         noticeBoardFragment = new NoticeBoardFragment();
-//        complaintsFragment = new ComplaintsFragment();
+        complaintsFragment = new ComplaintsFragment();
 
         getNoticesFromServer();
         getComplaintsFromServer();
@@ -142,7 +142,6 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                         if (!(fragment instanceof ComplaintsFragment)) {
                             appBarLayout.setElevation(0);
                             transaction = getSupportFragmentManager().beginTransaction();
-                            complaintsFragment = new ComplaintsFragment();
                             transaction.replace(R.id.admin_home_screen_fragment_area, complaintsFragment);
                             transaction.commit();
                         }
@@ -356,6 +355,7 @@ public class AdminHomeScreenActivity extends AppCompatActivity
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
                 assert response.body() != null;
                 String responseString = response.body().getAsJsonArray().toString();
+                Log.d("printres",responseString);
                 try{
                     JSONArray jsonArray = new JSONArray(responseString);
                     JSONObject loginResponse = jsonArray.getJSONObject(0);
@@ -366,9 +366,9 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                         ArrayList<Complaint> complaints = new ArrayList<>();
                         Complaint complaint;
                         Gson gson=new Gson();
-                        for(int i=1;i<jsonArray.length();i++){
-                            jsonArrayComplaint=jsonArray.getJSONArray(i);
-                            jsonObjectComplaint=jsonArrayComplaint.getJSONObject(0);
+                        jsonArrayComplaint=jsonArray.getJSONArray(1);
+                        for(int i=0;i<jsonArrayComplaint.length();i++){
+                            jsonObjectComplaint=jsonArrayComplaint.getJSONObject(i);
                             complaint=gson.fromJson(jsonObjectComplaint.toString(),Complaint.class);
 
                             complaints.add(complaint);

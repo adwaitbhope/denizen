@@ -14,6 +14,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -115,9 +116,10 @@ public class ComplaintsResidentContainerActivity extends AppCompatActivity imple
                         ArrayList<Complaint> complaints = new ArrayList<>();
                         Complaint complaint;
                         Gson gson=new Gson();
-                        for(int i=1;i<jsonArray.length();i++){
-                            jsonArrayComplaint=jsonArray.getJSONArray(i);
-                            jsonObjectComplaint=jsonArrayComplaint.getJSONObject(0);
+                        jsonArrayComplaint=jsonArray.getJSONArray(1);
+                        Log.d("printres",responseString);
+                        for(int i=0;i<jsonArrayComplaint.length();i++){
+                            jsonObjectComplaint=jsonArrayComplaint.getJSONObject(i);
                             complaint=gson.fromJson(jsonObjectComplaint.toString(),Complaint.class);
 
                             complaints.add(complaint);

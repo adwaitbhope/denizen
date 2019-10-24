@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -198,7 +199,6 @@ public class ComplaintsFragment extends Fragment {
         protected Void doInBackground(Void... voids) {
             temporaryPendingDataset.clear();
             temporaryPendingDataset.addAll(complaintDao.getPendingComplaints());
-
             temporaryResolvedDataset.clear();
             temporaryResolvedDataset.addAll(complaintDao.getResolvedComplaints());
 
@@ -213,12 +213,8 @@ public class ComplaintsFragment extends Fragment {
             pendingComplaintsDataset.addAll(temporaryPendingDataset);
             resolvedComplaintDataset.clear();
             resolvedComplaintDataset.addAll(temporaryResolvedDataset);
-            if(pendingAdapter!=null){
-                pendingAdapter.notifyDataSetChanged();
-            }
-            if(resolvedAdapter!=null){
-                resolvedAdapter.notifyDataSetChanged();
-            }
+            pendingListFragment.setDataset(pendingComplaintsDataset);
+            resolvedListFragment.setDataset(resolvedComplaintDataset);
         }
     }
 }
