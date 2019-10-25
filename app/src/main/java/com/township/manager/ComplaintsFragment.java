@@ -216,10 +216,10 @@ public class ComplaintsFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            temporaryPendingDataset.clear();
-            temporaryPendingDataset.addAll(complaintDao.getPendingComplaints());
-            temporaryResolvedDataset.clear();
-            temporaryResolvedDataset.addAll(complaintDao.getResolvedComplaints());
+//            temporaryPendingDataset.clear();
+//            temporaryPendingDataset.addAll(complaintDao.getPendingComplaints());
+//            temporaryResolvedDataset.clear();
+//            temporaryResolvedDataset.addAll(complaintDao.getResolvedComplaints());
 
 
             return null;
@@ -228,12 +228,12 @@ public class ComplaintsFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            pendingComplaintsDataset.clear();
-            pendingComplaintsDataset.addAll(temporaryPendingDataset);
-            resolvedComplaintDataset.clear();
-            resolvedComplaintDataset.addAll(temporaryResolvedDataset);
-            pendingListFragment.setDataset(pendingComplaintsDataset);
-            resolvedListFragment.setDataset(resolvedComplaintDataset);
+//            pendingComplaintsDataset.clear();
+//            pendingComplaintsDataset.addAll(temporaryPendingDataset);
+//            resolvedComplaintDataset.clear();
+//            resolvedComplaintDataset.addAll(temporaryResolvedDataset);
+//            pendingListFragment.setDataset(pendingComplaintsDataset);
+//            resolvedListFragment.setDataset(resolvedComplaintDataset);
         }
     }
 }

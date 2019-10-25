@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ComplaintsResidentContainerActivity">
+    tools:context=".MaintenanceAdminContainerActivity">
 
     <FrameLayout
-        android:id="@+id/complaints_resident_container_frame"
+        android:id="@+id/maintenance_admin_container_frame"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/complaints_resident_container_app_bar_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/maintenance_admin_container_app_bar_layout" />
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/complaints_resident_container_app_bar_layout"
+        android:id="@+id/maintenance_admin_container_app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="0dp"
@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/maintenance_admin_container_toolbar"
+            android:id="@+id/complaints_resident_container_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -36,6 +36,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
+
     </com.google.android.material.appbar.AppBarLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

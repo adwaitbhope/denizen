@@ -10,8 +10,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ComplaintsResidentContainerActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".MaintenanceAdminContainerActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".AddMaintenanceActivity" />
+        <activity
+            android:name=".ComplaintsResidentContainerActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".NoticeBoardCommentActivity"
             android:label="Comments"
@@ -43,7 +47,7 @@
             android:name=".RegistrationStepTwoStatusActivity"
             android:label="Application Status"
             android:parentActivityName=".RegistrationStepsActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RegistrationStepsActivity"
             android:label="Registration Steps"
@@ -97,14 +101,14 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

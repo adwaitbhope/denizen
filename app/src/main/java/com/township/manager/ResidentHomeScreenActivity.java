@@ -40,7 +40,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ResidentHomeScreenActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, NoticeBoardFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, NoticeBoardFragment.OnFragmentInteractionListener,MaintenanceFragment.OnFragmentInteractionListener {
 
     String username, password;
 
@@ -54,6 +54,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
     Notice[] noticesArray;
     NoticeWing[] noticeWingArray;
     Notice.Comment[] commentsArray;
+    MaintenanceFragment maintenanceFragment;
 
 
     @SuppressLint("SetTextI18n")
@@ -102,6 +103,8 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         residentFlatNo.setText(cursor.getString(wingNoCol) + "/" + cursor.getString(flatNoCol));
 
         noticeBoardFragment = new NoticeBoardFragment();
+        maintenanceFragment=new MaintenanceFragment();
+
         getNoticesFromServer();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -114,9 +117,9 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.resident_notice_board:
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.resident_home_screen_fragment_area, noticeBoardFragment);
-                        transaction.commit();
+                        FragmentTransaction transactionNotice = getSupportFragmentManager().beginTransaction();
+                        transactionNotice.replace(R.id.resident_home_screen_fragment_area, noticeBoardFragment);
+                        transactionNotice.commit();
                         return true;
 
                     case R.id.resident_group_chat:
@@ -126,6 +129,9 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                         return true;
 
                     case R.id.resident_maintenance:
+                        FragmentTransaction transactionMaintenance = getSupportFragmentManager().beginTransaction();
+                        transactionMaintenance.replace(R.id.resident_home_screen_fragment_area, maintenanceFragment);
+                        transactionMaintenance.commit();
                         return true;
 
                     case R.id.resident_visitor_history:

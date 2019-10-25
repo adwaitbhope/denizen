@@ -124,5 +124,39 @@ public interface RetrofitServerAPI {
             @Field("complaint_id") String complaint_id
     );
 
+    @FormUrlEncoded
+    @POST("/maintenance/")
+    Call<JsonArray> getMaintenance(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("timestamp") String timestamp
+    );
+
+    @FormUrlEncoded
+    @POST("/maintenance/add/")
+    Call<JsonArray> addMaintenance(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("wing_id") String wing_id,
+            @Field("apartment") String apartment,
+            @Field("amount")   Integer amount,
+            @Field("payment_mode") String payment_mode,
+            @Field("cheque_no ") String cheque_no
+    );
+
+    @FormUrlEncoded
+    @POST("/maintenance/pay/initiate/")
+    Call<JsonArray> intiateMaintenancePayment(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("TXN_AMOUNT") String txnAmount,
+            @Field("CHANNEL_ID") String channelId,
+            @Field("WEBSITE") String website,
+            @Field("CALLBACK_URL") String callbackUrl,
+            @Field("INDUSTRY_TYPE_ID") String industryTypeId
+    );
+
+
+
 
 }
