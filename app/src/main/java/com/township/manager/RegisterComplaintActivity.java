@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -47,6 +48,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.room.Room;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,6 +71,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
+
+import static com.township.manager.ComplaintsFragment.ADD_COMPLAINT_RESULT;
+
+
 public class RegisterComplaintActivity extends AppCompatActivity {
 
     TextInputLayout titleTil, descriptiontil;
@@ -83,6 +89,10 @@ public class RegisterComplaintActivity extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
     File file;
     String township_id;
+    AppDatabase appDatabase;
+    ImageView complaintPhotoImage;
+
+    ComplaintDao complaintDao;
     Complaint complaint;
 
     @Override
@@ -97,7 +107,12 @@ public class RegisterComplaintActivity extends AppCompatActivity {
 
         complaintTitle = (TextInputEditText) findViewById(R.id.register_complaint_title_textinput_child);
         complaintDescription = (TextInputEditText) findViewById(R.id.register_complaint_description_textinput_child);
+        complaintPhotoImage=findViewById(R.id.complaintPhotoImage);
 
+        appDatabase = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "app-database")
+                .fallbackToDestructiveMigration()
+                .build();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.register_complaint_toolbar);
         setSupportActionBar(toolbar);
@@ -171,6 +186,8 @@ public class RegisterComplaintActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                complaintPhotoImage.setVisibility(View.VISIBLE);
+                complaintPhotoImage.setImageBitmap(compalintPhoto);
                 new Thread() {
                     public void run() {
                          file = getOutputMediaFile();
@@ -239,6 +256,7 @@ public class RegisterComplaintActivity extends AppCompatActivity {
                             complaint=gson.fromJson(responseArray.getJSONObject(1).toString(),Complaint.class);
                             uploadComplaintPhotoToS3();
                             Toast.makeText(RegisterComplaintActivity.this,"Complaint Registered",Toast.LENGTH_SHORT).show();
+                            new AddComplaintAsyncTask().execute();
                         }
                     }
                 }
@@ -255,6 +273,27 @@ public class RegisterComplaintActivity extends AppCompatActivity {
         });
 
     }
+    private class AddComplaintAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            complaintDao = appDatabase.complaintDao();
+            complaintDao.insert(complaint);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            setResult(ADD_COMPLAINT_RESULT);
+            super.onPostExecute(aVoid);
+        }
+    }
+
 
     private void uploadComplaintPhotoToS3() {
         new Thread() {

@@ -396,7 +396,6 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                 complaintDao=appDatabase.complaintDao();
                 complaintsArray=new Complaint[complaints.size()];
                 complaints.toArray(complaintsArray);
-
                 ComplaintsAsyncTask complaintsAsyncTask=new ComplaintsAsyncTask();
                 complaintsAsyncTask.execute();
 

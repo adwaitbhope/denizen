@@ -120,7 +120,7 @@ public class ComplaintsAdapter extends RecyclerView.Adapter {
 
         ImageView expandButton;
         View clickArea;
-        ImageButton complaintImageButton;
+        ImageView complaintImageButton;
         Boolean complaintExpanded = false;
         TextView residentNameTextView, residentApartmentTextView, complaintTitle;
         MaterialTextView complaintDescriptionTextView;

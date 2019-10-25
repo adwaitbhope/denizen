@@ -25,7 +25,7 @@
 <!--            TODO-->
 <!--            android:animateLayoutChanges="true">-->
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/complaint_image_button"
                 android:layout_width="80dp"
                 android:layout_height="80dp"

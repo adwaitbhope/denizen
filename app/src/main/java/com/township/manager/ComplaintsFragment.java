@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -54,6 +55,8 @@ public class ComplaintsFragment extends Fragment {
     ComplaintDao complaintDao;
     ComplaintsListFragment pendingListFragment,resolvedListFragment;
     ComplaintsAdapter pendingAdapter,resolvedAdapter;
+    public static final int ADD_COMPLAINT_REQUEST = 69;
+    public static final int ADD_COMPLAINT_RESULT = 70;
 
 
 
@@ -144,7 +147,7 @@ public class ComplaintsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), RegisterComplaintActivity.class);
-                getContext().startActivity(intent);
+                startActivityForResult(intent,ADD_COMPLAINT_REQUEST);
             }
         });
 
@@ -165,6 +168,22 @@ public class ComplaintsFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_COMPLAINT_REQUEST) {
+            if (resultCode == ADD_COMPLAINT_RESULT) {
+                Log.d("added","add");
+                updateRecyclerView();
+                pendingListFragment.recyclerView.smoothScrollToPosition(0);
+            }
+        }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateRecyclerView();
     }
 
     @Override

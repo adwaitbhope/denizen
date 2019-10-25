@@ -24,7 +24,6 @@ public class NoticesAdapter extends RecyclerView.Adapter {
     String TOWNSHIP_ID;
     ArrayList<Notice> dataset;
     Context context;
-    InputStream stream = null;
 
     public NoticesAdapter(ArrayList<Notice> dataset, Context context) {
         this.dataset = dataset;
