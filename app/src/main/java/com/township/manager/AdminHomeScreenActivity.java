@@ -187,7 +187,8 @@ public class AdminHomeScreenActivity extends AppCompatActivity
             Intent intent = new Intent(AdminHomeScreenActivity.this, SecurityActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_vendors_admin) {
-
+            Intent intent = new Intent(AdminHomeScreenActivity.this, ServiceVendorActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_wing_details_admin) {
 
         } else if (id == R.id.nav_amenities_admin) {
