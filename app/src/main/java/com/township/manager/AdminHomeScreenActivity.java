@@ -149,7 +149,7 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                         if (!(fragment instanceof ComplaintsFragment)) {
                             appBarLayout.setElevation(0);
                             transaction = getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.admin_home_screen_fragment_area, complaintsFragment);
+                            transaction.replace(R.id.admin_home_screen_fragment_area, new ComplaintsFragment());
                             transaction.commit();
                         }
                         return true;

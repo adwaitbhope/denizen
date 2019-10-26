@@ -40,7 +40,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ResidentHomeScreenActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, NoticeBoardFragment.OnFragmentInteractionListener,MaintenanceFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, NoticeBoardFragment.OnFragmentInteractionListener, MaintenanceFragment.OnFragmentInteractionListener {
 
     String username, password;
 
@@ -106,7 +106,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         residentFlatNo.setText(cursor.getString(wingNoCol) + "/" + cursor.getString(flatNoCol));
 
         noticeBoardFragment = new NoticeBoardFragment();
-        maintenanceFragment=new MaintenanceFragment();
+        maintenanceFragment = new MaintenanceFragment();
 
         getNoticesFromServer();
         getMaintenanceFromServer();
@@ -352,22 +352,22 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
                 Log.d("maintenanceresponse", response.body().toString());
                 String responseString = response.body().getAsJsonArray().toString();
-                try{
-                    JSONArray jsonArray=new JSONArray(responseString);
+                try {
+                    JSONArray jsonArray = new JSONArray(responseString);
                     JSONObject loginResponse = jsonArray.getJSONObject(0);
 
                     if (loginResponse.getInt("login_status") == 1) {
-                        JSONArray jsonMaintenancArray=jsonArray.getJSONArray(1);
+                        JSONArray jsonMaintenancArray = jsonArray.getJSONArray(1);
 
                         JSONObject jsonMaintenance;
 
-                        ArrayList<Maintenance> maintenances=new ArrayList<>();
+                        ArrayList<Maintenance> maintenances = new ArrayList<>();
                         Maintenance maintenance;
-                        Gson gson=new Gson();
+                        Gson gson = new Gson();
 
-                        for(int i=0;i<jsonMaintenancArray.length();i++){
-                            jsonMaintenance=jsonMaintenancArray.getJSONObject(i);
-                            maintenance=gson.fromJson(jsonMaintenance.toString(),Maintenance.class);
+                        for (int i = 0; i < jsonMaintenancArray.length(); i++) {
+                            jsonMaintenance = jsonMaintenancArray.getJSONObject(i);
+                            maintenance = gson.fromJson(jsonMaintenance.toString(), Maintenance.class);
 
                             maintenances.add(maintenance);
                         }
@@ -375,9 +375,8 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                         addMaintenanceToDatabase(maintenances);
                     }
 
-                }
-                catch (JSONException e) {
-                    Log.d("maintenanceerror",e.getMessage());
+                } catch (JSONException e) {
+                    Log.d("maintenanceerror", e.getMessage());
                 }
             }
 
@@ -388,18 +387,20 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         });
 
     }
+
     private void addMaintenanceToDatabase(final ArrayList<Maintenance> maintenances) {
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
-                maintenanceDao=appDatabase.maintenanceDao();
-                maintenancesArray=new Maintenance[maintenances.size()];
+                maintenanceDao = appDatabase.maintenanceDao();
+                maintenancesArray = new Maintenance[maintenances.size()];
                 maintenances.toArray(maintenancesArray);
-                MaintenanceAsyncTask maintenanceAsyncTask=new MaintenanceAsyncTask();
+                MaintenanceAsyncTask maintenanceAsyncTask = new MaintenanceAsyncTask();
                 maintenanceAsyncTask.execute();
             }
         }.start();
     }
+
     private class MaintenanceAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -416,7 +417,9 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            maintenanceFragment.updateRecyclerView();
+            if (maintenanceFragment.getContext() != null) {
+                maintenanceFragment.updateRecyclerView();
+            }
             super.onPostExecute(aVoid);
         }
     }

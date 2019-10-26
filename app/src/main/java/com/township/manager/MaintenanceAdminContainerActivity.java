@@ -33,6 +33,7 @@ public class MaintenanceAdminContainerActivity extends AppCompatActivity impleme
     Maintenance[] maintenancesArray;
     AppDatabase appDatabase;
     String username, password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +45,7 @@ public class MaintenanceAdminContainerActivity extends AppCompatActivity impleme
         DBManager dbManager = new DBManager(getApplicationContext());
         Cursor cursor = dbManager.getDataLogin();
         cursor.moveToFirst();
-        int usernameCol,passwordCol;
+        int usernameCol, passwordCol;
         usernameCol = cursor.getColumnIndexOrThrow("Username");
         passwordCol = cursor.getColumnIndexOrThrow("Password");
         cursor.moveToFirst();
@@ -60,7 +61,7 @@ public class MaintenanceAdminContainerActivity extends AppCompatActivity impleme
         getMaintenanceFromServer();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        maintenanceFragment=new MaintenanceFragment();
+        maintenanceFragment = new MaintenanceFragment();
         transaction.replace(R.id.maintenance_admin_container_frame, maintenanceFragment);
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.commit();
@@ -87,22 +88,22 @@ public class MaintenanceAdminContainerActivity extends AppCompatActivity impleme
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
                 Log.d("maintenanceresponse", response.body().toString());
                 String responseString = response.body().getAsJsonArray().toString();
-                try{
-                    JSONArray jsonArray=new JSONArray(responseString);
+                try {
+                    JSONArray jsonArray = new JSONArray(responseString);
                     JSONObject loginResponse = jsonArray.getJSONObject(0);
 
                     if (loginResponse.getInt("login_status") == 1) {
-                        JSONArray jsonMaintenancArray=jsonArray.getJSONArray(1);
+                        JSONArray jsonMaintenancArray = jsonArray.getJSONArray(1);
 
                         JSONObject jsonMaintenance;
 
-                        ArrayList<Maintenance> maintenances=new ArrayList<>();
+                        ArrayList<Maintenance> maintenances = new ArrayList<>();
                         Maintenance maintenance;
-                        Gson gson=new Gson();
+                        Gson gson = new Gson();
 
-                        for(int i=0;i<jsonMaintenancArray.length();i++){
-                            jsonMaintenance=jsonMaintenancArray.getJSONObject(i);
-                            maintenance=gson.fromJson(jsonMaintenance.toString(),Maintenance.class);
+                        for (int i = 0; i < jsonMaintenancArray.length(); i++) {
+                            jsonMaintenance = jsonMaintenancArray.getJSONObject(i);
+                            maintenance = gson.fromJson(jsonMaintenance.toString(), Maintenance.class);
 
                             maintenances.add(maintenance);
                         }
@@ -110,9 +111,8 @@ public class MaintenanceAdminContainerActivity extends AppCompatActivity impleme
                         addMaintenanceToDatabase(maintenances);
                     }
 
-                }
-                catch (JSONException e) {
-                    Log.d("maintenanceerror",e.getMessage());
+                } catch (JSONException e) {
+                    Log.d("maintenanceerror", e.getMessage());
                 }
             }
 
@@ -123,18 +123,20 @@ public class MaintenanceAdminContainerActivity extends AppCompatActivity impleme
         });
 
     }
+
     private void addMaintenanceToDatabase(final ArrayList<Maintenance> maintenances) {
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
-                maintenanceDao=appDatabase.maintenanceDao();
-                maintenancesArray=new Maintenance[maintenances.size()];
+                maintenanceDao = appDatabase.maintenanceDao();
+                maintenancesArray = new Maintenance[maintenances.size()];
                 maintenances.toArray(maintenancesArray);
-                MaintenanceAsyncTask maintenanceAsyncTask=new MaintenanceAsyncTask();
+                MaintenanceAsyncTask maintenanceAsyncTask = new MaintenanceAsyncTask();
                 maintenanceAsyncTask.execute();
             }
         }.start();
     }
+
     private class MaintenanceAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override

@@ -96,32 +96,32 @@ public class MaintenanceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view =inflater.inflate(R.layout.fragment_maintenance, container, false);
+        View view = inflater.inflate(R.layout.fragment_maintenance, container, false);
         recyclerView = view.findViewById(R.id.maintenance_reclcyler_view);
         adapter = new MaintenanceAdapter(dataset, getContext());
-        addMaintenanceFloat=view.findViewById(R.id.add_maintenance_float_button);
+        addMaintenanceFloat = view.findViewById(R.id.add_maintenance_float_button);
 
-        DBManager dbManager=new DBManager(getContext());
-        Cursor cursor=dbManager.getDataLogin();
-        int typeCol=cursor.getColumnIndexOrThrow("Type");
+        DBManager dbManager = new DBManager(getContext());
+        Cursor cursor = dbManager.getDataLogin();
+        int typeCol = cursor.getColumnIndexOrThrow("Type");
         cursor.moveToFirst();
-        String type=cursor.getString(typeCol);
+        String type = cursor.getString(typeCol);
 
-        if(type.equals("admin")){
+        if (type.equals("admin")) {
             addMaintenanceFloat.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent=new Intent(getContext(),AddMaintenanceActivity.class);
-                    startActivityForResult(intent,ADD_MAINTENANCE_REQUEST);
+                    Intent intent = new Intent(getContext(), AddMaintenanceActivity.class);
+                    startActivityForResult(intent, ADD_MAINTENANCE_REQUEST);
                 }
             });
 
         }
-        if(type.equals("resident")){
+        if (type.equals("resident")) {
             addMaintenanceFloat.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent=new Intent(getContext(),PaymentForMaintenance.class);
+                    Intent intent = new Intent(getContext(), PaymentForMaintenance.class);
                     startActivity(intent);
                 }
             });
@@ -129,7 +129,6 @@ public class MaintenanceFragment extends Fragment {
         }
 
         updateRecyclerView();
-
 
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -155,7 +154,6 @@ public class MaintenanceFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        updateRecyclerView();
     }
 
     @Override
@@ -168,6 +166,7 @@ public class MaintenanceFragment extends Fragment {
             }
         }
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -212,7 +211,6 @@ public class MaintenanceFragment extends Fragment {
         protected Void doInBackground(Void... voids) {
             temporaryDataset.clear();
             temporaryDataset.addAll(maintenanceDao.getAll());
-
             return null;
         }
 

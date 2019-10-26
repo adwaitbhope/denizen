@@ -6,32 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".PaymentForMaintenance">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/enter_maintenance_amount_textinput"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/maintenance_payment_app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        app:counterEnabled="true"
-        app:counterMaxLength="30"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-       >
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/enter_maintenance_amount_textinput_child"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/maintenance_payment_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawablePadding="10dp"
-            android:drawableTint="@color/secondaryColor"
-            android:hint="Enter the maintenance Amount"
-            android:maxLength="30"
-            android:inputType="text"
-            android:paddingLeft="10dp"
-            android:textSize="14sp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/pay_for_maintenance_button"
@@ -50,5 +39,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/enter_maintenance_amount_textinput"
         app:layout_constraintVertical_bias="0.023" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/enter_maintenance_amount_textinput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/maintenance_payment_app_bar_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/enter_maintenance_amount_textinput_child"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/secondaryColor"
+            android:hint="Amount"
+            android:inputType="number"
+            android:maxLength="30"
+            android:paddingLeft="10dp"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,37 +32,38 @@ import static com.township.manager.MaintenanceFragment.ADD_MAINTENANCE_RESULT;
 
 public class AddMaintenanceActivity extends AppCompatActivity {
 
-    AutoCompleteTextView wing,modeOfPayment;
-    TextInputLayout dateInputLayout,amountInputLayout,flatInputLayout;
-    TextInputEditText dateInputEditText,amountInputEditText,flatInputEditText;
+    AutoCompleteTextView wing, modeOfPayment;
+    TextInputLayout dateInputLayout, amountInputLayout, flatInputLayout;
+    TextInputEditText dateInputEditText, amountInputEditText, flatInputEditText;
     WingDao wingDao;
     AppDatabase appDatabase;
     String username, password;
-    ArrayList<String> wingNameArray=new ArrayList<>();
+    ArrayList<String> wingNameArray = new ArrayList<>();
     MaterialButton addMaintenanceButton;
     String wingId;
     MaintenanceDao maintenanceDao;
     Maintenance maintenance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_maintenance);
-        dateInputEditText=findViewById(R.id.paid_maintenance_on_child);
-        amountInputEditText=findViewById(R.id.maintenance_amount_child);
-        dateInputLayout=findViewById(R.id.paid_maintenance_on);
-        amountInputLayout=findViewById(R.id.maintenance_amount);
-        wing=findViewById(R.id.wing_text_input_exposed_dropdown);
-        flatInputEditText=findViewById(R.id.flat_number_textinput_child);
-        flatInputLayout=findViewById(R.id.flat_number_textinput);
-        modeOfPayment=findViewById(R.id.mode_of_payment_text_input_filled_exposed_dropdown);
-        addMaintenanceButton=findViewById(R.id.add_maintenance_button);
+        dateInputEditText = findViewById(R.id.paid_maintenance_on_child);
+        amountInputEditText = findViewById(R.id.maintenance_amount_child);
+        dateInputLayout = findViewById(R.id.paid_maintenance_on);
+        amountInputLayout = findViewById(R.id.maintenance_amount);
+        wing = findViewById(R.id.wing_text_input_exposed_dropdown);
+        flatInputEditText = findViewById(R.id.flat_number_textinput_child);
+        flatInputLayout = findViewById(R.id.flat_number_textinput);
+        modeOfPayment = findViewById(R.id.mode_of_payment_text_input_filled_exposed_dropdown);
+        addMaintenanceButton = findViewById(R.id.add_maintenance_button);
 
 
         DBManager dbManager = new DBManager(getApplicationContext());
         Cursor cursor = dbManager.getDataLogin();
         cursor.moveToFirst();
 
-        int  usernameCol, passwordCol;
+        int usernameCol, passwordCol;
 
         usernameCol = cursor.getColumnIndexOrThrow("Username");
         passwordCol = cursor.getColumnIndexOrThrow("Password");
@@ -77,19 +78,18 @@ public class AddMaintenanceActivity extends AppCompatActivity {
                 .build();
 
 
-
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
-                wingDao=appDatabase.wingDao();
+                wingDao = appDatabase.wingDao();
                 wingNameArray.addAll(wingDao.getALLWingName());
             }
         }.start();
 
-        ArrayAdapter<String> wingAdapter=new ArrayAdapter<>(getApplicationContext(),R.layout.dropdown_menu_popup_item,wingNameArray);
+        ArrayAdapter<String> wingAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.dropdown_menu_popup_item, wingNameArray);
         wing.setAdapter(wingAdapter);
 
-        String[] ModeOfPayment = new String[]{"Cheque", "Cash","Online"};
+        String[] ModeOfPayment = new String[]{"Cheque", "Cash", "Online"};
 
         ArrayAdapter<String> modeOfPaymentAdaper =
                 new ArrayAdapter<>(

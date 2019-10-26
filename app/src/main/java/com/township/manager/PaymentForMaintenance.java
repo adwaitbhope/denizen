@@ -1,6 +1,7 @@
 package com.township.manager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -11,6 +12,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -44,6 +46,12 @@ public class PaymentForMaintenance extends AppCompatActivity implements PaytmPay
         enterTheAmount=findViewById(R.id.enter_maintenance_amount_textinput_child);
         enterTheAmountTIL=findViewById(R.id.enter_maintenance_amount_textinput);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.maintenance_payment_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Maintenance details");
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         DBManager dbManager = new DBManager(getApplicationContext());
         Cursor cursor = dbManager.getDataLogin();
         cursor.moveToFirst();
@@ -62,6 +70,16 @@ public class PaymentForMaintenance extends AppCompatActivity implements PaytmPay
             }
         });
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void payForMaintenance() {
