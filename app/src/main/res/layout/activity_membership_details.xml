@@ -70,7 +70,6 @@
                     <com.google.android.material.chip.ChipGroup
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:showMotionSpec="@android:anim/slide_in_left"
                         app:singleLine="true">
 
                         <com.google.android.material.chip.Chip
@@ -130,7 +129,7 @@
                         android:layout_height="match_parent">
 
                         <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/amenities_details_title_text_view"
+                            android:id="@+id/membership_details_flat_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
@@ -145,7 +144,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/amenity_timing_text_view"
+                            android:id="@+id/membership_details_validity_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
@@ -155,10 +154,10 @@
                             android:drawableTint="@color/secondaryColor"
                             android:text="Validity"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/amenity_membership_details_text_view" />
+                            app:layout_constraintTop_toBottomOf="@+id/amenity_membership_paid_text_view" />
 
                         <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/amenity_membership_details_text_view"
+                            android:id="@+id/amenity_membership_paid_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
@@ -169,10 +168,10 @@
                             android:text="Paid on:"
                             android:textSize="14sp"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/free_for_members_status_text_view" />
+                            app:layout_constraintTop_toBottomOf="@+id/membership_details_amount_text_view" />
 
                         <TextView
-                            android:id="@+id/free_for_members_status_text_view"
+                            android:id="@+id/membership_details_amount_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
@@ -182,10 +181,10 @@
                             android:drawableTint="@color/secondaryColor"
                             android:text="Amount:"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/amenities_details_title_text_view" />
+                            app:layout_constraintTop_toBottomOf="@+id/membership_details_flat_text_view" />
 
                         <TextView
-                            android:id="@+id/textView2"
+                            android:id="@+id/membership_details_name_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -196,7 +195,7 @@
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toEndOf="@+id/amenities_details_title_text_view"
+                            app:layout_constraintStart_toEndOf="@+id/membership_details_flat_text_view"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
@@ -206,73 +205,73 @@
                             android:layout_marginStart="8dp"
                             android:text="Rs. 5000"
                             android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/free_for_members_status_text_view"
-                            app:layout_constraintStart_toEndOf="@+id/free_for_members_status_text_view"
-                            app:layout_constraintTop_toTopOf="@+id/free_for_members_status_text_view"
+                            app:layout_constraintBottom_toBottomOf="@+id/membership_details_amount_text_view"
+                            app:layout_constraintStart_toEndOf="@+id/membership_details_amount_text_view"
+                            app:layout_constraintTop_toTopOf="@+id/membership_details_amount_text_view"
                             app:layout_constraintVertical_bias="0.0" />
 
                         <TextView
-                            android:id="@+id/textView4"
+                            android:id="@+id/membership_details_paid_date_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="Feb 31, 2019"
                             android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/amenity_membership_details_text_view"
-                            app:layout_constraintStart_toEndOf="@+id/amenity_membership_details_text_view"
-                            app:layout_constraintTop_toTopOf="@+id/amenity_membership_details_text_view" />
+                            app:layout_constraintBottom_toBottomOf="@+id/amenity_membership_paid_text_view"
+                            app:layout_constraintStart_toEndOf="@+id/amenity_membership_paid_text_view"
+                            app:layout_constraintTop_toTopOf="@+id/amenity_membership_paid_text_view" />
 
                         <TextView
-                            android:id="@+id/textView5"
+                            android:id="@+id/membership_details_validity_from_date_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
                             android:text="Jan 1, 2019"
                             android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/textView6"
+                            app:layout_constraintBottom_toBottomOf="@+id/membership_details_validity_from_text_view"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toEndOf="@+id/textView6"
-                            app:layout_constraintTop_toTopOf="@+id/textView6"
+                            app:layout_constraintStart_toEndOf="@+id/membership_details_validity_from_text_view"
+                            app:layout_constraintTop_toTopOf="@+id/membership_details_validity_from_text_view"
                             app:layout_constraintVertical_bias="1.0" />
 
                         <TextView
-                            android:id="@+id/textView6"
+                            android:id="@+id/membership_details_validity_from_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="From:"
-                            app:layout_constraintBottom_toBottomOf="@+id/amenity_timing_text_view"
-                            app:layout_constraintStart_toEndOf="@+id/amenity_timing_text_view"
-                            app:layout_constraintTop_toTopOf="@+id/amenity_timing_text_view" />
+                            app:layout_constraintBottom_toBottomOf="@+id/membership_details_validity_text_view"
+                            app:layout_constraintStart_toEndOf="@+id/membership_details_validity_text_view"
+                            app:layout_constraintTop_toTopOf="@+id/membership_details_validity_text_view" />
 
                         <TextView
-                            android:id="@+id/textView7"
+                            android:id="@+id/membership_details_validity_thru_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:layout_marginBottom="16dp"
                             android:text="Thru:"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/textView6"
-                            app:layout_constraintStart_toStartOf="@+id/textView6"
-                            app:layout_constraintTop_toBottomOf="@+id/textView6"
+                            app:layout_constraintEnd_toEndOf="@+id/membership_details_validity_from_text_view"
+                            app:layout_constraintStart_toStartOf="@+id/membership_details_validity_from_text_view"
+                            app:layout_constraintTop_toBottomOf="@+id/membership_details_validity_from_text_view"
                             app:layout_constraintVertical_bias="0.0" />
 
                         <TextView
-                            android:id="@+id/textView8"
+                            android:id="@+id/membership_details_validity_thru_date_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
                             android:text="Dec 31, 2020"
                             android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/textView7"
+                            app:layout_constraintBottom_toBottomOf="@+id/membership_details_validity_thru_text_view"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toEndOf="@+id/textView7"
-                            app:layout_constraintTop_toTopOf="@+id/textView7" />
+                            app:layout_constraintStart_toEndOf="@+id/membership_details_validity_thru_text_view"
+                            app:layout_constraintTop_toTopOf="@+id/membership_details_validity_thru_text_view" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
