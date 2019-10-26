@@ -139,7 +139,7 @@ public interface RetrofitServerAPI {
             @Field("password") String password,
             @Field("wing_id") String wing_id,
             @Field("apartment") String apartment,
-            @Field("amount")   Integer amount,
+            @Field("amount")   String amount,
             @Field("payment_mode") String payment_mode,
             @Field("cheque_no ") String cheque_no
     );
@@ -155,6 +155,14 @@ public interface RetrofitServerAPI {
             @Field("CALLBACK_URL") String callbackUrl,
             @Field("INDUSTRY_TYPE_ID") String industryTypeId
     );
+
+    @FormUrlEncoded
+    @POST("/maintenance/pay/verify/")
+    Call<JsonArray> verifyMaintenancePayment(
+        @Field("username") String username,
+        @Field("password") String passsword,
+        @Field("ORDER_ID") String ORDER_ID
+        );
 
 
 

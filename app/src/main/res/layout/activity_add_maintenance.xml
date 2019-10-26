@@ -102,27 +102,24 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/flat_number_textinput"
-                style="@style/AppTextField.ExposedDropdownMenu"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:hint="Enter the flat"
-                android:layout_marginBottom="24dp"
                 app:layout_constraintTop_toBottomOf="@id/wing_text_input"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:errorEnabled="true"
                >
 
-                <AutoCompleteTextView
-                    android:id="@+id/flat_number_textinput_exposed_dropdown"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/flat_number_textinput_child"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_font_download_black_24dp"
                     android:drawablePadding="10dp"
-                    android:drawableTint="@color/secondaryColor"
-                    android:editable="false"
+                    android:hint="Enter the Flat"
+                    android:inputType="number"
                     android:paddingLeft="10dp"
                     android:textSize="14sp" />
 
@@ -159,7 +156,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/register_complaint_button"
+                android:id="@+id/add_maintenance_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"

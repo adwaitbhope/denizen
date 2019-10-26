@@ -112,11 +112,22 @@ public class MaintenanceFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent=new Intent(getContext(),AddMaintenanceActivity.class);
-                    //(intent,ADD_MAINTENANCE_REQUEST);
+                    startActivityForResult(intent,ADD_MAINTENANCE_REQUEST);
                 }
             });
 
         }
+        if(type.equals("resident")){
+            addMaintenanceFloat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(getContext(),PaymentForMaintenance.class);
+                    startActivity();
+                }
+            });
+
+        }
+
         updateRecyclerView();
 
 

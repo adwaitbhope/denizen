@@ -15,7 +15,7 @@ public class Maintenance {
 
     @NonNull
     @PrimaryKey
-    String maintenance_id;
+    String id;
 
     @ColumnInfo(name="amount")
     String amount;
@@ -39,7 +39,7 @@ public class Maintenance {
 
     @NonNull
     public String getMaintenance_id() {
-        return maintenance_id;
+        return id;
     }
 
     public String getAmount() {
@@ -68,5 +68,37 @@ public class Maintenance {
 
     public String getWing_id() {
         return wing_id;
+    }
+
+    public void setMaintenance_id(@NonNull String id) {
+        this.id = id;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public void setApartment(String apartment) {
+        this.apartment = apartment;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    public void setCheque_no(String cheque_no) {
+        this.cheque_no = cheque_no;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setWing_id(String wing_id) {
+        this.wing_id = wing_id;
     }
 }

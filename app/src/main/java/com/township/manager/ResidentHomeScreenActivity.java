@@ -56,6 +56,9 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
     Notice.Comment[] commentsArray;
     MaintenanceFragment maintenanceFragment;
 
+    MaintenanceDao maintenanceDao;
+    Maintenance[] maintenancesArray;
+
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -106,6 +109,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         maintenanceFragment=new MaintenanceFragment();
 
         getNoticesFromServer();
+        getMaintenanceFromServer();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.resident_home_screen_fragment_area, noticeBoardFragment);
@@ -306,10 +310,6 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
 
     }
 
-    public void getComplaintsFromServer() {
-
-    }
-
     private class NoticesAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -328,6 +328,95 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(Void aVoid) {
             noticeBoardFragment.updateRecyclerView();
+            super.onPostExecute(aVoid);
+        }
+    }
+
+    private void getMaintenanceFromServer() {
+
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(getString(R.string.server_addr))
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit retrofit = builder.build();
+
+        RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
+
+        Call<JsonArray> call = retrofitServerAPI.getMaintenance(
+                username,
+                password,
+                null
+        );
+
+        call.enqueue(new Callback<JsonArray>() {
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                Log.d("maintenanceresponse", response.body().toString());
+                String responseString = response.body().getAsJsonArray().toString();
+                try{
+                    JSONArray jsonArray=new JSONArray(responseString);
+                    JSONObject loginResponse = jsonArray.getJSONObject(0);
+
+                    if (loginResponse.getInt("login_status") == 1) {
+                        JSONArray jsonMaintenancArray=jsonArray.getJSONArray(1);
+
+                        JSONObject jsonMaintenance;
+
+                        ArrayList<Maintenance> maintenances=new ArrayList<>();
+                        Maintenance maintenance;
+                        Gson gson=new Gson();
+
+                        for(int i=0;i<jsonMaintenancArray.length();i++){
+                            jsonMaintenance=jsonMaintenancArray.getJSONObject(i);
+                            maintenance=gson.fromJson(jsonMaintenance.toString(),Maintenance.class);
+
+                            maintenances.add(maintenance);
+                        }
+
+                        addMaintenanceToDatabase(maintenances);
+                    }
+
+                }
+                catch (JSONException e) {
+                    Log.d("maintenanceerror",e.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+
+            }
+        });
+
+    }
+    private void addMaintenanceToDatabase(final ArrayList<Maintenance> maintenances) {
+        new Thread(){
+            @Override
+            public void run() {
+                maintenanceDao=appDatabase.maintenanceDao();
+                maintenancesArray=new Maintenance[maintenances.size()];
+                maintenances.toArray(maintenancesArray);
+                MaintenanceAsyncTask maintenanceAsyncTask=new MaintenanceAsyncTask();
+                maintenanceAsyncTask.execute();
+            }
+        }.start();
+    }
+    private class MaintenanceAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            appDatabase.maintenanceDao().deleteAll();
+            maintenanceDao.insert(maintenancesArray);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            maintenanceFragment.updateRecyclerView();
             super.onPostExecute(aVoid);
         }
     }

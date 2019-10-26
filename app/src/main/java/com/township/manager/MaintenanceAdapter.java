@@ -44,7 +44,7 @@ public class MaintenanceAdapter extends RecyclerView.Adapter {
         viewHolder.flatNo.setText(maintenance.getApartment());
         viewHolder.amount.setText(maintenance.getAmount());
         viewHolder.modeofPayment.setText(maintenance.getMode());
-        viewHolder.monthYear.setText(maintenance.getTimestamp());
+        viewHolder.monthYear.setText(maintenance.getTimestamp().substring(0,10));
 
 
     }
