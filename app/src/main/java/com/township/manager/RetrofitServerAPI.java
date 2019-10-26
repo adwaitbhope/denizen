@@ -124,5 +124,42 @@ public interface RetrofitServerAPI {
             @Field("timestamp") String timestamp
     );
 
+    @FormUrlEncoded
+    @POST("/service_vendors/")
+    Call<JsonArray> getServiceVendors(
+            @Field("username") String username,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("/service_vendors/new/")
+    Call<JsonArray> addServiceVendors(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("first_name") String first_name,
+            @Field("last_name") String last_name,
+            @Field("phone") String phone,
+            @Field("work") String work
+    );
+
+    @FormUrlEncoded
+    @POST("/service_vendors/edit/")
+    Call<JsonArray> editServiceVendors(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("first_name") String first_name,
+            @Field("last_name") String last_name,
+            @Field("phone") String phone,
+            @Field("work") String work
+    );
+
+    @FormUrlEncoded
+    @POST("/service_vendors/delete/")
+    Call<JsonArray> deleteServiceVendors(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("vendor_id") String vendor_id
+    );
+
 
 }
