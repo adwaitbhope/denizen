@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 
+import java.io.FileInputStream;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
@@ -107,6 +108,25 @@ public interface RetrofitServerAPI {
     );
 
     @FormUrlEncoded
+    @POST("/visitors/new/")
+    Call<JsonArray> addNewVisitor(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("first_name") String first_name,
+            @Field("last_name") String last_name,
+            @Field("wing_id") String wing_id,
+            @Field("apartment") String apartment
+    );
+
+    @FormUrlEncoded
+    @POST("visitors/get/")
+    Call <JsonArray> getVisitorHistory(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("timestamp") String timestamp
+    );
+
+    @FormUrlEncoded
     @POST("/complaints/")
     Call<JsonArray> getComplaints(
             @Field("username") String username,
@@ -122,6 +142,46 @@ public interface RetrofitServerAPI {
             @Field("username") String username,
             @Field("password") String password,
             @Field("complaint_id") String complaint_id
+    );
+
+    @FormUrlEncoded
+    @POST("/maintenance/")
+    Call<JsonArray> getMaintenance(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("timestamp") String timestamp
+    );
+
+    @FormUrlEncoded
+    @POST("/maintenance/add/")
+    Call<JsonArray> addMaintenance(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("wing_id") String wing_id,
+            @Field("apartment") String apartment,
+            @Field("amount")   String amount,
+            @Field("payment_mode") String payment_mode,
+            @Field("cheque_no ") String cheque_no
+    );
+
+    @FormUrlEncoded
+    @POST("/maintenance/pay/initiate/")
+    Call<JsonArray> intiateMaintenancePayment(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("TXN_AMOUNT") String txnAmount,
+            @Field("CHANNEL_ID") String channelId,
+            @Field("WEBSITE") String website,
+            @Field("CALLBACK_URL") String callbackUrl,
+            @Field("INDUSTRY_TYPE_ID") String industryTypeId
+    );
+
+    @FormUrlEncoded
+    @POST("/maintenance/pay/verify/")
+    Call<JsonArray> verifyMaintenancePayment(
+        @Field("username") String username,
+        @Field("password") String passsword,
+        @Field("ORDER_ID") String ORDER_ID
     );
 
 

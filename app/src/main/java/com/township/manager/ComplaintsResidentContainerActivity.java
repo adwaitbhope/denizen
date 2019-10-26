@@ -34,6 +34,7 @@ public class ComplaintsResidentContainerActivity extends AppCompatActivity imple
     AppDatabase appDatabase;
     String username, password;
     ComplaintsFragment complaintsFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +55,7 @@ public class ComplaintsResidentContainerActivity extends AppCompatActivity imple
         Cursor cursor = dbManager.getDataLogin();
         cursor.moveToFirst();
 
-        int usernameCol,passwordCol;
+        int usernameCol, passwordCol;
         usernameCol = cursor.getColumnIndexOrThrow("Username");
         passwordCol = cursor.getColumnIndexOrThrow("Password");
         cursor.moveToFirst();
@@ -65,7 +66,7 @@ public class ComplaintsResidentContainerActivity extends AppCompatActivity imple
         getComplaintsFromServer();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        complaintsFragment=new ComplaintsFragment();
+        complaintsFragment = new ComplaintsFragment();
         transaction.replace(R.id.complaints_resident_container_frame, complaintsFragment);
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.commit();
@@ -85,6 +86,7 @@ public class ComplaintsResidentContainerActivity extends AppCompatActivity imple
     public void onFragmentInteraction(Uri uri) {
 
     }
+
     public void getComplaintsFromServer() {
 
         Retrofit.Builder builder = new Retrofit.Builder()
@@ -106,7 +108,7 @@ public class ComplaintsResidentContainerActivity extends AppCompatActivity imple
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
                 assert response.body() != null;
                 String responseString = response.body().getAsJsonArray().toString();
-                try{
+                try {
                     JSONArray jsonArray = new JSONArray(responseString);
                     JSONObject loginResponse = jsonArray.getJSONObject(0);
                     if (loginResponse.getInt("login_status") == 1) {
@@ -115,21 +117,20 @@ public class ComplaintsResidentContainerActivity extends AppCompatActivity imple
                         JSONObject jsonObjectComplaint;
                         ArrayList<Complaint> complaints = new ArrayList<>();
                         Complaint complaint;
-                        Gson gson=new Gson();
-                        jsonArrayComplaint=jsonArray.getJSONArray(1);
-                        Log.d("printres",responseString);
-                        for(int i=0;i<jsonArrayComplaint.length();i++){
-                            jsonObjectComplaint=jsonArrayComplaint.getJSONObject(i);
-                            complaint=gson.fromJson(jsonObjectComplaint.toString(),Complaint.class);
+                        Gson gson = new Gson();
+                        jsonArrayComplaint = jsonArray.getJSONArray(1);
+                        Log.d("printres", responseString);
+                        for (int i = 0; i < jsonArrayComplaint.length(); i++) {
+                            jsonObjectComplaint = jsonArrayComplaint.getJSONObject(i);
+                            complaint = gson.fromJson(jsonObjectComplaint.toString(), Complaint.class);
 
                             complaints.add(complaint);
                         }
                         addComplaintsToDatabase(complaints);
                     }
 
-                }
-                catch (JSONException jsonexcpetion){
-                    Toast.makeText(ComplaintsResidentContainerActivity.this,jsonexcpetion.getMessage(),Toast.LENGTH_SHORT).show();
+                } catch (JSONException jsonexcpetion) {
+                    Toast.makeText(ComplaintsResidentContainerActivity.this, jsonexcpetion.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -142,13 +143,13 @@ public class ComplaintsResidentContainerActivity extends AppCompatActivity imple
     }
 
     public void addComplaintsToDatabase(final ArrayList<Complaint> complaints) {
-        new Thread(){
-            public void run(){
-                complaintDao=appDatabase.complaintDao();
-                complaintsArray=new Complaint[complaints.size()];
+        new Thread() {
+            public void run() {
+                complaintDao = appDatabase.complaintDao();
+                complaintsArray = new Complaint[complaints.size()];
                 complaints.toArray(complaintsArray);
 
-                ComplaintsAsyncTask complaintsAsyncTask=new ComplaintsAsyncTask();
+                ComplaintsAsyncTask complaintsAsyncTask = new ComplaintsAsyncTask();
                 complaintsAsyncTask.execute();
 
             }

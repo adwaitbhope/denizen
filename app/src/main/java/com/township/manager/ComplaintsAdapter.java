@@ -139,9 +139,6 @@ public class ComplaintsAdapter extends RecyclerView.Adapter {
             complaintResolveButton = view.findViewById(R.id.resolve_complaint_button);
             constraintLayout = view.findViewById(R.id.complaint_card_constraint_layout);
 
-
-
-
         }
 
     }
