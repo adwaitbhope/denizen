@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,6 +42,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -53,6 +55,8 @@ public class LoginScreenActivity extends AppCompatActivity {
 
     DBManager dbManager;
     private AppDatabase appDatabase;
+
+    Resident[] residentsArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,6 +168,14 @@ public class LoginScreenActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                try {
+                    InputMethodManager manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 final String username = usernameEditText.getText().toString();
                 final String password = passwordEditText.getText().toString();
 
@@ -194,48 +206,46 @@ public class LoginScreenActivity extends AppCompatActivity {
 
                                     Log.d("login response", jsonArray.toString());
 
-                                    User user = new User();
-                                    user.setLogin(jsonObjectLogin.getInt("login"));
+                                    if (jsonObjectLogin.getInt("login") == 1) {
 
-
-                                    if (user.getLogin() == 1) {
                                         JSONObject jsonObjectLoginInfo = jsonArray.getJSONObject(1);
 
-                                        user.setLoginType(jsonObjectLoginInfo.getString("type"));
-                                        user.setUserName(jsonObjectLoginInfo.getString("username"));
-                                        user.setPassword(password);
-                                        user.setFirstName(jsonObjectLoginInfo.getString("first_name"));
-                                        user.setLastName(jsonObjectLoginInfo.getString("last_name"));
-                                        user.setPhoneNumber(jsonObjectLoginInfo.getString("phone"));
-                                        user.setEmail(jsonObjectLoginInfo.getString("email"));
-                                        user.setProfileUpdated(jsonObjectLoginInfo.getBoolean("profile_updated"));
-                                        user.setTownship(jsonObjectLoginInfo.getString("township"));
-
                                         ContentValues contentValues = new ContentValues();
-                                        contentValues.put(DBManager.ColUsername, user.getUserName());
-                                        contentValues.put(DBManager.ColPassword, user.getPassword());
-                                        contentValues.put(DBManager.ColFirstName, user.getFirstName());
-                                        contentValues.put(DBManager.ColLastName, user.getLastName());
-                                        contentValues.put(DBManager.ColPhone, user.getPhoneNumber());
-                                        contentValues.put(DBManager.ColEmail, user.getEmail());
-                                        contentValues.put(DBManager.ColProfileUpdated, user.getProfileUpdated());
-                                        contentValues.put(DBManager.ColTownship, user.getTownship());
-                                        contentValues.put(DBManager.ColType, user.getLoginType());
+                                        contentValues.put(DBManager.ColUsername, jsonObjectLoginInfo.getString("username"));
+                                        contentValues.put(DBManager.ColPassword, password);
+                                        contentValues.put(DBManager.ColFirstName, jsonObjectLoginInfo.getString("first_name"));
+                                        contentValues.put(DBManager.ColLastName, jsonObjectLoginInfo.getString("last_name"));
+                                        contentValues.put(DBManager.ColPhone, jsonObjectLoginInfo.getString("phone"));
+                                        contentValues.put(DBManager.ColEmail, jsonObjectLoginInfo.getString("email"));
+                                        contentValues.put(DBManager.ColProfileUpdated, jsonObjectLoginInfo.getBoolean("profile_updated"));
+                                        contentValues.put(DBManager.ColTownship, jsonObjectLoginInfo.getString("township"));
+                                        contentValues.put(DBManager.ColType, jsonObjectLoginInfo.getString("type"));
                                         contentValues.put(DBManager.ColTownshipId, jsonObjectLoginInfo.getString("township_id"));
-                                        //   Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
 
                                         JSONArray jsonWings = jsonArray.getJSONArray(2);
                                         Gson gson = new Gson();
                                         final Wing[] wings = new Wing[jsonWings.length()];
+                                        ArrayList<Resident> residents = new ArrayList<>();
                                         for (int i = 0; i < jsonWings.length(); i++) {
                                             JSONObject jsonWing = jsonWings.getJSONObject(i);
+                                            JSONArray jsonArrayWings = jsonWing.getJSONArray("apartments");
                                             wings[i] = gson.fromJson(jsonWing.toString(), Wing.class);
+                                            for (int j = 0; j < jsonArrayWings.length(); j++) {
+                                                Resident resident = gson.fromJson(jsonArrayWings.getJSONObject(j).toString(), Resident.class);
+                                                resident.setWing_id(wings[i].getWing_id());
+                                                residents.add(resident);
+                                            }
                                         }
+
+                                        residentsArray = new Resident[residents.size()];
+                                        residentsArray = residents.toArray(residentsArray);
 
                                         new Thread() {
                                             public void run() {
                                                 WingDao wingDao = appDatabase.wingDao();
+                                                ResidentDao residentDao = appDatabase.residentDao();
                                                 wingDao.insert(wings);
+                                                residentDao.insert(residentsArray);
                                             }
                                         }.start();
 
@@ -289,11 +299,10 @@ public class LoginScreenActivity extends AppCompatActivity {
 
 
                                         Log.d("response", response);
-                                        switch (user.getLoginType()) {
+                                        switch (jsonObjectLoginInfo.getString("type")) {
 
                                             case "admin": {
-                                                user.setDesignation(jsonObjectLoginInfo.getString("designation"));
-                                                contentValues.put(DBManager.ColDesignation, user.getDesignation());
+                                                contentValues.put(DBManager.ColDesignation, jsonObjectLoginInfo.getString("designation"));
                                                 long id = dbManager.Insert(contentValues);
                                                 PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-admins");
                                                 startActivity(new Intent(LoginScreenActivity.this, AdminHomeScreenActivity.class));
@@ -308,12 +317,10 @@ public class LoginScreenActivity extends AppCompatActivity {
                                                 break;
                                             }
                                             case "resident": {
-                                                user.setWing(jsonObjectLoginInfo.getString("wing"));
-                                                contentValues.put(DBManager.ColWing, user.getWing());
-                                                user.setApartment(jsonObjectLoginInfo.getString("apartment"));
+                                                contentValues.put(DBManager.ColWing, jsonObjectLoginInfo.getString("wing"));
                                                 PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-residents");
                                                 PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-" + jsonObjectLoginInfo.getString("wing_id") + "-residents");
-                                                contentValues.put(DBManager.ColApartment, user.getApartment());
+                                                contentValues.put(DBManager.ColApartment, jsonObjectLoginInfo.getString("apartment"));
                                                 long id = dbManager.Insert(contentValues);
 
                                                 startActivity(new Intent(LoginScreenActivity.this, ResidentHomeScreenActivity.class));

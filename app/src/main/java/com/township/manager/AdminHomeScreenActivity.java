@@ -60,11 +60,6 @@ public class AdminHomeScreenActivity extends AppCompatActivity
     ComplaintDao complaintDao;
     Complaint[] complaintsArray;
 
-
-
-
-
-
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +115,6 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         getNoticesFromServer();
         getComplaintsFromServer();
 
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.admin_home_screen_fragment_area, noticeBoardFragment);
         transaction.commit();
@@ -140,6 +134,7 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                             appBarLayout.setElevation(4);
                             transaction = getSupportFragmentManager().beginTransaction();
                             transaction.replace(R.id.admin_home_screen_fragment_area, noticeBoardFragment);
+                            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                             transaction.commit();
                         }
                         return true;
@@ -149,7 +144,9 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                         if (!(fragment instanceof ComplaintsFragment)) {
                             appBarLayout.setElevation(0);
                             transaction = getSupportFragmentManager().beginTransaction();
+                            complaintsFragment = new ComplaintsFragment();
                             transaction.replace(R.id.admin_home_screen_fragment_area, new ComplaintsFragment());
+                            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                             transaction.commit();
                         }
                         return true;
@@ -167,11 +164,6 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         });
 
     }
-
-
-
-
-
 
     @Override
     public void onBackPressed() {
@@ -194,7 +186,6 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_maintenance_admin) {
             Intent intent=new Intent(AdminHomeScreenActivity.this,MaintenanceAdminContainerActivity.class);
             startActivity(intent);
-
         } else if (id == R.id.nav_visitor_history_admin) {
 
         } else if (id == R.id.nav_admin_info_admin) {

@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 
+import java.io.FileInputStream;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
@@ -107,6 +108,25 @@ public interface RetrofitServerAPI {
     );
 
     @FormUrlEncoded
+    @POST("/visitors/new/")
+    Call<JsonArray> addNewVisitor(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("first_name") String first_name,
+            @Field("last_name") String last_name,
+            @Field("wing_id") String wing_id,
+            @Field("apartment") String apartment
+    );
+
+    @FormUrlEncoded
+    @POST("visitors/get/")
+    Call <JsonArray> getVisitorHistory(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("timestamp") String timestamp
+    );
+
+    @FormUrlEncoded
     @POST("/complaints/")
     Call<JsonArray> getComplaints(
             @Field("username") String username,
@@ -162,9 +182,7 @@ public interface RetrofitServerAPI {
         @Field("username") String username,
         @Field("password") String passsword,
         @Field("ORDER_ID") String ORDER_ID
-        );
-
-
+    );
 
 
 }

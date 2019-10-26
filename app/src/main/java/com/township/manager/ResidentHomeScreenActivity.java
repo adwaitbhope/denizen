@@ -40,20 +40,23 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ResidentHomeScreenActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, NoticeBoardFragment.OnFragmentInteractionListener, MaintenanceFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, NoticeBoardFragment.OnFragmentInteractionListener, MaintenanceFragment.OnFragmentInteractionListener, VisitorHistoryFragment.OnFragmentInteractionListener {
 
     String username, password;
 
     NoticeBoardFragment noticeBoardFragment;
+    VisitorHistoryFragment visitorHistoryFragment;
 
     AppDatabase appDatabase;
     NoticeDao noticeDao;
     NoticeWingDao noticeWingDao;
     CommentDao commentDao;
+    VisitorDao visitorDao;
 
     Notice[] noticesArray;
     NoticeWing[] noticeWingArray;
     Notice.Comment[] commentsArray;
+    Visitor[] visitorsArray;
     MaintenanceFragment maintenanceFragment;
 
     MaintenanceDao maintenanceDao;
@@ -107,9 +110,11 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
 
         noticeBoardFragment = new NoticeBoardFragment();
         maintenanceFragment = new MaintenanceFragment();
+        visitorHistoryFragment = new VisitorHistoryFragment();
 
         getNoticesFromServer();
         getMaintenanceFromServer();
+        getVisitorHistoryFromServer();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.resident_home_screen_fragment_area, noticeBoardFragment);
@@ -119,11 +124,13 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                FragmentTransaction transaction;
                 switch (item.getItemId()) {
                     case R.id.resident_notice_board:
-                        FragmentTransaction transactionNotice = getSupportFragmentManager().beginTransaction();
-                        transactionNotice.replace(R.id.resident_home_screen_fragment_area, noticeBoardFragment);
-                        transactionNotice.commit();
+                        transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.resident_home_screen_fragment_area, noticeBoardFragment);
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                        transaction.commit();
                         return true;
 
                     case R.id.resident_group_chat:
@@ -139,6 +146,10 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                         return true;
 
                     case R.id.resident_visitor_history:
+                        transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.resident_home_screen_fragment_area, visitorHistoryFragment);
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                        transaction.commit();
                         return true;
                 }
 
@@ -308,6 +319,81 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
             }
         }.start();
 
+    }
+
+    public void getVisitorHistoryFromServer() {
+        RetrofitServerAPI retrofitServerAPI = new Retrofit.Builder()
+                .baseUrl(getString(R.string.server_addr))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(RetrofitServerAPI.class);
+
+        Call<JsonArray> call = retrofitServerAPI.getVisitorHistory(
+                username,
+                password,
+                null
+        );
+
+        call.enqueue(new Callback<JsonArray>() {
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                String responseString = response.body().toString();
+                try {
+                    JSONArray responseArray = new JSONArray(responseString);
+                    JSONObject loginData = responseArray.getJSONObject(0);
+
+                    if (loginData.getInt("login_status") == 1) {
+                        if (loginData.getInt("request_status") == 1) {
+
+                            JSONArray visitorsResponseArray = responseArray.getJSONArray(1);
+                            Gson gson = new Gson();
+                            visitorsArray = new Visitor[visitorsResponseArray.length()];
+                            for (int i = 0; i < visitorsResponseArray.length(); i++) {
+                                Visitor visitor = gson.fromJson(visitorsResponseArray.getJSONObject(i).toString(), Visitor.class);
+                                visitorsArray[i] = visitor;
+                            }
+                            new AddVisitorsToDatabase().execute();
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getComplaintsFromServer() {
+
+    }
+
+    private class AddVisitorsToDatabase extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            visitorDao = appDatabase.visitorDao();
+            visitorDao.deleteAll();
+            visitorDao.insert(visitorsArray);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if (visitorHistoryFragment.getContext() != null) {
+                visitorHistoryFragment.updateRecyclerView();
+            }
+            super.onPostExecute(aVoid);
+        }
     }
 
     private class NoticesAsyncTask extends AsyncTask<Void, Void, Void> {
