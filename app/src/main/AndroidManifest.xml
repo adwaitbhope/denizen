@@ -19,7 +19,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OneTimeFeeDetailsListActivity"></activity>
+        <activity android:name=".OneTimeFeeDetailsListActivity"
+            android:label="One-time Payment List"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ResidentBookingHistoryActivity"
             android:label="Booking History"

@@ -4,6 +4,283 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OneTimeFeeDetailsListActivity">
+    tools:context=".ResidentBookingHistoryActivity">
 
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/resident_booking_history_app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/resident_booking_history_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/resident_booking_history_app_bar_layout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <HorizontalScrollView
+                android:id="@+id/one_time_list_horizontalScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="8dp"
+                android:scrollbars="none"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/filter_textView"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:singleLine="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/one_time_list_month_chip"
+                        style="@style/AppChipFilterStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="By Month"
+                        android:textAppearance="@style/chipTextAppearance" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/one_time_list_year_chip"
+                        style="@style/AppChipFilterStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="By Year"
+                        android:textAppearance="@style/chipTextAppearance" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/one_time_list_wing_chip"
+                        style="@style/AppChipFilterStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="By Wing"
+                        android:textAppearance="@style/chipTextAppearance" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/one_time_list_flat_chip"
+                        style="@style/AppChipFilterStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="By Flat"
+                        android:textAppearance="@style/chipTextAppearance" />
+
+
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/filter_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Filter"
+                android:paddingTop="4dp"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/membership_cardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:minHeight="200dp"
+                android:paddingBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/one_time_list_horizontalScrollView">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/one_time_fee_flat_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="B-101"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/one_time_fee_amenity_name_text_view" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/one_time_fee_slot_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:drawableStart="@drawable/ic_access_time_black_24dp"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/secondaryColor"
+                        android:text="Slot"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/one_time_fee_paid_on_text_view" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/one_time_fee_paid_on_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:drawableStart="@drawable/ic_payment_black_24dp"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/secondaryColor"
+                        android:text="Paid on:"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/one_time_fee_amount_text_view" />
+
+                    <TextView
+                        android:id="@+id/one_time_fee_amount_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:drawableStart="@drawable/ic_rupee_indian"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/secondaryColor"
+                        android:text="Amount:"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/one_time_fee_flat_text_view" />
+
+                    <TextView
+                        android:id="@+id/one_time_fee_name_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="Jonybhau Batliwala Sr."
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/one_time_fee_flat_text_view"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/one_time_fee_flat_text_view"
+                        app:layout_constraintTop_toTopOf="@+id/one_time_fee_flat_text_view" />
+
+                    <TextView
+                        android:id="@+id/one_time_fee_amount_paid_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Rs. 50"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/one_time_fee_amount_text_view"
+                        app:layout_constraintStart_toEndOf="@+id/one_time_fee_amount_text_view"
+                        app:layout_constraintTop_toTopOf="@+id/one_time_fee_amount_text_view"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/one_time_fee_paid_on_date_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Oct 31, 2019"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/one_time_fee_paid_on_text_view"
+                        app:layout_constraintStart_toEndOf="@+id/one_time_fee_paid_on_text_view"
+                        app:layout_constraintTop_toTopOf="@+id/one_time_fee_paid_on_text_view" />
+
+                    <TextView
+                        android:id="@+id/one_time_fee_slot_time_booked_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="8-9 AM"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/one_time_fee_slot_time_text_view"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/one_time_fee_slot_time_text_view"
+                        app:layout_constraintTop_toTopOf="@+id/one_time_fee_slot_time_text_view"
+                        app:layout_constraintVertical_bias="1.0" />
+
+                    <TextView
+                        android:id="@+id/one_time_fee_slot_time_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Time:"
+                        app:layout_constraintBottom_toBottomOf="@+id/one_time_fee_slot_text_view"
+                        app:layout_constraintStart_toEndOf="@+id/one_time_fee_slot_text_view"
+                        app:layout_constraintTop_toTopOf="@+id/one_time_fee_slot_text_view"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/one_time_fee_slot_date_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="Date:"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/one_time_fee_slot_time_text_view"
+                        app:layout_constraintStart_toStartOf="@+id/one_time_fee_slot_time_text_view"
+                        app:layout_constraintTop_toBottomOf="@+id/one_time_fee_slot_time_text_view"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/one_time_fee_slot_date_day_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="Oct 31, 2019"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/one_time_fee_slot_date_text_view"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/one_time_fee_slot_date_text_view"
+                        app:layout_constraintTop_toTopOf="@+id/one_time_fee_slot_date_text_view" />
+
+                    <TextView
+                        android:id="@+id/one_time_fee_amenity_name_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="Badminton"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -74,7 +74,7 @@ public class AmenitiesAdminContainerActivity extends AppCompatActivity implement
         }
         if (id == R.id.action_booking_list_item) {
 
-            // Do something
+            startActivity (new Intent(this, OneTimeFeeDetailsListActivity.class));
             return true;
         }
 
