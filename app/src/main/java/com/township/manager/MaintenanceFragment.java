@@ -122,7 +122,7 @@ public class MaintenanceFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent=new Intent(getContext(),PaymentForMaintenance.class);
-                    startActivity();
+                    startActivity(intent);
                 }
             });
 
