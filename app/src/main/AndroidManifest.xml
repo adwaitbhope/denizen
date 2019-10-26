@@ -19,14 +19,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".AmenityDetailsActivity"
+        <activity android:name=".ResidentBookingHistoryActivity"
+            android:label="Booking History"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity
+            android:name=".AmenityDetailsActivity"
             android:label="Amenity Details"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MembershipDetailsActivity"
             android:label="Membership Details"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".VisitorHistorySecurityContainerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
