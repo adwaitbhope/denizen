@@ -19,7 +19,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AmenityDetailsActivity"></activity>
+
+        <activity android:name=".AmenityDetailsActivity"
+            android:label="Amenity Details"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".MembershipDetailsActivity"
             android:label="Membership Details"

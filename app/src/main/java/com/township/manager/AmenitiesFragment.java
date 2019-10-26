@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 
@@ -79,6 +80,15 @@ public class AmenitiesFragment extends Fragment implements View.OnClickListener 
             public void onClick(View view) {
 
                 Intent intent = new Intent(getContext(), MembershipDetailsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        MaterialButton reserveSlotButton = view.findViewById(R.id.reserve_slot_button);
+        reserveSlotButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), AmenityDetailsActivity.class);
                 startActivity(intent);
             }
         });
