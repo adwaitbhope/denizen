@@ -246,7 +246,8 @@
                             android:text="From:"
                             app:layout_constraintBottom_toBottomOf="@+id/membership_details_validity_text_view"
                             app:layout_constraintStart_toEndOf="@+id/membership_details_validity_text_view"
-                            app:layout_constraintTop_toTopOf="@+id/membership_details_validity_text_view" />
+                            app:layout_constraintTop_toTopOf="@+id/membership_details_validity_text_view"
+                            app:layout_constraintVertical_bias="0.0" />
 
                         <TextView
                             android:id="@+id/membership_details_validity_thru_text_view"
