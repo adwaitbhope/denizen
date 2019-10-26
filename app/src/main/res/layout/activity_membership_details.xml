@@ -31,13 +31,60 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/forgot_password_app_bar_layout" >
+        app:layout_constraintTop_toBottomOf="@+id/membership_details_app_bar_layout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <HorizontalScrollView
+                android:id="@+id/membership_details_horizontalScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="8dp"
+                android:scrollbars="none">
 
+                <com.google.android.material.chip.ChipGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:showMotionSpec="@android:anim/slide_in_left"
+                    app:singleLine="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/wing_chip"
+                        style="@style/AppChipFilterStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="By Wing"
+                        android:textAppearance="@style/chipTextAppearance" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/flat_chip"
+                        style="@style/AppChipFilterStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="By Flat"
+                        android:textAppearance="@style/chipTextAppearance" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/fy_chip"
+                        style="@style/AppChipFilterStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="By Financial Year"
+                        android:textAppearance="@style/chipTextAppearance" />
+
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                tools:layout_editor_absoluteX="7dp"
+                tools:layout_editor_absoluteY="18dp" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
