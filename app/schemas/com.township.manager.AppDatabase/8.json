@@ -1,0 +1,311 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 8,
+    "identityHash": "7c97eb448e1ebdba73245b7804161d79",
+    "entities": [
+      {
+        "tableName": "Notice",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`notice_id` TEXT NOT NULL, `title` TEXT, `description` TEXT, `timestamp` TEXT, `posted_by_first_name` TEXT, `posted_by_last_name` TEXT, `posted_by_designation` TEXT, PRIMARY KEY(`notice_id`))",
+        "fields": [
+          {
+            "fieldPath": "notice_id",
+            "columnName": "notice_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "posted_by_first_name",
+            "columnName": "posted_by_first_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "posted_by_last_name",
+            "columnName": "posted_by_last_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "posted_by_designation",
+            "columnName": "posted_by_designation",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "notice_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Wing",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`wing_id` TEXT NOT NULL, `name` TEXT, `naming_convention` INTEGER NOT NULL, PRIMARY KEY(`wing_id`))",
+        "fields": [
+          {
+            "fieldPath": "wing_id",
+            "columnName": "wing_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "wing_name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "namingConvention",
+            "columnName": "naming_convention",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "wing_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "NoticeWing",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `notice_id` TEXT, `wing_id` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`notice_id`) REFERENCES `Notice`(`notice_id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`wing_id`) REFERENCES `Wing`(`wing_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "notice_id",
+            "columnName": "notice_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "wing_id",
+            "columnName": "wing_id",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "Notice",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "notice_id"
+            ],
+            "referencedColumns": [
+              "notice_id"
+            ]
+          },
+          {
+            "table": "Wing",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "wing_id"
+            ],
+            "referencedColumns": [
+              "wing_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Comment",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`comment_id` TEXT NOT NULL, `notice_id` TEXT, `posted_by_user_id` TEXT, `posted_by_first_name` TEXT, `posted_by_last_name` TEXT, `posted_by_wing` TEXT, `posted_by_apartment` TEXT, `posted_by_designation` TEXT, `content` TEXT, `timestamp` TEXT, PRIMARY KEY(`comment_id`), FOREIGN KEY(`notice_id`) REFERENCES `Notice`(`notice_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "comment_id",
+            "columnName": "comment_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "notice_id",
+            "columnName": "notice_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "posted_by_user_id",
+            "columnName": "posted_by_user_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "posted_by_first_name",
+            "columnName": "posted_by_first_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "posted_by_last_name",
+            "columnName": "posted_by_last_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "posted_by_wing",
+            "columnName": "posted_by_wing",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "posted_by_apartment",
+            "columnName": "posted_by_apartment",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "posted_by_designation",
+            "columnName": "posted_by_designation",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "comment_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "Notice",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "notice_id"
+            ],
+            "referencedColumns": [
+              "notice_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Complaint",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`complaint_id` TEXT NOT NULL, `resident_first_name` TEXT, `resident_last_name` TEXT, `resident_wing` TEXT, `resident_apartment` TEXT, `resolved` INTEGER, `description` TEXT, `timestamp` TEXT, `title` TEXT, PRIMARY KEY(`complaint_id`))",
+        "fields": [
+          {
+            "fieldPath": "complaint_id",
+            "columnName": "complaint_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "resident_first_name",
+            "columnName": "resident_first_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "resident_last_name",
+            "columnName": "resident_last_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "resident_wing",
+            "columnName": "resident_wing",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "resident_apartment",
+            "columnName": "resident_apartment",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "resolved",
+            "columnName": "resolved",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "complaint_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7c97eb448e1ebdba73245b7804161d79')"
+    ]
+  }
+}
