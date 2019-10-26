@@ -220,8 +220,6 @@ public class ComplaintsFragment extends Fragment {
             temporaryPendingDataset.addAll(complaintDao.getPendingComplaints());
             temporaryResolvedDataset.clear();
             temporaryResolvedDataset.addAll(complaintDao.getResolvedComplaints());
-
-
             return null;
         }
 

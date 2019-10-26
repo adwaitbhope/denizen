@@ -445,7 +445,9 @@ public class AdminHomeScreenActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            complaintsFragment.updateRecyclerView();
+            if (complaintsFragment.getContext() != null) {
+                complaintsFragment.updateRecyclerView();
+            }
             super.onPostExecute(aVoid);
         }
     }
