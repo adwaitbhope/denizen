@@ -131,7 +131,7 @@
                         android:layout_height="match_parent">
 
                         <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/membership_details_flat_text_view"
+                            android:id="@+id/amenity_details_time_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
@@ -183,7 +183,7 @@
                             android:drawableTint="@color/secondaryColor"
                             android:text="Amount:"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/membership_details_flat_text_view" />
+                            app:layout_constraintTop_toBottomOf="@+id/amenity_details_time_text_view" />
 
                         <TextView
                             android:id="@+id/membership_details_name_text_view"
@@ -197,7 +197,7 @@
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toEndOf="@+id/membership_details_flat_text_view"
+                            app:layout_constraintStart_toEndOf="@+id/amenity_details_time_text_view"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
