@@ -182,6 +182,8 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_visitor_history_admin) {
 
         } else if (id == R.id.nav_admin_info_admin) {
+            Intent intent = new Intent(AdminHomeScreenActivity.this, AdminInfoActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_security_list_admin) {
             Intent intent = new Intent(AdminHomeScreenActivity.this, SecurityActivity.class);
@@ -191,8 +193,7 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_wing_details_admin) {
 
         } else if (id == R.id.nav_amenities_admin) {
-            Intent intent = new
-                    Intent(AdminHomeScreenActivity.this, AmenitiesAdminContainerActivity.class);
+            Intent intent = new Intent(AdminHomeScreenActivity.this, AmenitiesAdminContainerActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_logout_admin) {
