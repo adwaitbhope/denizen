@@ -23,14 +23,15 @@
         </activity>
         <activity
             android:name=".AddServiceVendorActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".AddSecurityActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".VisitorHistorySecurityContainerActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".OneTimeFeeDetailsListActivity"
             android:label="One-time Payment List"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -56,10 +57,6 @@
 
         <activity android:name=".AddMaintenanceActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-
-        <activity
-            android:name=".VisitorHistorySecurityContainerActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".ComplaintsResidentContainerActivity"
