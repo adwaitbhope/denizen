@@ -7,16 +7,17 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
+
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -26,12 +27,12 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link NoticeBoardFragment.OnFragmentInteractionListener} interface
+ * {@link MaintenanceFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link NoticeBoardFragment#newInstance} factory method to
+ * Use the {@link MaintenanceFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NoticeBoardFragment extends Fragment {
+public class MaintenanceFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -41,23 +42,21 @@ public class NoticeBoardFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    RecyclerView recyclerView;
+    MaintenanceAdapter adapter;
+    RecyclerView.LayoutManager layoutManager;
+    FloatingActionButton addMaintenanceFloat;
+    ArrayList<Maintenance> dataset = new ArrayList<>();
+    AppDatabase appDatabase;
+    ArrayList<Maintenance> temporaryDataset = new ArrayList<>();
+    MaintenanceDao maintenanceDao;
+
+    public static final int ADD_MAINTENANCE_REQUEST = 69;
+    public static final int ADD_MAINTENANCE_RESULT = 70;
+
     private OnFragmentInteractionListener mListener;
 
-    RecyclerView recyclerView;
-    NoticesAdapter adapter;
-    RecyclerView.LayoutManager layoutManager;
-
-    AppDatabase appDatabase;
-    ArrayList<Notice> dataset = new ArrayList<>();
-    ArrayList<Notice> temporaryDataset = new ArrayList<>();
-    NoticeDao noticeDao;
-
-    String userType, townshipId;
-
-    public static final int ADD_NOTICE_REQUEST = 69;
-    public static final int ADD_NOTICE_RESULT = 70;
-
-    public NoticeBoardFragment() {
+    public MaintenanceFragment() {
         // Required empty public constructor
     }
 
@@ -67,11 +66,11 @@ public class NoticeBoardFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment NoticeBoardFragment.
+     * @return A new instance of fragment MaintenanceFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static NoticeBoardFragment newInstance(String param1, String param2) {
-        NoticeBoardFragment fragment = new NoticeBoardFragment();
+    public static MaintenanceFragment newInstance(String param1, String param2) {
+        MaintenanceFragment fragment = new MaintenanceFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -82,52 +81,56 @@ public class NoticeBoardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
         appDatabase = Room.databaseBuilder(getContext().getApplicationContext(),
                 AppDatabase.class, "app-database")
                 .fallbackToDestructiveMigration()
                 .build();
-
-        DBManager dbManager = new DBManager(getContext().getApplicationContext());
-        Cursor cursor = dbManager.getDataLogin();
-        cursor.moveToFirst();
-
-        userType = cursor.getString(cursor.getColumnIndexOrThrow("Type"));
-        townshipId = cursor.getString(cursor.getColumnIndexOrThrow("TownshipId"));
-        noticeDao = appDatabase.noticeDao();
+        maintenanceDao=appDatabase.maintenanceDao();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_notice_board, container, false);
+        View view = inflater.inflate(R.layout.fragment_maintenance, container, false);
+        recyclerView = view.findViewById(R.id.maintenance_reclcyler_view);
+        adapter = new MaintenanceAdapter(dataset, getContext());
+        addMaintenanceFloat = view.findViewById(R.id.add_maintenance_float_button);
 
-        if (userType.equals("admin")) {
-            FloatingActionButton addNoticeButton = view.findViewById(R.id.notice_board_add_notice_fab);
-            addNoticeButton.setVisibility(View.VISIBLE);
-            addNoticeButton.setOnClickListener(new View.OnClickListener() {
+        DBManager dbManager = new DBManager(getContext());
+        Cursor cursor = dbManager.getDataLogin();
+        int typeCol = cursor.getColumnIndexOrThrow("Type");
+        cursor.moveToFirst();
+        String type = cursor.getString(typeCol);
+
+        if (type.equals("admin")) {
+            addMaintenanceFloat.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getContext(), AddNoticeAdminActivity.class);
-                    startActivityForResult(intent, ADD_NOTICE_REQUEST);
+                    Intent intent = new Intent(getContext(), AddMaintenanceActivity.class);
+                    startActivityForResult(intent, ADD_MAINTENANCE_REQUEST);
                 }
             });
+
+        }
+        if (type.equals("resident")) {
+            addMaintenanceFloat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), PaymentForMaintenance.class);
+                    startActivity(intent);
+                }
+            });
+
         }
 
         updateRecyclerView();
 
-        recyclerView = view.findViewById(R.id.notice_board_recycler_view);
-        adapter = new NoticesAdapter(dataset, getContext());
-
-        adapter.TOWNSHIP_ID = townshipId;
         layoutManager = new LinearLayoutManager(getContext());
-
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
@@ -137,33 +140,30 @@ public class NoticeBoardFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        updateRecyclerView();
-//        recyclerView.smoothScrollToPosition(0);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ADD_NOTICE_REQUEST) {
-            if (resultCode == ADD_NOTICE_RESULT) {
-                updateRecyclerView();
-                recyclerView.smoothScrollToPosition(0);
-            }
-        }
-    }
-
     public void updateRecyclerView() {
-        new NoticesAsyncTask().execute();
+        new MaintenanceAsyncTask().execute();
     }
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_MAINTENANCE_REQUEST) {
+            if (resultCode == ADD_MAINTENANCE_RESULT) {
+                updateRecyclerView();
+                recyclerView.smoothScrollToPosition(0);
+            }
         }
     }
 
@@ -200,7 +200,7 @@ public class NoticeBoardFragment extends Fragment {
     }
 
     @SuppressLint("StaticFieldLeak")
-    private class NoticesAsyncTask extends AsyncTask<Void, Void, Void> {
+    private class MaintenanceAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
@@ -210,13 +210,7 @@ public class NoticeBoardFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
             temporaryDataset.clear();
-            temporaryDataset.addAll(noticeDao.getAll());
-
-            for (Notice notice : temporaryDataset) {
-                notice.setWings((ArrayList<Wing>) noticeDao.getWings(notice.getNotice_id()));
-                notice.setComments((ArrayList<Notice.Comment>) noticeDao.getComments(notice.getNotice_id()));
-            }
-
+            temporaryDataset.addAll(maintenanceDao.getAll());
             return null;
         }
 

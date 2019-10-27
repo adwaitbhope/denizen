@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.IntegerRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -54,6 +56,9 @@ public class AdminHomeScreenActivity extends AppCompatActivity
     NoticeWing[] noticeWingArray;
     Notice[] noticesArray;
     Notice.Comment[] commentsArray;
+
+    ComplaintDao complaintDao;
+    Complaint[] complaintsArray;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -105,9 +110,10 @@ public class AdminHomeScreenActivity extends AppCompatActivity
 
 
         noticeBoardFragment = new NoticeBoardFragment();
-//        complaintsFragment = new ComplaintsFragment();
+        complaintsFragment = new ComplaintsFragment();
 
         getNoticesFromServer();
+        getComplaintsFromServer();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.admin_home_screen_fragment_area, noticeBoardFragment);
@@ -139,7 +145,7 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                             appBarLayout.setElevation(0);
                             transaction = getSupportFragmentManager().beginTransaction();
                             complaintsFragment = new ComplaintsFragment();
-                            transaction.replace(R.id.admin_home_screen_fragment_area, complaintsFragment);
+                            transaction.replace(R.id.admin_home_screen_fragment_area, new ComplaintsFragment());
                             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                             transaction.commit();
                         }
@@ -178,7 +184,8 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         if (id == R.id.nav_intercom_admin) {
 
         } else if (id == R.id.nav_maintenance_admin) {
-
+            Intent intent=new Intent(AdminHomeScreenActivity.this,MaintenanceAdminContainerActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_visitor_history_admin) {
 
         } else if (id == R.id.nav_admin_info_admin) {
@@ -325,14 +332,80 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                 noticeWings.toArray(noticeWingArray);
                 comments.toArray(commentsArray);
 
-                NoticesAsyncTask asyncTask = new NoticesAsyncTask();
-                asyncTask.execute();
+                NoticesAsyncTask noticesAsyncTask = new NoticesAsyncTask();
+                noticesAsyncTask.execute();
             }
         }.start();
 
     }
 
     public void getComplaintsFromServer() {
+
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(getString(R.string.server_addr))
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit retrofit = builder.build();
+
+        RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
+
+        Call<JsonArray> call = retrofitServerAPI.getComplaints(
+                username,
+                password,
+                null,
+                null
+        );
+
+        call.enqueue(new Callback<JsonArray>() {
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                assert response.body() != null;
+                String responseString = response.body().getAsJsonArray().toString();
+                Log.d("printres",responseString);
+                try{
+                    JSONArray jsonArray = new JSONArray(responseString);
+                    JSONObject loginResponse = jsonArray.getJSONObject(0);
+                    if (loginResponse.getInt("login_status") == 1) {
+
+                        JSONArray jsonArrayComplaint;
+                        JSONObject jsonObjectComplaint;
+                        ArrayList<Complaint> complaints = new ArrayList<>();
+                        Complaint complaint;
+                        Gson gson=new Gson();
+                        jsonArrayComplaint=jsonArray.getJSONArray(1);
+                        for(int i=0;i<jsonArrayComplaint.length();i++){
+                            jsonObjectComplaint=jsonArrayComplaint.getJSONObject(i);
+                            complaint=gson.fromJson(jsonObjectComplaint.toString(),Complaint.class);
+
+                            complaints.add(complaint);
+                        }
+                        addComplaintsToDatabase(complaints);
+                    }
+
+                }
+                catch (JSONException jsonexcpetion){
+                    Toast.makeText(AdminHomeScreenActivity.this,jsonexcpetion.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    public void addComplaintsToDatabase(final ArrayList<Complaint> complaints) {
+        new Thread(){
+            public void run(){
+                complaintDao=appDatabase.complaintDao();
+                complaintsArray=new Complaint[complaints.size()];
+                complaints.toArray(complaintsArray);
+                ComplaintsAsyncTask complaintsAsyncTask=new ComplaintsAsyncTask();
+                complaintsAsyncTask.execute();
+
+            }
+        }.start();
 
     }
 
@@ -360,5 +433,30 @@ public class AdminHomeScreenActivity extends AppCompatActivity
             super.onPostExecute(aVoid);
         }
     }
+
+    private class ComplaintsAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            appDatabase.complaintDao().deleteAll();
+            complaintDao.insert(complaintsArray);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if (complaintsFragment.getContext() != null) {
+                complaintsFragment.updateRecyclerView();
+            }
+            super.onPostExecute(aVoid);
+        }
+    }
+
+
 
 }
