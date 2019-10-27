@@ -123,13 +123,6 @@ public class EditProfileActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        ((ImageView) findViewById(R.id.edit_profile_photo)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pickImage();
-            }
-        });
-
         TextInputLayout[] layouts = new TextInputLayout[5];
         layouts[0] = ((TextInputLayout) findViewById(R.id.edit_profile_first_name_til));
         layouts[1] = ((TextInputLayout) findViewById(R.id.edit_profile_last_name_til));
@@ -167,7 +160,17 @@ public class EditProfileActivity extends AppCompatActivity {
         final String url = "https://township-manager.s3.ap-south-1.amazonaws.com/townships/" + township_id + "/user_profile_pics/" + user_id + ".png";
         Picasso.get()
                 .load(url)
+                .noFade()
+                .placeholder(R.drawable.ic_man)
+                .error(R.drawable.ic_man)
                 .into(profilePic);
+
+        profilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickImage();
+            }
+        });
 
         ((TextInputEditText) findViewById(R.id.edit_profile_first_name_edit_text)).setText(firstName);
         ((TextInputEditText) findViewById(R.id.edit_profile_last_name_edit_text)).setText(lastName);

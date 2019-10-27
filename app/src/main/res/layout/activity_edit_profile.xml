@@ -6,22 +6,6 @@
     android:layout_height="match_parent"
     android:focusableInTouchMode="true">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/edit_profile_app_bar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/edit_profile_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -35,16 +19,39 @@
             android:layout_height="wrap_content"
             tools:context=".EditProfileActivity">
 
-            <ImageView
-                android:id="@+id/edit_profile_photo"
-                android:layout_width="120dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/edit_profile_last_name_til"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/edit_profile_first_name_til"
-                app:srcCompat="@drawable/ic_noice" />
+            <ProgressBar
+                android:id="@+id/edit_profile_progress_bar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_profile_phone_til"
+                app:layout_constraintEnd_toEndOf="@+id/edit_profile_email_til"
+                app:layout_constraintStart_toStartOf="@+id/edit_profile_email_til"
+                app:layout_constraintTop_toTopOf="@+id/edit_profile_email_til" />
 
+
+            <ProgressBar
+                android:id="@+id/edit_profile_upload_photo_progress_bar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/edit_profile_photo"
+                app:layout_constraintStart_toStartOf="@+id/edit_profile_photo"
+                app:layout_constraintTop_toBottomOf="@+id/edit_profile_photo" />
+
+            <TextView
+                android:id="@+id/edit_profile_username_helper_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="TextView"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@+id/edit_profile_username_til"
+                app:layout_constraintTop_toBottomOf="@+id/edit_profile_username_til" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/edit_profile_email_til"
@@ -109,10 +116,10 @@
                     android:id="@+id/edit_profile_last_name_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/last_name"
                     android:drawableLeft="@drawable/ic_person_black_24dp"
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/secondaryColor"
+                    android:hint="@string/last_name"
                     android:inputType="textPersonName|textCapWords"
                     android:paddingLeft="10dp"
                     android:textSize="14sp" />
@@ -233,50 +240,43 @@
                     android:id="@+id/edit_profile_confirm_password_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Confirm Password"
-                    android:inputType="textPassword"
                     android:drawableStart="@drawable/ic_check_circle_black_24dp"
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/secondaryColor"
+                    android:hint="Confirm Password"
+                    android:inputType="textPassword"
                     android:paddingLeft="10dp"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <ProgressBar
-                android:id="@+id/edit_profile_progress_bar"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/edit_profile_phone_til"
-                app:layout_constraintEnd_toEndOf="@+id/edit_profile_email_til"
-                app:layout_constraintStart_toStartOf="@+id/edit_profile_email_til"
-                app:layout_constraintTop_toTopOf="@+id/edit_profile_email_til" />
-
-            <TextView
-                android:id="@+id/edit_profile_username_helper_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="TextView"
-                android:textSize="12sp"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/edit_profile_username_til"
-                app:layout_constraintTop_toBottomOf="@+id/edit_profile_username_til" />
-
-            <ProgressBar
-                android:id="@+id/edit_profile_upload_photo_progress_bar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:indeterminate="true"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="@+id/edit_profile_photo"
-                app:layout_constraintStart_toStartOf="@+id/edit_profile_photo"
-                app:layout_constraintTop_toBottomOf="@+id/edit_profile_photo" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/edit_profile_photo"
+                android:layout_width="96dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_profile_last_name_til"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/edit_profile_first_name_til"
+                app:srcCompat="@drawable/ic_noice" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/edit_profile_app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/edit_profile_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -181,10 +181,13 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         townshipId = cursor.getString(cursor.getColumnIndexOrThrow("TownshipId"));
         userId = cursor.getString(cursor.getColumnIndexOrThrow("User_Id"));
 
-        ImageView profilePic = ((ImageView) findViewById(R.id.profile_photo));
+        ImageView profilePic = ((ImageView) headerView.findViewById(R.id.admin_home_nav_header_profile_image));
         final String url = "https://township-manager.s3.ap-south-1.amazonaws.com/townships/" + townshipId + "/user_profile_pics/" + userId + ".png";
         Picasso.get()
                 .load(url)
+                .noFade()
+                .placeholder(R.drawable.ic_man)
+                .error(R.drawable.ic_man)
                 .into(profilePic);
 
         adminDesignation = headerView.findViewById(R.id.navheader_admin_home_screen_designation_textview);

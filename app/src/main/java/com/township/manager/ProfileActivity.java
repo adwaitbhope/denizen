@@ -49,6 +49,16 @@ public class ProfileActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        ((ImageView) findViewById(R.id.profile_photo)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://township-manager.s3.ap-south-1.amazonaws.com/townships/" + townshipId + "/user_profile_pics/" + userId + ".png";
+                Intent intent = new Intent(ProfileActivity.this, FullScreenImageViewActivity.class);
+                intent.putExtra("url", url);
+                startActivity(intent);
+            }
+        });
+
         updateUI();
 
     }
@@ -105,6 +115,9 @@ public class ProfileActivity extends AppCompatActivity {
         final String url = "https://township-manager.s3.ap-south-1.amazonaws.com/townships/" + townshipId + "/user_profile_pics/" + userId + ".png";
         Picasso.get()
                 .load(url)
+                .noFade()
+                .placeholder(R.drawable.ic_man)
+                .error(R.drawable.ic_man)
                 .into(profilePic);
 
         ((TextView) findViewById(R.id.profile_name)).setText(firstName + " " + lastName);
