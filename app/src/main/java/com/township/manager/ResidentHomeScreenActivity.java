@@ -247,7 +247,6 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                                 comments.add(comment);
                             }
                             notice.setComments(comments);
-
                             notices.add(notice);
                         }
 

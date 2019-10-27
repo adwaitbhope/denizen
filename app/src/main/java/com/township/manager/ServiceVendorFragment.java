@@ -4,13 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,7 +115,9 @@ public class ServiceVendorFragment extends Fragment {
         addServiceVendor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), AddServiceVendorActivity.class));
+                Intent intent=new Intent(getContext(), AddServiceVendorActivity.class);
+                intent.putExtra("request","1");
+                startActivityForResult(intent,ADD_SERVICE_VENDOR_REQUEST);
             }
         });
 
@@ -135,6 +140,26 @@ public class ServiceVendorFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateRecyclerView();
+//        recyclerView.smoothScrollToPosition(0);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_SERVICE_VENDOR_REQUEST) {
+            if (resultCode == ADD_SERVICE_VENODR_RESULT) {
+                updateRecyclerView();
+                recyclerView.smoothScrollToPosition(0);
+            }
+        }
+    }
+
+    public void updateRecyclerView() {
+        new ServiceVendorsAsyncTask().execute();
     }
 
     @Override
@@ -167,5 +192,33 @@ public class ServiceVendorFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private class ServiceVendorsAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            temporaryDataset.clear();
+            temporaryDataset.addAll(serviceVendorDao.getAll());
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            dataset.clear();
+            dataset.addAll(temporaryDataset);
+            for(ServiceVendors serviceVendors:dataset){
+                Log.d("id",serviceVendors.getVendor_id());
+            }
+            if (adapter != null) {
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
 }
