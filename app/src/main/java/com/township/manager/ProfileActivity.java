@@ -14,7 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -59,7 +61,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        updateUI();
+        updateUI(true);
 
     }
 
@@ -83,14 +85,14 @@ public class ProfileActivity extends AppCompatActivity {
                     break;
 
                 case PROFILE_EDITED:
-                    updateUI();
+                    updateUI(false);
                     break;
             }
         }
 
     }
 
-    private void updateUI() {
+    private void updateUI(Boolean create) {
         // get details from database
         DBManager dbManager = new DBManager(getApplicationContext());
         cursor = dbManager.getDataLogin();
@@ -118,6 +120,7 @@ public class ProfileActivity extends AppCompatActivity {
                 .noFade()
                 .placeholder(R.drawable.ic_man)
                 .error(R.drawable.ic_man)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .into(profilePic);
 
         ((TextView) findViewById(R.id.profile_name)).setText(firstName + " " + lastName);
