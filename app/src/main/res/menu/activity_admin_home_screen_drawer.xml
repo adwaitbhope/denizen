@@ -12,10 +12,10 @@
                 android:id="@+id/nav_maintenance_admin"
                 android:icon="@drawable/ic_build_black_24dp"
                 android:title="Maintenance" />
-<!--            <item-->
-<!--                android:id="@+id/nav_visitor_history_admin"-->
-<!--                android:icon="@drawable/ic_group_black_24dp"-->
-<!--                android:title="Visitor History" />-->
+            <item
+                android:id="@+id/nav_visitor_history_admin"
+                android:icon="@drawable/ic_group_black_24dp"
+                android:title="Visitor History" />
         </group>
 
         <group android:id="@+id/group2">
