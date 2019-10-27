@@ -1,11 +1,17 @@
 package com.township.manager;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
+import android.widget.TextView;
+
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
 
@@ -22,7 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * Use the {@link ComplaintsListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class    ComplaintsListFragment extends Fragment {
+public class ComplaintsListFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -68,6 +74,7 @@ public class    ComplaintsListFragment extends Fragment {
 
         layoutManager = new LinearLayoutManager(getContext());
         adapter = new ComplaintsAdapter(dataset, getContext(), resolved);
+
     }
 
     @Override
@@ -79,8 +86,23 @@ public class    ComplaintsListFragment extends Fragment {
         recyclerView = view.findViewById(R.id.complaints_recycler_view);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+        TextView filter;
+        HorizontalScrollView horizontalScrollView;
+        DBManager dbManager = new DBManager(getContext());
+        Cursor cursor = dbManager.getDataLogin();
+        cursor.moveToFirst();
+        int typeCol;
+        typeCol = cursor.getColumnIndexOrThrow("Type");
 
-        recyclerView.setItemViewCacheSize(20);
+        filter = view.findViewById(R.id.filtertv);
+        horizontalScrollView = view.findViewById(R.id.horizontalScrollView);
+
+        if (cursor.getString(typeCol).equals("admin")) {
+            filter.setVisibility(View.VISIBLE);
+            horizontalScrollView.setVisibility(View.VISIBLE);
+        }
+
+        recyclerView.setItemViewCacheSize(15);
         recyclerView.setDrawingCacheEnabled(true);
         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
@@ -118,7 +140,6 @@ public class    ComplaintsListFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
 
 
     /**

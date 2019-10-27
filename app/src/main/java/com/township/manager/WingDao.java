@@ -23,4 +23,7 @@ public interface WingDao {
     @Query("DELETE FROM Wing")
     void deleteAll();
 
+    @Query("Select name FROM Wing WHERE wing_id=:id")
+    String getWingName(String id);
+
 }

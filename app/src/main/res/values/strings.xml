@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Township Manager</string>
+    <string name="app_name">Denizen</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -68,7 +68,7 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="designation">Designation</string>
-    <string name="phone_number">Phone Number</string>
+    <string name="phone_number">Phone</string>
     <string name="register_a_complaint">Register a complaint</string>
     <string name="description_in_150_words">Description(in 150 words)</string>
     <string name="upload_photo">Upload photo</string>
