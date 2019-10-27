@@ -27,7 +27,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddServiceVendorActivity"></activity>
+        <activity android:name=".AddServiceVendorActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".VisitorHistorySecurityContainerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -94,13 +96,17 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar.TransparentStatusBar" />
         <activity
+            android:name=".ServiceVendorActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".ResidentHomeScreenActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar.TransparentStatusBar" />
+            />
         <activity
             android:name=".SecurityHomeScreenActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar.TransparentStatusBar" />
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

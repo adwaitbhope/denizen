@@ -65,7 +65,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         setContentView(R.layout.activity_resident_home_screen);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar);
 
         DBManager dbManager = new DBManager(getApplicationContext());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -168,7 +168,8 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         if (id == R.id.nav_intercom_resident) {
             // Handle the camera action
         } else if (id == R.id.nav_vendors_resident) {
-
+            Intent intent=new Intent(ResidentHomeScreenActivity.this,ServiceVendorActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_admin_info_resident) {
 
         } else if (id == R.id.nav_complaints_resident) {

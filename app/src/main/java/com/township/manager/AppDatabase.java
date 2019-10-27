@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
         NoticeWing.class,
         Notice.Comment.class,
         Resident.class,
-        Visitor.class,ServiceVendors.class}, version = 11)
+        Visitor.class,ServiceVendors.class}, version = 12)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract WingDao wingDao();
 
@@ -23,5 +23,5 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract VisitorDao visitorDao();
 
-    public abstract ServiceVendors serviceVendors();
+    public abstract ServiceVendorDao serviceVendorDao();
 }

@@ -1,65 +1,55 @@
 package com.township.manager;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class ServiceVendorActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener{
+public class ServiceVendorActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener,ServiceVendorFragment.OnFragmentInteractionListener{
 
-    TextView popUpMenu;
-    RecyclerView recyclerView;
-    ServiceVendotAdapter adapter;
-    RecyclerView.LayoutManager layoutManager;
+//    TextView popUpMenu;
 
-    AppDatabase appDatabase;
-    ArrayList<ServiceVendors> dataset = new ArrayList<>();
-    ArrayList<ServiceVendors> temporaryDataset = new ArrayList<>();
-    ServiceVendorDao serviceVendorDao;
 
-    public static final int ADD_SERVICE_VENDOR_REQUEST = 69;
-    public static final int ADD_SERVICE_VENODR_RESULT = 70;
+    ServiceVendorFragment serviceVendorFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_vendor);
-        popUpMenu=findViewById(R.id.three_dots);
-        popUpMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopupMenu popupMenu=new PopupMenu(ServiceVendorActivity.this,view);
-                popupMenu.setOnMenuItemClickListener(ServiceVendorActivity.this);
-                popupMenu.inflate(R.menu.servcie_vendors_pop_up_menu);
-                popupMenu.show();
-            }
+//
+//
+//
+//
+        Toolbar toolbar = (Toolbar) findViewById(R.id.service_vendor_container_toolbar);
+//        toolbar.setTitleTextColor(getColor(R.color.secondaryColor));
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Service Vendors");
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        });
+        serviceVendorFragment=new ServiceVendorFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.service_vendors_container_frame,serviceVendorFragment );
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.commit();
 
-        appDatabase = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "app-database")
-                .fallbackToDestructiveMigration()
-                .build();
-
-        FloatingActionButton addServiceVendor = findViewById(R.id.add_vendor_floatingActionButton);
-        addServiceVendor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ServiceVendorActivity.this, AddServiceVendorActivity.class));
-
-
-            }
-        });
 
     }
 
@@ -67,4 +57,11 @@ public class ServiceVendorActivity extends AppCompatActivity implements PopupMen
     public boolean onMenuItemClick(MenuItem menuItem) {
         return false;
     }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+
 }
