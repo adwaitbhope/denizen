@@ -23,12 +23,14 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/intercom_app_bar_layout">
+        app:layout_constraintTop_toBottomOf="@+id/intercom_app_bar_layout"
+        app:layout_constraintVertical_bias="1.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -80,12 +82,12 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="Administrator"
-                android:textSize="18sp"
-                android:textStyle="bold"
                 android:drawableStart="@drawable/ic_contact_phone_black_24dp"
                 android:drawablePadding="8dp"
                 android:drawableTint="@color/secondaryColor"
+                android:text="Administrator"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -113,7 +115,6 @@
                         style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="8dp"
@@ -122,18 +123,17 @@
                         app:iconPadding="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toEndOf="@+id/intercom_admin_designation_text_view"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/intercom_admin_designation_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
                         android:text="Treasurer"
                         android:textSize="14sp"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/intercom_admin_name_text_view"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/intercom_admin_name_text_view"
                         app:layout_constraintTop_toBottomOf="@+id/intercom_admin_name_text_view" />
 
                     <TextView
@@ -142,9 +142,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
+                        android:layout_marginEnd="8dp"
                         android:text="Jonybhau Batliwala Sr."
                         android:textSize="14sp"
                         android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/intercom_admin_call_button"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -176,16 +178,17 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="Security"
-                android:textSize="18sp"
-                android:textStyle="bold"
                 android:drawableStart="@drawable/ic_security_black_24dp"
                 android:drawablePadding="8dp"
                 android:drawableTint="@color/secondaryColor"
+                android:text="Security"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/intercom_admin_cardView" />
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/intercom_security_cardView"
                 android:layout_width="match_parent"
@@ -193,9 +196,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
                 android:paddingBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/intercom_security_description_text_view"
@@ -218,8 +219,6 @@
                         app:iconPadding="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toEndOf="@+id/intercom_security_gate_number_text_view"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
@@ -228,9 +227,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
+                        android:layout_marginEnd="8dp"
                         android:text="Gate 1"
                         android:textSize="14sp"
                         android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/intercom_security_call_button"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -254,6 +256,104 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <TextView
+                android:id="@+id/intercom_wing_description_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:drawableStart="@drawable/ic_domain_black_24dp"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/secondaryColor"
+                android:text="Wing A"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/intercom_security_cardView" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/intercom_wing_cardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:paddingBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/intercom_wing_description_text_view"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/intercom_wing_call_button"
+                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="8dp"
+                        app:icon="@drawable/ic_call_black_24dp"
+                        app:iconGravity="textStart"
+                        app:iconPadding="0dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/intercom_wing_flat_number_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="A-101"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/intercom_wing_resident_phone_number_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="9876543210"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/intercom_wing_resident_name_text_view" />
+
+                    <TextView
+                        android:id="@+id/intercom_wing_resident_name_text_view"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="Jonybhau Batliwala Sr."
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/intercom_wing_flat_number_text_view"
+                        app:layout_constraintEnd_toStartOf="@+id/intercom_wing_call_button"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/intercom_wing_flat_number_text_view"
+                        app:layout_constraintTop_toTopOf="@+id/intercom_wing_flat_number_text_view"
+                        app:layout_constraintVertical_bias="0.0" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
