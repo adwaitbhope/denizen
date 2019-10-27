@@ -131,11 +131,11 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                     case R.id.admin_notice_board:
                         fragment = getSupportFragmentManager().findFragmentById(R.id.admin_home_screen_fragment_area);
                         if (!(fragment instanceof NoticeBoardFragment)) {
-                            appBarLayout.setElevation(4);
                             transaction = getSupportFragmentManager().beginTransaction();
                             transaction.replace(R.id.admin_home_screen_fragment_area, noticeBoardFragment);
                             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                             transaction.commit();
+                            appBarLayout.setElevation(4);
                         }
                         return true;
 
@@ -149,10 +149,6 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                             transaction.commit();
                         }
-                        return true;
-
-                    case R.id.admin_group_chat:
-//                        appBarLayout.setElevation(4);
                         return true;
 
                     case R.id.admin_finances:
@@ -184,10 +180,8 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         if (id == R.id.nav_intercom_admin) {
 
         } else if (id == R.id.nav_maintenance_admin) {
-            Intent intent=new Intent(AdminHomeScreenActivity.this,MaintenanceAdminContainerActivity.class);
+            Intent intent=new Intent(AdminHomeScreenActivity.this, MaintenanceAdminContainerActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_visitor_history_admin) {
-
         } else if (id == R.id.nav_admin_info_admin) {
 
         } else if (id == R.id.nav_security_list_admin) {

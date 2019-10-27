@@ -133,16 +133,14 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                         transaction.commit();
                         return true;
 
-                    case R.id.resident_group_chat:
-                        return true;
-
                     case R.id.resident_amenities:
                         return true;
 
                     case R.id.resident_maintenance:
-                        FragmentTransaction transactionMaintenance = getSupportFragmentManager().beginTransaction();
-                        transactionMaintenance.replace(R.id.resident_home_screen_fragment_area, maintenanceFragment);
-                        transactionMaintenance.commit();
+                        transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.resident_home_screen_fragment_area, maintenanceFragment);
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                        transaction.commit();
                         return true;
 
                     case R.id.resident_visitor_history:
