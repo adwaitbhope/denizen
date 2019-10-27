@@ -2,6 +2,8 @@ package com.township.manager;
 
 import com.google.gson.JsonArray;
 
+import org.json.JSONArray;
+
 import java.io.FileInputStream;
 import java.util.Map;
 
@@ -147,6 +149,7 @@ public interface RetrofitServerAPI {
     Call<JsonArray> editServiceVendors(
             @Field("username") String username,
             @Field("password") String password,
+            @Field("vendor_id") String vendor_id,
             @Field("first_name") String first_name,
             @Field("last_name") String last_name,
             @Field("phone") String phone,
