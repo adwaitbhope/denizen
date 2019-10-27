@@ -3,6 +3,8 @@ package com.township.manager;
 import com.google.gson.JsonArray;
 import com.squareup.moshi.Json;
 
+import org.json.JSONArray;
+
 import java.io.FileInputStream;
 import java.util.Map;
 
@@ -142,6 +144,64 @@ public interface RetrofitServerAPI {
     @GET("profile/check_username_availability/")
     Call<JsonArray> checkUsernameAvailability(
             @Query("username") String username
+    );
+
+    @FormUrlEncoded
+    @POST("/complaints/")
+    Call<JsonArray> getComplaints(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("timestamp") String timestamp,
+            @Field("resolved") Boolean resolved
+
+    );
+
+    @FormUrlEncoded
+    @POST("/complaints/resolve/")
+    Call<JsonArray> resolveComplaints(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("complaint_id") String complaint_id
+    );
+
+    @FormUrlEncoded
+    @POST("/maintenance/")
+    Call<JsonArray> getMaintenance(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("timestamp") String timestamp
+    );
+
+    @FormUrlEncoded
+    @POST("/maintenance/add/")
+    Call<JsonArray> addMaintenance(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("wing_id") String wing_id,
+            @Field("apartment") String apartment,
+            @Field("amount")   String amount,
+            @Field("payment_mode") String payment_mode,
+            @Field("cheque_no ") String cheque_no
+    );
+
+    @FormUrlEncoded
+    @POST("/maintenance/pay/initiate/")
+    Call<JsonArray> intiateMaintenancePayment(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("TXN_AMOUNT") String txnAmount,
+            @Field("CHANNEL_ID") String channelId,
+            @Field("WEBSITE") String website,
+            @Field("CALLBACK_URL") String callbackUrl,
+            @Field("INDUSTRY_TYPE_ID") String industryTypeId
+    );
+
+    @FormUrlEncoded
+    @POST("/maintenance/pay/verify/")
+    Call<JsonArray> verifyMaintenancePayment(
+        @Field("username") String username,
+        @Field("password") String passsword,
+        @Field("ORDER_ID") String ORDER_ID
     );
 
 

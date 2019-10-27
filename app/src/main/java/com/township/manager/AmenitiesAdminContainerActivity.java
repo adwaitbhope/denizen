@@ -1,5 +1,6 @@
 package com.township.manager;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -68,12 +69,12 @@ public class AmenitiesAdminContainerActivity extends AppCompatActivity implement
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_booking_history_item) {
 
-            // Do something
+            startActivity (new Intent(this, ResidentBookingHistoryActivity.class));
             return true;
         }
         if (id == R.id.action_booking_list_item) {
 
-            // Do something
+            startActivity (new Intent(this, OneTimeFeeDetailsListActivity.class));
             return true;
         }
 

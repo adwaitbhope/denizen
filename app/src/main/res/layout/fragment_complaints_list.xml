@@ -11,13 +11,14 @@
         tools:context=".ComplaintsListFragment">
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textView111"
+            android:id="@+id/filtertv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:paddingTop="4dp"
             android:text="Filter"
+            android:visibility="gone"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -28,9 +29,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
             android:layout_marginTop="8dp"
+            android:visibility="gone"
             android:scrollbars="none"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView111"
+            app:layout_constraintStart_toEndOf="@+id/filtertv"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.chip.ChipGroup
@@ -39,7 +41,7 @@
                 app:singleLine="true">
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip6"
+                    android:id="@+id/datechip"
                     style="@style/AppChipFilterStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -47,15 +49,16 @@
                     android:textAppearance="@style/chipTextAppearance" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip7"
+                    android:id="@+id/wingchip"
                     style="@style/AppChipFilterStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="By Wing"
+
                     android:textAppearance="@style/chipTextAppearance" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip107"
+                    android:id="@+id/flatchip"
                     style="@style/AppChipFilterStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -70,7 +73,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="0dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintEnd_toEndOf="parent"

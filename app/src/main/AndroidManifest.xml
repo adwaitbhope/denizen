@@ -18,7 +18,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".VisitorHistorySecurityContainerActivity"
+        <activity android:name=".OneTimeFeeDetailsListActivity"
+            android:label="One-time Payment List"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ResidentBookingHistoryActivity"
+            android:label="Booking History"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AmenityDetailsActivity"
+            android:label="Amenity Details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MembershipDetailsActivity"
+            android:label="Membership Details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".PaymentForMaintenance"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".MaintenanceAdminContainerActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AddMaintenanceActivity" />
+        <activity
+            android:name=".VisitorHistorySecurityContainerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ComplaintsResidentContainerActivity"

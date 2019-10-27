@@ -1,52 +1,67 @@
 package com.township.manager;
 
+import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity
 class Complaint {
-    private String complaintId, title, description;
-    private String firstName, lastName, wing, apartment;
-    private Boolean resolved;
-    private String timestamp;
 
-    public void setComplaintId(String complaintId) {
-        this.complaintId = complaintId;
+    @NonNull
+    @PrimaryKey
+    String complaint_id;
+
+    @ColumnInfo(name="resident_first_name")
+    String resident_first_name;
+
+    @ColumnInfo(name="resident_last_name")
+    String resident_last_name;
+
+    @ColumnInfo(name="resident_wing")
+    String resident_wing;
+
+    @ColumnInfo(name="resident_apartment")
+    String resident_apartment;
+
+    @ColumnInfo(name="resolved")
+    Boolean resolved;
+
+    @ColumnInfo(name="description")
+    String description;
+
+    @ColumnInfo(name="timestamp")
+    String timestamp;
+
+    @ColumnInfo(name="title")
+    String title;
+
+    @NonNull
+    public String getComplaint_id() {
+        return complaint_id;
     }
 
-    public void setApartment(String apartment) {
-        this.apartment = apartment;
+    public String getResident_first_name() {
+        return resident_first_name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public String getResident_last_name() {
+        return resident_last_name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public String getResident_wing() {
+        return resident_wing;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public String getResident_apartment() {
+        return resident_apartment;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setResolved(Boolean resolved) {
-        this.resolved = resolved;
-    }
-
-    public void setWing(String wing) {
-        this.wing = wing;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public String getComplaintId() {
-        return complaintId;
-    }
-
-    public Boolean isResolved() {
+    public Boolean getResolved() {
         return resolved;
     }
 
@@ -54,27 +69,47 @@ class Complaint {
         return description;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getApartment() {
-        return apartment;
-    }
-
-    public String getLastName() {
-        return lastName;
+    public String getTimestamp() {
+        return timestamp;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public String getWing() {
-        return wing;
+    public void setComplaint_id(@NonNull String complaint_id) {
+        this.complaint_id = complaint_id;
     }
 
-    public String getTimestamp() {
-        return timestamp;
+    public void setResident_first_name(String resident_first_name) {
+        this.resident_first_name = resident_first_name;
+    }
+
+    public void setResident_last_name(String resident_last_name) {
+        this.resident_last_name = resident_last_name;
+    }
+
+    public void setResident_wing(String resident_wing) {
+        this.resident_wing = resident_wing;
+    }
+
+    public void setResident_apartment(String resident_apartment) {
+        this.resident_apartment = resident_apartment;
+    }
+
+    public void setResolved(Boolean resolved) {
+        this.resolved = resolved;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

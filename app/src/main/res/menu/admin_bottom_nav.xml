@@ -6,10 +6,10 @@
         android:title="Notices"
         android:icon="@drawable/ic_assignment_black_24dp" />
 
-    <item
-        android:id="@+id/admin_group_chat"
-        android:title="Chats"
-        android:icon="@drawable/ic_chat_black_24dp" />
+<!--    <item-->
+<!--        android:id="@+id/admin_group_chat"-->
+<!--        android:title="Chats"-->
+<!--        android:icon="@drawable/ic_chat_black_24dp" />-->
 
     <item
         android:id="@+id/admin_complaints"

@@ -80,28 +80,12 @@ public class VisitorHistoryFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-//        Toast.makeText(context, "onCreate was called", Toast.LENGTH_SHORT).show();
-        Log.d("visitor", "onCreate was called");
-
         appDatabase = Room.databaseBuilder(context.getApplicationContext(),
                 AppDatabase.class, "app-database")
                 .fallbackToDestructiveMigration()
                 .build();
+
         visitorDao = appDatabase.visitorDao();
-
-        dataset = new ArrayList<>();
-//        Visitor visitor = new Visitor();
-//        visitor.setFirst_name("Adwait");
-//        visitor.setLast_name("Bhope");
-//        visitor.setId(1);
-//        visitor.setPhone("9405438914");
-//        visitor.setIn_timestamp("18th Oct, '19 4:20 PM");
-
-//        dataset.add(visitor);
-//        dataset.add(visitor);
-
-        adapter = new VisitorHistoryAdapter(dataset, getContext());
-        layoutManager = new LinearLayoutManager(getContext());
     }
 
     @Override
@@ -109,6 +93,8 @@ public class VisitorHistoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_visitor_history, container, false);
 
+        adapter = new VisitorHistoryAdapter(dataset, getContext());
+        layoutManager = new LinearLayoutManager(getContext());
         recyclerView = view.findViewById(R.id.visitor_history_recycler_view);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);

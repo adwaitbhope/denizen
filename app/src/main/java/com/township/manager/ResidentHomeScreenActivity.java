@@ -43,7 +43,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ResidentHomeScreenActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, NoticeBoardFragment.OnFragmentInteractionListener, VisitorHistoryFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, NoticeBoardFragment.OnFragmentInteractionListener, MaintenanceFragment.OnFragmentInteractionListener, VisitorHistoryFragment.OnFragmentInteractionListener {
 
     String username, password;
 
@@ -60,6 +60,11 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
     NoticeWing[] noticeWingArray;
     Notice.Comment[] commentsArray;
     Visitor[] visitorsArray;
+    MaintenanceFragment maintenanceFragment;
+
+    MaintenanceDao maintenanceDao;
+    Maintenance[] maintenancesArray;
+
 
     DBManager dbManager;
     Cursor cursor;
@@ -109,7 +114,12 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         password = cursor.getString(cursor.getColumnIndexOrThrow("Password"));
 
         noticeBoardFragment = new NoticeBoardFragment();
+        maintenanceFragment = new MaintenanceFragment();
         visitorHistoryFragment = new VisitorHistoryFragment();
+
+        getNoticesFromServer();
+        getMaintenanceFromServer();
+        getVisitorHistoryFromServer();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.resident_home_screen_fragment_area, noticeBoardFragment);
@@ -128,13 +138,14 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                         transaction.commit();
                         return true;
 
-                    case R.id.resident_group_chat:
-                        return true;
-
                     case R.id.resident_amenities:
                         return true;
 
                     case R.id.resident_maintenance:
+                        transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.resident_home_screen_fragment_area, maintenanceFragment);
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                        transaction.commit();
                         return true;
 
                     case R.id.resident_visitor_history:
@@ -148,9 +159,6 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                 return false;
             }
         });
-
-        getNoticesFromServer();
-        getVisitorHistoryFromServer();
 
     }
 
@@ -442,6 +450,98 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(Void aVoid) {
             noticeBoardFragment.updateRecyclerView();
+            super.onPostExecute(aVoid);
+        }
+    }
+
+    private void getMaintenanceFromServer() {
+
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(getString(R.string.server_addr))
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit retrofit = builder.build();
+
+        RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
+
+        Call<JsonArray> call = retrofitServerAPI.getMaintenance(
+                username,
+                password,
+                null
+        );
+
+        call.enqueue(new Callback<JsonArray>() {
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                Log.d("maintenanceresponse", response.body().toString());
+                String responseString = response.body().getAsJsonArray().toString();
+                try {
+                    JSONArray jsonArray = new JSONArray(responseString);
+                    JSONObject loginResponse = jsonArray.getJSONObject(0);
+
+                    if (loginResponse.getInt("login_status") == 1) {
+                        JSONArray jsonMaintenancArray = jsonArray.getJSONArray(1);
+
+                        JSONObject jsonMaintenance;
+
+                        ArrayList<Maintenance> maintenances = new ArrayList<>();
+                        Maintenance maintenance;
+                        Gson gson = new Gson();
+
+                        for (int i = 0; i < jsonMaintenancArray.length(); i++) {
+                            jsonMaintenance = jsonMaintenancArray.getJSONObject(i);
+                            maintenance = gson.fromJson(jsonMaintenance.toString(), Maintenance.class);
+
+                            maintenances.add(maintenance);
+                        }
+
+                        addMaintenanceToDatabase(maintenances);
+                    }
+
+                } catch (JSONException e) {
+                    Log.d("maintenanceerror", e.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    private void addMaintenanceToDatabase(final ArrayList<Maintenance> maintenances) {
+        new Thread() {
+            @Override
+            public void run() {
+                maintenanceDao = appDatabase.maintenanceDao();
+                maintenancesArray = new Maintenance[maintenances.size()];
+                maintenances.toArray(maintenancesArray);
+                MaintenanceAsyncTask maintenanceAsyncTask = new MaintenanceAsyncTask();
+                maintenanceAsyncTask.execute();
+            }
+        }.start();
+    }
+
+    private class MaintenanceAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            appDatabase.maintenanceDao().deleteAll();
+            maintenanceDao.insert(maintenancesArray);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if (maintenanceFragment.getContext() != null) {
+                maintenanceFragment.updateRecyclerView();
+            }
             super.onPostExecute(aVoid);
         }
     }
