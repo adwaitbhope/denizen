@@ -18,10 +18,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+
+import static android.view.View.GONE;
 
 
 /**
@@ -158,6 +161,7 @@ public class MaintenanceFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        updateRecyclerView();
         recyclerView.smoothScrollToPosition(0);
     }
 
@@ -228,6 +232,7 @@ public class MaintenanceFragment extends Fragment {
             dataset.clear();
             dataset.addAll(temporaryDataset);
             if (adapter != null) {
+                ((ProgressBar) getView().findViewById(R.id.maintenance_list_progress_bar)).setVisibility(GONE);
                 adapter.notifyDataSetChanged();
             }
         }

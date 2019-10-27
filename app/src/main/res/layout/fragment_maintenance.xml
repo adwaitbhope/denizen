@@ -22,4 +22,12 @@
         app:srcCompat="@drawable/ic_add_black_24dp"
         app:tint="@android:color/white" />
 
+    <ProgressBar
+        android:id="@+id/maintenance_list_progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_marginTop="32dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
