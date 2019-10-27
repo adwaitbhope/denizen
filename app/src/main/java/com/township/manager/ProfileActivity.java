@@ -2,9 +2,11 @@ package com.township.manager;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -12,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.squareup.picasso.Picasso;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -21,7 +24,9 @@ public class ProfileActivity extends AppCompatActivity {
     public static final int PROFILE_NOT_EDITED = -1;
 
     Cursor cursor;
-    String username, firstName, lastName, userInfo, phone, email, type;
+    String townshipId, userId;
+    String username, firstName, lastName;
+    String userInfo, phone, email, type;
     int profileUpdated;
 
     @Override
@@ -81,6 +86,8 @@ public class ProfileActivity extends AppCompatActivity {
         cursor = dbManager.getDataLogin();
         cursor.moveToFirst();
 
+        userId = cursor.getString(cursor.getColumnIndexOrThrow("User_Id"));
+        townshipId = cursor.getString(cursor.getColumnIndexOrThrow("TownshipId"));
         username = cursor.getString(cursor.getColumnIndexOrThrow("Username"));
         firstName = cursor.getString(cursor.getColumnIndexOrThrow("First_Name"));
         lastName = cursor.getString(cursor.getColumnIndexOrThrow("Last_Name"));
@@ -93,6 +100,12 @@ public class ProfileActivity extends AppCompatActivity {
         } else {
             userInfo = cursor.getString(cursor.getColumnIndexOrThrow("Designation"));
         }
+
+        ImageView profilePic = ((ImageView) findViewById(R.id.profile_photo));
+        final String url = "https://township-manager.s3.ap-south-1.amazonaws.com/townships/" + townshipId + "/user_profile_pics/" + userId + ".png";
+        Picasso.get()
+                .load(url)
+                .into(profilePic);
 
         ((TextView) findViewById(R.id.profile_name)).setText(firstName + " " + lastName);
         ((TextView) findViewById(R.id.profile_user_info)).setText(userInfo);

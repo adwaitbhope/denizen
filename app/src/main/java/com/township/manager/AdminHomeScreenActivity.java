@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -172,6 +174,16 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         desCol = cursor.getColumnIndexOrThrow("Designation");
 
         TextView adminName, adminDesignation;
+
+        String townshipId, userId;
+        townshipId = cursor.getString(cursor.getColumnIndexOrThrow("TownshipId"));
+        userId = cursor.getString(cursor.getColumnIndexOrThrow("User_Id"));
+
+        ImageView profilePic = ((ImageView) findViewById(R.id.profile_photo));
+        final String url = "https://township-manager.s3.ap-south-1.amazonaws.com/townships/" + townshipId + "/user_profile_pics/" + userId + ".png";
+        Picasso.get()
+                .load(url)
+                .into(profilePic);
 
         adminDesignation = headerView.findViewById(R.id.navheader_admin_home_screen_designation_textview);
         adminName = headerView.findViewById(R.id.navheader_admin_home_screen_name_textview);

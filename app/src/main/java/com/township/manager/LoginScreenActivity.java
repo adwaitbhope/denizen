@@ -229,6 +229,7 @@ public class LoginScreenActivity extends AppCompatActivity {
                                         JSONObject jsonObjectLoginInfo = jsonArray.getJSONObject(1);
 
                                         ContentValues contentValues = new ContentValues();
+                                        contentValues.put(DBManager.ColUserId, jsonObjectLoginInfo.getString("user_id"));
                                         contentValues.put(DBManager.ColUsername, jsonObjectLoginInfo.getString("username"));
                                         contentValues.put(DBManager.ColPassword, password);
                                         contentValues.put(DBManager.ColFirstName, jsonObjectLoginInfo.getString("first_name"));

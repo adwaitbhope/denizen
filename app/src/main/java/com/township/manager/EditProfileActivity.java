@@ -1,12 +1,19 @@
 package com.township.manager;
 
+import android.Manifest;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -16,19 +23,31 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.auth.CognitoCachingCredentialsProvider;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -36,11 +55,19 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.JsonArray;
 import com.pusher.pushnotifications.PushNotifications;
 import com.squareup.moshi.JsonAdapter;
+import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import static com.township.manager.ProfileActivity.PROFILE_EDITED;
 import static com.township.manager.ProfileActivity.PROFILE_NOT_EDITED;
@@ -49,12 +76,21 @@ public class EditProfileActivity extends AppCompatActivity {
 
     Cursor cursor;
     String org_username, org_password;
-    String username, password, firstName, lastName, designation, phone, email, type;
+    String user_id, username, password;
+    String firstName, lastName, designation, phone, email, type;
+    String township_id;
     int profileUpdated;
     DBManager dbManager;
 
     ColorStateList colorStateList;
     boolean isUsernameValid = true;
+
+    private static final int PERMISSIONS_REQUEST_CODE = 42;
+    private static final int PICK_IMAGE = 1;
+
+    File file;
+    Bitmap photo;
+    boolean profilePicUploading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +105,12 @@ public class EditProfileActivity extends AppCompatActivity {
         cursor = dbManager.getDataLogin();
         cursor.moveToFirst();
 
+        user_id = cursor.getString(cursor.getColumnIndexOrThrow("User_Id"));
         username = cursor.getString(cursor.getColumnIndexOrThrow("Username"));
         password = cursor.getString(cursor.getColumnIndexOrThrow("Password"));
         org_username = cursor.getString(cursor.getColumnIndexOrThrow("Username"));
         org_password = cursor.getString(cursor.getColumnIndexOrThrow("Password"));
+        township_id = cursor.getString(cursor.getColumnIndexOrThrow("TownshipId"));
         firstName = cursor.getString(cursor.getColumnIndexOrThrow("First_Name"));
         lastName = cursor.getString(cursor.getColumnIndexOrThrow("Last_Name"));
         email = cursor.getString(cursor.getColumnIndexOrThrow("Email"));
@@ -84,6 +122,13 @@ public class EditProfileActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        ((ImageView) findViewById(R.id.edit_profile_photo)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickImage();
+            }
+        });
 
         TextInputLayout[] layouts = new TextInputLayout[5];
         layouts[0] = ((TextInputLayout) findViewById(R.id.edit_profile_first_name_til));
@@ -118,6 +163,11 @@ public class EditProfileActivity extends AppCompatActivity {
             designation = cursor.getString(cursor.getColumnIndexOrThrow("Designation"));
         }
 
+        ImageView profilePic = ((ImageView) findViewById(R.id.edit_profile_photo));
+        final String url = "https://township-manager.s3.ap-south-1.amazonaws.com/townships/" + township_id + "/user_profile_pics/" + user_id + ".png";
+        Picasso.get()
+                .load(url)
+                .into(profilePic);
 
         ((TextInputEditText) findViewById(R.id.edit_profile_first_name_edit_text)).setText(firstName);
         ((TextInputEditText) findViewById(R.id.edit_profile_last_name_edit_text)).setText(lastName);
@@ -484,6 +534,135 @@ public class EditProfileActivity extends AppCompatActivity {
 
         setResult(PROFILE_EDITED);
         finish();
+    }
+
+    private void pickImage() {
+        String readPermission = Manifest.permission.READ_EXTERNAL_STORAGE;
+        String writePermission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
+        if (ContextCompat.checkSelfPermission(this, readPermission) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, writePermission) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, readPermission) || ActivityCompat.shouldShowRequestPermissionRationale(this, readPermission)) {
+                showError();
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{readPermission, writePermission}, PERMISSIONS_REQUEST_CODE);
+            }
+        } else {
+            Intent getIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(Intent.createChooser(getIntent, "Select a photo"), PICK_IMAGE);
+        }
+    }
+
+    private void showError() {
+        Toast.makeText(this, "Please allow external storage access", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_CODE: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    Intent getIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(Intent.createChooser(getIntent, "Select a photo"), PICK_IMAGE);
+                } else {
+                    showError();
+                }
+            }
+        }
+    }
+
+    public File getOutputMediaFile() {
+        File root = new File(Environment.getExternalStorageDirectory(), getResources().getString(R.string.app_name));
+        if (!root.exists()) {
+            root.mkdirs();
+        }
+        File filepath = new File(root.getPath() + File.separator + "abc.png");
+        return filepath;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE) {
+
+            if (data != null) {
+                Uri uri = data.getData();
+
+                CropImage.activity(uri)
+                        .setAllowFlipping(false)
+                        .setAllowRotation(false)
+                        .setAspectRatio(1, 1)
+                        .start(this);
+            }
+
+        } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                Uri uri = result.getUri();
+
+                try {
+                    photo = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ((ImageView) findViewById(R.id.edit_profile_photo)).setImageBitmap(photo);
+                ((ProgressBar) findViewById(R.id.edit_profile_upload_photo_progress_bar)).setVisibility(View.VISIBLE);
+
+                new Thread() {
+                    public void run() {
+                        file = getOutputMediaFile();
+                        try {
+                            FileOutputStream fileOutputStream = new FileOutputStream(file);
+                            photo.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+                            fileOutputStream.close();
+                            profilePicUploading = true;
+                            new UploadToS3().execute();
+                        } catch (FileNotFoundException e) {
+                            profilePicUploading = false;
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            profilePicUploading = false;
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
+
+            }
+        }
+    }
+
+    private class UploadToS3 extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
+                    getApplicationContext(),
+                    "ap-southeast-1:9dad92cc-b78c-43e3-925c-1b18b7f6eb9a", // Identity pool ID
+                    Regions.AP_SOUTHEAST_1 // Region
+            );
+
+            AmazonS3 s3Client = new AmazonS3Client(credentialsProvider);
+
+            try {
+                FileInputStream stream = new FileInputStream(file);
+                ObjectMetadata metadata = new ObjectMetadata();
+                metadata.setContentLength(file.length());
+                s3Client.putObject("township-manager", "townships/" + township_id + "/user_profile_pics/" + user_id + ".png", stream, metadata);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (AmazonClientException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            ((ProgressBar) findViewById(R.id.edit_profile_upload_photo_progress_bar)).setVisibility(View.GONE);
+            profilePicUploading = false;
+            super.onPostExecute(aVoid);
+        }
     }
 
 }

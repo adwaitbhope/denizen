@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -167,6 +169,16 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         lastNameCol = cursor.getColumnIndexOrThrow("Last_Name");
         flatNoCol = cursor.getColumnIndexOrThrow("Apartment");
         wingNoCol = cursor.getColumnIndexOrThrow("Wing");
+
+        String townshipId, userId;
+        townshipId = cursor.getString(cursor.getColumnIndexOrThrow("TownshipId"));
+        userId = cursor.getString(cursor.getColumnIndexOrThrow("User_Id"));
+
+        ImageView profilePic = ((ImageView) findViewById(R.id.profile_photo));
+        final String url = "https://township-manager.s3.ap-south-1.amazonaws.com/townships/" + townshipId + "/user_profile_pics/" + userId + ".png";
+        Picasso.get()
+                .load(url)
+                .into(profilePic);
 
         TextView residentFlatNo = headerView.findViewById(R.id.resident_home_nav_header_flat_no);
         TextView residentName = headerView.findViewById(R.id.resident_home_nav_header_name);

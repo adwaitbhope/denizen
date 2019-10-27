@@ -13,6 +13,7 @@ public class DBManager {
     static final String DBName = "Township-Manager";
     static final String TabNameLogin = "Login";
 
+    static final String ColUserId = "User_Id";
     static final String ColUsername = "Username";
     static final String ColPassword = "Password";
     static final String ColFirstName = "First_Name";
@@ -30,7 +31,7 @@ public class DBManager {
 
     static final int DBVersion = 1;
 
-    static final String CreateTabLogin = "CREATE TABLE IF NOT EXISTS " + TabNameLogin + "(ID INTEGER PRIMARY KEY AUTOINCREMENT," + ColUsername + " TEXT," + ColPassword + " TEXT," + ColFirstName + " TEXT," + ColLastName + " TEXT," + ColPhone + " TEXT," + ColEmail + " TEXT," + ColTownship + " TEXT," + ColWing + " TEXT," + ColApartment + " TEXT," + ColDesignation + " TEXT," + ColProfileUpdated + " INTEGER," + ColType + " TEXT," + ColTownshipId + " TEXT)";
+    static final String CreateTabLogin = "CREATE TABLE IF NOT EXISTS " + TabNameLogin + "(" + ColUserId + " TEXT," + ColUsername + " TEXT," + ColPassword + " TEXT," + ColFirstName + " TEXT," + ColLastName + " TEXT," + ColPhone + " TEXT," + ColEmail + " TEXT," + ColTownship + " TEXT," + ColWing + " TEXT," + ColApartment + " TEXT," + ColDesignation + " TEXT," + ColProfileUpdated + " INTEGER," + ColType + " TEXT," + ColTownshipId + " TEXT)";
 
 
     static class DatabaseHelperUser extends SQLiteOpenHelper {
