@@ -92,6 +92,7 @@
     <string name="title_activity_notice_board_admin">NoticeBoardAdmin</string>
     <string name="title_activity_notice_board_fragment">NoticeBoardFragment</string>
     <string name="title_activity_notice_board">NoticeBoard</string>
+    <string name="save">Save</string>
     <string-array name="naming_convention_array">
         <item>A-1 to A-36</item>
         <item>A-101 to A-904</item>

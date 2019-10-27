@@ -1,6 +1,7 @@
 package com.township.manager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,16 +11,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link SecurityDesksListFragment.OnFragmentInteractionListener} interface
+ * {@link SecurityPersonnelListFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link SecurityDesksListFragment#newInstance} factory method to
+ * Use the {@link SecurityPersonnelListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SecurityDesksListFragment extends Fragment {
+public class SecurityPersonnelListFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,7 +34,7 @@ public class SecurityDesksListFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public SecurityDesksListFragment() {
+    public SecurityPersonnelListFragment() {
         // Required empty public constructor
     }
 
@@ -41,11 +44,11 @@ public class SecurityDesksListFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment SecurityDesksListFragment.
+     * @return A new instance of fragment SecurityPersonnelListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SecurityDesksListFragment newInstance(String param1, String param2) {
-        SecurityDesksListFragment fragment = new SecurityDesksListFragment();
+    public static SecurityPersonnelListFragment newInstance(String param1, String param2) {
+        SecurityPersonnelListFragment fragment = new SecurityPersonnelListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -66,9 +69,18 @@ public class SecurityDesksListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_security_personnel_list, container, false);
+        FloatingActionButton fab = view.findViewById(R.id.add_security_personnel_floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), AddSecurityActivity.class));
 
-        return inflater.inflate(R.layout.fragment_security_desks_list, container, false);
-    }
+            } });
+                return view;
+
+        }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

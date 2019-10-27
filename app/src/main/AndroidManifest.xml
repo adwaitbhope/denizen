@@ -22,7 +22,14 @@
         <activity android:name=".ServiceVendorActivity">
 
         </activity>
-        <activity android:name=".AddServiceVendorActivity"></activity>
+        <activity
+            android:name=".AddServiceVendorActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name=".AddSecurityActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
         <activity
             android:name=".VisitorHistorySecurityContainerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -71,6 +78,7 @@
             android:label="Forgot Password"
             android:parentActivityName=".LoginScreenActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".RegistrationStepTwoActivity"
             android:label="Society Details"

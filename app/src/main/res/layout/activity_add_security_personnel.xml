@@ -59,18 +59,5 @@
         app:layout_constraintStart_toEndOf="@+id/add_security_personnel_imageview"
         app:srcCompat="@drawable/ic_add_a_photo_black_24dp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/add_security_personnel_phone_number_textinput"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="354dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="hint" />
-    </com.google.android.material.textfield.TextInputLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

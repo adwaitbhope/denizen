@@ -17,7 +17,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
 
-public class SecurityActivity extends AppCompatActivity implements SecurityDesksListFragment.OnFragmentInteractionListener {
+public class SecurityActivity extends AppCompatActivity implements SecurityDesksListFragment.OnFragmentInteractionListener,SecurityPersonnelListFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,7 @@ public class SecurityActivity extends AppCompatActivity implements SecurityDesks
         setContentView(R.layout.activity_security);
         SliderAdapter sliderAdapter = new SliderAdapter(Objects.requireNonNull(this).getSupportFragmentManager());
 
-        sliderAdapter.addFragment(new SecurityDesksListFragment(), "Personnel");
+        sliderAdapter.addFragment(new SecurityPersonnelListFragment(), "Personnel");
         sliderAdapter.addFragment(new SecurityDesksListFragment(), "Desks");
 
         ViewPager mSlideViewPager = (ViewPager) findViewById(R.id.security_view_pager);
