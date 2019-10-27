@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -41,6 +42,9 @@ public class MaintenanceAdminContainerActivity extends AppCompatActivity impleme
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.maintenance_admin_container_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Maintenance payments");
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         DBManager dbManager = new DBManager(getApplicationContext());
         Cursor cursor = dbManager.getDataLogin();
@@ -65,6 +69,16 @@ public class MaintenanceAdminContainerActivity extends AppCompatActivity impleme
         transaction.replace(R.id.maintenance_admin_container_frame, maintenanceFragment);
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

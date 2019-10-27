@@ -46,10 +46,13 @@ public class MaintenanceFragment extends Fragment {
     MaintenanceAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
     FloatingActionButton addMaintenanceFloat;
+
     ArrayList<Maintenance> dataset = new ArrayList<>();
-    AppDatabase appDatabase;
     ArrayList<Maintenance> temporaryDataset = new ArrayList<>();
+
+    AppDatabase appDatabase;
     MaintenanceDao maintenanceDao;
+    WingDao wingDao;
 
     public static final int ADD_MAINTENANCE_REQUEST = 69;
     public static final int ADD_MAINTENANCE_RESULT = 70;
@@ -89,7 +92,8 @@ public class MaintenanceFragment extends Fragment {
                 AppDatabase.class, "app-database")
                 .fallbackToDestructiveMigration()
                 .build();
-        maintenanceDao=appDatabase.maintenanceDao();
+        maintenanceDao = appDatabase.maintenanceDao();
+        wingDao = appDatabase.wingDao();
     }
 
     @Override
@@ -154,6 +158,7 @@ public class MaintenanceFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        recyclerView.smoothScrollToPosition(0);
     }
 
     @Override
@@ -211,6 +216,9 @@ public class MaintenanceFragment extends Fragment {
         protected Void doInBackground(Void... voids) {
             temporaryDataset.clear();
             temporaryDataset.addAll(maintenanceDao.getAll());
+            for (Maintenance maintenance : temporaryDataset) {
+                maintenance.setWing(wingDao.getWingName(maintenance.getWing_id()));
+            }
             return null;
         }
 

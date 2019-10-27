@@ -33,25 +33,34 @@
             android:name=".MembershipDetailsActivity"
             android:label="Membership Details"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".PaymentForMaintenance"
             android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity
             android:name=".MaintenanceAdminContainerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AddMaintenanceActivity" />
+
+        <activity android:name=".AddMaintenanceActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity
             android:name=".VisitorHistorySecurityContainerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".ComplaintsResidentContainerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".NoticeBoardCommentActivity"
             android:label="Comments"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
+
         <activity android:name=".ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".RegistrationSuccessfulActivity"
             android:parentActivityName=".LoginScreenActivity"
@@ -66,7 +75,9 @@
             android:label="Amenities"
             android:parentActivityName=".AdminHomeScreenActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".RegistrationPaymentDetailsActivity" />
+
         <activity
             android:name=".AddNoticeAdminActivity"
             android:label="New Notice"

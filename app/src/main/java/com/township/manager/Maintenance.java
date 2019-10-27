@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(foreignKeys = {
@@ -15,7 +16,7 @@ public class Maintenance {
 
     @NonNull
     @PrimaryKey
-    String id;
+    String payment_id;
 
     @ColumnInfo(name="amount")
     String amount;
@@ -30,6 +31,9 @@ public class Maintenance {
     String cheque_no;
 
     @ColumnInfo(name="first_name")
+    String first_name;
+
+    @ColumnInfo(name="last_name")
     String last_name;
 
     @ColumnInfo(name="timestamp")
@@ -37,9 +41,15 @@ public class Maintenance {
 
     String wing_id;
 
-    @NonNull
-    public String getMaintenance_id() {
-        return id;
+    @Ignore
+    String wing;
+
+    public String getWing() {
+        return wing;
+    }
+
+    public String getPayment_id() {
+        return payment_id;
     }
 
     public String getAmount() {
@@ -58,6 +68,10 @@ public class Maintenance {
         return cheque_no;
     }
 
+    public String getFirst_name() {
+        return first_name;
+    }
+
     public String getLast_name() {
         return last_name;
     }
@@ -70,12 +84,16 @@ public class Maintenance {
         return wing_id;
     }
 
-    public void setMaintenance_id(@NonNull String id) {
-        this.id = id;
+    public void setPayment_id(@NonNull String payment_id) {
+        this.payment_id = payment_id;
     }
 
     public void setAmount(String amount) {
         this.amount = amount;
+    }
+
+    public void setWing(String wing) {
+        this.wing = wing;
     }
 
     public void setApartment(String apartment) {
@@ -88,6 +106,10 @@ public class Maintenance {
 
     public void setCheque_no(String cheque_no) {
         this.cheque_no = cheque_no;
+    }
+
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
     }
 
     public void setLast_name(String last_name) {

@@ -62,7 +62,7 @@ public class VisitorEntryFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    String username, password, townshipId, wingId;
+    String username, password, wingId;
     String firstName, lastName, apartment;
 
     TextInputLayout firstNameTIL, lastNameTIL, wingTIL, apartmentTIL;
@@ -123,7 +123,6 @@ public class VisitorEntryFragment extends Fragment {
 
         username = cursor.getString(cursor.getColumnIndexOrThrow("Username"));
         password = cursor.getString(cursor.getColumnIndexOrThrow("Password"));
-        townshipId = cursor.getString(cursor.getColumnIndexOrThrow("TownshipId"));
     }
 
     @Override

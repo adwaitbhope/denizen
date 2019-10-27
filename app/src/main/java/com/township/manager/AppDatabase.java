@@ -11,7 +11,7 @@ import androidx.room.RoomDatabase;
         Complaint.class,
         Maintenance.class,
         Resident.class,
-        Visitor.class}, version = 12)
+        Visitor.class}, version = 14)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract WingDao wingDao();
 

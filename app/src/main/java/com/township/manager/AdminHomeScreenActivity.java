@@ -64,6 +64,8 @@ public class AdminHomeScreenActivity extends AppCompatActivity
     ComplaintDao complaintDao;
     Complaint[] complaintsArray;
 
+    DrawerLayout drawerLayout;
+
     DBManager dbManager;
     Cursor cursor;
     View headerView;
@@ -91,9 +93,9 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         final AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -218,20 +220,21 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         if (id == R.id.nav_intercom_admin) {
 
         } else if (id == R.id.nav_maintenance_admin) {
-            Intent intent=new Intent(AdminHomeScreenActivity.this, MaintenanceAdminContainerActivity.class);
+            Intent intent = new Intent(AdminHomeScreenActivity.this, MaintenanceAdminContainerActivity.class);
             startActivity(intent);
+
         } else if (id == R.id.nav_admin_info_admin) {
 
         } else if (id == R.id.nav_security_list_admin) {
             Intent intent = new Intent(AdminHomeScreenActivity.this, SecurityActivity.class);
             startActivity(intent);
+
         } else if (id == R.id.nav_vendors_admin) {
 
         } else if (id == R.id.nav_wing_details_admin) {
 
         } else if (id == R.id.nav_amenities_admin) {
-            Intent intent = new
-                    Intent(AdminHomeScreenActivity.this, AmenitiesAdminContainerActivity.class);
+            Intent intent = new Intent(AdminHomeScreenActivity.this, AmenitiesAdminContainerActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_logout_admin) {
@@ -239,8 +242,7 @@ public class AdminHomeScreenActivity extends AppCompatActivity
             logOutDialog.show(getSupportFragmentManager(), "Logout");
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        drawerLayout.closeDrawers();
         return true;
     }
 
@@ -392,8 +394,8 @@ public class AdminHomeScreenActivity extends AppCompatActivity
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
                 assert response.body() != null;
                 String responseString = response.body().getAsJsonArray().toString();
-                Log.d("printres",responseString);
-                try{
+                Log.d("printres", responseString);
+                try {
                     JSONArray jsonArray = new JSONArray(responseString);
                     JSONObject loginResponse = jsonArray.getJSONObject(0);
                     if (loginResponse.getInt("login_status") == 1) {
@@ -402,20 +404,19 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                         JSONObject jsonObjectComplaint;
                         ArrayList<Complaint> complaints = new ArrayList<>();
                         Complaint complaint;
-                        Gson gson=new Gson();
-                        jsonArrayComplaint=jsonArray.getJSONArray(1);
-                        for(int i=0;i<jsonArrayComplaint.length();i++){
-                            jsonObjectComplaint=jsonArrayComplaint.getJSONObject(i);
-                            complaint=gson.fromJson(jsonObjectComplaint.toString(),Complaint.class);
+                        Gson gson = new Gson();
+                        jsonArrayComplaint = jsonArray.getJSONArray(1);
+                        for (int i = 0; i < jsonArrayComplaint.length(); i++) {
+                            jsonObjectComplaint = jsonArrayComplaint.getJSONObject(i);
+                            complaint = gson.fromJson(jsonObjectComplaint.toString(), Complaint.class);
 
                             complaints.add(complaint);
                         }
                         addComplaintsToDatabase(complaints);
                     }
 
-                }
-                catch (JSONException jsonexcpetion){
-                    Toast.makeText(AdminHomeScreenActivity.this,jsonexcpetion.getMessage(),Toast.LENGTH_SHORT).show();
+                } catch (JSONException jsonexcpetion) {
+                    Toast.makeText(AdminHomeScreenActivity.this, jsonexcpetion.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -428,12 +429,12 @@ public class AdminHomeScreenActivity extends AppCompatActivity
     }
 
     public void addComplaintsToDatabase(final ArrayList<Complaint> complaints) {
-        new Thread(){
-            public void run(){
-                complaintDao=appDatabase.complaintDao();
-                complaintsArray=new Complaint[complaints.size()];
+        new Thread() {
+            public void run() {
+                complaintDao = appDatabase.complaintDao();
+                complaintsArray = new Complaint[complaints.size()];
                 complaints.toArray(complaintsArray);
-                ComplaintsAsyncTask complaintsAsyncTask=new ComplaintsAsyncTask();
+                ComplaintsAsyncTask complaintsAsyncTask = new ComplaintsAsyncTask();
                 complaintsAsyncTask.execute();
 
             }
@@ -488,7 +489,6 @@ public class AdminHomeScreenActivity extends AppCompatActivity
             super.onPostExecute(aVoid);
         }
     }
-
 
 
 }

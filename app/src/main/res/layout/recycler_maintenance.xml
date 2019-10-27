@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -9,9 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,74 +24,60 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/flat_name"
+                android:id="@+id/recycler_maintenance_apartment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
                 android:text="A/32"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-               />
+                app:layout_constraintTop_toBottomOf="@+id/recycler_maintenance_name" />
+
             <TextView
-                android:id="@+id/mode_of_payment"
+                android:id="@+id/recycler_maintenance_payment_mode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="48dp"
                 android:layout_marginEnd="16dp"
                 android:text="Paytm"
                 android:textSize="18sp"
-                app:layout_constraintTop_toBottomOf="@id/flat_name"
                 app:layout_constraintEnd_toEndOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/maintenance_rs"
+                android:id="@+id/recycler_maintenance_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:text="RS 5000"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@+id/mode_of_payment"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/flat_name"
-
-                />
-
-            <TextView
-                android:id="@+id/paid_on_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="Paid on"
+                android:text="RS 5000"
+
                 android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@id/month_year"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/maintenance_rs" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
-                android:id="@+id/month_year"
+                android:id="@+id/recycler_maintenance_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="8/2019"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/recycler_maintenance_name"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_maintenance_apartment" />
+
+            <TextView
+                android:id="@+id/recycler_maintenance_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:text="8/2019"
-                android:textSize="18sp"
-                app:layout_constraintTop_toTopOf="@id/mode_of_payment"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
-
-
+                android:text="Adwait Bhope"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,10 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
@@ -21,17 +19,17 @@ public class MaintenanceAdapter extends RecyclerView.Adapter {
     ArrayList<Maintenance> dataset;
     Context context;
 
-    public MaintenanceAdapter(ArrayList<Maintenance> dataset, Context context){
+    String[] months = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+
+    public MaintenanceAdapter(ArrayList<Maintenance> dataset, Context context) {
         this.dataset = dataset;
         this.context = context;
-        Log.d("inView","holdercoons");
-
     }
 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_maintenance, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_maintenance, parent, false);
         final ViewHolder viewHolder = new ViewHolder(view);
 
         return viewHolder;
@@ -40,13 +38,12 @@ public class MaintenanceAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         final ViewHolder viewHolder = (ViewHolder) holder;
-        Maintenance maintenance=dataset.get(position);
-        viewHolder.flatNo.setText(maintenance.getApartment());
-        viewHolder.amount.setText(maintenance.getAmount());
-        viewHolder.modeofPayment.setText(maintenance.getMode());
-        viewHolder.monthYear.setText(maintenance.getTimestamp().substring(0,10));
-
-
+        Maintenance maintenance = dataset.get(position);
+        viewHolder.name.setText(maintenance.getFirst_name() + " " + maintenance.getLast_name());
+        viewHolder.apartment.setText(maintenance.getWing() + "-" + maintenance.getApartment());
+        viewHolder.amount.setText("₹ " + maintenance.getAmount() + "/-");
+        viewHolder.paymentMode.setText(maintenance.getMode());
+        viewHolder.timestamp.setText(getFormattedDate(maintenance.getTimestamp()));
     }
 
     @Override
@@ -57,17 +54,40 @@ public class MaintenanceAdapter extends RecyclerView.Adapter {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        MaterialCardView maintenanceCardView;
-        TextView flatNo, amount, modeofPayment,paidOn,monthYear;
+        TextView name, apartment, amount, paymentMode, timestamp;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            maintenanceCardView=itemView.findViewById(R.id.maintenance_cardview);
-            flatNo=itemView.findViewById(R.id.flat_name);
-            amount=itemView.findViewById(R.id.maintenance_rs);
-            modeofPayment=itemView.findViewById(R.id.mode_of_payment);
-            paidOn=itemView.findViewById(R.id.paid_on_tv);
-            monthYear=itemView.findViewById(R.id.month_year);
+            name = itemView.findViewById(R.id.recycler_maintenance_name);
+            apartment = itemView.findViewById(R.id.recycler_maintenance_apartment);
+            amount = itemView.findViewById(R.id.recycler_maintenance_amount);
+            paymentMode = itemView.findViewById(R.id.recycler_maintenance_payment_mode);
+            timestamp = itemView.findViewById(R.id.recycler_maintenance_date);
         }
     }
+
+    public String getFormattedDate(String timestamp) {
+        String day = timestamp.substring(8, 10);
+        String digit = day.substring(1);
+
+        if (digit.equals("1")) {
+            day =  day + "st";
+        } else if (digit.equals("2")) {
+             day = day + "nd";
+        } else if (digit.equals("3")) {
+            day = day + "rd";
+        } else {
+            day = day + "th";
+        }
+
+        String month = months[Integer.valueOf(timestamp.substring(5, 7)) - 1];
+
+        String year = timestamp.substring(2, 4);
+
+        int hour = Integer.valueOf(timestamp.substring(11, 13));
+        int minute = Integer.valueOf(timestamp.substring(14, 16));
+
+        return month + " " + day + ", '" + year;
+    }
+
 }

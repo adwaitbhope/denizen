@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
@@ -44,12 +45,14 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ResidentHomeScreenActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, NoticeBoardFragment.OnFragmentInteractionListener, MaintenanceFragment.OnFragmentInteractionListener, VisitorHistoryFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, NoticeBoardFragment.OnFragmentInteractionListener, MaintenanceFragment.OnFragmentInteractionListener, VisitorHistoryFragment.OnFragmentInteractionListener, AmenitiesFragment.OnFragmentInteractionListener {
 
     String username, password;
 
     NoticeBoardFragment noticeBoardFragment;
     VisitorHistoryFragment visitorHistoryFragment;
+    MaintenanceFragment maintenanceFragment;
+    AmenitiesFragment amenitiesFragment;
 
     AppDatabase appDatabase;
     NoticeDao noticeDao;
@@ -61,11 +64,11 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
     NoticeWing[] noticeWingArray;
     Notice.Comment[] commentsArray;
     Visitor[] visitorsArray;
-    MaintenanceFragment maintenanceFragment;
 
     MaintenanceDao maintenanceDao;
     Maintenance[] maintenancesArray;
 
+    DrawerLayout drawerLayout;
 
     DBManager dbManager;
     Cursor cursor;
@@ -77,14 +80,14 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resident_home_screen);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.resident_home_screen_toolbar);
         setSupportActionBar(toolbar);
 
         dbManager = new DBManager(getApplicationContext());
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         appDatabase = Room.databaseBuilder(getApplicationContext(),
@@ -117,6 +120,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         noticeBoardFragment = new NoticeBoardFragment();
         maintenanceFragment = new MaintenanceFragment();
         visitorHistoryFragment = new VisitorHistoryFragment();
+        amenitiesFragment = new AmenitiesFragment();
 
         getNoticesFromServer();
         getMaintenanceFromServer();
@@ -140,6 +144,10 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                         return true;
 
                     case R.id.resident_amenities:
+                        transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.resident_home_screen_fragment_area, amenitiesFragment);
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                        transaction.commit();
                         return true;
 
                     case R.id.resident_maintenance:
@@ -224,6 +232,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_complaints_resident) {
             startActivity(new Intent(ResidentHomeScreenActivity.this, ComplaintsResidentContainerActivity.class));
+
         } else if (id == R.id.nav_security_list_resident) {
 
         } else if (id == R.id.nav_logout_resident) {
@@ -231,8 +240,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
             logOutDialog.show(getSupportFragmentManager(), "Logout");
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        drawerLayout.closeDrawers();
         return true;
     }
 
@@ -477,14 +485,14 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         call.enqueue(new Callback<JsonArray>() {
             @Override
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
-                Log.d("maintenanceresponse", response.body().toString());
+                Log.d("maintenance", response.body().toString());
                 String responseString = response.body().getAsJsonArray().toString();
                 try {
                     JSONArray jsonArray = new JSONArray(responseString);
                     JSONObject loginResponse = jsonArray.getJSONObject(0);
 
                     if (loginResponse.getInt("login_status") == 1) {
-                        JSONArray jsonMaintenancArray = jsonArray.getJSONArray(1);
+                        JSONArray jsonMaintenanceArray = jsonArray.getJSONArray(1);
 
                         JSONObject jsonMaintenance;
 
@@ -492,8 +500,8 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                         Maintenance maintenance;
                         Gson gson = new Gson();
 
-                        for (int i = 0; i < jsonMaintenancArray.length(); i++) {
-                            jsonMaintenance = jsonMaintenancArray.getJSONObject(i);
+                        for (int i = 0; i < jsonMaintenanceArray.length(); i++) {
+                            jsonMaintenance = jsonMaintenanceArray.getJSONObject(i);
                             maintenance = gson.fromJson(jsonMaintenance.toString(), Maintenance.class);
 
                             maintenances.add(maintenance);
@@ -503,7 +511,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                     }
 
                 } catch (JSONException e) {
-                    Log.d("maintenanceerror", e.getMessage());
+                    Log.d("maintenance", e.getMessage());
                 }
             }
 
