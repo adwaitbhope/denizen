@@ -25,6 +25,7 @@
         android:layout_marginEnd="8dp"
         android:layout_weight="50"
         android:text="Jonybhau Batliwala Sr."
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/recycler_view_visitor_date"
         app:layout_constraintHorizontal_bias="0.0"
@@ -35,13 +36,12 @@
         android:id="@+id/recycler_view_visitor_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:text="01-01-2019"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/recycler_view_visitor_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/recycler_view_visitor_name"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/recycler_view_visitor_time"
