@@ -260,6 +260,13 @@ public interface RetrofitServerAPI {
     );
 
     @FormUrlEncoded
+    @POST("/amenities/membership/")
+    Call<JsonArray> getMembershipPayments(
+            @Field("username") String username,
+            @Field("password") String passsword
+    );
+
+    @FormUrlEncoded
     @POST("/amenities/membership/check/")
     Call<JsonArray> checkMembershipStatus(
             @Field("username") String username,
