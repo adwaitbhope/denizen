@@ -73,7 +73,7 @@ public class SecurityDesksListFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), AddSecurityActivity.class));
+                startActivity(new Intent(getActivity(), AddSecurityDeskActivity.class));
 
             } });
         return view;
