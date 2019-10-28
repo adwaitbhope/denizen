@@ -169,9 +169,9 @@ public class RegistrationStepTwoLoginDetailsFragment extends Fragment implements
                     Amenity amenity = amenities.get(j);
 
                     amenitiesMap.put("amenity_" + j + "_name", amenity.getName());
-                    amenitiesMap.put("amenity_" + j + "_rate", amenity.getAmenityrate());
-                    amenitiesMap.put("amenity_" + j + "_time_period", amenity.getBillingperiod());
-                    amenitiesMap.put("amenity_" + j + "_free_for_members", amenity.getFreeornot());
+                    amenitiesMap.put("amenity_" + j + "_rate", amenity.getBilling_rate());
+                    amenitiesMap.put("amenity_" + j + "_time_period", amenity.getTime_period());
+                    amenitiesMap.put("amenity_" + j + "_free_for_members", amenity.getFree_for_members());
                 }
 
                 Paytm.PaytmOrder paytmOrder = new Paytm.PaytmOrder();

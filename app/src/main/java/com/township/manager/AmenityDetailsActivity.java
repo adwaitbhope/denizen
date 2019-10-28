@@ -16,7 +16,7 @@ public class AmenityDetailsActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.amenity_details_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Amenity Details");
+        getSupportActionBar().setTitle("Available slots");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

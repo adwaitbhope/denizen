@@ -59,14 +59,14 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
     NoticeWingDao noticeWingDao;
     CommentDao commentDao;
     VisitorDao visitorDao;
+    MaintenanceDao maintenanceDao;
 
     Notice[] noticesArray;
     NoticeWing[] noticeWingArray;
     Notice.Comment[] commentsArray;
     Visitor[] visitorsArray;
-
-    MaintenanceDao maintenanceDao;
     Maintenance[] maintenancesArray;
+    Amenity[] amenitiesArray;
 
     DrawerLayout drawerLayout;
 
@@ -123,6 +123,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         amenitiesFragment = new AmenitiesFragment();
 
         getNoticesFromServer();
+        getAmenitiesFromServer();
         getMaintenanceFromServer();
         getVisitorHistoryFromServer();
 
@@ -327,47 +328,51 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
 
     }
 
-    public void addNoticesToDatabase(final ArrayList<Notice> notices) {
+    public void getAmenitiesFromServer() {
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(getString(R.string.server_addr))
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit retrofit = builder.build();
 
-        new Thread() {
-            public void run() {
-                noticeDao = appDatabase.noticeDao();
-                noticeWingDao = appDatabase.noticeWingsDao();
-                commentDao = appDatabase.commentDao();
+        RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
 
-                noticesArray = new Notice[notices.size()];
+        Call<JsonArray> call = retrofitServerAPI.getAmenities(
+                username,
+                password
+        );
 
-                int noticeWingsLength = 0, commentsLength = 0;
-                for (Notice notice : notices) {
-                    noticeWingsLength += notice.getWings().size();
-                    commentsLength += notice.getComments().size();
-                }
+        call.enqueue(new Callback<JsonArray>() {
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                String responseString = response.body().toString();
+                try {
+                    JSONArray responseArray = new JSONArray(responseString);
+                    JSONObject loginData = responseArray.getJSONObject(0);
 
-                noticeWingArray = new NoticeWing[noticeWingsLength];
-                commentsArray = new Notice.Comment[commentsLength];
+                    if (loginData.getInt("login_status") == 1) {
+                        if (loginData.getInt("request_status") == 1) {
 
-                ArrayList<NoticeWing> noticeWings = new ArrayList<>();
-                ArrayList<Notice.Comment> comments = new ArrayList<>();
-                NoticeWing noticeWing;
-
-                for (Notice notice : notices) {
-                    for (Wing wing : notice.getWings()) {
-                        noticeWing = new NoticeWing();
-                        noticeWing.setWing_id(wing.getWing_id());
-                        noticeWing.setNotice_id(notice.getNotice_id());
-                        noticeWings.add(noticeWing);
+                            JSONArray amenitiesResponseArray = responseArray.getJSONArray(1);
+                            Gson gson = new Gson();
+                            amenitiesArray = new Amenity[amenitiesResponseArray.length()];
+                            for (int i = 0; i < amenitiesResponseArray.length(); i++) {
+                                Amenity amenity = gson.fromJson(amenitiesResponseArray.getJSONObject(i).toString(), Amenity.class);
+                                amenitiesArray[i] = amenity;
+                            }
+                            new AmenitiesAsyncTask().execute();
+                        }
                     }
-                    comments.addAll(notice.getComments());
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-
-                notices.toArray(noticesArray);
-                noticeWings.toArray(noticeWingArray);
-                comments.toArray(commentsArray);
-
-                new NoticesAsyncTask().execute();
             }
-        }.start();
 
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+
+            }
+        });
     }
 
     public void getVisitorHistoryFromServer() {
@@ -415,56 +420,6 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
 
             }
         });
-    }
-
-    public void getComplaintsFromServer() {
-
-    }
-
-    private class AddVisitorsToDatabase extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            visitorDao = appDatabase.visitorDao();
-            visitorDao.deleteAll();
-            visitorDao.insert(visitorsArray);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            if (visitorHistoryFragment.getContext() != null) {
-                visitorHistoryFragment.updateRecyclerView();
-            }
-            super.onPostExecute(aVoid);
-        }
-    }
-
-    private class NoticesAsyncTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            noticeDao.insert(noticesArray);
-            noticeWingDao.insert(noticeWingArray);
-            commentDao.insert(commentsArray);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            noticeBoardFragment.updateRecyclerView();
-            super.onPostExecute(aVoid);
-        }
     }
 
     private void getMaintenanceFromServer() {
@@ -536,6 +491,94 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         }.start();
     }
 
+    public void addNoticesToDatabase(final ArrayList<Notice> notices) {
+
+        new Thread() {
+            public void run() {
+                noticeDao = appDatabase.noticeDao();
+                noticeWingDao = appDatabase.noticeWingsDao();
+                commentDao = appDatabase.commentDao();
+
+                noticesArray = new Notice[notices.size()];
+
+                int noticeWingsLength = 0, commentsLength = 0;
+                for (Notice notice : notices) {
+                    noticeWingsLength += notice.getWings().size();
+                    commentsLength += notice.getComments().size();
+                }
+
+                noticeWingArray = new NoticeWing[noticeWingsLength];
+                commentsArray = new Notice.Comment[commentsLength];
+
+                ArrayList<NoticeWing> noticeWings = new ArrayList<>();
+                ArrayList<Notice.Comment> comments = new ArrayList<>();
+                NoticeWing noticeWing;
+
+                for (Notice notice : notices) {
+                    for (Wing wing : notice.getWings()) {
+                        noticeWing = new NoticeWing();
+                        noticeWing.setWing_id(wing.getWing_id());
+                        noticeWing.setNotice_id(notice.getNotice_id());
+                        noticeWings.add(noticeWing);
+                    }
+                    comments.addAll(notice.getComments());
+                }
+
+                notices.toArray(noticesArray);
+                noticeWings.toArray(noticeWingArray);
+                comments.toArray(commentsArray);
+
+                new NoticesAsyncTask().execute();
+            }
+        }.start();
+
+    }
+
+    private class NoticesAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            noticeDao.insert(noticesArray);
+            noticeWingDao.insert(noticeWingArray);
+            commentDao.insert(commentsArray);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            noticeBoardFragment.updateRecyclerView();
+            super.onPostExecute(aVoid);
+        }
+    }
+
+    private class AmenitiesAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            appDatabase.amenityDao().deleteAll();
+            appDatabase.amenityDao().insert(amenitiesArray);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if (amenitiesFragment.getContext() != null) {
+                amenitiesFragment.updateRecyclerView();
+            }
+            super.onPostExecute(aVoid);
+        }
+    }
+
     private class MaintenanceAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -546,7 +589,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         @Override
         protected Void doInBackground(Void... voids) {
             appDatabase.maintenanceDao().deleteAll();
-            maintenanceDao.insert(maintenancesArray);
+            appDatabase.maintenanceDao().insert(maintenancesArray);
             return null;
         }
 
@@ -554,6 +597,30 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         protected void onPostExecute(Void aVoid) {
             if (maintenanceFragment.getContext() != null) {
                 maintenanceFragment.updateRecyclerView();
+            }
+            super.onPostExecute(aVoid);
+        }
+    }
+
+    private class AddVisitorsToDatabase extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            visitorDao = appDatabase.visitorDao();
+            visitorDao.deleteAll();
+            visitorDao.insert(visitorsArray);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if (visitorHistoryFragment.getContext() != null) {
+                visitorHistoryFragment.updateRecyclerView();
             }
             super.onPostExecute(aVoid);
         }

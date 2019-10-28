@@ -9,20 +9,26 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CommentsAdapter extends RecyclerView.Adapter {
 
     ArrayList<ViewHolder> viewHolders = new ArrayList<>();
     ArrayList<Notice.Comment> dataset;
     Context context;
+    String townshipId;
 
-    public CommentsAdapter(ArrayList<Notice.Comment> dataset, Context context) {
+    public CommentsAdapter(ArrayList<Notice.Comment> dataset, Context context, String townshipId) {
         this.dataset = dataset;
         this.context = context;
+        this.townshipId = townshipId;
     }
 
     @NonNull
@@ -40,6 +46,15 @@ public class CommentsAdapter extends RecyclerView.Adapter {
 
         Notice.Comment comment = dataset.get(position);
         viewHolder.name.setText(comment.getPosted_by_first_name() + " " + comment.getPosted_by_last_name());
+
+        final String url = "https://township-manager.s3.ap-south-1.amazonaws.com/townships/" + townshipId + "/user_profile_pics/" + comment.getPosted_by_user_id() + ".png";
+        Picasso.get()
+                .load(url)
+                .noFade()
+                .placeholder(R.drawable.ic_man)
+                .error(R.drawable.ic_man)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
+                .into(viewHolder.image);
 
         if (comment.getPosted_by_apartment() == null) {
             viewHolder.apartment.setText("(" + comment.getPosted_by_designation() + ")");
@@ -80,7 +95,8 @@ public class CommentsAdapter extends RecyclerView.Adapter {
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView name, apartment, content;
-        ImageView image, statusIcon;
+        ImageView statusIcon;
+        CircleImageView image;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
