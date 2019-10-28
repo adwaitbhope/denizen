@@ -18,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -29,9 +28,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class AmenityDetailsActivity extends AppCompatActivity {
+public class AmenitySlotsActivity extends AppCompatActivity {
 
     String username, password, amenityId;
+    Boolean freeForMembers;
+    int amount;
 
     RecyclerView recyclerView;
     AmenitySlotsAdapter adapter;
@@ -42,7 +43,7 @@ public class AmenityDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_amenity_details);
+        setContentView(R.layout.activity_amenity_slots);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.amenity_details_toolbar);
         setSupportActionBar(toolbar);
@@ -62,7 +63,9 @@ public class AmenityDetailsActivity extends AppCompatActivity {
         }.start();
 
         Intent intent = getIntent();
-        amenityId = intent.getStringExtra("amenityId");
+        amenityId = intent.getStringExtra("amenity_id");
+        freeForMembers = intent.getBooleanExtra("free_for_members", false);
+        amount = intent.getIntExtra("amount", 0);
 
         CalendarView calendarView = findViewById(R.id.calendarView3);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -73,7 +76,7 @@ public class AmenityDetailsActivity extends AppCompatActivity {
         });
 
         recyclerView = findViewById(R.id.amenity_slots_recycler_view);
-        adapter = new AmenitySlotsAdapter(dataset, this);
+        adapter = new AmenitySlotsAdapter(dataset, this, freeForMembers, amenityId, amount);
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);

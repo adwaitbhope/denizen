@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -49,8 +48,10 @@ public class AmenitiesAdapter extends RecyclerView.Adapter {
         viewHolder.reserveSlot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, AmenityDetailsActivity.class);
-                intent.putExtra("amenityId", amenity.getAmenity_id());
+                Intent intent = new Intent(context, AmenitySlotsActivity.class);
+                intent.putExtra("amenity_id", amenity.getAmenity_id());
+                intent.putExtra("free_for_members", amenity.getFree_for_members());
+                intent.putExtra("amount", amenity.getBilling_rate());
                 context.startActivity(intent);
             }
         });

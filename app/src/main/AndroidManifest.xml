@@ -2,14 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.township.manager">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:name=".GlobalVariables"
         android:allowBackup="true"
@@ -18,7 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OneTimeFeeDetailsListActivity"
+        <activity android:name=".AmenityBookSlotActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".OneTimeFeeDetailsListActivity"
             android:label="One-time Payment List"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -26,63 +21,53 @@
             android:label="Booking History"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AmenityDetailsActivity"
+            android:name=".AmenitySlotsActivity"
             android:label="Amenity Details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MembershipDetailsActivity"
             android:label="Membership Details"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".PaymentForMaintenance"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
+        <activity
+            android:name=".MaintenancePaymentActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MaintenanceAdminContainerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".AddMaintenanceActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
+        <activity
+            android:name=".AddMaintenanceActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".VisitorHistorySecurityContainerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ComplaintsResidentContainerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".NoticeBoardCommentActivity"
             android:label="Comments"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
-
-        <activity android:name=".ProfileActivity"
+        <activity
+            android:name=".ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".RegistrationSuccessfulActivity"
             android:parentActivityName=".LoginScreenActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".FullScreenImageViewActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".AmenitiesAdminContainerActivity"
             android:label="Amenities"
             android:parentActivityName=".AdminHomeScreenActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity android:name=".RegistrationPaymentDetailsActivity" />
-
         <activity
             android:name=".AddNoticeAdminActivity"
             android:label="New Notice"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".RegisterComplaintActivity"
             android:label="Register Complaint"
@@ -95,63 +80,51 @@
             android:label="Application Status"
             android:parentActivityName=".RegistrationStepsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".RegistrationStepsActivity"
             android:label="Registration Steps"
             android:parentActivityName=".LoginScreenActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ForgotPassword"
             android:label="Forgot Password"
             android:parentActivityName=".LoginScreenActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".RegistrationStepTwoActivity"
             android:label="Society Details"
             android:parentActivityName=".RegistrationStepsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".MapsActivityStepOne"
             android:label="@string/title_activity_maps_step_one" />
-
         <activity
             android:name=".LoginScreenActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
         <activity
             android:name=".RegistrationStepOneActivity"
             android:label="Society Details"
             android:parentActivityName=".RegistrationStepsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".AdminHomeScreenActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar.TransparentStatusBar" />
-
         <activity
             android:name=".ResidentHomeScreenActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar.TransparentStatusBar" />
-
         <activity
             android:name=".SecurityHomeScreenActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar.TransparentStatusBar" />
-
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
 
         <meta-data
@@ -160,7 +133,14 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
     </application>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>

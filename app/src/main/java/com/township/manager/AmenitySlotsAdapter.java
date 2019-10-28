@@ -1,6 +1,7 @@
 package com.township.manager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,16 @@ public class AmenitySlotsAdapter extends RecyclerView.Adapter {
 
     ArrayList<AmenitySlot> dataset;
     Context context;
+    String amenityId;
+    int amount;
+    Boolean freeForMembers;
 
-    public AmenitySlotsAdapter(ArrayList<AmenitySlot> dataset, Context context) {
+    public AmenitySlotsAdapter(ArrayList<AmenitySlot> dataset, Context context, Boolean freeForMembers, String amenityId, int amount) {
         this.dataset = dataset;
         this.context = context;
+        this.amenityId = amenityId;
+        this.freeForMembers = freeForMembers;
+        this.amount = amount;
     }
 
     @NonNull
@@ -34,7 +41,7 @@ public class AmenitySlotsAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        AmenitySlot slot = dataset.get(position);
+        final AmenitySlot slot = dataset.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
 
         int startTime = Integer.valueOf(slot.getBilling_from().substring(11, 13));
@@ -50,12 +57,17 @@ public class AmenitySlotsAdapter extends RecyclerView.Adapter {
             endPeriod = "pm";
         }
 
-        String slotTime = startTime + "" + startPeriod + " to " + endTime + "" + endPeriod;
+        final String slotTime = startTime + "" + startPeriod + " to " + endTime + "" + endPeriod;
         viewHolder.slotTime.setText(slotTime);
         viewHolder.bookSlot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Booked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, AmenityBookSlotActivity.class);
+                intent.putExtra("slot_start", slot.getBilling_from());
+                intent.putExtra("free_for_members", freeForMembers);
+                intent.putExtra("amount", amount);
+                intent.putExtra("amenity_id", amenityId);
+                context.startActivity(intent);
             }
         });
      }

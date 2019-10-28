@@ -12,7 +12,8 @@ import androidx.room.RoomDatabase;
         Maintenance.class,
         Resident.class,
         Visitor.class,
-        Amenity.class}, version = 15)
+        Amenity.class,
+        AmenityBooking.class}, version = 16)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract WingDao wingDao();
 
@@ -31,4 +32,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract VisitorDao visitorDao();
 
     public abstract AmenityDao amenityDao();
+
+    public abstract AmenityBookingDao amenityBookingDao();
 }

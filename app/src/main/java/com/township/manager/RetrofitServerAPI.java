@@ -204,7 +204,6 @@ public interface RetrofitServerAPI {
             @Field("ORDER_ID") String ORDER_ID
     );
 
-
     @FormUrlEncoded
     @POST("/amenities/")
     Call<JsonArray> getAmenities(
@@ -221,6 +220,50 @@ public interface RetrofitServerAPI {
             @Field("day") int day,
             @Field("month") int month,
             @Field("year") int year
+    );
+
+    @FormUrlEncoded
+    @POST("amenities/book/")
+    Call<JsonArray> bookAmenity(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("amenity_id") String amenity_id,
+            @Field("day") int day,
+            @Field("month") int month,
+            @Field("year") int year,
+            @Field("hour") int hour
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/book/pay/initiate/")
+    Call<JsonArray> intiateAmenityBookingPayment(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("TXN_AMOUNT") String txnAmount,
+            @Field("CHANNEL_ID") String channelId,
+            @Field("WEBSITE") String website,
+            @Field("CALLBACK_URL") String callbackUrl,
+            @Field("INDUSTRY_TYPE_ID") String industryTypeId
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/book/pay/verify/")
+    Call<JsonArray> verifyAmenityBookingPayment(
+            @Field("username") String username,
+            @Field("password") String passsword,
+            @Field("ORDER_ID") String ORDER_ID,
+            @Field("amenity_id") String amenity_id,
+            @Field("day") int day,
+            @Field("month") int month,
+            @Field("year") int year,
+            @Field("hour") int hour
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/membership/check/")
+    Call<JsonArray> checkMembershipStatus(
+            @Field("username") String username,
+            @Field("password") String passsword
     );
 
 }
