@@ -6,33 +6,67 @@
     android:layout_height="match_parent"
     tools:context=".AddSecurityActivity">
 
+
     <ImageView
         android:id="@+id/add_security_personnel_imageview"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/professional_photo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/ic_noice"
+        tools:layout_editor_absoluteX="149dp"
+        tools:layout_editor_absoluteY="520dp" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/add_security_personnel_name_textinput"
+        android:id="@+id/security_name_til"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_security_personnel_imageview">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/add_security_personnel_name_textinput_child"
+            android:id="@+id/security_name_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/name" />
+            android:drawableStart="@drawable/ic_person_black_24dp"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/secondaryColor"
+            android:fontFamily="@font/roboto_mono"
+            android:hint="Name"
+            android:inputType="textPersonName|text"
+            android:paddingLeft="10dp"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/security_phone_number_til"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:errorEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/security_name_til">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/security_phone_number_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_call_black_24dp"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/secondaryColor"
+            android:fontFamily="@font/roboto_mono"
+            android:hint="Phone"
+            android:inputType="textPersonName|text"
+            android:paddingLeft="10dp"
+            android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -41,7 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:text="@string/save"
+        android:text="Save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -55,38 +89,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/add_security_personnel_edit_image_button"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        app:layout_constraintBottom_toBottomOf="@+id/add_security_personnel_imageview"
-        app:layout_constraintStart_toEndOf="@+id/add_security_personnel_imageview"
-        app:srcCompat="@drawable/ic_add_a_photo_black_24dp" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/add_security_personnel_phone_number_textinput"
-        android:layout_width="0dp"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="@+id/add_security_personnel_name_textinput"
-        app:layout_constraintStart_toStartOf="@+id/add_security_personnel_name_textinput"
-        app:layout_constraintTop_toBottomOf="@+id/add_security_personnel_name_textinput">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/add_security_personnel_phone_textinput_child"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/phone_number" />
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_marginTop="8dp"
+        android:paddingLeft="8dp"
+        android:text="Upload Photo"
+        app:icon="@drawable/ic_add_a_photo_black_24dp"
+        app:iconPadding="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/add_security_personnel_imageview"
+        app:layout_constraintStart_toStartOf="@+id/add_security_personnel_imageview"
+        app:layout_constraintTop_toBottomOf="@+id/add_security_personnel_imageview"
+        app:srcCompat="@drawable/ic_add_a_photo_black_24dp" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:text="Shift TImings:"
-        app:layout_constraintStart_toStartOf="@+id/add_security_personnel_phone_number_textinput"
-        app:layout_constraintTop_toBottomOf="@+id/add_security_personnel_phone_number_textinput" />
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="419dp" />
 
     <Button
         android:id="@+id/add_security_personnel_shift_from_button"
