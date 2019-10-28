@@ -13,11 +13,11 @@
         <activity android:name=".AmenityBookSlotActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".OneTimeFeeDetailsListActivity"
+            android:name=".AmenitiesOneTimePaymentsActivity"
             android:label="One-time Payment List"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ResidentBookingHistoryActivity"
+            android:name=".AmenitiesBookingHistoryActivity"
             android:label="Booking History"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

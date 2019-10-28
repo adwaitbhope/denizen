@@ -236,7 +236,7 @@ public interface RetrofitServerAPI {
 
     @FormUrlEncoded
     @POST("/amenities/book/pay/initiate/")
-    Call<JsonArray> intiateAmenityBookingPayment(
+    Call<JsonArray> initiateAmenityBookingPayment(
             @Field("username") String username,
             @Field("password") String password,
             @Field("TXN_AMOUNT") String txnAmount,
@@ -250,7 +250,7 @@ public interface RetrofitServerAPI {
     @POST("/amenities/book/pay/verify/")
     Call<JsonArray> verifyAmenityBookingPayment(
             @Field("username") String username,
-            @Field("password") String passsword,
+            @Field("password") String password,
             @Field("ORDER_ID") String ORDER_ID,
             @Field("amenity_id") String amenity_id,
             @Field("day") int day,
@@ -263,14 +263,21 @@ public interface RetrofitServerAPI {
     @POST("/amenities/membership/")
     Call<JsonArray> getMembershipPayments(
             @Field("username") String username,
-            @Field("password") String passsword
+            @Field("password") String password
     );
 
     @FormUrlEncoded
     @POST("/amenities/membership/check/")
     Call<JsonArray> checkMembershipStatus(
             @Field("username") String username,
-            @Field("password") String passsword
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/booking_history/")
+    Call<JsonArray> getAmenityBookingHistory(
+            @Field("username") String username,
+            @Field("password") String password
     );
 
 }

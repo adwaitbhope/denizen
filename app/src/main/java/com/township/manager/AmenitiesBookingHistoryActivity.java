@@ -12,13 +12,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
+import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 
@@ -28,38 +28,32 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MembershipDetailsActivity extends AppCompatActivity {
-
-    AppDatabase appDatabase;
-    MembershipPaymentDao paymentDao;
-
-    String username, password;
-
-    ExtendedFloatingActionButton payMembershipButton;
-    ArrayList<MembershipPayment> dataset = new ArrayList<>();
-    ArrayList<MembershipPayment> temporaryDataset = new ArrayList<>();
+public class AmenitiesBookingHistoryActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    MembershipPaymentsAdapter adapter;
+    AmenitiesBookingHistoryAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
+
+    ArrayList<AmenityBooking> dataset = new ArrayList<>();
+    ArrayList<AmenityBooking> temporaryDataset = new ArrayList<>();
+
+    AppDatabase appDatabase;
+    AmenityBookingDao bookingDao;
+
+    String username, password;
+    AmenityBooking[] amenityBookingsArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_membership_details);
+        setContentView(R.layout.activity_amenities_booking_history);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.membership_details_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.resident_booking_history_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Membership Details");
+        getSupportActionBar().setTitle("Booking History");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        appDatabase = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "app-database")
-                .fallbackToDestructiveMigration()
-                .build();
-        paymentDao = appDatabase.membershipPaymentDao();
 
         DBManager dbManager = new DBManager(getApplicationContext());
         Cursor cursor = dbManager.getDataLogin();
@@ -68,22 +62,14 @@ public class MembershipDetailsActivity extends AppCompatActivity {
         username = cursor.getString(cursor.getColumnIndexOrThrow("Username"));
         password = cursor.getString(cursor.getColumnIndexOrThrow("Password"));
 
-        recyclerView = findViewById(R.id.membership_payments_recycler_view);
-        adapter = new MembershipPaymentsAdapter(dataset, this);
+        appDatabase = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "app-database")
+                .fallbackToDestructiveMigration()
+                .build();
+        bookingDao = appDatabase.amenityBookingDao();
 
-        payMembershipButton = findViewById(R.id.pay_membership_ex_fab);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dy > 10) {
-                    payMembershipButton.hide();
-                } else if (dy < 10) {
-                    payMembershipButton.show();
-                }
-            }
-        });
-
-        getMembershipPaymentsFromServer();
+        recyclerView = findViewById(R.id.amenities_booking_history_recycler_view);
+        adapter = new AmenitiesBookingHistoryAdapter(dataset, this);
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -93,16 +79,8 @@ public class MembershipDetailsActivity extends AppCompatActivity {
         recyclerView.setDrawingCacheEnabled(true);
         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
-    }
+        getBookingHistoryFromServer();
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        updateRecyclerView();
-    }
-
-    private void updateRecyclerView() {
-        new GetPaymentsAsyncTask().execute();
     }
 
     @Override
@@ -115,16 +93,23 @@ public class MembershipDetailsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void getMembershipPaymentsFromServer() {
-        Call<JsonArray> call = new Retrofit.Builder()
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
+    }
+
+    public void getBookingHistoryFromServer() {
+        Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(getString(R.string.server_addr))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(RetrofitServerAPI.class)
-                .getMembershipPayments(
-                        username,
-                        password
-                );
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit retrofit = builder.build();
+
+        RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
+
+        Call<JsonArray> call = retrofitServerAPI.getAmenityBookingHistory(
+                username,
+                password
+        );
 
         call.enqueue(new Callback<JsonArray>() {
             @Override
@@ -137,27 +122,25 @@ public class MembershipDetailsActivity extends AppCompatActivity {
                     if (loginData.getInt("login_status") == 1) {
                         if (loginData.getInt("request_status") == 1) {
 
-                            final JSONArray paymentsResponseArray = responseArray.getJSONArray(1);
+                            final JSONArray bookingResponseArray = responseArray.getJSONArray(1);
                             final Gson gson = new Gson();
-                            final MembershipPayment[] payments = new MembershipPayment[paymentsResponseArray.length()];
-
+                            amenityBookingsArray = new AmenityBooking[bookingResponseArray.length()];
                             new Thread() {
                                 public void run() {
-                                    WingDao wingDao = appDatabase.wingDao();
-                                    for (int i = 0; i < paymentsResponseArray.length(); i++) {
-                                        MembershipPayment payment = null;
+                                    for (int i = 0; i < bookingResponseArray.length(); i++) {
                                         try {
-                                            payment = gson.fromJson(paymentsResponseArray.getJSONObject(i).toString(), MembershipPayment.class);
-                                            payment.setWing(wingDao.getWingName(payment.getWing_id()));
-                                            payments[i] = payment;
+                                            AmenityBooking booking = null;
+                                            booking = gson.fromJson(bookingResponseArray.getJSONObject(i).toString(), AmenityBooking.class);
+                                            amenityBookingsArray[i] = booking;
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
                                     }
-                                    paymentDao.insert(payments);
-                                    updateRecyclerView();
+                                    appDatabase.amenityBookingDao().insert(amenityBookingsArray);
+                                    new GetBookingsAsyncTask().execute();
                                 }
                             }.start();
+
                         }
                     }
 
@@ -173,7 +156,7 @@ public class MembershipDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private class GetPaymentsAsyncTask extends AsyncTask<Void, Void, Void> {
+    private class GetBookingsAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
@@ -183,7 +166,7 @@ public class MembershipDetailsActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             temporaryDataset.clear();
-            temporaryDataset.addAll(paymentDao.getAll());
+            temporaryDataset.addAll(bookingDao.getAll());
             return null;
         }
 

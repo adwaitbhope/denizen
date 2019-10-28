@@ -146,7 +146,7 @@ public class AmenitiesFragment extends Fragment implements View.OnClickListener 
     }
 
     public void updateRecyclerView() {
-        new AmenitiesFragment.MaintenanceAsyncTask().execute();
+        new AmenitiesFragment.AmenitiesAsyncTask().execute();
     }
 
     @Override
@@ -186,7 +186,7 @@ public class AmenitiesFragment extends Fragment implements View.OnClickListener 
         void onFragmentInteraction(Uri uri);
     }
 
-    private class MaintenanceAsyncTask extends AsyncTask<Void, Void, Void> {
+    private class AmenitiesAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {

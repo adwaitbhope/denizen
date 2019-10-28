@@ -6,12 +6,12 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-public class OneTimeFeeDetailsListActivity extends AppCompatActivity {
+public class AmenitiesOneTimePaymentsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_one_time_fee_details_list);
+        setContentView(R.layout.activity_amenities_one_time_payments);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.resident_booking_history_toolbar);
 //        toolbar.setTitleTextColor(getColor(R.color.secondaryColor));

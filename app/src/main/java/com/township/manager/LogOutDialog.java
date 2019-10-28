@@ -38,6 +38,8 @@ public class LogOutDialog extends AppCompatDialogFragment {
                                 .fallbackToDestructiveMigration()
                                 .build();
 
+                        appDatabase.membershipPaymentDao();
+                        appDatabase.amenityBookingDao();
                         appDatabase.amenityDao().deleteAll();
                         appDatabase.visitorDao().deleteAll();
                         appDatabase.commentDao().deleteAll();

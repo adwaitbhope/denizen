@@ -178,7 +178,7 @@ public class AmenityBookSlotActivity extends AppCompatActivity implements PaytmP
 
         paytmOrder.setTXN_AMOUNT(amount);
         RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
-        Call<JsonArray> call = retrofitServerAPI.intiateAmenityBookingPayment(
+        Call<JsonArray> call = retrofitServerAPI.initiateAmenityBookingPayment(
                 username,
                 password,
                 amount,
