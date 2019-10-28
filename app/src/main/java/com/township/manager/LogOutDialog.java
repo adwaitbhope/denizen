@@ -46,6 +46,7 @@ public class LogOutDialog extends AppCompatDialogFragment {
                         appDatabase.complaintDao().deleteAll();
                         appDatabase.residentDao().deleteAll();
                         appDatabase.wingDao().deleteAll();
+                        appDatabase.intercomDao().deleteAll();
 
                     }
                 }.start();
