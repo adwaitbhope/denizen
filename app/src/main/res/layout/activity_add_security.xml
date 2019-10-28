@@ -11,9 +11,13 @@
         android:id="@+id/add_security_personnel_imageview"
         android:layout_width="120dp"
         android:layout_height="120dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
         android:src="@drawable/ic_noice"
-        tools:layout_editor_absoluteX="145dp"
-        tools:layout_editor_absoluteY="358dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/security_name_til"
@@ -37,7 +41,7 @@
             android:drawableTint="@color/secondaryColor"
             android:fontFamily="@font/roboto_mono"
             android:hint="Name"
-            android:inputType="textPersonName|text"
+            android:inputType="textShortMessage|textPersonName|text"
             android:paddingLeft="10dp"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -64,14 +68,14 @@
             android:drawableTint="@color/secondaryColor"
             android:fontFamily="@font/roboto_mono"
             android:hint="Phone"
-            android:inputType="textPersonName|text"
+            android:inputType="phone"
             android:paddingLeft="10dp"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/add_security_personnel_save_button"
-        android:layout_width="90dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
@@ -115,27 +119,39 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:text="Shift TImings:"
-        app:layout_constraintTop_toBottomOf="@+id/security_phone_number_til"
-        tools:layout_editor_absoluteX="32dp" />
+        android:layout_marginEnd="24dp"
+        android:text="Shift Timings"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/security_phone_number_til" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/add_security_personnel_shift_from_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="64dp"
         android:layout_marginTop="16dp"
+        android:paddingLeft="8dp"
         android:text="From"
+        app:icon="@drawable/ic_call_received_black_24dp"
+        app:iconPadding="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/add_security_personnel_shift_till_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="80dp"
+        android:layout_marginEnd="64dp"
+        android:paddingLeft="8dp"
         android:text="Till"
+        app:icon="@drawable/ic_call_made_black_24dp"
+        app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/add_security_personnel_shift_from_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/add_security_personnel_shift_from_button" />
@@ -145,7 +161,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="6 AM"
         app:layout_constraintEnd_toEndOf="@+id/add_security_personnel_shift_from_button"
         app:layout_constraintStart_toStartOf="@+id/add_security_personnel_shift_from_button"
         app:layout_constraintTop_toBottomOf="@+id/add_security_personnel_shift_from_button" />
@@ -155,7 +171,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="4 PM"
         app:layout_constraintEnd_toEndOf="@+id/add_security_personnel_shift_till_button"
         app:layout_constraintStart_toStartOf="@+id/add_security_personnel_shift_till_button"
         app:layout_constraintTop_toBottomOf="@+id/add_security_personnel_shift_till_button" />
