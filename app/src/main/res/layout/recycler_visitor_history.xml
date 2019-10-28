@@ -29,9 +29,9 @@
         android:layout_marginStart="8dp"
         android:text="21-10-2019"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintBottom_toBottomOf="@+id/recycler_view_visitor_time_image_view"
+        app:layout_constraintStart_toEndOf="@+id/recycler_view_visitor_time_image_view"
+        app:layout_constraintTop_toTopOf="@+id/recycler_view_visitor_time_image_view" />
 
     <TextView
         android:id="@+id/recycler_view_visitor_time"
@@ -40,22 +40,22 @@
         android:layout_marginStart="24dp"
         android:layout_weight="20"
         android:text="18:01:33"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/recycler_view_visitor_time_image_view"
         app:layout_constraintStart_toEndOf="@+id/recycler_view_visitor_date"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintTop_toTopOf="@+id/recycler_view_visitor_time_image_view" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/recycler_view_visitor_time_in_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="18:01:45"
-        app:layout_constraintBottom_toBottomOf="@+id/textView10"
-        app:layout_constraintStart_toEndOf="@+id/textView10"
-        app:layout_constraintTop_toTopOf="@+id/textView10" />
+        app:layout_constraintBottom_toBottomOf="@+id/recycler_view_visitor_date_in_text_view"
+        app:layout_constraintStart_toEndOf="@+id/recycler_view_visitor_date_in_text_view"
+        app:layout_constraintTop_toTopOf="@+id/recycler_view_visitor_date_in_text_view" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/recycler_view_visitee_description_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -68,15 +68,15 @@
         app:layout_constraintTop_toBottomOf="@+id/recycler_view_visitor_name" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/recycler_view_visitee_wing_flat_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="B-101"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/textView6"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toTopOf="@+id/textView6" />
+        app:layout_constraintBottom_toBottomOf="@+id/recycler_view_visitee_description_text_view"
+        app:layout_constraintStart_toEndOf="@+id/recycler_view_visitee_description_text_view"
+        app:layout_constraintTop_toTopOf="@+id/recycler_view_visitee_description_text_view" />
 
     <View
         android:id="@+id/divider2"
@@ -89,10 +89,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view_visitor_date_in_text_view" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/recycler_view_visitor_date_in_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -102,18 +102,18 @@
         app:layout_constraintTop_toBottomOf="@+id/recycler_view_visitor_date" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/recycler_view_visitor_time_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:tint="@color/secondaryColor"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view_visitee_description_text_view"
         app:srcCompat="@drawable/ic_today_black_24dp" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/visitor_in_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -127,17 +127,17 @@
         app:srcCompat="@drawable/ic_call_received_black_24dp" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/visitor_out_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="132dp"
         android:tint="@color/secondaryColor"
-        app:layout_constraintBottom_toBottomOf="@+id/textView10"
+        app:layout_constraintBottom_toBottomOf="@+id/recycler_view_visitor_date_in_text_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toTopOf="@+id/textView10"
+        app:layout_constraintStart_toEndOf="@+id/recycler_view_visitor_time_in_text_view"
+        app:layout_constraintTop_toTopOf="@+id/recycler_view_visitor_date_in_text_view"
         app:srcCompat="@drawable/ic_call_made_black_24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
