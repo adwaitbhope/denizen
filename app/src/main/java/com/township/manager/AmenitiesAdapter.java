@@ -29,14 +29,13 @@ public class AmenitiesAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_amenities, parent, false);
-        final AmenitiesAdapter.ViewHolder viewHolder = new AmenitiesAdapter.ViewHolder(view);
-
+        AmenitiesAdapter.ViewHolder viewHolder = new AmenitiesAdapter.ViewHolder(view);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        Amenity amenity = dataset.get(position);
+        final Amenity amenity = dataset.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
 
         viewHolder.name.setText(amenity.getName());
@@ -51,6 +50,7 @@ public class AmenitiesAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, AmenityDetailsActivity.class);
+                intent.putExtra("amenityId", amenity.getAmenity_id());
                 context.startActivity(intent);
             }
         });

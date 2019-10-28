@@ -24,6 +24,15 @@ class Amenity {
     @ColumnInfo(name = "free_for_members")
     Boolean free_for_members;
 
+    @NonNull
+    public String getAmenity_id() {
+        return amenity_id;
+    }
+
+    public void setAmenity_id(@NonNull String amenity_id) {
+        this.amenity_id = amenity_id;
+    }
+
     public String getName() {
         return name;
     }

@@ -212,4 +212,15 @@ public interface RetrofitServerAPI {
             @Field("password") String password
     );
 
+    @FormUrlEncoded
+    @POST("/amenities/availability/")
+    Call<JsonArray> getAmenitySlots(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("amenity_id") String amenity_id,
+            @Field("day") int day,
+            @Field("month") int month,
+            @Field("year") int year
+    );
+
 }
