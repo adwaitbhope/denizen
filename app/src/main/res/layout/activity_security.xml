@@ -40,19 +40,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:elevation="4dp"
-        app:layout_constraintTop_toBottomOf="@id/security_info_app_bar_layout"
-        app:tabIndicatorColor="@android:color/white"
-        app:tabTextColor="@android:color/white">
+        app:tabInlineLabel="true"
+        app:layout_constraintTop_toBottomOf="@id/security_info_app_bar_layout">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/desk_tab"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_people_black_24dp"
+            android:text="Personnel"/>
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/personnel_tab"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_store_black_24dp"
+            android:text="Desks" />
 
     </com.google.android.material.tabs.TabLayout>
 

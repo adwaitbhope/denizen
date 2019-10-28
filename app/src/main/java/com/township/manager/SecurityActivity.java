@@ -40,6 +40,8 @@ public class SecurityActivity extends AppCompatActivity implements SecurityDesks
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.security_tab_layout);
         tabLayout.setupWithViewPager(mSlideViewPager);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_people_black_24dp);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_store_black_24dp);
 
     }
 
