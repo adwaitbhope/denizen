@@ -2,6 +2,7 @@ package com.township.manager;
 
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -11,6 +12,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 
 public class AddSecurityActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
@@ -36,6 +38,24 @@ public class AddSecurityActivity extends AppCompatActivity implements TimePicker
                 timePicker.show(getSupportFragmentManager(), "time picker");
             }
         });
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.add_security_personnel_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Add Security");
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

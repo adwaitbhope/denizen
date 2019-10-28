@@ -34,7 +34,8 @@ public class SecurityActivity extends AppCompatActivity implements SecurityDesks
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.security_info_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Security");
+        getSupportActionBar().setTitle("Security Info");
+        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
