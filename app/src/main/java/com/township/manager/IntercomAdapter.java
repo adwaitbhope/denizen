@@ -6,12 +6,9 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 
@@ -27,7 +24,6 @@ public class IntercomAdapter extends RecyclerView.Adapter {
     WingDao wingDao;
     AppDatabase appDatabase;
     String wing;
-    int wingfilter;
 
     public IntercomAdapter(ArrayList<Intercom> dataset, Context context) {
         this.dataset = dataset;
@@ -37,88 +33,42 @@ public class IntercomAdapter extends RecyclerView.Adapter {
                 AppDatabase.class, "app-database")
                 .fallbackToDestructiveMigration()
                 .build();
-        wingDao=appDatabase.wingDao();
+        wingDao = appDatabase.wingDao();
     }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if(viewType==1) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_intercom_admins, parent, false);
-            final ViewHolderAdmin viewHolder = new ViewHolderAdmin(view);
-            return viewHolder;
-        }
-        else if(viewType==2){
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_intercom_security, parent, false);
-            final ViewHolderSecurity viewHolder = new ViewHolderSecurity(view);
-            return viewHolder;
-        }
-        else{
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_intercom_apartments, parent, false);
-            final ViewHolderApartments viewHolder = new ViewHolderApartments(view);
-            return viewHolder;
-        }
-
-
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        if(dataset.get(position).getType().equals("admin"))
-            return 1;
-        else if(dataset.get(position).getType().equals("security"))
-            return 2;
-        else
-            return 3;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_intercom, parent, false);
+        final ViewHolder viewHolder = new ViewHolder(view);
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-        final Intercom intercom=dataset.get(position);
-        MaterialButton button;
-        if(dataset.get(position).getType().equals("admin")){
-            final ViewHolderAdmin viewHolderAdmin=(ViewHolderAdmin)holder;
-            viewHolderAdmin.adminPhone.setText(intercom.getPhone());
-            viewHolderAdmin.adminName.setText(intercom.getFirst_name()+" "+intercom.getLast_name());
-            viewHolderAdmin.adminDesignation.setText(intercom.getDesignation());
-            button=viewHolderAdmin.phoneAdmin;
-        }
-        else if(dataset.get(position).getType().equals("security")){
-            final ViewHolderSecurity viewHolderSecurity=(ViewHolderSecurity)holder;
-            viewHolderSecurity.securityPhone.setText(intercom.getPhone());
-            viewHolderSecurity.securityGateNumer.setText(intercom.getDesignation());
-            button=viewHolderSecurity.phoneSecurity;
-        }
-        else{
+        final Intercom intercom = dataset.get(position);
+        final ViewHolder viewHolder = (ViewHolder) holder;
 
-            new Thread(){
-                @Override
-                public void run() {
-                    super.run();
-                    wing=wingDao.getWingName(intercom.getWing_id());
-                }
-            }.start();
-            final ViewHolderApartments viewHolderApartments=(ViewHolderApartments)holder;
-            viewHolderApartments.residentPhone.setText(intercom.getPhone());
-            viewHolderApartments.residentName.setText(intercom.getFirst_name()+" "+intercom.getLast_name());
-            viewHolderApartments.flatNo.setText(wing+" "+intercom.getApartment());
-            button=viewHolderApartments.phoneApartment;
+        viewHolder.phone.setText(intercom.getPhone());
+
+        if (intercom.getType().equals("security")) {
+            viewHolder.name.setText(intercom.getDesignation());
+            viewHolder.designation.setVisibility(View.GONE);
+        } else if (intercom.getType().equals("admin")) {
+            viewHolder.name.setText(intercom.getFirst_name() + " " + intercom.getLast_name());
+            viewHolder.designation.setText(intercom.getDesignation());
+        } else {
+            viewHolder.name.setText(intercom.getFirst_name() + " " + intercom.getLast_name());
+            viewHolder.designation.setText(intercom.getWing() + "-" + intercom.getApartment());
         }
-        button.setOnClickListener(new View.OnClickListener() {
+
+        viewHolder.callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri u = Uri.parse("tel:" + intercom.getPhone());
-                Intent i = new Intent(Intent.ACTION_DIAL, u);
-
-
-                try
-                {
-                    context.startActivity(i);
-                }
-                catch (SecurityException s)
-                {
-
-                }
+                Uri uri = Uri.parse("tel:" + intercom.getPhone());
+                Intent intent = new Intent(Intent.ACTION_DIAL, uri);
+                context.startActivity(intent);
             }
         });
 
@@ -130,48 +80,19 @@ public class IntercomAdapter extends RecyclerView.Adapter {
         return dataset.size();
     }
 
-    public static class ViewHolderAdmin extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        MaterialButton phoneAdmin;
-        TextView adminName,adminPhone,adminDesignation;
+        MaterialButton callButton;
+        TextView name, phone, designation;
 
-
-        public ViewHolderAdmin(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            phoneAdmin=itemView.findViewById(R.id.intercom_admin_call_button);
-            adminName=itemView.findViewById(R.id.intercom_admin_name_text_view);
-            adminPhone=itemView.findViewById(R.id.intercom_admin_phone_number_text_view);
-            adminDesignation=itemView.findViewById(R.id.intercom_admin_designation_text_view);
-
+            callButton = itemView.findViewById(R.id.recycler_intercom_call_button);
+            name = itemView.findViewById(R.id.recycler_intercom_name_text_view);
+            phone = itemView.findViewById(R.id.recycler_intercom_phone_text_view);
+            designation = itemView.findViewById(R.id.recycler_intercom_designation_text_view);
         }
     }
 
 
-    public static class ViewHolderSecurity extends RecyclerView.ViewHolder {
-
-       MaterialButton phoneSecurity;
-       TextView securityGateNumer,securityPhone;
-
-        public ViewHolderSecurity(@NonNull View itemView) {
-            super(itemView);
-            phoneSecurity=itemView.findViewById(R.id.intercom_security_call_button);
-            securityGateNumer=itemView.findViewById(R.id.intercom_security_gate_number_text_view);
-            securityPhone=itemView.findViewById(R.id.intercom_security_phone_number_text_view);
-
-        }
-    }
-
-    public static class ViewHolderApartments extends RecyclerView.ViewHolder {
-
-        MaterialButton phoneApartment;
-        TextView flatNo,residentName,residentPhone;
-
-        public ViewHolderApartments(@NonNull View itemView) {
-            super(itemView);
-            phoneApartment=itemView.findViewById(R.id.intercom_wing_resident_call_button);
-            flatNo=itemView.findViewById(R.id.intercom_wing_resident_flat_number_text_view);
-            residentName=itemView.findViewById(R.id.intercom_wing_resident_name_text_view);
-            residentPhone=itemView.findViewById(R.id.intercom_wing_resident_phone_number_text_view);
-        }
-    }
 }

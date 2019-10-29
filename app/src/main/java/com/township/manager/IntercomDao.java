@@ -17,13 +17,12 @@ public interface IntercomDao {
     @Delete
     void delete(Intercom intercom);
 
-
     @Query("DELETE FROM Intercom")
     void deleteAll();
 
-    @Query("SELECT * FROM Intercom WHERE type=:type")
+    @Query("SELECT * FROM Intercom WHERE type=:type ORDER BY designation")
     List<Intercom> getAll(String type);
 
-    @Query("SELECT * FROM Intercom WHERE type=:type AND wing_id=:wingid")
-    List<Intercom> getAll(String type,String wingid);
+    @Query("SELECT * FROM Intercom WHERE type=:type AND wing_id=:wingid ORDER BY apartment")
+    List<Intercom> getAll(String type, String wingid);
 }

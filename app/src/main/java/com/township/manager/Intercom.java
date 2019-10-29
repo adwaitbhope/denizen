@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(foreignKeys = {
@@ -28,6 +29,9 @@ public class Intercom {
     @ColumnInfo(name="phone")
     String phone;
 
+    @Ignore
+    String wing;
+
     String wing_id;
 
     @ColumnInfo(name="apartment")
@@ -46,6 +50,14 @@ public class Intercom {
 
     public String getWing_id() {
         return wing_id;
+    }
+
+    public void setWing(String wing) {
+        this.wing = wing;
+    }
+
+    public String getWing() {
+        return wing;
     }
 
     public void setWing_id(String wing_id) {

@@ -37,57 +37,56 @@ import javax.sql.StatementEvent;
 
 public class IntercomActivity extends AppCompatActivity {
 
-    RecyclerView recyclerViewAdmins,recyclerViewApartments,recyclerViewSecurity;
-    IntercomAdapter adapterAdmins,adapterSecurity,adapterApartments;
-    RecyclerView.LayoutManager layoutManagerAdmins,layoutManagerSecurity,layoutManagerApartments;
+    RecyclerView recyclerViewAdmins, recyclerViewApartments, recyclerViewSecurity;
+    IntercomAdapter adapterAdmins, adapterSecurity, adapterApartments;
+    RecyclerView.LayoutManager layoutManagerAdmins, layoutManagerSecurity, layoutManagerApartments;
 
     AppDatabase appDatabase;
-    String username,password;
+    IntercomDao intercomDao;
+    WingDao wingDao;
+
+    String username, password;
 
     ArrayList<Intercom> intercoms = new ArrayList<>();
-    ArrayList<Intercom> datasetAdmin=new ArrayList<>();
-    ArrayList<Intercom> datasetApartment=new ArrayList<>();
-    ArrayList<Intercom> datasetSecurity=new ArrayList<>();
+
+    ArrayList<Intercom> datasetAdmin = new ArrayList<>();
+    ArrayList<Intercom> datasetApartment = new ArrayList<>();
+    ArrayList<Intercom> datasetSecurity = new ArrayList<>();
+
     ArrayList<Intercom> temporaryDatasetAdmin = new ArrayList<>();
-    ArrayList<Intercom> temporaryDatasetApartment=new ArrayList<>();
-    ArrayList<Intercom> temporaryDatasetSecurity=new ArrayList<>();
-    IntercomDao intercomDao;
+    ArrayList<Intercom> temporaryDatasetApartment = new ArrayList<>();
+    ArrayList<Intercom> temporaryDatasetSecurity = new ArrayList<>();
+
     Intercom[] intercomsArray;
-    WingDao wingDao;
-    ArrayList<String> WINGS=new ArrayList<>();
+
     AutoCompleteTextView wingFilledExposedDropdown;
-    int flag=0;
+    ArrayList<String> WINGS = new ArrayList<>();
 
-
+    int flag = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intercom);
 
+        DBManager dbManager = new DBManager(getApplicationContext());
+        Cursor cursor = dbManager.getDataLogin();
+        cursor.moveToFirst();
 
-                DBManager dbManager = new DBManager(getApplicationContext());
-                Cursor cursor = dbManager.getDataLogin();
-                cursor.moveToFirst();
+        int usernameCol, passwordCol;
 
-                int usernameCol,passwordCol;
+        usernameCol = cursor.getColumnIndexOrThrow("Username");
+        passwordCol = cursor.getColumnIndexOrThrow("Password");
 
-                usernameCol = cursor.getColumnIndexOrThrow("Username");
-                passwordCol = cursor.getColumnIndexOrThrow("Password");
-
-
-                username = cursor.getString(usernameCol);
-                password = cursor.getString(passwordCol);
-
+        username = cursor.getString(usernameCol);
+        password = cursor.getString(passwordCol);
 
         appDatabase = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "app-database")
                 .fallbackToDestructiveMigration()
                 .build();
-        intercomDao=appDatabase.intercomDao();
-        wingDao=appDatabase.wingDao();
-
-        getIntercomFromServer();
+        intercomDao = appDatabase.intercomDao();
+        wingDao = appDatabase.wingDao();
 
         intializeAdminRecycler();
         intializeSecurityRecycler();
@@ -95,6 +94,7 @@ public class IntercomActivity extends AppCompatActivity {
 
         updateRecyclerView();
 
+        getIntercomFromServer();
 
         new Thread() {
             @Override
@@ -110,18 +110,15 @@ public class IntercomActivity extends AppCompatActivity {
                         R.layout.dropdown_menu_popup_item,
                         WINGS);
 
-        wingFilledExposedDropdown =
-                findViewById(R.id.intercom_wing_selector_exposed_dropdown);
+        wingFilledExposedDropdown = findViewById(R.id.intercom_wing_selector_exposed_dropdown);
         wingFilledExposedDropdown.setAdapter(adapter);
-
-       wingFilledExposedDropdown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-           @Override
-           public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
-               flag=1;
-               updateRecyclerView();
-           }
-       });
-
+        wingFilledExposedDropdown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
+                flag = 1;
+                updateRecyclerView();
+            }
+        });
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.intercom_toolbar);
         setSupportActionBar(toolbar);
@@ -154,43 +151,42 @@ public class IntercomActivity extends AppCompatActivity {
         call.enqueue(new Callback<JsonArray>() {
             @Override
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
-//                Log.d("intercomresponse", response.body().toString());
+                Log.d("intercom response", response.body().toString());
                 String responseString = response.body().getAsJsonArray().toString();
-                try{
-                    Log.d("inercom",responseString);
+                try {
+                    Log.d("intercom", responseString);
                     JSONArray jsonArray = new JSONArray(responseString);
                     JSONObject loginResponse = jsonArray.getJSONObject(0);
 
                     if (loginResponse.getInt("login_status") == 1) {
-                        JSONArray jsonAdmin=jsonArray.getJSONArray(1);
-                        JSONArray jsonSecurity=jsonArray.getJSONArray(2);
-                        JSONArray jsonApartment=jsonArray.getJSONArray(3);
+                        JSONArray jsonAdmin = jsonArray.getJSONArray(1);
+                        JSONArray jsonSecurity = jsonArray.getJSONArray(2);
+                        JSONArray jsonApartment = jsonArray.getJSONArray(3);
 
                         Intercom intercom;
                         Gson gson = new Gson();
                         JSONObject intercomObject;
 
-                        for(int i=0;i<jsonAdmin.length();i++){
-                            intercomObject=jsonAdmin.getJSONObject(i);
-                            intercom=gson.fromJson(intercomObject.toString(), Intercom.class);
+                        for (int i = 0; i < jsonAdmin.length(); i++) {
+                            intercomObject = jsonAdmin.getJSONObject(i);
+                            intercom = gson.fromJson(intercomObject.toString(), Intercom.class);
                             intercoms.add(intercom);
                         }
-                        for(int i=0;i<jsonSecurity.length();i++){
-                            intercomObject=jsonSecurity.getJSONObject(i);
-                            intercom=gson.fromJson(intercomObject.toString(), Intercom.class);
+                        for (int i = 0; i < jsonSecurity.length(); i++) {
+                            intercomObject = jsonSecurity.getJSONObject(i);
+                            intercom = gson.fromJson(intercomObject.toString(), Intercom.class);
                             intercoms.add(intercom);
                         }
-                        for(int i=0;i<jsonApartment.length();i++){
-                            intercomObject=jsonApartment.getJSONObject(i);
-                            intercom=gson.fromJson(intercomObject.toString(), Intercom.class);
+                        for (int i = 0; i < jsonApartment.length(); i++) {
+                            intercomObject = jsonApartment.getJSONObject(i);
+                            intercom = gson.fromJson(intercomObject.toString(), Intercom.class);
                             intercoms.add(intercom);
                         }
 
                         addIntercomToDatabase(intercoms);
                     }
 
-                }
-                catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -204,11 +200,11 @@ public class IntercomActivity extends AppCompatActivity {
 
     private void addIntercomToDatabase(final ArrayList<Intercom> intercoms) {
 
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
-                intercomDao=appDatabase.intercomDao();
-                intercomsArray=new Intercom[intercoms.size()];
+                intercomDao = appDatabase.intercomDao();
+                intercomsArray = new Intercom[intercoms.size()];
 
                 intercoms.toArray(intercomsArray);
                 IntercomAsyncTask intercomAsyncTask = new IntercomAsyncTask();
@@ -251,22 +247,22 @@ public class IntercomActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
+
+            WingDao wingDao = appDatabase.wingDao();
+
             temporaryDatasetAdmin.clear();
             temporaryDatasetAdmin.addAll(intercomDao.getAll("admin"));
             temporaryDatasetApartment.clear();
-            String wingid;
 
-            Log.d("if","a");
-            if(flag==1) {
-                wingid=wingDao.getWingId(wingFilledExposedDropdown.getText().toString());
-                Log.d("id",wingid);
-                Log.d("if",wingFilledExposedDropdown.getText().toString());
-                temporaryDatasetApartment.addAll(intercomDao.getAll("resident", wingid));
+            String wingId;
+            if (flag == 1) {
+                wingId = wingDao.getWingId(wingFilledExposedDropdown.getText().toString());
+                temporaryDatasetApartment.addAll(intercomDao.getAll("resident", wingId));
+                for (Intercom intercom : temporaryDatasetApartment) {
+                    intercom.setWing(wingDao.getWingName(intercom.getWing_id()));
+                }
             }
-            else {
-                Log.d("else","else");
-                temporaryDatasetApartment.addAll(intercomDao.getAll("resident"));
-            }
+
             temporaryDatasetSecurity.clear();
             temporaryDatasetSecurity.addAll(intercomDao.getAll("security"));
 
@@ -279,17 +275,22 @@ public class IntercomActivity extends AppCompatActivity {
             super.onPostExecute(aVoid);
             datasetAdmin.clear();
             datasetAdmin.addAll(temporaryDatasetAdmin);
+
             datasetApartment.clear();
             datasetApartment.addAll(temporaryDatasetApartment);
+
             datasetSecurity.clear();
             datasetSecurity.addAll(temporaryDatasetSecurity);
+
             if (adapterApartments != null) {
                 adapterApartments.notifyDataSetChanged();
             }
-            if(adapterAdmins!=null){
+
+            if (adapterAdmins != null) {
                 adapterAdmins.notifyDataSetChanged();
             }
-            if(adapterSecurity!=null){
+
+            if (adapterSecurity != null) {
                 adapterSecurity.notifyDataSetChanged();
             }
         }
@@ -297,8 +298,8 @@ public class IntercomActivity extends AppCompatActivity {
 
     private void intializeApartmentsRecyler() {
 
-        recyclerViewApartments= findViewById(R.id.recycler_intecom_apartments);
-        adapterApartments = new IntercomAdapter(datasetApartment,this);
+        recyclerViewApartments = findViewById(R.id.recycler_intecom_apartments);
+        adapterApartments = new IntercomAdapter(datasetApartment, this);
 
         layoutManagerApartments = new LinearLayoutManager(this);
 
@@ -312,8 +313,8 @@ public class IntercomActivity extends AppCompatActivity {
 
     private void intializeSecurityRecycler() {
 
-        recyclerViewSecurity= findViewById(R.id.recycler_intecom_security);
-        adapterSecurity = new IntercomAdapter(datasetSecurity,this);
+        recyclerViewSecurity = findViewById(R.id.recycler_intecom_security);
+        adapterSecurity = new IntercomAdapter(datasetSecurity, this);
 
         layoutManagerSecurity = new LinearLayoutManager(this);
 
@@ -328,9 +329,9 @@ public class IntercomActivity extends AppCompatActivity {
     private void intializeAdminRecycler() {
 
         recyclerViewAdmins = findViewById(R.id.recycler_intecom_admins);
-        adapterAdmins = new IntercomAdapter(datasetAdmin,this);
+        adapterAdmins = new IntercomAdapter(datasetAdmin, this);
 
-        layoutManagerAdmins= new LinearLayoutManager(this);
+        layoutManagerAdmins = new LinearLayoutManager(this);
 
         recyclerViewAdmins.setLayoutManager(layoutManagerAdmins);
         recyclerViewAdmins.setAdapter(adapterAdmins);
