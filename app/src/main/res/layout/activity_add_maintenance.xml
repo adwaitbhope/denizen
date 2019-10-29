@@ -85,7 +85,7 @@
             android:drawableStart="@drawable/ic_home_black_24dp"
             android:drawablePadding="10dp"
             android:drawableTint="@color/secondaryColor"
-            android:editable="true"
+            android:editable="false"
             android:hint="Flat no."
             android:paddingStart="10dp"
             android:textSize="14sp" />
