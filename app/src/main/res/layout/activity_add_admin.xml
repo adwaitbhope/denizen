@@ -12,12 +12,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="240dp"
-        android:text="No. of new admins"
+        android:text="No. of new adminInfos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/no_of_new_admins_editText"
+        android:id="@+id/add_admin_no_of_admins_edit_text"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -26,5 +26,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/no_of_new_admins_textView"
         app:layout_constraintStart_toEndOf="@+id/no_of_new_admins_textView"
         app:layout_constraintTop_toTopOf="@+id/no_of_new_admins_textView" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_admin_create_admins_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create"
+        app:layout_constraintTop_toBottomOf="@id/add_admin_no_of_admins_edit_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
