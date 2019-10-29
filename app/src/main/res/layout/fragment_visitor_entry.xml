@@ -7,81 +7,138 @@
     android:focusableInTouchMode="true"
     tools:context=".VisitorEntryFragment">
 
-    <Button
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/visitor_entry_app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/visitor_entry_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/visitor_entry_go_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="Go"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        android:layout_marginEnd="16dp"
+        android:paddingLeft="8dp"
+        android:text="Add Entry"
+        app:icon="@drawable/ic_person_add_black_24dp"
+        app:iconPadding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/visitor_entry_purpose_til" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/visitor_entry_visitor_phone_til"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/visitor_entry_last_name_til">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/visitor_entry_visitor_phone_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_call_black_24dp"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/secondaryColor"
+            android:hint="Phone"
+            android:inputType="phone|number"
+            android:paddingLeft="10dp"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/visitor_entry_wing_til"
+        style="@style/AppTextField.ExposedDropdownMenu"
+        android:layout_width="144dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="35"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/visitor_entry_visitor_phone_til">
+
+        <AutoCompleteTextView
+            android:id="@+id/visitor_entry_wing_drop_down"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_domain_black_24dp"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/secondaryColor"
+            android:editable="false"
+            android:hint="Wing"
+            android:paddingLeft="10dp"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/visitor_entry_apartment_til"
+        style="@style/AppTextField.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:orientation="horizontal"
+        android:layout_weight="65"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/visitor_entry_last_name_til">
+        app:layout_constraintStart_toEndOf="@+id/visitor_entry_wing_til"
+        app:layout_constraintTop_toBottomOf="@+id/visitor_entry_visitor_phone_til">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/visitor_entry_wing_til"
-            style="@style/AppTextField.ExposedDropdownMenu"
-            android:layout_width="0dp"
+        <AutoCompleteTextView
+            android:id="@+id/visitor_entry_apartment_drop_down"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="35">
-
-            <AutoCompleteTextView
-                android:id="@+id/visitor_entry_wing_drop_down"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:editable="false"
-                android:hint="Wing"
-                android:paddingStart="16dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/visitor_entry_apartment_til"
-            style="@style/AppTextField.ExposedDropdownMenu"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_weight="65">
-
-            <AutoCompleteTextView
-                android:id="@+id/visitor_entry_apartment_drop_down"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:editable="false"
-                android:hint="Apartment"
-                android:paddingStart="16dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </LinearLayout>
+            android:drawableStart="@drawable/ic_home_black_24dp"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/secondaryColor"
+            android:editable="false"
+            android:hint="Flat"
+            android:paddingLeft="10dp"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/visitor_entry_first_name_til"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/visitor_entry_app_bar_layout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/visitor_entry_first_name_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_person_black_24dp"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/secondaryColor"
             android:hint="@string/first_name"
-            android:inputType="textPersonName|textCapWords" />
+            android:inputType="textPersonName|textCapWords"
+            android:paddingLeft="10dp"
+            android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -99,8 +156,38 @@
             android:id="@+id/visitor_entry_last_name_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_person_black_24dp"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/secondaryColor"
             android:hint="@string/last_name"
-            android:inputType="textPersonName|textCapWords" />
+            android:inputType="textPersonName|textCapWords"
+            android:paddingLeft="10dp"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/visitor_entry_purpose_til"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/visitor_entry_wing_til">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/visitor_entry_purpose_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_drive_eta_black_24dp"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/secondaryColor"
+            android:hint="Purpose of Visit"
+            android:inputType="textMultiLine|textCapWords"
+            android:paddingLeft="10dp"
+            android:scrollbars="vertical"
+            android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ProgressBar
