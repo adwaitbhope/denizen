@@ -39,7 +39,7 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 
-public class PaymentForMaintenance extends AppCompatActivity implements PaytmPaymentTransactionCallback {
+public class MaintenancePaymentActivity extends AppCompatActivity implements PaytmPaymentTransactionCallback {
 
     MaterialButton payForMaintenance;
     TextInputLayout amountTIL;
@@ -52,7 +52,7 @@ public class PaymentForMaintenance extends AppCompatActivity implements PaytmPay
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_payment_for_maintenance);
+        setContentView(R.layout.activity_maintenance_payment);
         payForMaintenance = findViewById(R.id.pay_for_maintenance_button);
         amountEditText = findViewById(R.id.enter_maintenance_amount_textinput_child);
         amountTIL = findViewById(R.id.enter_maintenance_amount_textinput);
@@ -208,7 +208,7 @@ public class PaymentForMaintenance extends AppCompatActivity implements PaytmPay
         Service.initialize(order, null);
 
         //finally starting the payment transaction
-        Service.startPaymentTransaction(PaymentForMaintenance.this, true, true, this);
+        Service.startPaymentTransaction(MaintenancePaymentActivity.this, true, true, this);
     }
 
 
@@ -223,7 +223,7 @@ public class PaymentForMaintenance extends AppCompatActivity implements PaytmPay
             if (jsonObject.getString("STATUS").equals("TXN_SUCCESS")) {
                 verifyTransactionStatusFromServer(jsonObject.getString("ORDERID"));
             } else {
-                Toast.makeText(PaymentForMaintenance.this, jsonObject.getString("STATUS"), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MaintenancePaymentActivity.this, jsonObject.getString("STATUS"), Toast.LENGTH_SHORT).show();
             }
 
         } catch (JSONException e) {
@@ -267,14 +267,14 @@ public class PaymentForMaintenance extends AppCompatActivity implements PaytmPay
                             }
                         }.start();
 
-                        Intent intent = new Intent(PaymentForMaintenance.this, RegistrationSuccessfulActivity.class);
+                        Intent intent = new Intent(MaintenancePaymentActivity.this, RegistrationSuccessfulActivity.class);
                         intent.putExtra("title", "Payment status");
                         intent.putExtra("heading", "Maintenance paid");
                         intent.putExtra("description", "Transaction successful, maintenance has been paid!");
                         startActivity(intent);
                         finish();
                     } else {
-                        Intent intent = new Intent(PaymentForMaintenance.this, RegistrationSuccessfulActivity.class);
+                        Intent intent = new Intent(MaintenancePaymentActivity.this, RegistrationSuccessfulActivity.class);
                         intent.putExtra("title", "Payment status");
                         intent.putExtra("heading", "Maintenance not paid");
                         intent.putExtra("description", "Transaction was unsuccessful, please try again later.");
@@ -319,31 +319,31 @@ public class PaymentForMaintenance extends AppCompatActivity implements PaytmPay
 
     @Override
     public void networkNotAvailable() {
-        Toast.makeText(PaymentForMaintenance.this, "Network error", Toast.LENGTH_LONG).show();
+        Toast.makeText(MaintenancePaymentActivity.this, "Network error", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void clientAuthenticationFailed(String inErrorMessage) {
-        Toast.makeText(PaymentForMaintenance.this, inErrorMessage, Toast.LENGTH_LONG).show();
+        Toast.makeText(MaintenancePaymentActivity.this, inErrorMessage, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void someUIErrorOccurred(String inErrorMessage) {
-        Toast.makeText(PaymentForMaintenance.this, inErrorMessage, Toast.LENGTH_LONG).show();
+        Toast.makeText(MaintenancePaymentActivity.this, inErrorMessage, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onErrorLoadingWebPage(int iniErrorCode, String inErrorMessage, String inFailingUrl) {
-        Toast.makeText(PaymentForMaintenance.this, inErrorMessage, Toast.LENGTH_LONG).show();
+        Toast.makeText(MaintenancePaymentActivity.this, inErrorMessage, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onBackPressedCancelTransaction() {
-        Toast.makeText(PaymentForMaintenance.this, "Transaction cancelled", Toast.LENGTH_LONG).show();
+        Toast.makeText(MaintenancePaymentActivity.this, "Transaction cancelled", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onTransactionCancel(String inErrorMessage, Bundle inResponse) {
-        Toast.makeText(PaymentForMaintenance.this, inErrorMessage + inResponse.toString(), Toast.LENGTH_LONG).show();
+        Toast.makeText(MaintenancePaymentActivity.this, inErrorMessage + inResponse.toString(), Toast.LENGTH_LONG).show();
     }
 }

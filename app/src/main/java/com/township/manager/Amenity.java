@@ -1,11 +1,37 @@
 package com.township.manager;
 
- class Amenity {
-    int billingperiod,amenityrate;
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
+class Amenity {
+
+    @NonNull
+    @PrimaryKey
+    String amenity_id;
+
+    @ColumnInfo(name = "name")
     String name;
-    Boolean freeornot;
 
+    @ColumnInfo(name="time_period")
+    int time_period;
 
+    @ColumnInfo(name = "billing_rate")
+    int billing_rate;
+
+    @ColumnInfo(name = "free_for_members")
+    Boolean free_for_members;
+
+    @NonNull
+    public String getAmenity_id() {
+        return amenity_id;
+    }
+
+    public void setAmenity_id(@NonNull String amenity_id) {
+        this.amenity_id = amenity_id;
+    }
 
     public String getName() {
         return name;
@@ -15,28 +41,28 @@ package com.township.manager;
         this.name = name;
     }
 
-    public Integer getBillingperiod() {
-        return billingperiod;
+    public Integer getTime_period() {
+        return time_period;
     }
 
-    public void setBillingperiod(Integer billingperiod) {
-        this.billingperiod = billingperiod;
+    public void setTime_period(Integer time_period) {
+        this.time_period = time_period;
     }
 
-    public Boolean getFreeornot() {
-        return freeornot;
+    public Boolean getFree_for_members() {
+        return free_for_members;
     }
 
-    public void setFreeornot(Boolean freeornot) {
-        this.freeornot = freeornot;
+    public void setFree_for_members(Boolean free_for_members) {
+        this.free_for_members = free_for_members;
     }
 
-    public int getAmenityrate() {
-        return amenityrate;
+    public int getBilling_rate() {
+        return billing_rate;
     }
 
-    public void setAmenityrate(int amenityrate) {
-        this.amenityrate = amenityrate;
+    public void setBilling_rate(int billing_rate) {
+        this.billing_rate = billing_rate;
     }
 
 

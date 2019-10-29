@@ -84,9 +84,6 @@ public class MaintenanceAdapter extends RecyclerView.Adapter {
 
         String year = timestamp.substring(2, 4);
 
-        int hour = Integer.valueOf(timestamp.substring(11, 13));
-        int minute = Integer.valueOf(timestamp.substring(14, 16));
-
         return month + " " + day + ", '" + year;
     }
 

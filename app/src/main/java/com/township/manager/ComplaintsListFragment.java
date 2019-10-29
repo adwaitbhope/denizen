@@ -3,12 +3,14 @@ package com.township.manager;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 
 /**
@@ -32,14 +35,25 @@ public class ComplaintsListFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM3 = "param3";
+    private static final String ARG_PARAM4 = "param4";
+    private static final String ARG_PARAM5 = "param5";
 
     // TODO: Rename and change types of parameters
     private Boolean resolved;
+    private String townshipId;
+    private Boolean isAdmin;
+    private String username, password;
 
     RecyclerView recyclerView;
     ComplaintsAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
-    ArrayList<Complaint> dataset;
+    ArrayList<Complaint> dataset = new ArrayList<>();
+    ArrayList<Complaint> temporaryDataset = new ArrayList<>();
+
+    AppDatabase appDatabase;
+    ComplaintDao complaintDao;
 
     private OnFragmentInteractionListener mListener;
 
@@ -55,10 +69,14 @@ public class ComplaintsListFragment extends Fragment {
      * @return A new instance of fragment ComplaintsListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ComplaintsListFragment newInstance(Boolean resolved) {
+    public static ComplaintsListFragment newInstance(Boolean resolved, String username, String password, String townshipId, Boolean isAdmin) {
         ComplaintsListFragment fragment = new ComplaintsListFragment();
         Bundle args = new Bundle();
         args.putBoolean(ARG_PARAM1, resolved);
+        args.putString(ARG_PARAM2, townshipId);
+        args.putBoolean(ARG_PARAM3, isAdmin);
+        args.putString(ARG_PARAM4, username);
+        args.putString(ARG_PARAM5, password);
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,11 +88,20 @@ public class ComplaintsListFragment extends Fragment {
 
         if (getArguments() != null) {
             resolved = getArguments().getBoolean(ARG_PARAM1);
+            townshipId = getArguments().getString(ARG_PARAM2);
+            isAdmin = getArguments().getBoolean(ARG_PARAM3);
+            username = getArguments().getString(ARG_PARAM4);
+            password = getArguments().getString(ARG_PARAM5);
         }
 
         layoutManager = new LinearLayoutManager(getContext());
-        adapter = new ComplaintsAdapter(dataset, getContext(), resolved);
+        adapter = new ComplaintsAdapter(dataset, getContext(), resolved, townshipId, isAdmin, username, password);
 
+        appDatabase = Room.databaseBuilder(getContext().getApplicationContext(),
+                AppDatabase.class, "app-database")
+                .fallbackToDestructiveMigration()
+                .build();
+        complaintDao = appDatabase.complaintDao();
     }
 
     @Override
@@ -106,15 +133,20 @@ public class ComplaintsListFragment extends Fragment {
         recyclerView.setDrawingCacheEnabled(true);
         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
+        updateRecyclerView();
+
         return view;
 
     }
 
-    public void setDataset(ArrayList<Complaint> dataset) {
-        this.dataset = dataset;
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
-        }
+    public void updateRecyclerView() {
+        new ComplaintsAsync().execute();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        new ComplaintsAsync().execute();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -155,5 +187,33 @@ public class ComplaintsListFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public class ComplaintsAsync extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            temporaryDataset.clear();
+            if (resolved) {
+                temporaryDataset.addAll(complaintDao.getResolvedComplaints());
+            } else {
+                temporaryDataset.addAll(complaintDao.getPendingComplaints());
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            dataset.clear();
+            dataset.addAll(temporaryDataset);
+            adapter.notifyDataSetChanged();
+        }
     }
 }
