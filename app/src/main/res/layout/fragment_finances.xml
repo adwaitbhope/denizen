@@ -7,7 +7,7 @@
     tools:context=".FinancesFragment">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/credit_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -16,26 +16,6 @@
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider4" />
-
-    <View
-        android:id="@+id/divider3"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="4dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView"
-        app:srcCompat="@drawable/down_arrow_hide" />
 
     <View
         android:id="@+id/divider4"
@@ -47,24 +27,44 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/down_arrow1_imageView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/credit_textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/credit_textView"
+        app:srcCompat="@drawable/down_arrow_hide" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="4dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/credit_textView" />
+
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/maintenance_details_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Maintenance Details:"
-        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/credit_textView"
         app:layout_constraintTop_toBottomOf="@+id/divider3" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/maintenance_amount_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="42069"
-        app:layout_constraintBottom_toBottomOf="@+id/textView2"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/textView2" />
+        app:layout_constraintBottom_toBottomOf="@+id/maintenance_details_textView"
+        app:layout_constraintEnd_toEndOf="@+id/down_arrow1_imageView"
+        app:layout_constraintStart_toStartOf="@+id/down_arrow1_imageView"
+        app:layout_constraintTop_toTopOf="@+id/maintenance_details_textView" />
 
     <View
         android:id="@+id/divider5"
@@ -74,16 +74,16 @@
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/maintenance_details_textView" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/debit_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="Debit:"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintStart_toStartOf="@+id/maintenance_details_textView"
         app:layout_constraintTop_toBottomOf="@+id/divider5" />
 
     <View
@@ -94,25 +94,25 @@
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/debit_textView" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/down_arrow2_imageView"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="32dp"
         android:src="@drawable/down_arrow_hide"
-        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+        app:layout_constraintBottom_toBottomOf="@+id/debit_textView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView4" />
+        app:layout_constraintTop_toTopOf="@+id/debit_textView" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/ganpati_expenses_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Ganpati Expenses:"
-        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintStart_toStartOf="@+id/debit_textView"
         app:layout_constraintTop_toBottomOf="@+id/divider6" />
 
     <TextView
@@ -120,10 +120,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="6969"
-        app:layout_constraintBottom_toBottomOf="@+id/textView6"
-        app:layout_constraintEnd_toEndOf="@+id/imageView4"
-        app:layout_constraintStart_toStartOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="@+id/textView6" />
+        app:layout_constraintBottom_toBottomOf="@+id/ganpati_expenses_textView"
+        app:layout_constraintEnd_toEndOf="@+id/down_arrow2_imageView"
+        app:layout_constraintStart_toStartOf="@+id/down_arrow2_imageView"
+        app:layout_constraintTop_toTopOf="@+id/ganpati_expenses_textView" />
 
     <View
         android:id="@+id/fabBGLayout"
@@ -138,17 +138,17 @@
         android:layout_height="1dp"
         android:layout_marginTop="4dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@+id/textView13"
+        app:layout_constraintTop_toBottomOf="@+id/balance_textView"
         tools:layout_editor_absoluteX="1dp" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/balance_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="Balance:"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/textView6"
+        app:layout_constraintStart_toStartOf="@+id/ganpati_expenses_textView"
         app:layout_constraintTop_toBottomOf="@+id/divider7" />
 
     <View
@@ -157,18 +157,18 @@
         android:layout_height="1dp"
         android:layout_marginTop="40dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/ganpati_expenses_textView"
         tools:layout_editor_absoluteX="1dp" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/balance_amount_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="36050"
-        app:layout_constraintBottom_toBottomOf="@+id/textView13"
-        app:layout_constraintEnd_toEndOf="@+id/imageView4"
-        app:layout_constraintStart_toStartOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="@+id/textView13" />
+        app:layout_constraintBottom_toBottomOf="@+id/balance_textView"
+        app:layout_constraintEnd_toEndOf="@+id/down_arrow2_imageView"
+        app:layout_constraintStart_toStartOf="@+id/down_arrow2_imageView"
+        app:layout_constraintTop_toTopOf="@+id/balance_textView" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fabLayout"
@@ -211,7 +211,7 @@
             android:focusable="true" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/add_credit_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add Credit"
@@ -240,7 +240,7 @@
             android:focusable="true" />
 
         <TextView
-            android:id="@+id/textView10"
+            android:id="@+id/add_debit_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add Debit"
