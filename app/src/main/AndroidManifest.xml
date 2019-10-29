@@ -12,6 +12,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".AmenityBookSlotActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".SecurityActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".AmenitiesOneTimePaymentsActivity"
             android:label="One-time Payment List"
