@@ -1,14 +1,18 @@
 package com.township.manager;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 /**
@@ -28,6 +32,14 @@ public class FinancesFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    boolean isFABOpen = false;
+
+    FloatingActionButton fab, fab1, fab2;
+
+    ConstraintLayout fabLayout1, fabLayout2, fabLayout;
+
+    View fabBGLayout;
 
     private OnFragmentInteractionListener mListener;
 
@@ -65,8 +77,95 @@ public class FinancesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_finances, container, false);
+        View view = inflater.inflate(R.layout.fragment_finances, container, false);
+        fab = view.findViewById(R.id.fab);
+        fab1 = view.findViewById(R.id.fab1);
+        fab2 = view.findViewById(R.id.fab2);
+
+        fabLayout1 = (ConstraintLayout) view.findViewById(R.id.fabLayout1);
+        fabLayout2 = (ConstraintLayout) view.findViewById(R.id.fabLayout2);
+        fabLayout = (ConstraintLayout) view.findViewById(R.id.fabLayout);
+
+        fabBGLayout = view.findViewById(R.id.fabBGLayout);
+
+        fabLayout1.setVisibility(View.INVISIBLE);
+        fabLayout2.setVisibility(View.INVISIBLE);
+
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isFABOpen) {
+                    showFABMenu();
+                } else {
+                    closeFABMenu();
+                }
+            }
+        });
+        fabBGLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                closeFABMenu();
+            }
+        });
+        return view;
+    }
+
+    private void showFABMenu() {
+        isFABOpen = true;
+        fabLayout1.setVisibility(View.VISIBLE);
+        fabLayout2.setVisibility(View.VISIBLE);
+
+        fabBGLayout.setVisibility(View.VISIBLE);
+        fab.animate().rotationBy(180);
+        fabLayout1.animate().translationY(-getResources().getDimension(R.dimen.standard_10));
+        fabLayout2.animate().translationY(-getResources().getDimension(R.dimen.standard_20));
+
+
+    }
+
+    private void closeFABMenu() {
+        isFABOpen = false;
+        fabBGLayout.setVisibility(View.GONE);
+        fab.animate().rotation(0);
+        fabLayout1.animate().translationY(0);
+        fabLayout2.animate().translationY(0);
+        fabLayout2.animate().translationY(0).setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                if (!isFABOpen) {
+                    fabLayout1.setVisibility(View.GONE);
+                    fabLayout2.setVisibility(View.GONE);
+                }
+/*                if (fab.getRotation() != -180) {
+                    fab.setRotation(-180);
+                }*/
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
+    }
+
+
+    public void onBackPressed() {
+        if (isFABOpen) {
+            closeFABMenu();
+        } else {
+            onBackPressed();
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
