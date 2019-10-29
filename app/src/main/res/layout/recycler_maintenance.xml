@@ -6,13 +6,13 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/maintenance_cardview"
+        android:id="@+id/maintenance_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:paddingBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,10 +28,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:text="A/32"
-                android:textSize="16sp"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recycler_maintenance_name" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/recycler_maintenance_payment_mode"
@@ -39,8 +41,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="32dp"
                 android:text="Paytm"
                 android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,36 +52,51 @@
                 android:id="@+id/recycler_maintenance_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:text="RS 5000"
+                android:layout_marginStart="8dp"
 
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:text="Rs. 5000"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/recycler_maintenance_amount_description_text_view"
+                app:layout_constraintStart_toEndOf="@+id/recycler_maintenance_amount_description_text_view"
+                app:layout_constraintTop_toTopOf="@+id/recycler_maintenance_amount_description_text_view" />
 
             <TextView
                 android:id="@+id/recycler_maintenance_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:text="8/2019"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/recycler_maintenance_name"
-                app:layout_constraintTop_toBottomOf="@+id/recycler_maintenance_apartment" />
+                tools:layout_editor_absoluteX="192dp"
+                tools:layout_editor_absoluteY="72dp" />
 
             <TextView
                 android:id="@+id/recycler_maintenance_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
-                android:text="Adwait Bhope"
-                android:textSize="16sp"
+                android:layout_marginEnd="16dp"
+                android:text="Jonybhau Batliwala Sr."
+                android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/recycler_maintenance_apartment"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/recycler_maintenance_amount_description_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Amount:"
+                android:drawableStart="@drawable/ic_rupee_indian_24dp"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/secondaryColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_maintenance_name" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

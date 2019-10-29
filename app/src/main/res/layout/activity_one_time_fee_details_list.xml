@@ -167,7 +167,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
-                        android:drawableStart="@drawable/ic_rupee_indian"
+                        android:drawableStart="@drawable/ic_rupee_indian_24dp"
                         android:drawablePadding="8dp"
                         android:drawableTint="@color/secondaryColor"
                         android:text="Amount:"
