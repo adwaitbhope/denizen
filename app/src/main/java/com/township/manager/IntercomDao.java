@@ -23,4 +23,7 @@ public interface IntercomDao {
 
     @Query("SELECT * FROM Intercom WHERE type=:type")
     List<Intercom> getAll(String type);
+
+    @Query("SELECT * FROM Intercom WHERE type=:type AND wing_id=:wingid")
+    List<Intercom> getAll(String type,String wingid);
 }

@@ -17,16 +17,27 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 
 public class IntercomAdapter extends RecyclerView.Adapter {
 
     ArrayList<Intercom> dataset;
     Context context;
+    WingDao wingDao;
+    AppDatabase appDatabase;
+    String wing;
+    int wingfilter;
 
     public IntercomAdapter(ArrayList<Intercom> dataset, Context context) {
         this.dataset = dataset;
         this.context = context;
+
+        appDatabase = Room.databaseBuilder(context,
+                AppDatabase.class, "app-database")
+                .fallbackToDestructiveMigration()
+                .build();
+        wingDao=appDatabase.wingDao();
     }
     @NonNull
     @Override
@@ -46,6 +57,8 @@ public class IntercomAdapter extends RecyclerView.Adapter {
             final ViewHolderApartments viewHolder = new ViewHolderApartments(view);
             return viewHolder;
         }
+
+
     }
 
     @Override
@@ -77,10 +90,18 @@ public class IntercomAdapter extends RecyclerView.Adapter {
             button=viewHolderSecurity.phoneSecurity;
         }
         else{
+
+            new Thread(){
+                @Override
+                public void run() {
+                    super.run();
+                    wing=wingDao.getWingName(intercom.getWing_id());
+                }
+            }.start();
             final ViewHolderApartments viewHolderApartments=(ViewHolderApartments)holder;
             viewHolderApartments.residentPhone.setText(intercom.getPhone());
             viewHolderApartments.residentName.setText(intercom.getFirst_name()+" "+intercom.getLast_name());
-            viewHolderApartments.flatNo.setText(intercom.getApartment());
+            viewHolderApartments.flatNo.setText(wing+" "+intercom.getApartment());
             button=viewHolderApartments.phoneApartment;
         }
         button.setOnClickListener(new View.OnClickListener() {

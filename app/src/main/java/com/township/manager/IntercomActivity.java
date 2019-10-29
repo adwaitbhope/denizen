@@ -17,18 +17,21 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.nbsp.materialfilepicker.ui.DirectoryAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.StatementEvent;
 
@@ -50,7 +53,10 @@ public class IntercomActivity extends AppCompatActivity {
     ArrayList<Intercom> temporaryDatasetSecurity=new ArrayList<>();
     IntercomDao intercomDao;
     Intercom[] intercomsArray;
-
+    WingDao wingDao;
+    ArrayList<String> WINGS=new ArrayList<>();
+    AutoCompleteTextView wingFilledExposedDropdown;
+    int flag=0;
 
 
 
@@ -79,6 +85,7 @@ public class IntercomActivity extends AppCompatActivity {
                 .fallbackToDestructiveMigration()
                 .build();
         intercomDao=appDatabase.intercomDao();
+        wingDao=appDatabase.wingDao();
 
         getIntercomFromServer();
 
@@ -88,7 +95,14 @@ public class IntercomActivity extends AppCompatActivity {
 
         updateRecyclerView();
 
-        String[] WINGS = new String[] {"Wing A", "Wing B", "Wing C"};
+
+        new Thread() {
+            @Override
+            public void run() {
+                wingDao = appDatabase.wingDao();
+                WINGS.addAll(wingDao.getALLWingName());
+            }
+        }.start();
 
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(
@@ -96,9 +110,17 @@ public class IntercomActivity extends AppCompatActivity {
                         R.layout.dropdown_menu_popup_item,
                         WINGS);
 
-        AutoCompleteTextView wingFilledExposedDropdown =
+        wingFilledExposedDropdown =
                 findViewById(R.id.intercom_wing_selector_exposed_dropdown);
         wingFilledExposedDropdown.setAdapter(adapter);
+
+       wingFilledExposedDropdown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+           @Override
+           public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
+               flag=1;
+               updateRecyclerView();
+           }
+       });
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.intercom_toolbar);
@@ -232,7 +254,19 @@ public class IntercomActivity extends AppCompatActivity {
             temporaryDatasetAdmin.clear();
             temporaryDatasetAdmin.addAll(intercomDao.getAll("admin"));
             temporaryDatasetApartment.clear();
-            temporaryDatasetApartment.addAll(intercomDao.getAll("resident"));
+            String wingid;
+
+            Log.d("if","a");
+            if(flag==1) {
+                wingid=wingDao.getWingId(wingFilledExposedDropdown.getText().toString());
+                Log.d("id",wingid);
+                Log.d("if",wingFilledExposedDropdown.getText().toString());
+                temporaryDatasetApartment.addAll(intercomDao.getAll("resident", wingid));
+            }
+            else {
+                Log.d("else","else");
+                temporaryDatasetApartment.addAll(intercomDao.getAll("resident"));
+            }
             temporaryDatasetSecurity.clear();
             temporaryDatasetSecurity.addAll(intercomDao.getAll("security"));
 
