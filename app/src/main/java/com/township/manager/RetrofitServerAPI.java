@@ -281,4 +281,24 @@ public interface RetrofitServerAPI {
             @Field("with_payments_only") Boolean with_payments_only
     );
 
+    @FormUrlEncoded
+    @POST("/amenities/membership/pay/initiate/")
+    Call<JsonArray> initiateAmenityMembershipPayment(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("TXN_AMOUNT") String txnAmount,
+            @Field("CHANNEL_ID") String channelId,
+            @Field("WEBSITE") String website,
+            @Field("CALLBACK_URL") String callbackUrl,
+            @Field("INDUSTRY_TYPE_ID") String industryTypeId
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/membership/pay/verify/")
+    Call<JsonArray> verifyAmenityMembershipPayment(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("ORDER_ID") String ORDER_ID
+    );
+
 }

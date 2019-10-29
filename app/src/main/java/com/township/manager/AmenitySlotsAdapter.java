@@ -1,5 +1,6 @@
 package com.township.manager;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -67,6 +68,7 @@ public class AmenitySlotsAdapter extends RecyclerView.Adapter {
                 intent.putExtra("free_for_members", freeForMembers);
                 intent.putExtra("amount", amount);
                 intent.putExtra("amenity_id", amenityId);
+                ((Activity) context).finish();
                 context.startActivity(intent);
             }
         });

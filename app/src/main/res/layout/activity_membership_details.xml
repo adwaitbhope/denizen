@@ -68,10 +68,11 @@
             android:id="@+id/membership_payments_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/membership_details_horizontalScrollView" />
+            app:layout_constraintTop_toBottomOf="@+id/membership_details_membership_status_text_view" />
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/membership_details_app_bar_layout"
@@ -91,15 +92,40 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+        <TextView
+            android:id="@+id/membership_details_membership_status_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Your membership is active and valid until Oct 31st, '20"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/membership_details_horizontalScrollView" />
+
+        <ProgressBar
+            android:id="@+id/membership_details_progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/membership_details_membership_status_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/membership_details_membership_status_text_view" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/pay_membership_ex_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right|end"
+        android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:contentDescription="Pay Membership"
         android:text="Pay Membership"
+        android:visibility="gone"
         app:icon="@drawable/ic_payment_black_24dp" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -3,11 +3,13 @@ package com.township.manager;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -30,6 +32,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -43,6 +47,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.township.manager.R.color.white;
 
 public class ResidentHomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, NoticeBoardFragment.OnFragmentInteractionListener, MaintenanceFragment.OnFragmentInteractionListener, VisitorHistoryFragment.OnFragmentInteractionListener, AmenitiesFragment.OnFragmentInteractionListener {
@@ -73,6 +79,8 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
     DBManager dbManager;
     Cursor cursor;
     View headerView;
+
+    Menu menu;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -142,6 +150,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                         transaction.replace(R.id.resident_home_screen_fragment_area, noticeBoardFragment);
                         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         transaction.commit();
+                        menu.findItem(R.id.action_booking_history_item).setVisible(false);
                         return true;
 
                     case R.id.resident_amenities:
@@ -149,6 +158,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                         transaction.replace(R.id.resident_home_screen_fragment_area, amenitiesFragment);
                         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         transaction.commit();
+                        menu.findItem(R.id.action_booking_history_item).setVisible(true);
                         return true;
 
                     case R.id.resident_maintenance:
@@ -156,6 +166,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                         transaction.replace(R.id.resident_home_screen_fragment_area, maintenanceFragment);
                         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         transaction.commit();
+                        menu.findItem(R.id.action_booking_history_item).setVisible(false);
                         return true;
 
                     case R.id.resident_visitor_history:
@@ -163,6 +174,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                         transaction.replace(R.id.resident_home_screen_fragment_area, visitorHistoryFragment);
                         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         transaction.commit();
+                        menu.findItem(R.id.action_booking_history_item).setVisible(false);
                         return true;
                 }
 
@@ -207,6 +219,32 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
 
         residentName.setText(cursor.getString(firstNameCol) + " " + cursor.getString(lastNameCol));
         residentFlatNo.setText(cursor.getString(wingNoCol) + "/" + cursor.getString(flatNoCol));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        this.menu = menu;
+        getMenuInflater().inflate(R.menu.amenities_action_bar_menu, menu);
+        menu.findItem(R.id.action_booking_history_item).setVisible(false);
+        menu.findItem(R.id.action_booking_list_item).setVisible(false);
+
+        Drawable historyDrawable = menu.findItem(R.id.action_booking_history_item).getIcon();
+        historyDrawable = DrawableCompat.wrap(historyDrawable);
+        DrawableCompat.setTint(historyDrawable, ContextCompat.getColor(this, white));
+        menu.findItem(R.id.action_booking_history_item).setIcon(historyDrawable);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_booking_history_item) {
+            startActivity (new Intent(this, AmenitiesBookingHistoryActivity.class));
+            return true;
+        }
+        return false;
     }
 
     @Override

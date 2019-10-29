@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Dao;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -14,10 +15,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -26,7 +29,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class AmenitySlotsActivity extends AppCompatActivity {
 
@@ -38,7 +45,9 @@ public class AmenitySlotsActivity extends AppCompatActivity {
     AmenitySlotsAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
 
-    ArrayList<AmenitySlot> dataset= new ArrayList<>();
+    Date today;
+
+    ArrayList<AmenitySlot> dataset = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,28 +61,16 @@ public class AmenitySlotsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        new Thread() {
-            public void run() {
-                DBManager dbManager = new DBManager(getApplicationContext());
-                Cursor cursor = dbManager.getDataLogin();
-                cursor.moveToFirst();
-                username = cursor.getString(cursor.getColumnIndexOrThrow("Username"));
-                password = cursor.getString(cursor.getColumnIndexOrThrow("Password"));
-            }
-        }.start();
+        DBManager dbManager = new DBManager(getApplicationContext());
+        Cursor cursor = dbManager.getDataLogin();
+        cursor.moveToFirst();
+        username = cursor.getString(cursor.getColumnIndexOrThrow("Username"));
+        password = cursor.getString(cursor.getColumnIndexOrThrow("Password"));
 
         Intent intent = getIntent();
         amenityId = intent.getStringExtra("amenity_id");
         freeForMembers = intent.getBooleanExtra("free_for_members", false);
         amount = intent.getIntExtra("amount", 0);
-
-        CalendarView calendarView = findViewById(R.id.calendarView3);
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                getSlotsFromServer(dayOfMonth, month + 1, year);
-            }
-        });
 
         recyclerView = findViewById(R.id.amenity_slots_recycler_view);
         adapter = new AmenitySlotsAdapter(dataset, this, freeForMembers, amenityId, amount);
@@ -85,6 +82,27 @@ public class AmenitySlotsActivity extends AppCompatActivity {
         recyclerView.setItemViewCacheSize(15);
         recyclerView.setDrawingCacheEnabled(true);
         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
+        final CalendarView calendarView = findViewById(R.id.calendarView3);
+        final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        today = new Date(calendarView.getDate());
+        String selectedDate = sdf.format(today);
+
+        getSlotsFromServer(Integer.valueOf(selectedDate.substring(0, 2)), Integer.valueOf(selectedDate.substring(3, 5)), Integer.valueOf(selectedDate.substring(6, 10)));
+
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                Date date = new GregorianCalendar(year, month, dayOfMonth).getTime();
+                if (today.after(date)) {
+                    Toast.makeText(AmenitySlotsActivity.this, "Please select a future date", Toast.LENGTH_SHORT).show();
+                    dataset.clear();
+                    adapter.notifyDataSetChanged();
+                } else {
+                    getSlotsFromServer(dayOfMonth, month + 1, year);
+                }
+            }
+        });
 
     }
 
