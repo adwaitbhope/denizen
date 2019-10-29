@@ -2,6 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.township.manager">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:name=".GlobalVariables"
         android:allowBackup="true"
@@ -10,10 +18,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AmenityBookSlotActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".SecurityActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".AddCreditActivity"></activity>
+        <activity
+            android:name=".AmenityBookSlotActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SecurityActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AmenitiesOneTimePaymentsActivity"
             android:label="One-time Payment List"
@@ -136,13 +147,5 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>

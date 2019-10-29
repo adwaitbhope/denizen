@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".AddCreditActivity">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/credit_title_textInputLayout"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/credit_title_textInputLayout_child"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Title" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/amount_textInputLayout"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/credit_title_textInputLayout"
+            app:layout_constraintTop_toBottomOf="@+id/credit_title_textInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/amount_textInputLayout_child"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Amount" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_cheque_payment_mode_til"
+            style="@style/AppTextField.ExposedDropdownMenu"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/amount_textInputLayout"
+            app:layout_constraintTop_toBottomOf="@+id/amount_textInputLayout">
+
+            <AutoCompleteTextView
+                android:id="@+id/add_upi_payment_mode_dropdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Mode Of Payment" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:text="Save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Date "
+            app:layout_constraintStart_toStartOf="@+id/add_cheque_payment_mode_til"
+            app:layout_constraintTop_toBottomOf="@+id/add_cheque_payment_mode_til" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

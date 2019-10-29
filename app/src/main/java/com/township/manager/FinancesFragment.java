@@ -2,6 +2,7 @@ package com.township.manager;
 
 import android.animation.Animator;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -74,6 +75,8 @@ public class FinancesFragment extends Fragment {
         }
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -90,6 +93,13 @@ public class FinancesFragment extends Fragment {
 
         fabLayout1.setVisibility(View.INVISIBLE);
         fabLayout2.setVisibility(View.INVISIBLE);
+
+        fab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), AddCreditActivity.class));
+            }
+        });
 
 
         fab.setOnClickListener(new View.OnClickListener() {
