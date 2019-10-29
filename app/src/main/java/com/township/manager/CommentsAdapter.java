@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
@@ -54,6 +55,7 @@ public class CommentsAdapter extends RecyclerView.Adapter {
                 .placeholder(R.drawable.ic_man)
                 .error(R.drawable.ic_man)
                 .networkPolicy(NetworkPolicy.NO_CACHE)
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .into(viewHolder.image);
 
         if (comment.getPosted_by_apartment() == null) {

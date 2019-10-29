@@ -11,10 +11,9 @@ import androidx.room.RoomDatabase;
         Complaint.class,
         Maintenance.class,
         Resident.class,
-        Visitor.class,
         Amenity.class,
         AmenityBooking.class,
-        MembershipPayment.class
+        MembershipPayment.class,
         Visitor.class,
         Intercom.class}, version = 21)
 public abstract class AppDatabase extends RoomDatabase {

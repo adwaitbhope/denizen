@@ -35,6 +35,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
@@ -192,6 +193,7 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                 .placeholder(R.drawable.ic_man)
                 .error(R.drawable.ic_man)
                 .networkPolicy(NetworkPolicy.NO_CACHE)
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .into(profilePic);
 
         adminDesignation = headerView.findViewById(R.id.navheader_admin_home_screen_designation_textview);
