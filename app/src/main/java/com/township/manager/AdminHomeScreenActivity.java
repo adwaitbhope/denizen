@@ -218,6 +218,8 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_intercom_admin) {
+            Intent intent=new Intent(AdminHomeScreenActivity.this, IntercomActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_maintenance_admin) {
             Intent intent = new Intent(AdminHomeScreenActivity.this, MaintenanceAdminContainerActivity.class);
