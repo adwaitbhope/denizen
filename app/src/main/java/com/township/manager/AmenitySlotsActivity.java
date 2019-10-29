@@ -87,6 +87,11 @@ public class AmenitySlotsActivity extends AppCompatActivity {
         final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         today = new Date(calendarView.getDate());
         String selectedDate = sdf.format(today);
+        try {
+            today = sdf.parse(selectedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         getSlotsFromServer(Integer.valueOf(selectedDate.substring(0, 2)), Integer.valueOf(selectedDate.substring(3, 5)), Integer.valueOf(selectedDate.substring(6, 10)));
 
@@ -94,6 +99,7 @@ public class AmenitySlotsActivity extends AppCompatActivity {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 Date date = new GregorianCalendar(year, month, dayOfMonth).getTime();
+                Log.d("date selected", date.toString());
                 if (today.after(date)) {
                     Toast.makeText(AmenitySlotsActivity.this, "Please select a future date", Toast.LENGTH_SHORT).show();
                     dataset.clear();
