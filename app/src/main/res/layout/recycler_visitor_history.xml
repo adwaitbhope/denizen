@@ -10,16 +10,15 @@
         android:id="@+id/recycler_view_visitor_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
         android:layout_weight="50"
         android:text="Jonybhau Batliwala Sr."
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/recycler_view_visitor_image_view"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -61,14 +60,13 @@
         android:id="@+id/recycler_view_visitee_description_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:drawableStart="@drawable/ic_domain_black_24dp"
         android:drawablePadding="8dp"
         android:drawableTint="@color/secondaryColor"
         android:text="Visitee:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recycler_view_visitor_name" />
+        app:layout_constraintStart_toStartOf="@+id/recycler_view_visitor_name"
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view_visitor_phone_number" />
 
     <TextView
         android:id="@+id/recycler_view_visitee_wing_flat_text_view"
@@ -109,14 +107,14 @@
         android:id="@+id/recycler_view_date_description_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:drawableStart="@drawable/ic_today_black_24dp"
         android:drawablePadding="8dp"
         android:drawableTint="@color/secondaryColor"
         android:text="Date:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recycler_view_visitee_description_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view_visitor_purpose_text_view" />
 
     <ImageView
         android:id="@+id/visitor_in_image_view"
@@ -156,5 +154,53 @@
         app:layout_constraintBottom_toBottomOf="@+id/recycler_view_date_description_text_view"
         app:layout_constraintStart_toEndOf="@+id/recycler_view_visitor_date"
         app:layout_constraintTop_toTopOf="@+id/recycler_view_date_description_text_view" />
+
+    <TextView
+        android:id="@+id/recycler_view_visitor_phone_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="9876543210"
+        app:layout_constraintEnd_toEndOf="@+id/recycler_view_visitor_name"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/recycler_view_visitor_name"
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view_visitor_name" />
+
+    <ImageView
+        android:id="@+id/recycler_view_visitor_image_view"
+        android:layout_width="104dp"
+        android:layout_height="104dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_man" />
+
+    <TextView
+        android:id="@+id/recycler_view_visitor_purpose_description_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:drawableStart="@drawable/ic_drive_eta_black_24dp"
+        android:drawablePadding="8dp"
+        android:drawableTint="@color/secondaryColor"
+        android:text="Purpose:"
+        app:layout_constraintEnd_toEndOf="@+id/recycler_view_visitee_description_text_view"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/recycler_view_visitee_description_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view_visitee_description_text_view" />
+
+    <TextView
+        android:id="@+id/recycler_view_visitor_purpose_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="Food Delivery"
+        app:layout_constraintBottom_toBottomOf="@+id/recycler_view_visitor_purpose_description_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/recycler_view_visitor_purpose_description_text_view"
+        app:layout_constraintTop_toTopOf="@+id/recycler_view_visitor_purpose_description_text_view"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
