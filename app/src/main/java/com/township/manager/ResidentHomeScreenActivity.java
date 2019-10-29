@@ -507,7 +507,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                             maintenances.add(maintenance);
                         }
 
-                        addMaintenanceToDatabase(maintenances);
+                       // addMaintenanceToDatabase(maintenances);
                     }
 
                 } catch (JSONException e) {
@@ -523,40 +523,40 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
 
     }
 
-    private void addMaintenanceToDatabase(final ArrayList<Maintenance> maintenances) {
-        new Thread() {
-            @Override
-            public void run() {
-                maintenanceDao = appDatabase.maintenanceDao();
-                maintenancesArray = new Maintenance[maintenances.size()];
-                maintenances.toArray(maintenancesArray);
-                MaintenanceAsyncTask maintenanceAsyncTask = new MaintenanceAsyncTask();
-                maintenanceAsyncTask.execute();
-            }
-        }.start();
-    }
-
-    private class MaintenanceAsyncTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            appDatabase.maintenanceDao().deleteAll();
-            maintenanceDao.insert(maintenancesArray);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            if (maintenanceFragment.getContext() != null) {
-                maintenanceFragment.updateRecyclerView();
-            }
-            super.onPostExecute(aVoid);
-        }
-    }
+//    private void addMaintenanceToDatabase(final ArrayList<Maintenance> maintenances) {
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                maintenanceDao = appDatabase.maintenanceDao();
+//                maintenancesArray = new Maintenance[maintenances.size()];
+//                maintenances.toArray(maintenancesArray);
+//                MaintenanceAsyncTask maintenanceAsyncTask = new MaintenanceAsyncTask();
+//                maintenanceAsyncTask.execute();
+//            }
+//        }.start();
+//    }
+//
+//    private class MaintenanceAsyncTask extends AsyncTask<Void, Void, Void> {
+//
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//        }
+//
+//        @Override
+//        protected Void doInBackground(Void... voids) {
+//            appDatabase.maintenanceDao().deleteAll();
+//            maintenanceDao.insert(maintenancesArray);
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Void aVoid) {
+//            if (maintenanceFragment.getContext() != null) {
+//                maintenanceFragment.updateRecyclerView();
+//            }
+//            super.onPostExecute(aVoid);
+//        }
+//    }
 
 }

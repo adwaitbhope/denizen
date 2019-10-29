@@ -1,17 +1,26 @@
 package com.township.manager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 
 /**
@@ -33,6 +42,21 @@ public class SecurityPersonnelListFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    RecyclerView recyclerView;
+    SecurityPersonnelAdapter adapter;
+    RecyclerView.LayoutManager layoutManager;
+
+    AppDatabase appDatabase;
+    ArrayList<SecurityPersonnel> dataset = new ArrayList<>();
+    ArrayList<SecurityPersonnel> temporaryDataset = new ArrayList<>();
+    SecurityPersonnelDao securityPersonnelDao;
+
+
+    String userType, townshipId;
+
+    public static final int ADD_SECURITY_PERSONNEL_REQUEST = 69;
+    public static final int ADD_SECURITY_PERSONNEL_RESULT = 70;
 
     public SecurityPersonnelListFragment() {
         // Required empty public constructor
@@ -63,6 +87,18 @@ public class SecurityPersonnelListFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        appDatabase = Room.databaseBuilder(getContext().getApplicationContext(),
+                AppDatabase.class, "app-database")
+                .fallbackToDestructiveMigration()
+                .build();
+
+
+
+
+
+        securityPersonnelDao=appDatabase.securityPersonnelDao();
+
     }
 
     @Override
@@ -74,12 +110,58 @@ public class SecurityPersonnelListFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), AddSecurityActivity.class));
+                Intent intent=new Intent(getActivity(), AddSecurityPersonnelActivity.class);
+                intent.putExtra("type","add");
+                startActivityForResult(intent,ADD_SECURITY_PERSONNEL_REQUEST);
 
             } });
-                return view;
+
+        updateRecyclerView();
+
+        recyclerView=view.findViewById(R.id.security_personnel_recycler_view);
+        adapter=new SecurityPersonnelAdapter(dataset,getContext());
+
+        DBManager dbManager = new DBManager(getContext());
+        Cursor cursor = dbManager.getDataLogin();
+        cursor.moveToFirst();
+
+        adapter.username = cursor.getString(cursor.getColumnIndexOrThrow("Username"));
+        adapter.password = cursor.getString(cursor.getColumnIndexOrThrow("Password"));
+        adapter.TOWNSHIP_ID= cursor.getString(cursor.getColumnIndexOrThrow("TownshipId"));
+        layoutManager = new LinearLayoutManager(getContext());
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+        recyclerView.setItemViewCacheSize(15);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
+        return view;
 
         }
+
+    public void updateRecyclerView() {
+        new SecurityPersonnelAsyncTask().execute();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateRecyclerView();
+//        recyclerView.smoothScrollToPosition(0);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_SECURITY_PERSONNEL_REQUEST) {
+            if (resultCode == ADD_SECURITY_PERSONNEL_RESULT) {
+                updateRecyclerView();
+                recyclerView.smoothScrollToPosition(0);
+            }
+        }
+    }
 
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -119,5 +201,32 @@ public class SecurityPersonnelListFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private class SecurityPersonnelAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            temporaryDataset.clear();
+            temporaryDataset.addAll(securityPersonnelDao.getAll());
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            dataset.clear();
+            dataset.addAll(temporaryDataset);
+            if (adapter != null) {
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
 }

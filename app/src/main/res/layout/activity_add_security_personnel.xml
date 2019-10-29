@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddSecurityActivity">
+    tools:context=".AddSecurityPersonnelActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/add_security_personnel_app_bar_layout"
@@ -178,7 +178,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="6 AM"
+        android:text="----"
         app:layout_constraintEnd_toEndOf="@+id/add_security_personnel_shift_from_button"
         app:layout_constraintStart_toStartOf="@+id/add_security_personnel_shift_from_button"
         app:layout_constraintTop_toBottomOf="@+id/add_security_personnel_shift_from_button" />
@@ -188,7 +188,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="4 PM"
+        android:text="----"
         app:layout_constraintEnd_toEndOf="@+id/add_security_personnel_shift_till_button"
         app:layout_constraintStart_toStartOf="@+id/add_security_personnel_shift_till_button"
         app:layout_constraintTop_toBottomOf="@+id/add_security_personnel_shift_till_button" />

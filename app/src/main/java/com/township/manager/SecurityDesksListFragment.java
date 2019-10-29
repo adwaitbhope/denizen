@@ -2,16 +2,24 @@ package com.township.manager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 
 /**
@@ -33,6 +41,21 @@ public class SecurityDesksListFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    RecyclerView recyclerView;
+    SecurityDesksAdapter adapter;
+    RecyclerView.LayoutManager layoutManager;
+
+    AppDatabase appDatabase;
+    ArrayList<SecurityDesks> dataset = new ArrayList<>();
+    ArrayList<SecurityDesks> temporaryDataset = new ArrayList<>();
+    SecurityDesksDao securityDesksDao;
+
+
+    String userType, townshipId;
+
+    public static final int ADD_SECURITY_DESKS_REQUEST = 69;
+    public static final int ADD_SECURITY_DESKS_RESULT = 70;
 
     public SecurityDesksListFragment() {
         // Required empty public constructor
@@ -63,6 +86,15 @@ public class SecurityDesksListFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+        appDatabase = Room.databaseBuilder(getContext().getApplicationContext(),
+                AppDatabase.class, "app-database")
+                .fallbackToDestructiveMigration()
+                .build();
+
+
+        securityDesksDao=appDatabase.securityDesksDao();
     }
 
     @Override
@@ -73,12 +105,48 @@ public class SecurityDesksListFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), AddSecurityDeskActivity.class));
+                startActivityForResult(new Intent(getActivity(), AddSecurityDeskActivity.class),ADD_SECURITY_DESKS_REQUEST);
 
             } });
+        updateRecyclerView();
+
+        recyclerView=view.findViewById(R.id.security_desks_recycler_view);
+        adapter=new SecurityDesksAdapter(dataset,getContext());
+        layoutManager = new LinearLayoutManager(getContext());
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+        recyclerView.setItemViewCacheSize(15);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
+
         return view;
 
     }
+
+    public void updateRecyclerView() {
+        new SecurityDesksAsyncTask().execute();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateRecyclerView();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_SECURITY_DESKS_REQUEST) {
+            if (resultCode == ADD_SECURITY_DESKS_RESULT) {
+                updateRecyclerView();
+                recyclerView.smoothScrollToPosition(0);
+            }
+        }
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -117,5 +185,31 @@ public class SecurityDesksListFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private class SecurityDesksAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            temporaryDataset.clear();
+            temporaryDataset.addAll(securityDesksDao.getAll());
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            dataset.clear();
+            dataset.addAll(temporaryDataset);
+            if (adapter != null) {
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
 }

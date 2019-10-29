@@ -204,5 +204,63 @@ public interface RetrofitServerAPI {
         @Field("ORDER_ID") String ORDER_ID
     );
 
+    @FormUrlEncoded
+    @POST("/security/desks/")
+    Call<JsonArray> getSecurityDesks(
+        @Field("username") String username,
+        @Field("password") String passsword
+    );
+
+    @FormUrlEncoded
+    @POST("/security/desks/new")
+    Call<JsonArray> addNewSecurityDesks(
+            @Field("username") String username,
+            @Field("password") String passsword,
+            @Field("security_desk_name") String security_desk_name,
+            @Field("security_desk_phone") String security_desk_phone
+    );
+
+    @FormUrlEncoded
+    @POST("/security/personnel/")
+    Call<JsonArray> getSecurityPersonnel(
+            @Field("username") String username,
+            @Field("password") String passsword
+    );
+
+    @FormUrlEncoded
+    @POST("/security/personnel/new")
+    Call<JsonArray> addNewSecurityPersonnel(
+            @Field("username") String username,
+            @Field("password") String passsword,
+            @Field("security_personnel_name") String security_personnel_name,
+            @Field("security_personnel_phone") String security_personnel_phone,
+            @Field("security_personnel_timings_from") Integer security_personnel_timings_from,
+            @Field("security_personnel_timings_till") Integer security_personnel_timings_till
+
+    );
+
+    @FormUrlEncoded
+    @POST("/security/personnel/edit/")
+    Call<JsonArray> editSecurityPersonnel(
+            @Field("username") String username,
+            @Field("password") String passsword,
+            @Field("personnel_id") String personnel_id,
+            @Field("security_personnel_name") String security_personnel_name,
+            @Field("security_personnel_phone") String security_personnel_phone,
+            @Field("security_personnel_timings_from") Integer security_personnel_timings_from,
+            @Field("security_personnel_timings_till") Integer security_personnel_timings_till
+    );
+
+    @FormUrlEncoded
+    @POST("/security/personnel/delete/")
+    Call<JsonArray> deleteSecurityPersonnel(
+            @Field("username") String username,
+            @Field("password") String passsword,
+            @Field("personnel_id") String personnel_id
+    );
+
+
+
+
 
 }
