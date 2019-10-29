@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
@@ -47,6 +48,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static com.township.manager.ProfileActivity.PROFILE_EDITED;
+import static com.township.manager.ProfileActivity.PROFILE_NOT_EDITED;
+
 public class LoginScreenActivity extends AppCompatActivity {
     public com.google.android.material.button.MaterialButton forgotpasswordButton, registersociety, contactus, loginButton;
 
@@ -57,6 +61,7 @@ public class LoginScreenActivity extends AppCompatActivity {
     private AppDatabase appDatabase;
 
     Resident[] residentsArray;
+    String userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,20 +76,33 @@ public class LoginScreenActivity extends AppCompatActivity {
         dbManager = new DBManager(this);
         Cursor cursor = dbManager.getDataLogin();
         if (cursor.getCount() != 0) {
-            int columntypeindex = cursor.getColumnIndexOrThrow("Type");
             cursor.moveToFirst();
-            switch (cursor.getString(columntypeindex)) {
+            userType = cursor.getString(cursor.getColumnIndexOrThrow("Type"));
+            int profileUpdated = cursor.getInt(cursor.getColumnIndexOrThrow("Profile_Updated"));
+            switch (userType) {
                 case "admin":
-                    startActivity(new Intent(LoginScreenActivity.this, AdminHomeScreenActivity.class));
-                    finish();
+                    if (profileUpdated == 0) {
+                        startActivityForResult(new Intent(LoginScreenActivity.this, EditProfileActivity.class), 123);
+                    } else {
+                        startActivity(new Intent(LoginScreenActivity.this, AdminHomeScreenActivity.class));
+                        finish();
+                    }
                     break;
                 case "security":
-                    startActivity(new Intent(LoginScreenActivity.this, SecurityHomeScreenActivity.class));
-                    finish();
+                    if (profileUpdated == 0) {
+                        startActivityForResult(new Intent(LoginScreenActivity.this, EditProfileActivity.class), 123);
+                    } else {
+                        startActivity(new Intent(LoginScreenActivity.this, SecurityHomeScreenActivity.class));
+                        finish();
+                    }
                     break;
                 case "resident":
-                    startActivity(new Intent(LoginScreenActivity.this, ResidentHomeScreenActivity.class));
-                    finish();
+                    if (profileUpdated == 0) {
+                        startActivityForResult(new Intent(LoginScreenActivity.this, EditProfileActivity.class), 123);
+                    } else {
+                        startActivity(new Intent(LoginScreenActivity.this, ResidentHomeScreenActivity.class));
+                        finish();
+                    }
                     break;
             }
 
@@ -211,13 +229,18 @@ public class LoginScreenActivity extends AppCompatActivity {
                                         JSONObject jsonObjectLoginInfo = jsonArray.getJSONObject(1);
 
                                         ContentValues contentValues = new ContentValues();
+                                        contentValues.put(DBManager.ColUserId, jsonObjectLoginInfo.getString("user_id"));
                                         contentValues.put(DBManager.ColUsername, jsonObjectLoginInfo.getString("username"));
                                         contentValues.put(DBManager.ColPassword, password);
                                         contentValues.put(DBManager.ColFirstName, jsonObjectLoginInfo.getString("first_name"));
                                         contentValues.put(DBManager.ColLastName, jsonObjectLoginInfo.getString("last_name"));
                                         contentValues.put(DBManager.ColPhone, jsonObjectLoginInfo.getString("phone"));
                                         contentValues.put(DBManager.ColEmail, jsonObjectLoginInfo.getString("email"));
-                                        contentValues.put(DBManager.ColProfileUpdated, jsonObjectLoginInfo.getBoolean("profile_updated"));
+                                        if (jsonObjectLoginInfo.getBoolean("profile_updated")) {
+                                            contentValues.put(DBManager.ColProfileUpdated, 1);
+                                        } else {
+                                            contentValues.put(DBManager.ColProfileUpdated, 0);
+                                        }
                                         contentValues.put(DBManager.ColTownship, jsonObjectLoginInfo.getString("township"));
                                         contentValues.put(DBManager.ColType, jsonObjectLoginInfo.getString("type"));
                                         contentValues.put(DBManager.ColTownshipId, jsonObjectLoginInfo.getString("township_id"));
@@ -297,34 +320,50 @@ public class LoginScreenActivity extends AppCompatActivity {
 
                                         }
 
-
                                         Log.d("response", response);
-                                        switch (jsonObjectLoginInfo.getString("type")) {
+                                        dbManager.deleteAll();
 
+                                        userType = jsonObjectLoginInfo.getString("type");
+                                        switch (userType) {
                                             case "admin": {
                                                 contentValues.put(DBManager.ColDesignation, jsonObjectLoginInfo.getString("designation"));
-                                                long id = dbManager.Insert(contentValues);
+                                                dbManager.Insert(contentValues);
                                                 PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-admins");
-                                                startActivity(new Intent(LoginScreenActivity.this, AdminHomeScreenActivity.class));
-                                                finish();
+
+                                                if (!jsonObjectLoginInfo.getBoolean("profile_updated")) {
+                                                    startActivityForResult(new Intent(LoginScreenActivity.this, EditProfileActivity.class), 123);
+                                                } else {
+                                                    startActivity(new Intent(LoginScreenActivity.this, AdminHomeScreenActivity.class));
+                                                    finish();
+                                                }
                                                 break;
                                             }
                                             case "security": {
-                                                long id = dbManager.Insert(contentValues);
-                                                startActivity(new Intent(LoginScreenActivity.this, SecurityHomeScreenActivity.class));
+                                                dbManager.Insert(contentValues);
                                                 PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-security");
-                                                finish();
+
+                                                if (!jsonObjectLoginInfo.getBoolean("profile_updated")) {
+                                                    startActivityForResult(new Intent(LoginScreenActivity.this, EditProfileActivity.class), 123);
+                                                } else {
+                                                    startActivity(new Intent(LoginScreenActivity.this, SecurityHomeScreenActivity.class));
+                                                    finish();
+                                                }
                                                 break;
                                             }
                                             case "resident": {
                                                 contentValues.put(DBManager.ColWing, jsonObjectLoginInfo.getString("wing"));
-                                                PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-residents");
-                                                PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-" + jsonObjectLoginInfo.getString("wing_id") + "-residents");
                                                 contentValues.put(DBManager.ColApartment, jsonObjectLoginInfo.getString("apartment"));
-                                                long id = dbManager.Insert(contentValues);
+                                                dbManager.Insert(contentValues);
 
-                                                startActivity(new Intent(LoginScreenActivity.this, ResidentHomeScreenActivity.class));
-                                                finish();
+                                                PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-" + jsonObjectLoginInfo.getString("wing_id") + "-residents");
+                                                PushNotifications.addDeviceInterest(jsonObjectLoginInfo.getString("township_id") + "-residents");
+
+                                                if (!jsonObjectLoginInfo.getBoolean("profile_updated")) {
+                                                    startActivityForResult(new Intent(LoginScreenActivity.this, EditProfileActivity.class), 123);
+                                                } else {
+                                                    startActivity(new Intent(LoginScreenActivity.this, ResidentHomeScreenActivity.class));
+                                                    finish();
+                                                }
                                                 break;
                                             }
 
@@ -361,10 +400,36 @@ public class LoginScreenActivity extends AppCompatActivity {
 
     }
 
-    public void openDialog() {
-//        ContactUsDialog exampleDialog = new ContactUsDialog();
-//        exampleDialog.show(getSupportFragmentManager(), "example dialog");
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 123) {
+            if (resultCode == PROFILE_EDITED) {
+                switch (userType) {
 
+                    case "admin":
+                        startActivity(new Intent(LoginScreenActivity.this, AdminHomeScreenActivity.class));
+                        finish();
+                        break;
+
+                    case "security":
+                        startActivity(new Intent(LoginScreenActivity.this, SecurityHomeScreenActivity.class));
+                        finish();
+                        break;
+
+                    case "resident":
+                        startActivity(new Intent(LoginScreenActivity.this, ResidentHomeScreenActivity.class));
+                        finish();
+                        break;
+
+                }
+            } else if (resultCode == PROFILE_NOT_EDITED) {
+
+            }
+        }
+    }
+
+    public void openDialog() {
         MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(this);
         materialAlertDialogBuilder.setTitle("Contact us")
                 .setMessage("\nE-mail: support@denizen.io\n\nPhone: +91 94054 38914")

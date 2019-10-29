@@ -9,8 +9,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.IntegerRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +35,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,14 +62,26 @@ public class AdminHomeScreenActivity extends AppCompatActivity
     Notice[] noticesArray;
     Notice.Comment[] commentsArray;
 
+    ComplaintDao complaintDao;
+    Complaint[] complaintsArray;
+
+    DrawerLayout drawerLayout;
+
+    DBManager dbManager;
+    Cursor cursor;
+    View headerView;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        DBManager dbManager = new DBManager(getApplicationContext());
-        Cursor cursor = dbManager.getDataLogin();
+        dbManager = new DBManager(getApplicationContext());
+        cursor = dbManager.getDataLogin();
         cursor.moveToFirst();
+
+        username = cursor.getString(cursor.getColumnIndexOrThrow("Username"));
+        password = cursor.getString(cursor.getColumnIndexOrThrow("Password"));
 
         appDatabase = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "app-database")
@@ -75,39 +94,29 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         final AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        headerView = navigationView.getHeaderView(0);
 
-        View header = navigationView.getHeaderView(0);
-        TextView adminName, adminDesignation;
-
-        adminDesignation = header.findViewById(R.id.navheader_admin_home_screen_designation_textview);
-        adminName = header.findViewById(R.id.navheader_admin_home_screen_name_textview);
-
-        int firstNameCol, desCol, lastNameCol, usernameCol, passwordCol;
-        firstNameCol = cursor.getColumnIndexOrThrow("First_Name");
-        lastNameCol = cursor.getColumnIndexOrThrow("Last_Name");
-        desCol = cursor.getColumnIndexOrThrow("Designation");
-        usernameCol = cursor.getColumnIndexOrThrow("Username");
-        passwordCol = cursor.getColumnIndexOrThrow("Password");
-        cursor.moveToFirst();
-
-        username = cursor.getString(usernameCol);
-        password = cursor.getString(passwordCol);
-
-        adminDesignation.setText(cursor.getString(desCol));
-        adminName.setText(cursor.getString(firstNameCol) + " " + cursor.getString(lastNameCol));
-
+        ImageButton editProfile = headerView.findViewById(R.id.admin_home_nav_header_edit_profile_button);
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminHomeScreenActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
 
         noticeBoardFragment = new NoticeBoardFragment();
-//        complaintsFragment = new ComplaintsFragment();
+        complaintsFragment = new ComplaintsFragment();
 
         getNoticesFromServer();
+        getComplaintsFromServer();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.admin_home_screen_fragment_area, noticeBoardFragment);
@@ -125,11 +134,11 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                     case R.id.admin_notice_board:
                         fragment = getSupportFragmentManager().findFragmentById(R.id.admin_home_screen_fragment_area);
                         if (!(fragment instanceof NoticeBoardFragment)) {
-                            appBarLayout.setElevation(4);
                             transaction = getSupportFragmentManager().beginTransaction();
                             transaction.replace(R.id.admin_home_screen_fragment_area, noticeBoardFragment);
                             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                             transaction.commit();
+                            appBarLayout.setElevation(4);
                         }
                         return true;
 
@@ -139,14 +148,10 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                             appBarLayout.setElevation(0);
                             transaction = getSupportFragmentManager().beginTransaction();
                             complaintsFragment = new ComplaintsFragment();
-                            transaction.replace(R.id.admin_home_screen_fragment_area, complaintsFragment);
+                            transaction.replace(R.id.admin_home_screen_fragment_area, new ComplaintsFragment());
                             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                             transaction.commit();
                         }
-                        return true;
-
-                    case R.id.admin_group_chat:
-//                        appBarLayout.setElevation(4);
                         return true;
 
                     case R.id.admin_finances:
@@ -157,6 +162,45 @@ public class AdminHomeScreenActivity extends AppCompatActivity
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
+    public void updateUI() {
+        cursor = dbManager.getDataLogin();
+        cursor.moveToFirst();
+
+        int firstNameCol, desCol, lastNameCol;
+        firstNameCol = cursor.getColumnIndexOrThrow("First_Name");
+        lastNameCol = cursor.getColumnIndexOrThrow("Last_Name");
+        desCol = cursor.getColumnIndexOrThrow("Designation");
+
+        TextView adminName, adminDesignation;
+
+        String townshipId, userId;
+        townshipId = cursor.getString(cursor.getColumnIndexOrThrow("TownshipId"));
+        userId = cursor.getString(cursor.getColumnIndexOrThrow("User_Id"));
+
+        ImageView profilePic = ((ImageView) headerView.findViewById(R.id.admin_home_nav_header_profile_image));
+        final String url = "https://township-manager.s3.ap-south-1.amazonaws.com/townships/" + townshipId + "/user_profile_pics/" + userId + ".png";
+        Picasso.get()
+                .load(url)
+                .noFade()
+                .placeholder(R.drawable.ic_man)
+                .error(R.drawable.ic_man)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+                .into(profilePic);
+
+        adminDesignation = headerView.findViewById(R.id.navheader_admin_home_screen_designation_textview);
+        adminName = headerView.findViewById(R.id.navheader_admin_home_screen_name_textview);
+
+        adminName.setText(cursor.getString(firstNameCol) + " " + cursor.getString(lastNameCol));
+        adminDesignation.setText(cursor.getString(desCol));
     }
 
     @Override
@@ -176,16 +220,19 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_intercom_admin) {
+            Intent intent=new Intent(AdminHomeScreenActivity.this, IntercomActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_maintenance_admin) {
-
-        } else if (id == R.id.nav_visitor_history_admin) {
+            Intent intent = new Intent(AdminHomeScreenActivity.this, MaintenanceAdminContainerActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_admin_info_admin) {
 
         } else if (id == R.id.nav_security_list_admin) {
             Intent intent = new Intent(AdminHomeScreenActivity.this, SecurityActivity.class);
             startActivity(intent);
+
         } else if (id == R.id.nav_vendors_admin) {
             Intent intent=new Intent(AdminHomeScreenActivity.this,ServiceVendorActivity.class);
             startActivity(intent);
@@ -193,8 +240,7 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_wing_details_admin) {
 
         } else if (id == R.id.nav_amenities_admin) {
-            Intent intent = new
-                    Intent(AdminHomeScreenActivity.this, AmenitiesAdminContainerActivity.class);
+            Intent intent = new Intent(AdminHomeScreenActivity.this, AmenitiesAdminContainerActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_logout_admin) {
@@ -202,8 +248,7 @@ public class AdminHomeScreenActivity extends AppCompatActivity
             logOutDialog.show(getSupportFragmentManager(), "Logout");
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        drawerLayout.closeDrawers();
         return true;
     }
 
@@ -327,14 +372,84 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                 noticeWings.toArray(noticeWingArray);
                 comments.toArray(commentsArray);
 
-                NoticesAsyncTask asyncTask = new NoticesAsyncTask();
-                asyncTask.execute();
+                NoticesAsyncTask noticesAsyncTask = new NoticesAsyncTask();
+                noticesAsyncTask.execute();
             }
         }.start();
 
     }
 
     public void getComplaintsFromServer() {
+
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(getString(R.string.server_addr))
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit retrofit = builder.build();
+
+        RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
+
+        Call<JsonArray> call = retrofitServerAPI.getComplaints(
+                username,
+                password,
+                null,
+                null
+        );
+
+        call.enqueue(new Callback<JsonArray>() {
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                assert response.body() != null;
+                String responseString = response.body().getAsJsonArray().toString();
+                Log.d("printres", responseString);
+                try {
+                    JSONArray jsonArray = new JSONArray(responseString);
+                    JSONObject loginResponse = jsonArray.getJSONObject(0);
+                    if (loginResponse.getInt("login_status") == 1) {
+
+                        JSONArray jsonArrayComplaint;
+                        JSONObject jsonObjectComplaint;
+                        ArrayList<Complaint> complaints = new ArrayList<>();
+                        Complaint complaint;
+                        Gson gson = new Gson();
+                        jsonArrayComplaint = jsonArray.getJSONArray(1);
+                        for (int i = 0; i < jsonArrayComplaint.length(); i++) {
+                            jsonObjectComplaint = jsonArrayComplaint.getJSONObject(i);
+                            complaint = gson.fromJson(jsonObjectComplaint.toString(), Complaint.class);
+                            complaints.add(complaint);
+                        }
+                        jsonArrayComplaint = jsonArray.getJSONArray(2);
+                        for (int i = 0; i < jsonArrayComplaint.length(); i++) {
+                            jsonObjectComplaint = jsonArrayComplaint.getJSONObject(i);
+                            complaint = gson.fromJson(jsonObjectComplaint.toString(), Complaint.class);
+                            complaints.add(complaint);
+                        }
+                        addComplaintsToDatabase(complaints);
+                    }
+
+                } catch (JSONException jsonexcpetion) {
+                    Toast.makeText(AdminHomeScreenActivity.this, jsonexcpetion.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    public void addComplaintsToDatabase(final ArrayList<Complaint> complaints) {
+        new Thread() {
+            public void run() {
+                complaintDao = appDatabase.complaintDao();
+                complaintsArray = new Complaint[complaints.size()];
+                complaints.toArray(complaintsArray);
+                ComplaintsAsyncTask complaintsAsyncTask = new ComplaintsAsyncTask();
+                complaintsAsyncTask.execute();
+
+            }
+        }.start();
 
     }
 
@@ -362,5 +477,29 @@ public class AdminHomeScreenActivity extends AppCompatActivity
             super.onPostExecute(aVoid);
         }
     }
+
+    private class ComplaintsAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            appDatabase.complaintDao().deleteAll();
+            complaintDao.insert(complaintsArray);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if (complaintsFragment.getContext() != null) {
+                complaintsFragment.updateRecyclerView();
+            }
+            super.onPostExecute(aVoid);
+        }
+    }
+
 
 }

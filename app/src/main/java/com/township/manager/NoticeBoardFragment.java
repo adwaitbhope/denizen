@@ -1,5 +1,6 @@
 package com.township.manager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -198,6 +199,7 @@ public class NoticeBoardFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class NoticesAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override

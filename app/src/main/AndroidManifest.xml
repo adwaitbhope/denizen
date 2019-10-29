@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.township.manager">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_SMS" />
@@ -9,7 +10,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".GlobalVariables"
@@ -19,17 +19,41 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginScreenActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".AddServiceVendorActivity"
+        <activity android:name=".AmenityBookSlotActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".SecurityActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".IntercomActivity"
+            android:label="Intercom"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity
+            android:name=".AmenitiesOneTimePaymentsActivity"
+            android:label="One-time Payment List"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AmenitiesBookingHistoryActivity"
+            android:label="Booking History"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AmenitySlotsActivity"
+            android:label="Amenity Details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MembershipDetailsActivity"
+            android:label="Membership Details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MaintenancePaymentActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MaintenanceAdminContainerActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AddMaintenanceActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AddServiceVendorActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".VisitorHistorySecurityContainerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -42,6 +66,9 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name=".ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".RegistrationSuccessfulActivity"
             android:parentActivityName=".LoginScreenActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -53,16 +80,18 @@
             android:label="Amenities"
             android:parentActivityName=".AdminHomeScreenActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".RegistrationPaymentDetailsActivity" />
         <activity
             android:name=".AddNoticeAdminActivity"
             android:label="New Notice"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RegistrationPaymentDetailsActivity" />
         <activity
             android:name=".RegisterComplaintActivity"
             android:label="Register Complaint"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".EditProfileActivity" />
+        <activity
+            android:name=".EditProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RegistrationStepTwoStatusActivity"
             android:label="Application Status"
@@ -87,6 +116,16 @@
             android:name=".MapsActivityStepOne"
             android:label="@string/title_activity_maps_step_one" />
         <activity
+            android:name=".LoginScreenActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".RegistrationStepOneActivity"
             android:label="Society Details"
             android:parentActivityName=".RegistrationStepsActivity"
@@ -102,11 +141,12 @@
         <activity
             android:name=".ResidentHomeScreenActivity"
             android:label="@string/app_name"
-            />
+            android:theme="@style/AppTheme.NoActionBar.TransparentStatusBar" />
         <activity
             android:name=".SecurityHomeScreenActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.TransparentStatusBar" />
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

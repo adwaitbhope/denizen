@@ -14,7 +14,7 @@ public interface ResidentDao {
     @Query("SELECT * FROM Resident")
     List<Resident> getAll();
 
-    @Query("SELECT * FROM Resident WHERE wing_id = :wing_id")
+    @Query("SELECT * FROM Resident WHERE wing_id = :wing_id ORDER BY apartment ASC")
     List<Resident> getAllFromWing(String wing_id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

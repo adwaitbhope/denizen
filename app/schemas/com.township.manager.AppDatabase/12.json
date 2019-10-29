@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 12,
-    "identityHash": "5c1d0dabb8fac59dbfd9a98a0e5a2d84",
+    "identityHash": "e880cdff741911c1dc199092dbda87a7",
     "entities": [
       {
         "tableName": "Notice",
@@ -234,6 +234,148 @@
         ]
       },
       {
+        "tableName": "Complaint",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`complaint_id` TEXT NOT NULL, `resident_first_name` TEXT, `resident_last_name` TEXT, `resident_wing` TEXT, `resident_apartment` TEXT, `resolved` INTEGER, `description` TEXT, `timestamp` TEXT, `title` TEXT, PRIMARY KEY(`complaint_id`))",
+        "fields": [
+          {
+            "fieldPath": "complaint_id",
+            "columnName": "complaint_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "resident_first_name",
+            "columnName": "resident_first_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "resident_last_name",
+            "columnName": "resident_last_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "resident_wing",
+            "columnName": "resident_wing",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "resident_apartment",
+            "columnName": "resident_apartment",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "resolved",
+            "columnName": "resolved",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "complaint_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Maintenance",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`payment_id` TEXT NOT NULL, `amount` TEXT, `apartment` TEXT, `mode` TEXT, `cheque_no` TEXT, `first_name` TEXT, `timestamp` TEXT, `wing_id` TEXT, PRIMARY KEY(`payment_id`), FOREIGN KEY(`wing_id`) REFERENCES `Wing`(`wing_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "payment_id",
+            "columnName": "payment_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amount",
+            "columnName": "amount",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "apartment",
+            "columnName": "apartment",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mode",
+            "columnName": "mode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cheque_no",
+            "columnName": "cheque_no",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "last_name",
+            "columnName": "first_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "wing_id",
+            "columnName": "wing_id",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "payment_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "Wing",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "wing_id"
+            ],
+            "referencedColumns": [
+              "wing_id"
+            ]
+          }
+        ]
+      },
+      {
         "tableName": "Resident",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `username` TEXT, `first_name` TEXT, `last_name` TEXT, `phone` TEXT, `wing_id` TEXT, `apartment` TEXT, FOREIGN KEY(`wing_id`) REFERENCES `Wing`(`wing_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
@@ -362,56 +504,12 @@
         },
         "indices": [],
         "foreignKeys": []
-      },
-      {
-        "tableName": "ServiceVendors",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`vendor_id` TEXT NOT NULL, `first_name` TEXT, `last_name` TEXT, `phone` TEXT, `work` TEXT, PRIMARY KEY(`vendor_id`))",
-        "fields": [
-          {
-            "fieldPath": "vendor_id",
-            "columnName": "vendor_id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "first_name",
-            "columnName": "first_name",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "last_name",
-            "columnName": "last_name",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "phone",
-            "columnName": "phone",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "work",
-            "columnName": "work",
-            "affinity": "TEXT",
-            "notNull": false
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "vendor_id"
-          ],
-          "autoGenerate": false
-        },
-        "indices": [],
-        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5c1d0dabb8fac59dbfd9a98a0e5a2d84')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e880cdff741911c1dc199092dbda87a7')"
     ]
   }
 }

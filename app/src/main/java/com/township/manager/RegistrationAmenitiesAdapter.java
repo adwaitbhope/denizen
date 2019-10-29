@@ -26,7 +26,7 @@ class RegistrationAmenitiesAdapter extends RecyclerView.Adapter<RegistrationAmen
     ArrayList<Amenity> dataset;
     Context context;
     ArrayList<RegistrationAmenitiesAdapter.MyViewHolder> viewHolders;
-    Boolean checkAmenitiesError=false;
+    Boolean checkAmenitiesError = false;
     Integer billingperiod;
 
 
@@ -82,24 +82,24 @@ class RegistrationAmenitiesAdapter extends RecyclerView.Adapter<RegistrationAmen
         Amenity amenity = null;
         MyViewHolder myViewHolder;
         for (int i = 0; i < viewHolders.size(); i++) {
-            checkAmenitiesError=false;
+            checkAmenitiesError = false;
             boolean bool = false;
             myViewHolder = viewHolders.get(i);
-            amenity=new Amenity();
-            if(checkErrorAmenities(myViewHolder)) {
-                checkAmenitiesError=true;
+            amenity = new Amenity();
+            if (checkErrorAmenities(myViewHolder)) {
+                checkAmenitiesError = true;
                 break;
             }
-            if(myViewHolder.billingPeriod.getText().toString().equals("Hourly"))
-                billingperiod=1;
+            if (myViewHolder.billingPeriod.getText().toString().equals("Hourly"))
+                billingperiod = 1;
             else
-                billingperiod=2;
+                billingperiod = 2;
 
             if (myViewHolder.freeOrNot.getText().toString().equals("Yes"))
-                bool=true;
-            amenity.setAmenityrate(Integer.valueOf(myViewHolder.rateAmenity.getText().toString()));
-            amenity.setBillingperiod(billingperiod);
-            amenity.setFreeornot(bool);
+                bool = true;
+            amenity.setBilling_rate(Integer.valueOf(myViewHolder.rateAmenity.getText().toString()));
+            amenity.setTime_period(billingperiod);
+            amenity.setFree_for_members(bool);
             amenity.setName(myViewHolder.amenityName.getText().toString());
 
             amenities.add(amenity);
@@ -113,51 +113,54 @@ class RegistrationAmenitiesAdapter extends RecyclerView.Adapter<RegistrationAmen
     public int getItemCount() {
         return dataset.size();
     }
-    private boolean checkErrorAmenities(RegistrationAmenitiesAdapter.MyViewHolder viewHolder) {
-        boolean error=false;
 
-        if(TextUtils.isEmpty(viewHolder.amenityName.getText().toString())){
+    private boolean checkErrorAmenities(RegistrationAmenitiesAdapter.MyViewHolder viewHolder) {
+        boolean error = false;
+
+        if (TextUtils.isEmpty(viewHolder.amenityName.getText().toString())) {
             viewHolder.amenityNameIIL.setError("Required");
             viewHolder.amenityNameIIL.setErrorEnabled(true);
             viewHolder.amenityNameIIL.requestFocus();
             viewHolder.amenityNameIIL.setErrorIconDrawable(null);
-            Log.d("val5",String.valueOf(error));
-            error=true;
+            Log.d("val5", String.valueOf(error));
+            error = true;
             return error;
         }
-        if(TextUtils.isEmpty(viewHolder.rateAmenity.getText().toString())){
+        if (TextUtils.isEmpty(viewHolder.rateAmenity.getText().toString())) {
             viewHolder.rateAmenityTIL.setError("Required");
             viewHolder.rateAmenityTIL.setErrorEnabled(true);
             viewHolder.rateAmenityTIL.requestFocus();
             viewHolder.rateAmenityTIL.setErrorIconDrawable(null);
-            Log.d("val7",String.valueOf(error));
-            error=true;
+            Log.d("val7", String.valueOf(error));
+            error = true;
             return error;
         }
-        if(TextUtils.isEmpty(viewHolder.billingPeriod.getText().toString())){
+        if (TextUtils.isEmpty(viewHolder.billingPeriod.getText().toString())) {
             viewHolder.billingPeriodTIL.setError("Required");
             viewHolder.billingPeriodTIL.setErrorEnabled(true);
             viewHolder.billingPeriodTIL.requestFocus();
             viewHolder.billingPeriodTIL.setErrorIconDrawable(null);
-            Log.d("val6",String.valueOf(error));
-            error=true;
+            Log.d("val6", String.valueOf(error));
+            error = true;
             return error;
         }
-        if(TextUtils.isEmpty(viewHolder.freeOrNot.getText().toString())){
+        if (TextUtils.isEmpty(viewHolder.freeOrNot.getText().toString())) {
             viewHolder.freeOrNotTIL.setError("Required");
             viewHolder.freeOrNotTIL.setErrorEnabled(true);
             viewHolder.freeOrNotTIL.requestFocus();
             viewHolder.freeOrNotTIL.setErrorIconDrawable(null);
-            Log.d("val8",String.valueOf(error));
-            error=true;
+            Log.d("val8", String.valueOf(error));
+            error = true;
             return error;
         }
-        return  error;
+        return error;
     }
-    public Boolean getAmenitiesError(){
-        Log.d("amenitieserror",String.valueOf(checkAmenitiesError));
-        return  checkAmenitiesError;
+
+    public Boolean getAmenitiesError() {
+        Log.d("amenitieserror", String.valueOf(checkAmenitiesError));
+        return checkAmenitiesError;
     }
+
     private void error(final TextInputLayout textInputLayout) {
         Objects.requireNonNull(textInputLayout.getEditText()).addTextChangedListener(new TextWatcher() {
             @Override
@@ -177,11 +180,12 @@ class RegistrationAmenitiesAdapter extends RecyclerView.Adapter<RegistrationAmen
             }
         });
     }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextInputEditText amenityName, rateAmenity;
         AutoCompleteTextView billingPeriod, freeOrNot;
-        TextInputLayout amenityNameIIL, rateAmenityTIL,billingPeriodTIL,freeOrNotTIL;
+        TextInputLayout amenityNameIIL, rateAmenityTIL, billingPeriodTIL, freeOrNotTIL;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -192,8 +196,8 @@ class RegistrationAmenitiesAdapter extends RecyclerView.Adapter<RegistrationAmen
             rateAmenityTIL = itemView.findViewById(R.id.amenities_rate_til);
             billingPeriod = itemView.findViewById(R.id.billing_period_details_filled_exposed_dropdown);
             freeOrNot = itemView.findViewById(R.id.free_for_members_filled_exposed_dropdown);
-            billingPeriodTIL=itemView.findViewById(R.id.amenities_registration_billing_period_TIL);
-            freeOrNotTIL=itemView.findViewById(R.id.amenities_registration_free_or_not_til);
+            billingPeriodTIL = itemView.findViewById(R.id.amenities_registration_billing_period_TIL);
+            freeOrNotTIL = itemView.findViewById(R.id.amenities_registration_free_or_not_til);
         }
     }
 

@@ -117,5 +117,17 @@
         android:paddingLeft="8dp"
         app:icon="@drawable/ic_feedback_black_24dp"
         app:iconPadding="8dp"/>
+
+    <ImageView
+        android:id="@+id/complaintPhotoImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_complaint_upload_photos_button"
+        tools:srcCompat="@tools:sample/avatars" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
