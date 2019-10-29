@@ -110,7 +110,8 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/one_time_fee_paid_on_text_view"
                 app:layout_constraintStart_toEndOf="@+id/one_time_fee_paid_on_text_view"
-                app:layout_constraintTop_toTopOf="@+id/one_time_fee_paid_on_text_view" />
+                app:layout_constraintTop_toTopOf="@+id/one_time_fee_paid_on_text_view"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/recycler_amenity_booking_history_slot_time_text_view"

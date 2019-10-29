@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(foreignKeys = {
@@ -17,6 +18,10 @@ public class AmenityBooking {
     @PrimaryKey
     String booking_id;
 
+    @Ignore
+    String amenity_name;
+
+    @ColumnInfo(name = "amenity_id")
     String amenity_id;
 
     @ColumnInfo(name = "first_name")
@@ -24,6 +29,9 @@ public class AmenityBooking {
 
     @ColumnInfo(name = "last_name")
     String last_name;
+
+    @Ignore
+    String wing;
 
     String wing_id;
 
@@ -50,6 +58,10 @@ public class AmenityBooking {
         return booking_id;
     }
 
+    public String getAmenity_name() {
+        return amenity_name;
+    }
+
     public String getAmenity_id() {
         return amenity_id;
     }
@@ -60,6 +72,10 @@ public class AmenityBooking {
 
     public String getApartment() {
         return apartment;
+    }
+
+    public String getWing() {
+        return wing;
     }
 
     public String getWing_id() {
@@ -94,12 +110,20 @@ public class AmenityBooking {
         this.booking_id = booking_id;
     }
 
+    public void setAmenity_name(String amenity_name) {
+        this.amenity_name = amenity_name;
+    }
+
     public void setAmenity_id(String amenity_id) {
         this.amenity_id = amenity_id;
     }
 
     public void setFirst_name(String first_name) {
         this.first_name = first_name;
+    }
+
+    public void setWing(String wing) {
+        this.wing = wing;
     }
 
     public void setWing_id(String wing_id) {

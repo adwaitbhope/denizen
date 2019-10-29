@@ -277,7 +277,8 @@ public interface RetrofitServerAPI {
     @POST("/amenities/booking_history/")
     Call<JsonArray> getAmenityBookingHistory(
             @Field("username") String username,
-            @Field("password") String password
+            @Field("password") String password,
+            @Field("with_payments_only") Boolean with_payments_only
     );
 
 }

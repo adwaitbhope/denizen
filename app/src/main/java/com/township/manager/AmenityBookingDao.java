@@ -11,8 +11,11 @@ import androidx.room.Query;
 @Dao
 public interface AmenityBookingDao {
 
-    @Query("SELECT * FROM AmenityBooking")
+    @Query("SELECT * FROM AmenityBooking ORDER BY booking_from DESC")
     List<AmenityBooking> getAll();
+
+    @Query("SELECT * FROM AmenityBooking WHERE payment = 1 ORDER BY booking_from DESC")
+    List<AmenityBooking> getWithPaymentsOnly();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(AmenityBooking... bookings);

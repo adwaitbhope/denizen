@@ -14,6 +14,9 @@ public interface AmenityDao {
     @Query("SELECT * FROM Amenity")
     List<Amenity> getAll();
 
+    @Query("Select name FROM Amenity WHERE amenity_id=:id")
+    String getAmenityName(String id);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Amenity... amenities);
 

@@ -17,6 +17,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -62,6 +63,8 @@ public class AmenitiesBookingHistoryActivity extends AppCompatActivity {
         username = cursor.getString(cursor.getColumnIndexOrThrow("Username"));
         password = cursor.getString(cursor.getColumnIndexOrThrow("Password"));
 
+        ((ProgressBar) findViewById(R.id.amenities_booking_history_progress_bar)).setVisibility(View.VISIBLE);
+
         appDatabase = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "app-database")
                 .fallbackToDestructiveMigration()
@@ -78,6 +81,8 @@ public class AmenitiesBookingHistoryActivity extends AppCompatActivity {
         recyclerView.setItemViewCacheSize(15);
         recyclerView.setDrawingCacheEnabled(true);
         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
+        new GetBookingsAsyncTask().execute();
 
         getBookingHistoryFromServer();
 
@@ -108,7 +113,8 @@ public class AmenitiesBookingHistoryActivity extends AppCompatActivity {
 
         Call<JsonArray> call = retrofitServerAPI.getAmenityBookingHistory(
                 username,
-                password
+                password,
+                false
         );
 
         call.enqueue(new Callback<JsonArray>() {
@@ -129,8 +135,8 @@ public class AmenitiesBookingHistoryActivity extends AppCompatActivity {
                                 public void run() {
                                     for (int i = 0; i < bookingResponseArray.length(); i++) {
                                         try {
-                                            AmenityBooking booking = null;
-                                            booking = gson.fromJson(bookingResponseArray.getJSONObject(i).toString(), AmenityBooking.class);
+                                            AmenityBooking booking = gson.fromJson(bookingResponseArray.getJSONObject(i).toString(), AmenityBooking.class);
+
                                             amenityBookingsArray[i] = booking;
                                         } catch (JSONException e) {
                                             e.printStackTrace();
@@ -167,6 +173,12 @@ public class AmenitiesBookingHistoryActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             temporaryDataset.clear();
             temporaryDataset.addAll(bookingDao.getAll());
+            WingDao wingDao = appDatabase.wingDao();
+            AmenityDao amenityDao = appDatabase.amenityDao();
+            for (AmenityBooking booking : temporaryDataset) {
+                booking.setWing(wingDao.getWingName(booking.getWing_id()));
+                booking.setAmenity_name(amenityDao.getAmenityName(booking.getAmenity_id()));
+            }
             return null;
         }
 
@@ -175,8 +187,9 @@ public class AmenitiesBookingHistoryActivity extends AppCompatActivity {
             super.onPostExecute(aVoid);
             dataset.clear();
             dataset.addAll(temporaryDataset);
+
             if (adapter != null) {
-//                ((ProgressBar) getView().findViewById(R.id.maintenance_list_progress_bar)).setVisibility(GONE);
+                ((ProgressBar) findViewById(R.id.amenities_booking_history_progress_bar)).setVisibility(View.GONE);
                 adapter.notifyDataSetChanged();
             }
         }

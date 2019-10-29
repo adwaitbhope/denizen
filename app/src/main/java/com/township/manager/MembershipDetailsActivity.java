@@ -184,6 +184,10 @@ public class MembershipDetailsActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             temporaryDataset.clear();
             temporaryDataset.addAll(paymentDao.getAll());
+            WingDao wingDao = appDatabase.wingDao();
+            for (MembershipPayment payment : temporaryDataset) {
+                payment.setWing(wingDao.getWingName(payment.getWing_id()));
+            }
             return null;
         }
 
