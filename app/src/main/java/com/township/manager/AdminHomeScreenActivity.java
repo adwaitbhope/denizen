@@ -413,7 +413,12 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                         for (int i = 0; i < jsonArrayComplaint.length(); i++) {
                             jsonObjectComplaint = jsonArrayComplaint.getJSONObject(i);
                             complaint = gson.fromJson(jsonObjectComplaint.toString(), Complaint.class);
-
+                            complaints.add(complaint);
+                        }
+                        jsonArrayComplaint = jsonArray.getJSONArray(2);
+                        for (int i = 0; i < jsonArrayComplaint.length(); i++) {
+                            jsonObjectComplaint = jsonArrayComplaint.getJSONObject(i);
+                            complaint = gson.fromJson(jsonObjectComplaint.toString(), Complaint.class);
                             complaints.add(complaint);
                         }
                         addComplaintsToDatabase(complaints);
