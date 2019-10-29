@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -128,7 +127,7 @@ public class MaintenanceFragment extends Fragment {
             addMaintenanceFloat.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getContext(), PaymentForMaintenance.class);
+                    Intent intent = new Intent(getContext(), MaintenancePaymentActivity.class);
                     startActivity(intent);
                 }
             });

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PaymentForMaintenance">
+    tools:context=".MaintenancePaymentActivity">
 
     <ProgressBar
         android:id="@+id/maintenance_payment_progress_bar"

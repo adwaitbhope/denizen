@@ -2,16 +2,24 @@ package com.township.manager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 
 /**
@@ -31,6 +39,18 @@ public class AmenitiesFragment extends Fragment implements View.OnClickListener 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    ArrayList<Amenity> dataset = new ArrayList<>();
+    ArrayList<Amenity> temporaryDataset = new ArrayList<>();
+
+    AppDatabase appDatabase;
+    AmenityDao amenityDao;
+
+    RecyclerView recyclerView;
+    AmenitiesAdapter adapter;
+    RecyclerView.LayoutManager layoutManager;
+
+    String type;
 
     private OnFragmentInteractionListener mListener;
 
@@ -66,34 +86,59 @@ public class AmenitiesFragment extends Fragment implements View.OnClickListener 
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        appDatabase = Room.databaseBuilder(getContext().getApplicationContext(),
+                AppDatabase.class, "app-database")
+                .fallbackToDestructiveMigration()
+                .build();
+        amenityDao = appDatabase.amenityDao();
+
+        DBManager dbManager = new DBManager(getContext().getApplicationContext());
+        Cursor cursor = dbManager.getDataLogin();
+        cursor.moveToFirst();
+
+        type = cursor.getString(cursor.getColumnIndexOrThrow("Type"));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
         View view = inflater.inflate(R.layout.fragment_amenities, container, false);
-        ExtendedFloatingActionButton membershipDetailsButton = view.findViewById(R.id.membership_details_ex_fab);
+
+        recyclerView = view.findViewById(R.id.amenities_recycler_view);
+        adapter = new AmenitiesAdapter(dataset, getContext(), type);
+
+        final ExtendedFloatingActionButton membershipDetailsButton = view.findViewById(R.id.membership_details_ex_fab);
         membershipDetailsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(getContext(), MembershipDetailsActivity.class);
                 startActivity(intent);
             }
         });
 
-        MaterialButton reserveSlotButton = view.findViewById(R.id.reserve_slot_button);
-        reserveSlotButton.setOnClickListener(new View.OnClickListener() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), AmenityDetailsActivity.class);
-                startActivity(intent);
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+                if (dy > 10) {
+                    membershipDetailsButton.hide();
+                }
+                else if (dy < 10) {
+                    membershipDetailsButton.show();
+                }
             }
         });
 
-        return(view);
+        updateRecyclerView();
+
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+        recyclerView.setItemViewCacheSize(15);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -101,6 +146,16 @@ public class AmenitiesFragment extends Fragment implements View.OnClickListener 
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateRecyclerView();
+    }
+
+    public void updateRecyclerView() {
+        new AmenitiesFragment.AmenitiesAsyncTask().execute();
     }
 
     @Override
@@ -138,5 +193,31 @@ public class AmenitiesFragment extends Fragment implements View.OnClickListener 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private class AmenitiesAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            temporaryDataset.clear();
+            temporaryDataset.addAll(amenityDao.getAll());
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            dataset.clear();
+            dataset.addAll(temporaryDataset);
+            if (adapter != null) {
+//                ((ProgressBar) getView().findViewById(R.id.maintenance_list_progress_bar)).setVisibility(GONE);
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
 }

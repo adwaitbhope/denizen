@@ -26,4 +26,9 @@ public interface WingDao {
     @Query("Select name FROM Wing WHERE wing_id=:id")
     String getWingName(String id);
 
+    @Query("Select name FROM Wing")
+    List<String> getALLWingName();
+
+    @Query("Select wing_id FROM Wing WHERE name=:name")
+    String getWingId(String name);
 }

@@ -3,11 +3,13 @@ package com.township.manager;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -20,6 +22,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
@@ -30,6 +33,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -43,6 +48,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.township.manager.R.color.white;
 
 public class ResidentHomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, NoticeBoardFragment.OnFragmentInteractionListener, MaintenanceFragment.OnFragmentInteractionListener, VisitorHistoryFragment.OnFragmentInteractionListener, AmenitiesFragment.OnFragmentInteractionListener {
@@ -59,20 +66,22 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
     NoticeWingDao noticeWingDao;
     CommentDao commentDao;
     VisitorDao visitorDao;
+    MaintenanceDao maintenanceDao;
 
     Notice[] noticesArray;
     NoticeWing[] noticeWingArray;
     Notice.Comment[] commentsArray;
     Visitor[] visitorsArray;
-
-    MaintenanceDao maintenanceDao;
     Maintenance[] maintenancesArray;
+    Amenity[] amenitiesArray;
 
     DrawerLayout drawerLayout;
 
     DBManager dbManager;
     Cursor cursor;
     View headerView;
+
+    Menu menu;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -123,6 +132,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         amenitiesFragment = new AmenitiesFragment();
 
         getNoticesFromServer();
+        getAmenitiesFromServer();
         getMaintenanceFromServer();
         getVisitorHistoryFromServer();
 
@@ -141,6 +151,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                         transaction.replace(R.id.resident_home_screen_fragment_area, noticeBoardFragment);
                         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         transaction.commit();
+                        menu.findItem(R.id.action_booking_history_item).setVisible(false);
                         return true;
 
                     case R.id.resident_amenities:
@@ -148,6 +159,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                         transaction.replace(R.id.resident_home_screen_fragment_area, amenitiesFragment);
                         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         transaction.commit();
+                        menu.findItem(R.id.action_booking_history_item).setVisible(true);
                         return true;
 
                     case R.id.resident_maintenance:
@@ -155,6 +167,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                         transaction.replace(R.id.resident_home_screen_fragment_area, maintenanceFragment);
                         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         transaction.commit();
+                        menu.findItem(R.id.action_booking_history_item).setVisible(false);
                         return true;
 
                     case R.id.resident_visitor_history:
@@ -162,6 +175,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                         transaction.replace(R.id.resident_home_screen_fragment_area, visitorHistoryFragment);
                         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         transaction.commit();
+                        menu.findItem(R.id.action_booking_history_item).setVisible(false);
                         return true;
                 }
 
@@ -199,6 +213,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                 .placeholder(R.drawable.ic_man)
                 .error(R.drawable.ic_man)
                 .networkPolicy(NetworkPolicy.NO_CACHE)
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .into(profilePic);
 
         TextView residentFlatNo = headerView.findViewById(R.id.resident_home_nav_header_flat_no);
@@ -206,6 +221,32 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
 
         residentName.setText(cursor.getString(firstNameCol) + " " + cursor.getString(lastNameCol));
         residentFlatNo.setText(cursor.getString(wingNoCol) + "/" + cursor.getString(flatNoCol));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        this.menu = menu;
+        getMenuInflater().inflate(R.menu.amenities_action_bar_menu, menu);
+        menu.findItem(R.id.action_booking_history_item).setVisible(false);
+        menu.findItem(R.id.action_booking_list_item).setVisible(false);
+
+        Drawable historyDrawable = menu.findItem(R.id.action_booking_history_item).getIcon();
+        historyDrawable = DrawableCompat.wrap(historyDrawable);
+        DrawableCompat.setTint(historyDrawable, ContextCompat.getColor(this, white));
+        menu.findItem(R.id.action_booking_history_item).setIcon(historyDrawable);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_booking_history_item) {
+            startActivity (new Intent(this, AmenitiesBookingHistoryActivity.class));
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -225,7 +266,9 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_intercom_resident) {
-
+            Intent intent=new Intent(ResidentHomeScreenActivity.this, IntercomActivity.class);
+            startActivity(intent);
+            // Handle the camera action
         } else if (id == R.id.nav_vendors_resident) {
 
         } else if (id == R.id.nav_admin_info_resident) {
@@ -327,47 +370,51 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
 
     }
 
-    public void addNoticesToDatabase(final ArrayList<Notice> notices) {
+    public void getAmenitiesFromServer() {
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(getString(R.string.server_addr))
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit retrofit = builder.build();
 
-        new Thread() {
-            public void run() {
-                noticeDao = appDatabase.noticeDao();
-                noticeWingDao = appDatabase.noticeWingsDao();
-                commentDao = appDatabase.commentDao();
+        RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
 
-                noticesArray = new Notice[notices.size()];
+        Call<JsonArray> call = retrofitServerAPI.getAmenities(
+                username,
+                password
+        );
 
-                int noticeWingsLength = 0, commentsLength = 0;
-                for (Notice notice : notices) {
-                    noticeWingsLength += notice.getWings().size();
-                    commentsLength += notice.getComments().size();
-                }
+        call.enqueue(new Callback<JsonArray>() {
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                String responseString = response.body().toString();
+                try {
+                    JSONArray responseArray = new JSONArray(responseString);
+                    JSONObject loginData = responseArray.getJSONObject(0);
 
-                noticeWingArray = new NoticeWing[noticeWingsLength];
-                commentsArray = new Notice.Comment[commentsLength];
+                    if (loginData.getInt("login_status") == 1) {
+                        if (loginData.getInt("request_status") == 1) {
 
-                ArrayList<NoticeWing> noticeWings = new ArrayList<>();
-                ArrayList<Notice.Comment> comments = new ArrayList<>();
-                NoticeWing noticeWing;
-
-                for (Notice notice : notices) {
-                    for (Wing wing : notice.getWings()) {
-                        noticeWing = new NoticeWing();
-                        noticeWing.setWing_id(wing.getWing_id());
-                        noticeWing.setNotice_id(notice.getNotice_id());
-                        noticeWings.add(noticeWing);
+                            JSONArray amenitiesResponseArray = responseArray.getJSONArray(1);
+                            Gson gson = new Gson();
+                            amenitiesArray = new Amenity[amenitiesResponseArray.length()];
+                            for (int i = 0; i < amenitiesResponseArray.length(); i++) {
+                                Amenity amenity = gson.fromJson(amenitiesResponseArray.getJSONObject(i).toString(), Amenity.class);
+                                amenitiesArray[i] = amenity;
+                            }
+                            new AmenitiesAsyncTask().execute();
+                        }
                     }
-                    comments.addAll(notice.getComments());
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-
-                notices.toArray(noticesArray);
-                noticeWings.toArray(noticeWingArray);
-                comments.toArray(commentsArray);
-
-                new NoticesAsyncTask().execute();
             }
-        }.start();
 
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+
+            }
+        });
     }
 
     public void getVisitorHistoryFromServer() {
@@ -415,56 +462,6 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
 
             }
         });
-    }
-
-    public void getComplaintsFromServer() {
-
-    }
-
-    private class AddVisitorsToDatabase extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            visitorDao = appDatabase.visitorDao();
-            visitorDao.deleteAll();
-            visitorDao.insert(visitorsArray);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            if (visitorHistoryFragment.getContext() != null) {
-                visitorHistoryFragment.updateRecyclerView();
-            }
-            super.onPostExecute(aVoid);
-        }
-    }
-
-    private class NoticesAsyncTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            noticeDao.insert(noticesArray);
-            noticeWingDao.insert(noticeWingArray);
-            commentDao.insert(commentsArray);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            noticeBoardFragment.updateRecyclerView();
-            super.onPostExecute(aVoid);
-        }
     }
 
     private void getMaintenanceFromServer() {
@@ -536,6 +533,94 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         }.start();
     }
 
+    public void addNoticesToDatabase(final ArrayList<Notice> notices) {
+
+        new Thread() {
+            public void run() {
+                noticeDao = appDatabase.noticeDao();
+                noticeWingDao = appDatabase.noticeWingsDao();
+                commentDao = appDatabase.commentDao();
+
+                noticesArray = new Notice[notices.size()];
+
+                int noticeWingsLength = 0, commentsLength = 0;
+                for (Notice notice : notices) {
+                    noticeWingsLength += notice.getWings().size();
+                    commentsLength += notice.getComments().size();
+                }
+
+                noticeWingArray = new NoticeWing[noticeWingsLength];
+                commentsArray = new Notice.Comment[commentsLength];
+
+                ArrayList<NoticeWing> noticeWings = new ArrayList<>();
+                ArrayList<Notice.Comment> comments = new ArrayList<>();
+                NoticeWing noticeWing;
+
+                for (Notice notice : notices) {
+                    for (Wing wing : notice.getWings()) {
+                        noticeWing = new NoticeWing();
+                        noticeWing.setWing_id(wing.getWing_id());
+                        noticeWing.setNotice_id(notice.getNotice_id());
+                        noticeWings.add(noticeWing);
+                    }
+                    comments.addAll(notice.getComments());
+                }
+
+                notices.toArray(noticesArray);
+                noticeWings.toArray(noticeWingArray);
+                comments.toArray(commentsArray);
+
+                new NoticesAsyncTask().execute();
+            }
+        }.start();
+
+    }
+
+    private class NoticesAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            noticeDao.insert(noticesArray);
+            noticeWingDao.insert(noticeWingArray);
+            commentDao.insert(commentsArray);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            noticeBoardFragment.updateRecyclerView();
+            super.onPostExecute(aVoid);
+        }
+    }
+
+    private class AmenitiesAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            appDatabase.amenityDao().deleteAll();
+            appDatabase.amenityDao().insert(amenitiesArray);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if (amenitiesFragment.getContext() != null) {
+                amenitiesFragment.updateRecyclerView();
+            }
+            super.onPostExecute(aVoid);
+        }
+    }
+
     private class MaintenanceAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -546,7 +631,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         @Override
         protected Void doInBackground(Void... voids) {
             appDatabase.maintenanceDao().deleteAll();
-            maintenanceDao.insert(maintenancesArray);
+            appDatabase.maintenanceDao().insert(maintenancesArray);
             return null;
         }
 
@@ -554,6 +639,30 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         protected void onPostExecute(Void aVoid) {
             if (maintenanceFragment.getContext() != null) {
                 maintenanceFragment.updateRecyclerView();
+            }
+            super.onPostExecute(aVoid);
+        }
+    }
+
+    private class AddVisitorsToDatabase extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            visitorDao = appDatabase.visitorDao();
+            visitorDao.deleteAll();
+            visitorDao.insert(visitorsArray);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if (visitorHistoryFragment.getContext() != null) {
+                visitorHistoryFragment.updateRecyclerView();
             }
             super.onPostExecute(aVoid);
         }

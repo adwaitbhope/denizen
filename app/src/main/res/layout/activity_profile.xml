@@ -47,7 +47,7 @@
             app:layout_constraintTop_toBottomOf="@+id/profile_name" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/recycler_membership_payments_amount_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -69,11 +69,11 @@
             android:layout_marginEnd="16dp"
             android:text="1122334455"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView3"
+            app:layout_constraintBottom_toBottomOf="@+id/recycler_membership_payments_amount_text_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="@+id/textView3"
+            app:layout_constraintTop_toTopOf="@+id/recycler_membership_payments_amount_text_view"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
@@ -132,7 +132,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/recycler_membership_payments_amount_text_view" />
 
         <TextView
             android:id="@+id/textView9"
