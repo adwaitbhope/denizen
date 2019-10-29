@@ -28,13 +28,14 @@
                 android:id="@+id/recycler_maintenance_apartment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:text="A/32"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/recycler_maintenance_name"
+                app:layout_constraintEnd_toStartOf="@+id/recycler_maintenance_three_dots"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/recycler_maintenance_name" />
 
             <TextView
                 android:id="@+id/recycler_maintenance_payment_mode"
@@ -77,15 +78,12 @@
                 android:id="@+id/recycler_maintenance_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
                 android:text="Jonybhau Batliwala Sr."
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/recycler_maintenance_three_dots"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/recycler_maintenance_apartment"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
