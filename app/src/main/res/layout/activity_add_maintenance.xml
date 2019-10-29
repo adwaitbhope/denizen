@@ -25,54 +25,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout6"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_maintenance_app_bar_layout">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/add_maintenance_wing_til"
-            style="@style/AppTextField.ExposedDropdownMenu"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="35">
-
-            <AutoCompleteTextView
-                android:id="@+id/add_maintenance_wing_dropdown"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:editable="false"
-                android:hint="Wing"
-                android:paddingStart="16dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/add_maintenance_apartment_til"
-            style="@style/AppTextField.ExposedDropdownMenu"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_weight="65">
-
-            <AutoCompleteTextView
-                android:id="@+id/add_maintenance_apartment_dropdown"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:editable="false"
-                android:hint="Apartment"
-                android:paddingStart="16dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </LinearLayout>
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/add_maintenance_confirm_button"
         android:layout_width="wrap_content"
@@ -80,31 +32,84 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:paddingLeft="8dp"
         android:text="Add payment"
+        app:icon="@drawable/ic_add_circle_black_24dp"
         app:iconPadding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_maintenance_cheque_no_til"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@id/add_maintenance_cheque_no_til" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/add_maintenance_wing_til"
+        style="@style/AppTextField.ExposedDropdownMenu"
+        android:layout_width="144dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_weight="35"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_maintenance_app_bar_layout">
+
+        <AutoCompleteTextView
+            android:id="@+id/add_maintenance_wing_dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_domain_black_24dp"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/secondaryColor"
+            android:editable="false"
+            android:hint="Wing"
+            android:paddingStart="10dp"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/add_maintenance_apartment_til"
+        style="@style/AppTextField.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_weight="65"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/add_maintenance_wing_til"
+        app:layout_constraintTop_toBottomOf="@+id/add_maintenance_app_bar_layout">
+
+        <AutoCompleteTextView
+            android:id="@+id/add_maintenance_apartment_dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_home_black_24dp"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/secondaryColor"
+            android:editable="true"
+            android:hint="Flat no."
+            android:paddingStart="10dp"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/add_maintenance_payment_mode_til"
         style="@style/AppTextField.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:hint="Mode of Payment"
         app:errorEnabled="true"
-        app:layout_constraintEnd_toEndOf="@+id/add_maintenance_amount_til"
-        app:layout_constraintStart_toStartOf="@+id/add_maintenance_amount_til"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_maintenance_amount_til">
 
         <AutoCompleteTextView
             android:id="@+id/add_maintenance_payment_mode_dropdown"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_font_download_black_24dp"
+            android:drawableStart="@drawable/ic_credit_card_black_24dp"
             android:drawablePadding="10dp"
             android:drawableTint="@color/secondaryColor"
             android:editable="false"
@@ -117,19 +122,25 @@
         android:id="@+id/add_maintenance_amount_til"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout6"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout6">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_maintenance_apartment_til">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/add_maintenance_amount_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_rupee_indian_24dp"
             android:drawablePadding="10dp"
+            android:drawableTint="@color/secondaryColor"
+            android:editable="false"
             android:hint="Amount"
             android:inputType="number"
+            android:paddingStart="10dp"
             android:paddingLeft="10dp"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -142,7 +153,6 @@
         android:layout_marginEnd="16dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout6"
         app:layout_constraintTop_toBottomOf="@id/add_maintenance_payment_mode_til">
 
         <com.google.android.material.textfield.TextInputEditText
