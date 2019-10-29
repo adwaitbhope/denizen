@@ -33,10 +33,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class SecurityActivity extends AppCompatActivity implements SecurityDesksListFragment.OnFragmentInteractionListener,SecurityPersonnelListFragment.OnFragmentInteractionListener {
+public class SecurityActivity extends AppCompatActivity implements SecurityDesksListFragment.OnFragmentInteractionListener, SecurityPersonnelListFragment.OnFragmentInteractionListener {
 
 
-    String username,password;
+    String username, password;
     DBManager dbManager;
     Cursor cursor;
     SecurityDesksDao securityDesksDao;
@@ -65,9 +65,9 @@ public class SecurityActivity extends AppCompatActivity implements SecurityDesks
         username = cursor.getString(cursor.getColumnIndexOrThrow("Username"));
         password = cursor.getString(cursor.getColumnIndexOrThrow("Password"));
 
+        securityPersonnelListFragment = new SecurityPersonnelListFragment();
+        securityDesksListFragment = new SecurityDesksListFragment();
 
-        securityPersonnelListFragment=new SecurityPersonnelListFragment();
-        securityDesksListFragment=new SecurityDesksListFragment();
         sliderAdapter.addFragment(securityPersonnelListFragment, "Personnel");
         sliderAdapter.addFragment(securityDesksListFragment, "Desks");
 
@@ -90,6 +90,17 @@ public class SecurityActivity extends AppCompatActivity implements SecurityDesks
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_people_black_24dp);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_store_black_24dp);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (securityPersonnelListFragment.getContext() != null) {
+            new SecurityPersonnelAsyncTask().execute();
+        }
+        if (securityDesksListFragment.getContext() != null) {
+            new SecurityDesksAsyncTask().execute();
+        }
     }
 
     private void getSecurityDesksFromServer() {
@@ -118,20 +129,19 @@ public class SecurityActivity extends AppCompatActivity implements SecurityDesks
                         JSONArray jsonSecurityDesks = jsonArray.getJSONArray(1);
                         JSONObject jsonSecurityDeskObject;
 
-                        ArrayList<SecurityDesks> securityDesksArrayList=new ArrayList<>();
-                        Gson gson=new Gson();
+                        ArrayList<SecurityDesks> securityDesksArrayList = new ArrayList<>();
+                        Gson gson = new Gson();
                         SecurityDesks securityDesks;
 
-                        for(int i=0;i<jsonSecurityDesks.length();i++){
-                            jsonSecurityDeskObject=jsonSecurityDesks.getJSONObject(i);
-                            securityDesks=gson.fromJson(jsonSecurityDeskObject.toString(),SecurityDesks.class);
+                        for (int i = 0; i < jsonSecurityDesks.length(); i++) {
+                            jsonSecurityDeskObject = jsonSecurityDesks.getJSONObject(i);
+                            securityDesks = gson.fromJson(jsonSecurityDeskObject.toString(), SecurityDesks.class);
                             securityDesksArrayList.add(securityDesks);
                         }
                         addSecurityDesksToDatabase(securityDesksArrayList);
                     }
 
-                }
-                catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
@@ -146,13 +156,14 @@ public class SecurityActivity extends AppCompatActivity implements SecurityDesks
     }
 
     private void addSecurityDesksToDatabase(final ArrayList<SecurityDesks> securityDesksArrayList) {
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 super.run();
-                securityDesksDao=appDatabase.securityDesksDao();
-                securityDesks=new SecurityDesks[securityDesksArrayList.size()];
+                securityDesksDao = appDatabase.securityDesksDao();
+                securityDesks = new SecurityDesks[securityDesksArrayList.size()];
                 securityDesksArrayList.toArray(securityDesks);
+                new SecurityDesksAsyncTask().execute();
             }
         }.start();
     }
@@ -184,19 +195,18 @@ public class SecurityActivity extends AppCompatActivity implements SecurityDesks
                         JSONArray jsonSecurityPersonnel = jsonArray.getJSONArray(1);
                         JSONObject jsonSecurityPersonnelObject;
                         SecurityPersonnel securityPersonnel;
-                        ArrayList<SecurityPersonnel> securityPersonnelArrayList=new ArrayList<>();
-                        Gson gson=new Gson();
+                        ArrayList<SecurityPersonnel> securityPersonnelArrayList = new ArrayList<>();
+                        Gson gson = new Gson();
 
-                        for(int i=0;i<jsonSecurityPersonnel.length();i++){
-                            jsonSecurityPersonnelObject=jsonSecurityPersonnel.getJSONObject(i);
-                            securityPersonnel=gson.fromJson(jsonSecurityPersonnelObject.toString(),SecurityPersonnel.class);
+                        for (int i = 0; i < jsonSecurityPersonnel.length(); i++) {
+                            jsonSecurityPersonnelObject = jsonSecurityPersonnel.getJSONObject(i);
+                            securityPersonnel = gson.fromJson(jsonSecurityPersonnelObject.toString(), SecurityPersonnel.class);
                             securityPersonnelArrayList.add(securityPersonnel);
                         }
                         addSecurityPersonnelToDatabase(securityPersonnelArrayList);
                     }
 
-                }
-                catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -209,13 +219,14 @@ public class SecurityActivity extends AppCompatActivity implements SecurityDesks
     }
 
     private void addSecurityPersonnelToDatabase(final ArrayList<SecurityPersonnel> securityPersonnelArrayList) {
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 super.run();
-                securityPersonnelDao=appDatabase.securityPersonnelDao();
-                securityPersonnels=new SecurityPersonnel[securityPersonnelArrayList.size()];
+                securityPersonnelDao = appDatabase.securityPersonnelDao();
+                securityPersonnels = new SecurityPersonnel[securityPersonnelArrayList.size()];
                 securityPersonnelArrayList.toArray(securityPersonnels);
+                new SecurityPersonnelAsyncTask().execute();
 
             }
         }.start();

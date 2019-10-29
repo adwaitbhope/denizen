@@ -12,8 +12,11 @@ public class SecurityDesks {
     @PrimaryKey
     String desk_id;
 
-    @ColumnInfo(name="security_desk_name")
-    String security_desk_name;
+    @ColumnInfo(name="designation")
+    String designation;
+
+    @ColumnInfo(name="phone")
+    String phone;
 
     @NonNull
     public String getDesk_id() {
@@ -24,23 +27,20 @@ public class SecurityDesks {
         this.desk_id = desk_id;
     }
 
-    public String getSecurity_desk_name() {
-        return security_desk_name;
+    public String getDesignation() {
+        return designation;
     }
 
-    public void setSecurity_desk_name(String security_desk_name) {
-        this.security_desk_name = security_desk_name;
+    public String getPhone() {
+        return phone;
     }
 
-    public String getSecurity_desk_phone() {
-        return security_desk_phone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public void setSecurity_desk_phone(String security_desk_phone) {
-        this.security_desk_phone = security_desk_phone;
+    public void setDesignation(String designation) {
+        this.designation = designation;
     }
-
-    @ColumnInfo(name="security_desk_phone")
-    String security_desk_phone;
 
 }

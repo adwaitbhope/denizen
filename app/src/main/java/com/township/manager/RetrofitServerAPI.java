@@ -200,7 +200,7 @@ public interface RetrofitServerAPI {
     @POST("/maintenance/pay/verify/")
     Call<JsonArray> verifyMaintenancePayment(
         @Field("username") String username,
-        @Field("password") String passsword,
+        @Field("password") String password,
         @Field("ORDER_ID") String ORDER_ID
     );
 
@@ -208,16 +208,16 @@ public interface RetrofitServerAPI {
     @POST("/security/desks/")
     Call<JsonArray> getSecurityDesks(
         @Field("username") String username,
-        @Field("password") String passsword
+        @Field("password") String password
     );
 
     @FormUrlEncoded
-    @POST("/security/desks/new")
+    @POST("/security/desks/new/")
     Call<JsonArray> addNewSecurityDesks(
             @Field("username") String username,
-            @Field("password") String passsword,
-            @Field("security_desk_name") String security_desk_name,
-            @Field("security_desk_phone") String security_desk_phone
+            @Field("password") String password,
+            @Field("name") String name,
+            @Field("phone") String phone
     );
 
     @FormUrlEncoded
@@ -228,10 +228,10 @@ public interface RetrofitServerAPI {
     );
 
     @FormUrlEncoded
-    @POST("/security/personnel/new")
+    @POST("/security/personnel/new/")
     Call<JsonArray> addNewSecurityPersonnel(
             @Field("username") String username,
-            @Field("password") String passsword,
+            @Field("password") String password,
             @Field("security_personnel_name") String security_personnel_name,
             @Field("security_personnel_phone") String security_personnel_phone,
             @Field("security_personnel_timings_from") Integer security_personnel_timings_from,
@@ -243,7 +243,7 @@ public interface RetrofitServerAPI {
     @POST("/security/personnel/edit/")
     Call<JsonArray> editSecurityPersonnel(
             @Field("username") String username,
-            @Field("password") String passsword,
+            @Field("password") String password,
             @Field("personnel_id") String personnel_id,
             @Field("security_personnel_name") String security_personnel_name,
             @Field("security_personnel_phone") String security_personnel_phone,
@@ -255,7 +255,7 @@ public interface RetrofitServerAPI {
     @POST("/security/personnel/delete/")
     Call<JsonArray> deleteSecurityPersonnel(
             @Field("username") String username,
-            @Field("password") String passsword,
+            @Field("password") String password,
             @Field("personnel_id") String personnel_id
     );
 

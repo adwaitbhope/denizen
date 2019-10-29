@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 
 import com.google.android.material.button.MaterialButton;
@@ -28,9 +29,9 @@ import static com.township.manager.SecurityDesksListFragment.ADD_SECURITY_DESKS_
 
 public class AddSecurityDeskActivity extends AppCompatActivity {
 
-    TextInputLayout securityDeskNameTIL,securityDeskPhoneTIL;
-    EditText securityDeskName,securityDeskPhone;
-    MaterialButton cancelButton,saveButton;
+    TextInputLayout securityDeskNameTIL, securityDeskPhoneTIL;
+    EditText securityDeskName, securityDeskPhone;
+    MaterialButton cancelButton, saveButton;
     String username, password;
     SecurityDesks securityDesks;
     SecurityDesksDao securityDesksDao;
@@ -39,25 +40,26 @@ public class AddSecurityDeskActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_security_desk);
 
-        securityDeskNameTIL=findViewById(R.id.add_security_desk_name_name_til);
-        securityDeskName=findViewById(R.id.add_security_desk_name_edit_text);
-        securityDeskPhoneTIL=findViewById(R.id.add_security_desk_phone_number_til);
-        securityDeskPhone=findViewById(R.id.add_security_desk_phone_number_edit_text);
-        cancelButton=findViewById(R.id.add_security_desk_cancel_button);
-        saveButton=findViewById(R.id.add_security_desk_save_button);
+        securityDeskNameTIL = findViewById(R.id.add_security_desk_name_name_til);
+        securityDeskName = findViewById(R.id.add_security_desk_name_edit_text);
+        securityDeskPhoneTIL = findViewById(R.id.add_security_desk_phone_number_til);
+        securityDeskPhone = findViewById(R.id.add_security_desk_phone_number_edit_text);
+        cancelButton = findViewById(R.id.add_security_desk_cancel_button);
+        saveButton = findViewById(R.id.add_security_desk_save_button);
 
         appDatabase = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "app-database")
                 .fallbackToDestructiveMigration()
                 .build();
+
         DBManager dbManager = new DBManager(getApplicationContext());
         Cursor cursor = dbManager.getDataLogin();
         cursor.moveToFirst();
         username = cursor.getString(cursor.getColumnIndexOrThrow("Username"));
         password = cursor.getString(cursor.getColumnIndexOrThrow("Password"));
 
-        setContentView(R.layout.activity_add_security_desk);
         Toolbar toolbar = (Toolbar) findViewById(R.id.add_security_desk_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Add Desk");
@@ -65,13 +67,20 @@ public class AddSecurityDeskActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        addSecurityDesksToServer();
+
+        MaterialButton saveButton = ((MaterialButton) findViewById(R.id.add_security_desk_save_button));
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addSecurityDesksToServer();
+            }
+        });
     }
 
     private void addSecurityDesksToServer() {
-        String name,phone;
-        name=securityDeskName.getText().toString();
-        phone=securityDeskPhone.getText().toString();
+        String name, phone;
+        name = securityDeskName.getText().toString();
+        phone = securityDeskPhone.getText().toString();
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(getString(R.string.server_addr))
@@ -80,7 +89,7 @@ public class AddSecurityDeskActivity extends AppCompatActivity {
 
         RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
 
-        Call<JsonArray> call=retrofitServerAPI.addNewSecurityDesks(
+        Call<JsonArray> call = retrofitServerAPI.addNewSecurityDesks(
                 username,
                 password,
                 name,
@@ -96,13 +105,13 @@ public class AddSecurityDeskActivity extends AppCompatActivity {
                     if (loginJson.getString("login_status").equals("1")) {
                         if (loginJson.getString("request_status").equals("1")) {
                             Gson gson = new Gson();
-                            securityDesks=gson.fromJson(responseArray.getJSONObject(1).toString(), SecurityDesks.class);
+                            securityDesks = gson.fromJson(responseArray.getJSONObject(1).toString(), SecurityDesks.class);
                             new AddSecurityDeskAsyncTask().execute();
+                            finish();
                         }
 
                     }
-                }
-                catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -113,6 +122,7 @@ public class AddSecurityDeskActivity extends AppCompatActivity {
             }
         });
     }
+
     private class AddSecurityDeskAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -133,6 +143,7 @@ public class AddSecurityDeskActivity extends AppCompatActivity {
             super.onPostExecute(aVoid);
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

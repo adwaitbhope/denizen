@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,13 +47,11 @@ public class SecurityDesksListFragment extends Fragment {
     SecurityDesksAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
 
-    AppDatabase appDatabase;
     ArrayList<SecurityDesks> dataset = new ArrayList<>();
     ArrayList<SecurityDesks> temporaryDataset = new ArrayList<>();
+
+    AppDatabase appDatabase;
     SecurityDesksDao securityDesksDao;
-
-
-    String userType, townshipId;
 
     public static final int ADD_SECURITY_DESKS_REQUEST = 69;
     public static final int ADD_SECURITY_DESKS_RESULT = 70;
@@ -86,15 +85,11 @@ public class SecurityDesksListFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
         appDatabase = Room.databaseBuilder(getContext().getApplicationContext(),
                 AppDatabase.class, "app-database")
                 .fallbackToDestructiveMigration()
                 .build();
-
-
-        securityDesksDao=appDatabase.securityDesksDao();
+        securityDesksDao = appDatabase.securityDesksDao();
     }
 
     @Override
@@ -105,13 +100,14 @@ public class SecurityDesksListFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(getActivity(), AddSecurityDeskActivity.class),ADD_SECURITY_DESKS_REQUEST);
+                startActivityForResult(new Intent(getActivity(), AddSecurityDeskActivity.class), ADD_SECURITY_DESKS_REQUEST);
+            }
+        });
 
-            } });
         updateRecyclerView();
 
-        recyclerView=view.findViewById(R.id.security_desks_recycler_view);
-        adapter=new SecurityDesksAdapter(dataset,getContext());
+        recyclerView = view.findViewById(R.id.security_desks_recycler_view);
+        adapter = new SecurityDesksAdapter(dataset, getContext());
         layoutManager = new LinearLayoutManager(getContext());
 
         recyclerView.setLayoutManager(layoutManager);
@@ -120,7 +116,6 @@ public class SecurityDesksListFragment extends Fragment {
         recyclerView.setItemViewCacheSize(15);
         recyclerView.setDrawingCacheEnabled(true);
         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-
 
         return view;
 
@@ -146,7 +141,6 @@ public class SecurityDesksListFragment extends Fragment {
             }
         }
     }
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -198,7 +192,6 @@ public class SecurityDesksListFragment extends Fragment {
         protected Void doInBackground(Void... voids) {
             temporaryDataset.clear();
             temporaryDataset.addAll(securityDesksDao.getAll());
-
             return null;
         }
 

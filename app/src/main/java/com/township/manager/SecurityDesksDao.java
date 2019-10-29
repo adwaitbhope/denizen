@@ -1,6 +1,5 @@
 package com.township.manager;
 
-
 import java.util.List;
 
 import androidx.room.Dao;
@@ -11,7 +10,8 @@ import androidx.room.Query;
 
 @Dao
 public interface SecurityDesksDao {
-    @Query("SELECT * FROM SecurityDesks")
+
+    @Query("SELECT * FROM SecurityDesks ORDER BY designation")
     List<SecurityDesks> getAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

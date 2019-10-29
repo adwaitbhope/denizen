@@ -19,7 +19,7 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/security_personnel_three_dots"
+            android:id="@+id/recycler_security_personnel_three_dots"
             style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -34,7 +34,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/security_personnel_profile_image"
+            android:id="@+id/recycler_security_personnel_profile_image"
             android:layout_width="128dp"
             android:layout_height="128dp"
             android:layout_marginStart="16dp"
@@ -47,22 +47,21 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/security_personnel_name"
+            android:id="@+id/recycler_security_personnel_name_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="Salam Sabji Jr."
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/three_dots"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/security_personnel_profile_image"
-            app:layout_constraintTop_toTopOf="@+id/security_personnel_profile_image" />
+            app:layout_constraintStart_toEndOf="@+id/recycler_security_personnel_profile_image"
+            app:layout_constraintTop_toTopOf="@+id/recycler_security_personnel_profile_image" />
 
         <TextView
-            android:id="@+id/security_personnel_phone_number"
+            android:id="@+id/recycler_security_personnel_phone_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -84,13 +83,13 @@
             android:drawablePadding="8dp"
             android:drawableTint="@color/secondaryColor"
             android:text="Shift:"
-            app:layout_constraintEnd_toEndOf="@+id/security_personnel_name"
+            app:layout_constraintEnd_toEndOf="@+id/recycler_security_personnel_name_text_view"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/security_personnel_name"
-            app:layout_constraintTop_toBottomOf="@+id/security_personnel_name" />
+            app:layout_constraintStart_toStartOf="@+id/recycler_security_personnel_name_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/recycler_security_personnel_name_text_view" />
 
         <TextView
-            android:id="@+id/security_personnel_timings"
+            android:id="@+id/recycler_security_personnel_shift_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

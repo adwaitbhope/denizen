@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,13 +48,11 @@ public class SecurityPersonnelListFragment extends Fragment {
     SecurityPersonnelAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
 
-    AppDatabase appDatabase;
     ArrayList<SecurityPersonnel> dataset = new ArrayList<>();
     ArrayList<SecurityPersonnel> temporaryDataset = new ArrayList<>();
+
+    AppDatabase appDatabase;
     SecurityPersonnelDao securityPersonnelDao;
-
-
-    String userType, townshipId;
 
     public static final int ADD_SECURITY_PERSONNEL_REQUEST = 69;
     public static final int ADD_SECURITY_PERSONNEL_RESULT = 70;
@@ -92,13 +91,7 @@ public class SecurityPersonnelListFragment extends Fragment {
                 AppDatabase.class, "app-database")
                 .fallbackToDestructiveMigration()
                 .build();
-
-
-
-
-
-        securityPersonnelDao=appDatabase.securityPersonnelDao();
-
+        securityPersonnelDao = appDatabase.securityPersonnelDao();
     }
 
     @Override
@@ -110,16 +103,17 @@ public class SecurityPersonnelListFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getActivity(), AddSecurityPersonnelActivity.class);
-                intent.putExtra("type","add");
-                startActivityForResult(intent,ADD_SECURITY_PERSONNEL_REQUEST);
+                Intent intent = new Intent(getActivity(), AddSecurityPersonnelActivity.class);
+                intent.putExtra("type", "add");
+                startActivityForResult(intent, ADD_SECURITY_PERSONNEL_REQUEST);
 
-            } });
+            }
+        });
 
         updateRecyclerView();
 
-        recyclerView=view.findViewById(R.id.security_personnel_recycler_view);
-        adapter=new SecurityPersonnelAdapter(dataset,getContext());
+        recyclerView = view.findViewById(R.id.security_personnel_recycler_view);
+        adapter = new SecurityPersonnelAdapter(dataset, getContext());
 
         DBManager dbManager = new DBManager(getContext());
         Cursor cursor = dbManager.getDataLogin();
@@ -127,7 +121,7 @@ public class SecurityPersonnelListFragment extends Fragment {
 
         adapter.username = cursor.getString(cursor.getColumnIndexOrThrow("Username"));
         adapter.password = cursor.getString(cursor.getColumnIndexOrThrow("Password"));
-        adapter.TOWNSHIP_ID= cursor.getString(cursor.getColumnIndexOrThrow("TownshipId"));
+        adapter.TOWNSHIP_ID = cursor.getString(cursor.getColumnIndexOrThrow("TownshipId"));
         layoutManager = new LinearLayoutManager(getContext());
 
         recyclerView.setLayoutManager(layoutManager);
@@ -139,7 +133,7 @@ public class SecurityPersonnelListFragment extends Fragment {
 
         return view;
 
-        }
+    }
 
     public void updateRecyclerView() {
         new SecurityPersonnelAsyncTask().execute();
@@ -203,7 +197,6 @@ public class SecurityPersonnelListFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    @SuppressLint("StaticFieldLeak")
     private class SecurityPersonnelAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -215,7 +208,6 @@ public class SecurityPersonnelListFragment extends Fragment {
         protected Void doInBackground(Void... voids) {
             temporaryDataset.clear();
             temporaryDataset.addAll(securityPersonnelDao.getAll());
-
             return null;
         }
 
@@ -224,6 +216,11 @@ public class SecurityPersonnelListFragment extends Fragment {
             super.onPostExecute(aVoid);
             dataset.clear();
             dataset.addAll(temporaryDataset);
+
+            for (SecurityPersonnel personnel : dataset) {
+                Log.d("personnel", personnel.getFirst_name());
+            }
+
             if (adapter != null) {
                 adapter.notifyDataSetChanged();
             }
