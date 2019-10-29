@@ -22,6 +22,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
@@ -212,6 +213,7 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
                 .placeholder(R.drawable.ic_man)
                 .error(R.drawable.ic_man)
                 .networkPolicy(NetworkPolicy.NO_CACHE)
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .into(profilePic);
 
         TextView residentFlatNo = headerView.findViewById(R.id.resident_home_nav_header_flat_no);
@@ -264,7 +266,9 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_intercom_resident) {
-
+            Intent intent=new Intent(ResidentHomeScreenActivity.this, IntercomActivity.class);
+            startActivity(intent);
+            // Handle the camera action
         } else if (id == R.id.nav_vendors_resident) {
 
         } else if (id == R.id.nav_admin_info_resident) {

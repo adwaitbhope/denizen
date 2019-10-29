@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 14,
-    "identityHash": "5fd52872fb27db8125beafeec8844c1d",
+    "identityHash": "8fa95fd65ae2d07fdf1e99e906f735cc",
     "entities": [
       {
         "tableName": "Notice",
@@ -303,11 +303,11 @@
       },
       {
         "tableName": "Maintenance",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`payment_id` TEXT NOT NULL, `amount` TEXT, `apartment` TEXT, `mode` TEXT, `cheque_no` TEXT, `first_name` TEXT, `last_name` TEXT, `timestamp` TEXT, `wing_id` TEXT, PRIMARY KEY(`payment_id`), FOREIGN KEY(`wing_id`) REFERENCES `Wing`(`wing_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `amount` TEXT, `apartment` TEXT, `mode` TEXT, `cheque_no` TEXT, `first_name` TEXT, `timestamp` TEXT, `wing_id` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`wing_id`) REFERENCES `Wing`(`wing_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
-            "fieldPath": "payment_id",
-            "columnName": "payment_id",
+            "fieldPath": "id",
+            "columnName": "id",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -336,14 +336,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "first_name",
-            "columnName": "first_name",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
             "fieldPath": "last_name",
-            "columnName": "last_name",
+            "columnName": "first_name",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -362,7 +356,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "payment_id"
+            "id"
           ],
           "autoGenerate": false
         },
@@ -510,12 +504,86 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "Intercom",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_id` TEXT NOT NULL, `type` TEXT, `first_name` TEXT, `last_name` TEXT, `phone` TEXT, `wing_id` TEXT, `apartment` TEXT, `designation` TEXT, PRIMARY KEY(`user_id`), FOREIGN KEY(`wing_id`) REFERENCES `Wing`(`wing_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "user_id",
+            "columnName": "user_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "first_name",
+            "columnName": "first_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "last_name",
+            "columnName": "last_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "phone",
+            "columnName": "phone",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "wing_id",
+            "columnName": "wing_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "apartment",
+            "columnName": "apartment",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "designation",
+            "columnName": "designation",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "user_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "Wing",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "wing_id"
+            ],
+            "referencedColumns": [
+              "wing_id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5fd52872fb27db8125beafeec8844c1d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8fa95fd65ae2d07fdf1e99e906f735cc')"
     ]
   }
 }

@@ -55,6 +55,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.JsonArray;
 import com.pusher.pushnotifications.PushNotifications;
 import com.squareup.moshi.JsonAdapter;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -164,7 +165,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 .noFade()
                 .placeholder(R.drawable.ic_man)
                 .error(R.drawable.ic_man)
-//                .networkPolicy(NetworkPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .into(profilePic);
 
         profilePic.setOnClickListener(new View.OnClickListener() {

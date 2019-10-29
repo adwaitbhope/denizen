@@ -301,4 +301,12 @@ public interface RetrofitServerAPI {
             @Field("ORDER_ID") String ORDER_ID
     );
 
+    @FormUrlEncoded
+    @POST("/intercom/")
+    Call<JsonArray> getIntercomDetails(
+            @Field("username") String username,
+            @Field("password") String password
+    );
+
+
 }

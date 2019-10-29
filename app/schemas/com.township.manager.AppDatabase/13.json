@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 13,
-    "identityHash": "e880cdff741911c1dc199092dbda87a7",
+    "identityHash": "6d78c53aa75b4f8fd43992fcd39b445d",
     "entities": [
       {
         "tableName": "Notice",
@@ -303,11 +303,11 @@
       },
       {
         "tableName": "Maintenance",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`payment_id` TEXT NOT NULL, `amount` TEXT, `apartment` TEXT, `mode` TEXT, `cheque_no` TEXT, `first_name` TEXT, `timestamp` TEXT, `wing_id` TEXT, PRIMARY KEY(`payment_id`), FOREIGN KEY(`wing_id`) REFERENCES `Wing`(`wing_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `amount` TEXT, `apartment` TEXT, `mode` TEXT, `cheque_no` TEXT, `first_name` TEXT, `timestamp` TEXT, `wing_id` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`wing_id`) REFERENCES `Wing`(`wing_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
-            "fieldPath": "payment_id",
-            "columnName": "payment_id",
+            "fieldPath": "id",
+            "columnName": "id",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -356,7 +356,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "payment_id"
+            "id"
           ],
           "autoGenerate": false
         },
@@ -509,7 +509,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e880cdff741911c1dc199092dbda87a7')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6d78c53aa75b4f8fd43992fcd39b445d')"
     ]
   }
 }
