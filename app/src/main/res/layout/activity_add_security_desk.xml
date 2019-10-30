@@ -73,6 +73,7 @@
             android:drawablePadding="10dp"
             android:drawableTint="@color/secondaryColor"
             android:fontFamily="@font/roboto_mono"
+            android:maxLength="10"
             android:hint="Desk Phone"
             android:inputType="phone"
             android:paddingLeft="10dp"
