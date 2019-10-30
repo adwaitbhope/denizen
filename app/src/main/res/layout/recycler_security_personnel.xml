@@ -65,14 +65,15 @@
 
             <TextView
                 android:id="@+id/recycler_security_personnel_shift_text_view"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:drawableStart="@drawable/ic_access_time_black_24dp"
                 android:drawablePadding="8dp"
                 android:drawableTint="@color/secondaryColor"
                 android:text="Shift:"
-                app:layout_constraintEnd_toEndOf="@+id/recycler_security_personnel_name_text_view"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/recycler_security_personnel_name_text_view"
                 app:layout_constraintTop_toBottomOf="@+id/recycler_security_personnel_name_text_view" />

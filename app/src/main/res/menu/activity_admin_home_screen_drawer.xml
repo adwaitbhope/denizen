@@ -25,10 +25,10 @@
                 android:icon="@drawable/ic_security_black_24dp"
                 android:title="Security Desk List" />
 
-            <item
-                android:id="@+id/nav_wing_details_admin"
-                android:icon="@drawable/ic_location_city_black_24dp"
-                android:title="Wing Details" />
+<!--            <item-->
+<!--                android:id="@+id/nav_wing_details_admin"-->
+<!--                android:icon="@drawable/ic_location_city_black_24dp"-->
+<!--                android:title="Wing Details" />-->
             <item
                 android:id="@+id/nav_amenities_admin"
                 android:icon="@drawable/ic_pool_black_24dp"
