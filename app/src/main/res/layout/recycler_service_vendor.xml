@@ -60,15 +60,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="8dp"
                 android:text="Parshuram Nalwale"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintEnd_toStartOf="@+id/security_desks_three_dots"
                 app:layout_constraintStart_toEndOf="@+id/vendor_profile_image"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/vendor_profile_image" />
 
             <TextView
                 android:id="@+id/vendor_service"
@@ -81,13 +79,28 @@
                 app:layout_constraintTop_toBottomOf="@+id/vendor_name" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/security_desks_three_dots"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:textAppearance="?android:textAppearanceLarge"
+                app:icon="@drawable/ic_more_vert_black_24dp"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconTint="@color/material_on_surface_emphasis_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/vendor_call_button"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="24dp"
                 android:paddingStart="8dp"
                 android:text="Call Vendor"
                 app:icon="@drawable/ic_call_black_24dp"
