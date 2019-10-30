@@ -36,11 +36,7 @@
         <activity
             android:name=".VisitorHistorySecurityContainerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".OneTimeFeeDetailsListActivity"
         <activity android:name=".AmenityBookSlotActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".SecurityActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".IntercomActivity"
             android:label="Intercom"
@@ -69,9 +65,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddMaintenanceActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".VisitorHistorySecurityContainerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ComplaintsResidentContainerActivity"
@@ -175,10 +168,6 @@
             android:name=".SecurityHomeScreenActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar.TransparentStatusBar" />
-        <activity
-            android:name=".SecurityActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
 
         <meta-data

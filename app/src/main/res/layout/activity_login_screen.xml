@@ -1,178 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:focusableInTouchMode="true"
-    android:focusable="true"
-    android:clickable="true"
-    tools:context=".LoginScreenActivity">
+    android:layout_height="match_parent">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/login_screen_brand_cardView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="16dp"
-        android:elevation="0dp"
-        android:paddingBottom="8dp"
-        app:cardBackgroundColor="@color/primaryColor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:strokeWidth="0dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/login_screen_brand_title_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                android:text="Denizen"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/login_screen_login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/login"
-        app:icon="@drawable/ic_check_circle_black_24dp"
-        android:paddingLeft="8dp"
-        app:iconPadding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_screen_password_til" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/login_screen_forgot_password_button"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:drawableTint="@color/primaryColor"
-        android:paddingLeft="8dp"
-        android:text="@string/forgot_password"
-        android:textColor="@color/primaryColor"
-        app:icon="@drawable/ic_error_black_24dp"
-        app:iconPadding="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/login_screen_login_button"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_screen_password_til" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/login_screen_register_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:paddingLeft="8dp"
-        android:text="@string/register_your_society"
-        app:icon="@drawable/ic_assignment_turned_in_black_24dp"
-        app:iconPadding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_screen_login_button" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/login_screen_contact_us_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:paddingStart="8dp"
-        android:text="@string/contact_us"
-        app:icon="@drawable/ic_call_black_24dp"
-        app:iconPadding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/login_screen_username_til"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="16dp"
-        app:errorEnabled="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_screen_description_text_view">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/login_screen_username_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_person_black_24dp"
-            android:drawablePadding="10dp"
-            android:drawableTint="@color/secondaryColor"
-            android:fontFamily="@font/roboto_mono"
-            android:hint="Username"
-            android:inputType="textPersonName|text"
-            android:paddingLeft="10dp"
-            android:textSize="14sp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/login_screen_password_til"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        app:endIconMode="password_toggle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_screen_username_til">
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        tools:context=".LoginScreenActivity">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/login_screen_password_edit_text"
+        <TextView
+            android:id="@+id/login_screen_description_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Township Manager"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/login_screen_brand_cardView"
+            app:layout_constraintStart_toStartOf="@+id/login_screen_brand_cardView"
+            app:layout_constraintTop_toBottomOf="@+id/login_screen_brand_cardView" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/login_screen_forgot_password_button"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:drawableTint="@color/primaryColor"
+            android:paddingLeft="8dp"
+            android:text="@string/forgot_password"
+            android:textColor="@color/primaryColor"
+            app:icon="@drawable/ic_error_black_24dp"
+            app:iconPadding="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/login_screen_login_button"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_screen_password_til" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/login_screen_register_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:paddingLeft="8dp"
+            android:text="@string/register_your_society"
+            app:icon="@drawable/ic_assignment_turned_in_black_24dp"
+            app:iconPadding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_screen_login_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/login_screen_contact_us_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:paddingStart="8dp"
+            android:text="@string/contact_us"
+            app:icon="@drawable/ic_call_black_24dp"
+            app:iconPadding="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_screen_register_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/login_screen_login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:paddingLeft="8dp"
+            android:text="@string/login"
+            app:icon="@drawable/ic_check_circle_black_24dp"
+            app:iconPadding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_screen_password_til" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/login_screen_brand_cardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="16dp"
+            android:elevation="0dp"
+            android:paddingBottom="8dp"
+            app:cardBackgroundColor="@color/primaryColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/login_screen_brand_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Denizen"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_screen_password_til"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_lock_black_24dp"
-            android:drawablePadding="10dp"
-            android:drawableTint="@color/secondaryColor"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:paddingLeft="10dp"
-            android:textSize="14sp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:endIconMode="password_toggle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_screen_username_til">
 
-    <TextView
-        android:id="@+id/login_screen_description_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Township Manager"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/login_screen_brand_cardView"
-        app:layout_constraintStart_toStartOf="@+id/login_screen_brand_cardView"
-        app:layout_constraintTop_toBottomOf="@+id/login_screen_brand_cardView" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login_screen_password_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_lock_black_24dp"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/secondaryColor"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:paddingLeft="10dp"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_screen_username_til"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="16dp"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_screen_description_text_view">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login_screen_username_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_person_black_24dp"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/secondaryColor"
+                android:fontFamily="@font/roboto_mono"
+                android:hint="Username"
+                android:inputType="textPersonName|text"
+                android:paddingLeft="10dp"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+
