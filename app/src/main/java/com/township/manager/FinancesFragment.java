@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CalendarView;
@@ -34,6 +35,7 @@ import com.google.gson.JsonArray;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.text.ParseException;
@@ -64,12 +66,12 @@ public class FinancesFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     CalendarView calendarView;
-    TextInputLayout titleTextInputLayout,typeOfExpenseTextInputLayout,amountTextInputLayout,paidViaTextInputLayout,chequeNumberTextInputLayout;
-    EditText titleEdit,amountEdit,chequeNoEdit;
-    String username,password,day,month,year,chequeNumber;
+    TextInputLayout titleTextInputLayout, typeOfExpenseTextInputLayout, amountTextInputLayout, paidViaTextInputLayout, chequeNumberTextInputLayout;
+    EditText titleEdit, amountEdit, chequeNoEdit;
+    String username, password, day, month, year, chequeNumber;
     MaterialButton saveButton;
     ExtendedFloatingActionButton generateReportFloatingActionButton;
-    AutoCompleteTextView typeOfExpenseAutoCompleteTextView,paidViaAutoCompleteTextView;
+    AutoCompleteTextView typeOfExpenseAutoCompleteTextView, paidViaAutoCompleteTextView;
     Date today;
 
     public FinancesFragment() {
@@ -115,30 +117,30 @@ public class FinancesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_finances, container, false);
 
-        titleTextInputLayout=view.findViewById(R.id.finance_title_textInputLayout);
-        titleEdit=view.findViewById(R.id.finance_title_textInputLayout_child);
+        titleTextInputLayout = view.findViewById(R.id.finance_title_textInputLayout);
+        titleEdit = view.findViewById(R.id.finance_title_textInputLayout_child);
 
-        amountTextInputLayout=view.findViewById(R.id.finance_amount_textInputLayout);
-        amountEdit=view.findViewById(R.id.finance_amount_textInputLayout_child);
+        amountTextInputLayout = view.findViewById(R.id.finance_amount_textInputLayout);
+        amountEdit = view.findViewById(R.id.finance_amount_textInputLayout_child);
 
-        typeOfExpenseTextInputLayout=view.findViewById(R.id.finance_type_of_expense_dropdown_til);
-        typeOfExpenseAutoCompleteTextView=view.findViewById(R.id.finance_type_of_expense_dropdown);
+        typeOfExpenseTextInputLayout = view.findViewById(R.id.finance_type_of_expense_dropdown_til);
+        typeOfExpenseAutoCompleteTextView = view.findViewById(R.id.finance_type_of_expense_dropdown);
 
-        paidViaTextInputLayout=view.findViewById(R.id.finance_mode_of_payment_payment_mode_til);
-        paidViaTextInputLayout=view.findViewById(R.id.finance_mode_of_payment_mode_dropdown);
+        paidViaTextInputLayout = view.findViewById(R.id.finance_mode_of_payment_payment_mode_til);
+        paidViaAutoCompleteTextView = view.findViewById(R.id.finance_mode_of_payment_mode_dropdown);
 
-        chequeNumberTextInputLayout=view.findViewById(R.id.finance_cheque_no_payment_mode_til);
-        chequeNoEdit=view.findViewById(R.id.finance_cheque_no_mode_edit_text);
+        chequeNumberTextInputLayout = view.findViewById(R.id.finance_cheque_no_payment_mode_til);
+        chequeNoEdit = view.findViewById(R.id.finance_cheque_no_mode_edit_text);
 
-        calendarView=view.findViewById(R.id.finance_calendarView);
+        calendarView = view.findViewById(R.id.finance_calendarView);
 
-        saveButton=view.findViewById(R.id.finances_save_button);
+        saveButton = view.findViewById(R.id.finances_save_button);
 
-        generateReportFloatingActionButton=view.findViewById(R.id.finances_report_ex_fab);
+        generateReportFloatingActionButton = view.findViewById(R.id.finances_report_ex_fab);
 
-        String[] type=new String[]{"Credit","Debit"};
+        String[] type = new String[]{"Credit", "Debit"};
 
-        ArrayAdapter<String> adapterType=new ArrayAdapter<>(
+        ArrayAdapter<String> adapterType = new ArrayAdapter<>(
                 getContext(),
                 R.layout.dropdown_menu_popup_item,
                 type
@@ -146,9 +148,9 @@ public class FinancesFragment extends Fragment {
 
         typeOfExpenseAutoCompleteTextView.setAdapter(adapterType);
 
-        String[] paymentmode=new String[]{"Cash","Cheque","Online"};
+        String[] paymentmode = new String[]{"Cash", "Cheque", "Online"};
 
-        ArrayAdapter<String> adapterPaymentMode=new ArrayAdapter<>(
+        ArrayAdapter<String> adapterPaymentMode = new ArrayAdapter<>(
                 getContext(),
                 R.layout.dropdown_menu_popup_item,
                 paymentmode
@@ -156,7 +158,16 @@ public class FinancesFragment extends Fragment {
 
         paidViaAutoCompleteTextView.setAdapter(adapterPaymentMode);
 
-
+        paidViaAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (paidViaAutoCompleteTextView.getText().toString().equals("Cheque")) {
+                    chequeNumberTextInputLayout.setVisibility(View.VISIBLE);
+                } else {
+                    chequeNumberTextInputLayout.setVisibility(View.GONE);
+                }
+            }
+        });
 
         generateReportFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,7 +175,6 @@ public class FinancesFragment extends Fragment {
                 getFinanceReport();
             }
         });
-
 
 
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -185,22 +195,22 @@ public class FinancesFragment extends Fragment {
             e.printStackTrace();
         }
 
-        day=selectedDate.substring(0,2);
-        month=selectedDate.substring(3,5);
-        year=selectedDate.substring(6,10);
+        day = selectedDate.substring(0, 2);
+        month = selectedDate.substring(3, 5);
+        year = selectedDate.substring(6, 10);
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int yearCal, int monthCal, int dayCal) {
                 monthCal++;
-                month=String.valueOf(monthCal);
-                day=String.valueOf(dayCal);
-                year=String.valueOf(dayCal);
+                month = String.valueOf(monthCal);
+                day = String.valueOf(dayCal);
+                year = String.valueOf(dayCal);
 
             }
         });
 
-        if(paidViaAutoCompleteTextView.getText().toString().equals("Cheque")) {
+        if (paidViaAutoCompleteTextView.getText().toString().equals("Cheque")) {
             chequeNoEdit.setVisibility(View.VISIBLE);
         }
 
@@ -267,33 +277,31 @@ public class FinancesFragment extends Fragment {
 //        });
 
 
-
         return view;
     }
 
     private void addFinanceEntry() {
 
-        String title,amount;
-        int typeOfExpense,paymentMode;
-        title=titleEdit.getText().toString();
-        amount=amountEdit.getText().toString();
+        String title, amount;
+        int typeOfExpense, paymentMode;
+        title = titleEdit.getText().toString();
+        amount = amountEdit.getText().toString();
 
-        typeOfExpense=0;
-        paymentMode=0;
+        typeOfExpense = 0;
+        paymentMode = 0;
 
-        if(typeOfExpenseAutoCompleteTextView.getText().toString().equals("Credit"))
-            typeOfExpense=1;
-        else if(typeOfExpenseAutoCompleteTextView.getText().toString().equals("Debit"))
-            typeOfExpense=2;
+        if (typeOfExpenseAutoCompleteTextView.getText().toString().equals("Credit"))
+            typeOfExpense = 1;
+        else if (typeOfExpenseAutoCompleteTextView.getText().toString().equals("Debit"))
+            typeOfExpense = 2;
 
-        if(paidViaAutoCompleteTextView.getText().toString().equals("Cash"))
-            paymentMode=1;
-        else if(paidViaAutoCompleteTextView.getText().toString().equals("Cheque")) {
+        if (paidViaAutoCompleteTextView.getText().toString().equals("Cash"))
+            paymentMode = 1;
+        else if (paidViaAutoCompleteTextView.getText().toString().equals("Cheque")) {
             paymentMode = 2;
-            chequeNumber=chequeNoEdit.getText().toString();
-        }
-        else if(paidViaAutoCompleteTextView.getText().toString().equals("Online"))
-            paymentMode=3;
+            chequeNumber = chequeNoEdit.getText().toString();
+        } else if (paidViaAutoCompleteTextView.getText().toString().equals("Online"))
+            paymentMode = 3;
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(getString(R.string.server_addr))
@@ -302,7 +310,7 @@ public class FinancesFragment extends Fragment {
 
         RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
 
-        Call<JsonArray> call=retrofitServerAPI.addNewFinance(
+        Call<JsonArray> call = retrofitServerAPI.addNewFinance(
                 username,
                 password,
                 title,
@@ -324,10 +332,10 @@ public class FinancesFragment extends Fragment {
                     JSONObject loginJson = responseArray.getJSONObject(0);
                     if (loginJson.getString("login_status").equals("1")) {
                         if (loginJson.getString("request_status").equals("1")) {
-                            Toast.makeText(getActivity(),"Finance Added",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Finance Added", Toast.LENGTH_SHORT).show();
                         }
                     }
-                }catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -349,7 +357,7 @@ public class FinancesFragment extends Fragment {
 
         RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
 
-        Call<JsonArray> call=retrofitServerAPI.generateFinanceReport(
+        Call<JsonArray> call = retrofitServerAPI.generateFinanceReport(
                 username,
                 password
         );
@@ -362,11 +370,11 @@ public class FinancesFragment extends Fragment {
                     JSONArray responseArray = new JSONArray(responseString);
                     JSONObject loginJson = responseArray.getJSONObject(0);
                     if (loginJson.getString("login_status").equals("1")) {
-                        if (loginJson.getString("request_status").equals("1")) {
-                            Toast.makeText(getActivity(),"Report Generated",Toast.LENGTH_SHORT).show();
+                        if (loginJson.getString("authorization").equals("1")) {
+                            Toast.makeText(getActivity(), "Report has been sent to your email!", Toast.LENGTH_SHORT).show();
                         }
                     }
-                }catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
 

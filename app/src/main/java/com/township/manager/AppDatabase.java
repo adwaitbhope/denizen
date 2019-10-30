@@ -18,8 +18,6 @@ import androidx.room.RoomDatabase;
         SecurityDesks.class,
         AdminInfo.class,
         MembershipPayment.class,
-        FinancesCredit.class,
-        FinancesDebit.class,
         Intercom.class,
         ServiceVendors.class}, version = 25)
 public abstract class AppDatabase extends RoomDatabase {

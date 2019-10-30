@@ -23,10 +23,6 @@
         <activity android:name=".SecurityActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".IntercomActivity"/>
-        <activity android:name=".AddFinancesActivity"/>
-        <activity
-            android:name=".AmenityBookSlotActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddSecurityDeskActivity"
             android:label="Add Desk"
