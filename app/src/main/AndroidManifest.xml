@@ -29,9 +29,16 @@
             android:name=".SecurityActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
+        <activity android:name=".AmenityBookSlotActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".SecurityActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".IntercomActivity"/>
         <activity
             android:name=".AddSecurityDeskActivity"
             android:label="Add Desk"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ServiceVendorActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
         <activity android:name=".ServiceVendorActivity"
@@ -83,6 +90,9 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".AddMaintenanceActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".AddAdminActivity"
             android:label="Add Admin(s)"
             android:theme="@style/AppTheme.NoActionBar"
@@ -94,8 +104,8 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".AddMaintenanceActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ComplaintsResidentContainerActivity"
             android:theme="@style/AppTheme.NoActionBar"

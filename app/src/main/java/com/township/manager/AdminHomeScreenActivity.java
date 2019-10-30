@@ -157,14 +157,13 @@ public class AdminHomeScreenActivity extends AppCompatActivity
 
                     case R.id.admin_finances:
                         fragment = getSupportFragmentManager().findFragmentById(R.id.admin_home_screen_fragment_area);
-                        if (!(fragment instanceof ComplaintsFragment)) {
+                        if (!(fragment instanceof FinancesFragment)) {
                             appBarLayout.setElevation(0);
                             transaction = getSupportFragmentManager().beginTransaction();
                             financesFragment = new FinancesFragment();
                             transaction.replace(R.id.admin_home_screen_fragment_area, new FinancesFragment());
                             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                             transaction.commit();
-//                        appBarLayout.setElevation(4);
                         }
                         return true;
                 }
@@ -246,9 +245,10 @@ public class AdminHomeScreenActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_vendors_admin) {
-            Intent intent = new Intent(AdminHomeScreenActivity.this, ServiceVendorActivity.class);
+            Intent intent=new Intent(AdminHomeScreenActivity.this,ServiceVendorActivity.class);
             startActivity(intent);
-//        } else if (id == R.id.nav_wing_details_admin) {
+
+        } else if (id == R.id.nav_wing_details_admin) {
 
         } else if (id == R.id.nav_amenities_admin) {
             Intent intent = new Intent(AdminHomeScreenActivity.this, AmenitiesAdminContainerActivity.class);

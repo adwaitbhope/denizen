@@ -272,7 +272,6 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_vendors_resident) {
             Intent intent=new Intent(ResidentHomeScreenActivity.this,ServiceVendorActivity.class);
             startActivity(intent);
-
         } else if (id == R.id.nav_admin_info_resident) {
             Intent intent=new Intent(ResidentHomeScreenActivity.this,AdminInfoActivity.class);
             startActivity(intent);
