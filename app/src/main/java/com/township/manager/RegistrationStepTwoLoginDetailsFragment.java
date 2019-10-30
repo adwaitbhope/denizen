@@ -63,6 +63,7 @@ public class RegistrationStepTwoLoginDetailsFragment extends Fragment implements
     private String mParam2;
     ArrayList<Wing> wings;
     ArrayList<Amenity> amenities;
+    ProgressBar progressBar;
 
 
     public TextView tvShowNumbers;
@@ -123,7 +124,7 @@ public class RegistrationStepTwoLoginDetailsFragment extends Fragment implements
         noOfAdmin = view.findViewById(R.id.registration_step2_admin_no_of_admins);
         noOfSecurityDesks = view.findViewById(R.id.registration_step2_admin_no_of_security);
 
-        final ProgressBar progressBar = view.findViewById(R.id.registration_initiate_payment_progress_bar);
+         progressBar = view.findViewById(R.id.registration_initiate_payment_progress_bar);
 
         error(noOfAdmin);
         error(noOfSecurityDesks);
@@ -133,7 +134,7 @@ public class RegistrationStepTwoLoginDetailsFragment extends Fragment implements
             @Override
             public void onClick(View view) {
 
-                progressBar.setVisibility(View.VISIBLE);
+
                 try {
                     InputMethodManager manager = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
                     manager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
@@ -156,10 +157,13 @@ public class RegistrationStepTwoLoginDetailsFragment extends Fragment implements
                     return;
                 }
 
+                progressBar.setVisibility(View.VISIBLE);
+                int apts=0;
                 Map<String, Object> wingsMap = new HashMap<>();
                 for (int i = 0; i < wings.size(); i++) {
                     Wing wing = wings.get(i);
                     wingsMap.put("wing_" + i + "_name", wing.getName());
+                    apts+=wing.getNumberOfFloors()*wing.getNumberOfApartmentsPerFloor();
                     wingsMap.put("wing_" + i + "_floors", wing.getNumberOfFloors());
                     wingsMap.put("wing_" + i + "_apts_per_floor", wing.getNumberOfApartmentsPerFloor());
                     wingsMap.put("wing_" + i + "_naming_convention", wing.getNamingConvention());
@@ -175,7 +179,7 @@ public class RegistrationStepTwoLoginDetailsFragment extends Fragment implements
                 }
 
                 Paytm.PaytmOrder paytmOrder = new Paytm.PaytmOrder();
-                paytmOrder.setTXN_AMOUNT("100");
+                paytmOrder.setTXN_AMOUNT(String.valueOf(2500*apts));
                 generateChecksumFromServer(paytmOrder, wingsMap, amenitiesMap);
             }
         });
@@ -243,6 +247,9 @@ public class RegistrationStepTwoLoginDetailsFragment extends Fragment implements
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.d("pay", e.toString());
+                    progressBar.setVisibility(View.GONE);
+
+
                 }
 
             }
@@ -250,6 +257,7 @@ public class RegistrationStepTwoLoginDetailsFragment extends Fragment implements
             @Override
             public void onFailure(Call<JsonArray> call, Throwable throwable) {
                 Log.d("Init call failure", throwable.toString() + " " + call.toString());
+                progressBar.setVisibility(View.GONE);
 
             }
         });
@@ -289,6 +297,7 @@ public class RegistrationStepTwoLoginDetailsFragment extends Fragment implements
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
+            progressBar.setVisibility(View.GONE);
         }
     }
 
@@ -301,6 +310,7 @@ public class RegistrationStepTwoLoginDetailsFragment extends Fragment implements
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+
     }
 
     @Override
@@ -332,6 +342,7 @@ public class RegistrationStepTwoLoginDetailsFragment extends Fragment implements
         } catch (JSONException e) {
             Log.d("JsonException", e.toString());
         }
+        progressBar.setVisibility(View.GONE);
 
     }
 

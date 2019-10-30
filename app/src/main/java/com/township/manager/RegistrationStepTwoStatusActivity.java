@@ -255,6 +255,8 @@ public class RegistrationStepTwoStatusActivity extends AppCompatActivity {
                     visible(statusValue);
 
                     if (jsonObject.getBoolean("verified")) {
+                        applicationEmail.setEnabled(false);
+                        applicationNumber.setEnabled(false);
                         proceedButton.setVisibility(View.VISIBLE);
                     }
 
