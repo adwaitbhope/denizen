@@ -248,8 +248,6 @@ public class AdminHomeScreenActivity extends AppCompatActivity
             Intent intent=new Intent(AdminHomeScreenActivity.this,ServiceVendorActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_wing_details_admin) {
-
         } else if (id == R.id.nav_amenities_admin) {
             Intent intent = new Intent(AdminHomeScreenActivity.this, AmenitiesAdminContainerActivity.class);
             startActivity(intent);

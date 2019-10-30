@@ -19,8 +19,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddFinancesActivity"
-            android:screenOrientation="portrait"/>
         <activity
             android:name=".AmenityBookSlotActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -29,19 +27,14 @@
             android:name=".SecurityActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
-        <activity android:name=".AmenityBookSlotActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".SecurityActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".IntercomActivity"/>
         <activity
             android:name=".AddSecurityDeskActivity"
             android:label="Add Desk"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ServiceVendorActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ServiceVendorActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".AddServiceVendorActivity"
@@ -54,11 +47,6 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".VisitorHistorySecurityContainerActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".IntercomActivity"
-            android:label="Intercom"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
         <activity
@@ -91,6 +79,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".AddMaintenanceActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddAdminActivity"
@@ -102,10 +91,6 @@
             android:label="Admin Info"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".AddMaintenanceActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ComplaintsResidentContainerActivity"
             android:theme="@style/AppTheme.NoActionBar"
