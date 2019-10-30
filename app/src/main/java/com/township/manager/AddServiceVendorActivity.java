@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -110,6 +111,7 @@ public class AddServiceVendorActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+
         intent=getIntent();
         if(intent.getStringExtra("request").equals("1")) {
             saveVendor.setOnClickListener(new View.OnClickListener() {
@@ -145,8 +147,16 @@ public class AddServiceVendorActivity extends AppCompatActivity {
             });
         }
 
+    }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void editVendorToServer() {
