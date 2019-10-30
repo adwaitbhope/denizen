@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Plumber"
-                android:textSize="18dp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@+id/vendor_name"
                 app:layout_constraintTop_toBottomOf="@+id/vendor_name" />
 
