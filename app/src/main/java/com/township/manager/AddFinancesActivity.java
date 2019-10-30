@@ -8,7 +8,7 @@ import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.textfield.TextInputLayout;
 
-public class AddCreditActivity extends AppCompatActivity {
+public class AddFinancesActivity extends AppCompatActivity {
 
     AutoCompleteTextView paymentModeACTV;
 
@@ -17,7 +17,7 @@ public class AddCreditActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_credit);
+        setContentView(R.layout.activity_add_finances);
 
         paymentModeTIL = findViewById(R.id.add_cheque_payment_mode_til);
 
@@ -25,7 +25,7 @@ public class AddCreditActivity extends AppCompatActivity {
 
         String[] paymentModes = new String[] {"Cheque", "UPI"};
         ArrayAdapter<String> paymentModeAdapter = new ArrayAdapter<>(
-                AddCreditActivity.this,
+                AddFinancesActivity.this,
                 R.layout.dropdown_menu_popup_item,
                 paymentModes);
         paymentModeACTV.setAdapter(paymentModeAdapter);

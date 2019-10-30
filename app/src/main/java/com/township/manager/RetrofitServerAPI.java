@@ -301,4 +301,38 @@ public interface RetrofitServerAPI {
             @Field("ORDER_ID") String ORDER_ID
     );
 
+    @FormUrlEncoded
+    @POST("/finances/")
+    Call<JsonArray> getFinances(
+            @Field("username") String username,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("/finances/credit/new/")
+    Call<JsonArray> addFinanacesCredit(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("day") String credit_day,
+            @Field("month") String credit_month,
+            @Field("year") String credit_year,
+            @Field("mode_of_payment") String credit_mode_of_payment,
+            @Field("amount") String credit_amount,
+            @Field("title") String credit_title
+    );
+
+    @FormUrlEncoded
+    @POST("/finances/debit/new/")
+    Call<JsonArray> addFinanacesDebit(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("day") String debit_day,
+            @Field("month") String debit_month,
+            @Field("year") String debit_year,
+            @Field("mode_of_payment") String debit_mode_of_payment,
+            @Field("amount") String debit_amount,
+            @Field("title") String debit_title
+    );
+
+
 }

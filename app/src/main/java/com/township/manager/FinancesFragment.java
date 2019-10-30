@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -37,7 +38,7 @@ public class FinancesFragment extends Fragment {
 
     FloatingActionButton fab, fab1, fab2;
 
-    ConstraintLayout fabLayout1, fabLayout2, fabLayout;
+    CoordinatorLayout fabLayout1, fabLayout2, fabLayout;
 
     View fabBGLayout;
 
@@ -83,9 +84,9 @@ public class FinancesFragment extends Fragment {
         fab1 = view.findViewById(R.id.fab1);
         fab2 = view.findViewById(R.id.fab2);
 
-        fabLayout1 = (ConstraintLayout) view.findViewById(R.id.fabLayout1);
-        fabLayout2 = (ConstraintLayout) view.findViewById(R.id.fabLayout2);
-        fabLayout = (ConstraintLayout) view.findViewById(R.id.fabLayout);
+        fabLayout1 = (CoordinatorLayout) view.findViewById(R.id.fabLayout1);
+        fabLayout2 = (CoordinatorLayout) view.findViewById(R.id.fabLayout2);
+//        fabLayout = (CoordinatorLayout) view.findViewById(R.id.fabLayout);
 
         fabBGLayout = view.findViewById(R.id.fabBGLayout);
 
@@ -95,7 +96,7 @@ public class FinancesFragment extends Fragment {
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), AddCreditActivity.class));
+                startActivity(new Intent(getContext(), AddFinancesActivity.class));
             }
         });
 
@@ -151,7 +152,7 @@ public class FinancesFragment extends Fragment {
         fabLayout2.setVisibility(View.VISIBLE);
 
         fabBGLayout.setVisibility(View.VISIBLE);
-        fab.animate().rotationBy(180);
+        fab.animate().rotationBy(135);
         fabLayout1.animate().translationY(-getResources().getDimension(R.dimen.standard_10));
         fabLayout2.animate().translationY(-getResources().getDimension(R.dimen.standard_20));
 

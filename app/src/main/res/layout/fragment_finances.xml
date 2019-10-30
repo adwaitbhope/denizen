@@ -1,398 +1,500 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    tools:context=".FinancesFragment">-->
+
+<!--    <View-->
+<!--        android:id="@+id/bg_fab_menu"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:background="#48000000"-->
+<!--        android:alpha="0"-->
+<!--        android:visibility="gone"/>-->
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+
+
+<!--&lt;!&ndash;        <View&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/fabBGLayout"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:background="@color/white"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:visibility="gone" />&ndash;&gt;-->
+
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:id="@+id/fabLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="137dp"-->
+<!--            android:visibility="gone"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent">-->
+
+<!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--                android:id="@+id/fab123"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="4dp"-->
+<!--                android:clickable="true"-->
+<!--                android:focusable="true"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:srcCompat="@drawable/ic_add_black_24dp" />-->
+
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--        <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+<!--            android:id="@+id/fabLayout1"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="96dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/add_credit_textView"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginEnd="8dp"-->
+<!--                android:text="Add Credit"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/fab1"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--                android:id="@+id/fab1"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="4dp"-->
+<!--                android:layout_marginEnd="16dp"-->
+<!--                android:layout_marginBottom="4dp"-->
+<!--                android:clickable="true"-->
+<!--                android:focusable="true"-->
+<!--                android:layout_gravity="bottom|end"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:maxImageSize="32dp"-->
+<!--                app:srcCompat="@drawable/ic_add_black_24dp"-->
+<!--                app:tint="@android:color/white" />-->
+<!--        </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+
+
+<!--        <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+<!--            android:id="@+id/fabLayout2"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="3dp"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/fabLayout1"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/add_debit_textView"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginEnd="8dp"-->
+<!--                android:text="Add Debit"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/fab2"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--                android:id="@+id/fab2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="4dp"-->
+<!--                android:layout_marginEnd="16dp"-->
+<!--                android:layout_marginBottom="4dp"-->
+<!--                android:layout_gravity="bottom|end"-->
+<!--                android:clickable="true"-->
+<!--                android:focusable="true"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintVertical_bias="0.0"-->
+<!--                app:maxImageSize="32dp"-->
+<!--                app:srcCompat="@drawable/ic_add_black_24dp"-->
+<!--                app:tint="@android:color/white" />-->
+<!--        </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+
+<!--        <com.google.android.material.card.MaterialCardView-->
+<!--            android:id="@+id/debit_cardView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:layout_marginEnd="16dp"-->
+<!--            android:paddingBottom="8dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/credit_cardView">-->
+
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/debit_textView"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="24dp"-->
+<!--                    android:layout_marginTop="16dp"-->
+<!--                    android:layout_marginEnd="16dp"-->
+<!--                    android:text="Debit"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    app:layout_constraintEnd_toStartOf="@+id/finances_debit_dropdown_arrow_button"-->
+<!--                    app:layout_constraintHorizontal_bias="0.0"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+
+<!--                <com.google.android.material.button.MaterialButton-->
+<!--                    android:id="@+id/finances_debit_dropdown_arrow_button"-->
+<!--                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"-->
+<!--                    android:layout_width="48dp"-->
+<!--                    android:layout_height="48dp"-->
+<!--                    android:layout_marginTop="8dp"-->
+<!--                    android:layout_marginEnd="8dp"-->
+<!--                    app:icon="@drawable/ic_expand_more_black_24dp"-->
+<!--                    app:iconGravity="textStart"-->
+<!--                    app:iconPadding="0dp"-->
+<!--                    app:iconTint="@color/secondaryColor"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--        </com.google.android.material.card.MaterialCardView>-->
+
+<!--        <com.google.android.material.card.MaterialCardView-->
+<!--            android:id="@+id/credit_cardView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginTop="24dp"-->
+<!--            android:layout_marginEnd="16dp"-->
+<!--            android:paddingBottom="8dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
+
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/credit_textView"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="24dp"-->
+<!--                    android:layout_marginTop="16dp"-->
+<!--                    android:layout_marginEnd="16dp"-->
+<!--                    android:text="Credit"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    app:layout_constraintEnd_toStartOf="@+id/finances_credit_dropdown_arrow_button"-->
+<!--                    app:layout_constraintHorizontal_bias="0.0"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+
+<!--                <com.google.android.material.button.MaterialButton-->
+<!--                    android:id="@+id/finances_credit_dropdown_arrow_button"-->
+<!--                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"-->
+<!--                    android:layout_width="48dp"-->
+<!--                    android:layout_height="48dp"-->
+<!--                    android:layout_marginTop="8dp"-->
+<!--                    android:layout_marginEnd="8dp"-->
+<!--                    app:icon="@drawable/ic_expand_more_black_24dp"-->
+<!--                    app:iconGravity="textStart"-->
+<!--                    app:iconPadding="0dp"-->
+<!--                    app:iconTint="@color/secondaryColor"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--        </com.google.android.material.card.MaterialCardView>-->
+
+<!--        <com.google.android.material.card.MaterialCardView-->
+<!--            android:id="@+id/balance_cardView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginTop="250dp"-->
+<!--            android:layout_marginEnd="16dp"-->
+<!--            android:paddingBottom="8dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/debit_cardView">-->
+
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/balance_textView"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="24dp"-->
+<!--                    android:layout_marginTop="16dp"-->
+<!--                    android:layout_marginBottom="16dp"-->
+<!--                    android:text="Balance"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/balance_amount_textView"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="16dp"-->
+<!--                    android:layout_marginEnd="16dp"-->
+<!--                    android:text="₹ 44000"-->
+<!--                    android:textStyle="bold"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@+id/balance_textView"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintHorizontal_bias="1.0"-->
+<!--                    app:layout_constraintStart_toEndOf="@+id/balance_textView"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/balance_textView" />-->
+
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--        </com.google.android.material.card.MaterialCardView>-->
+
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/finances_credit_fab"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom|end"-->
+<!--        android:layout_margin="@dimen/standard_23"-->
+<!--        android:rotation="90"-->
+<!--        android:visibility="gone"-->
+<!--        app:fabSize="mini"-->
+<!--        app:maxImageSize="32dp"-->
+<!--        app:srcCompat="@drawable/ic_call_received_black_24dp"-->
+<!--        app:tint="@android:color/white" />-->
+
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/finances_debit_fab"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom|end"-->
+<!--        android:layout_margin="@dimen/standard_23"-->
+<!--        android:rotation="90"-->
+<!--        android:visibility="gone"-->
+<!--        app:fabSize="mini"-->
+<!--        app:maxImageSize="32dp"-->
+<!--        app:srcCompat="@drawable/ic_call_received_black_24dp"-->
+<!--        app:tint="@android:color/white" />-->
+
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/fab"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom|end"-->
+<!--        android:layout_margin="@dimen/fab_margin"-->
+<!--        app:maxImageSize="32dp"-->
+<!--        app:srcCompat="@drawable/ic_add_black_24dp"-->
+<!--        app:tint="@android:color/white" />-->
+<!--</androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".FinancesFragment">
+    android:layout_height="wrap_content">
 
-    <View
-        android:id="@+id/bg_fab_menu"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#48000000"
-        android:alpha="0"
-        android:visibility="gone"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/finances_menu_fab"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:maxImageSize="32dp"
-        app:srcCompat="@drawable/ic_add_black_24dp"
-        app:tint="@android:color/white" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/finances_app_bar_layout">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/finances_credit_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/standard_23"
-        android:visibility="gone"
-        android:rotation="90"
-        app:fabSize="mini"
-        app:maxImageSize="32dp"
-        app:srcCompat="@drawable/ic_call_received_black_24dp"
-        app:tint="@android:color/white" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/finances_debit_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/standard_23"
-        android:visibility="gone"
-        android:rotation="90"
-        app:fabSize="mini"
-        app:maxImageSize="32dp"
-        app:srcCompat="@drawable/ic_call_received_black_24dp"
-        app:tint="@android:color/white" />
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/credit_cardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
-            android:paddingBottom="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/credit_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="Credit"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/finances_credit_dropdown_arrow_button"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/credit_title_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="24dp"
-                    android:text="Maintenance"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/credit_textView" />
-
-                <TextView
-                    android:id="@+id/credit_title_amount_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="₹ 50000"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/credit_title_text_view"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/credit_title_text_view"
-                    app:layout_constraintTop_toTopOf="@+id/credit_title_text_view"
-                    app:layout_constraintVertical_bias="1.0" />
-
-                <TextView
-                    android:id="@+id/credit_sub_title_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="64dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="24dp"
-                    android:text="Cleaning Expenses"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/credit_title_text_view" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/finances_credit_dropdown_arrow_button"
-                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    app:icon="@drawable/ic_expand_more_black_24dp"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconTint="@color/secondaryColor"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/credit_sub_title_amount_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="₹ 25000"
-                    app:layout_constraintBottom_toBottomOf="@+id/credit_sub_title_text_view"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/credit_sub_title_text_view"
-                    app:layout_constraintTop_toTopOf="@+id/credit_sub_title_text_view" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/debit_cardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:paddingBottom="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/credit_cardView">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/debit_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="Debit"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/finances_debit_dropdown_arrow_button"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/debit_title_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="24dp"
-                    android:text="Ganpati Expenses"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/debit_textView" />
-
-                <TextView
-                    android:id="@+id/debit_title_amount_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="₹ 6000"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/debit_title_text_view"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/debit_title_text_view"
-                    app:layout_constraintTop_toTopOf="@+id/debit_title_text_view" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/finances_debit_dropdown_arrow_button"
-                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    app:icon="@drawable/ic_expand_more_black_24dp"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconTint="@color/secondaryColor"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/debit_sub_title_amount_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="₹ 3000"
-                    app:layout_constraintBottom_toBottomOf="@+id/debit_sub_title_text_view"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/debit_sub_title_text_view"
-                    app:layout_constraintTop_toTopOf="@+id/debit_sub_title_text_view" />
-
-                <TextView
-                    android:id="@+id/debit_sub_title_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="64dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="24dp"
-                    android:text="Murti"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/debit_title_text_view" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <View
-            android:id="@+id/fabBGLayout"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:visibility="gone" />
+            tools:context=".AddFinancesActivity">
 
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:text="Save"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/calendarView" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/balance_cardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:paddingBottom="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/debit_cardView">
+            <CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="56dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.512"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="433dp" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/credit_title_textInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/balance_textView"
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/credit_title_textInputLayout_child"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="Balance"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:hint="Title"
+                    android:drawableStart="@drawable/ic_font_download_black_24dp"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/secondaryColor"
+                    android:paddingLeft="10dp"
+                    android:textSize="14sp"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:id="@+id/balance_amount_textView"
-                    android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/amount_textInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/type_of_expense_dropdown_til">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/amount_textInputLayout_child"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="₹ 44000"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/balance_textView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/balance_textView"
-                    app:layout_constraintTop_toTopOf="@+id/balance_textView" />
+                    android:hint="Amount"
+                    android:drawableStart="@drawable/ic_rupee_indian_24dp"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/secondaryColor"
+                    android:paddingLeft="10dp"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/fabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="137dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/mode_of_payment_payment_mode_til"
+                style="@style/AppTextField.ExposedDropdownMenu"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:clickable="true"
-                android:focusable="true"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_add_black_24dp" />
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/amount_textInputLayout">
+
+                <AutoCompleteTextView
+                    android:id="@+id/mode_of_payment_mode_dropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_credit_card_black_24dp"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/secondaryColor"
+                    android:editable="false"
+                    android:hint="Paid via"
+                    android:paddingLeft="10dp"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cheque_no_payment_mode_til"
+                style="@style/AppTextField.ExposedDropdownMenu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/amount_textInputLayout">
+
+                <EditText
+                    android:id="@+id/cheque_no_mode_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_credit_card_black_24dp"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/secondaryColor"
+                    android:editable="false"
+                    android:hint="Paid via"
+                    android:paddingLeft="10dp"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/type_of_expense_dropdown_til"
+                style="@style/AppTextField.ExposedDropdownMenu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/credit_title_textInputLayout">
+
+                <AutoCompleteTextView
+                    android:id="@+id/type_of_expense_dropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_account_balance_black_24dp"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/secondaryColor"
+                    android:hint="Type of Expense"
+                    android:paddingLeft="10dp"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/fabLayout1"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/finances_app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/finances_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="9dp"
-            app:layout_constraintBottom_toTopOf="@+id/fabLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_add_black_24dp" />
-
-            <TextView
-                android:id="@+id/add_credit_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add Credit"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/fab1"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/fabLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="3dp"
-            app:layout_constraintBottom_toTopOf="@+id/fabLayout1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_add_black_24dp" />
-
-            <TextView
-                android:id="@+id/add_debit_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add Debit"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/fab2"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

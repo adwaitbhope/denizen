@@ -18,7 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddCreditActivity"></activity>
+        <activity android:name=".AddFinancesActivity"></activity>
         <activity
             android:name=".AmenityBookSlotActivity"
             android:theme="@style/AppTheme.NoActionBar" />
