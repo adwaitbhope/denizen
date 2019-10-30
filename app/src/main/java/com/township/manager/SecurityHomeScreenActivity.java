@@ -107,10 +107,16 @@ public class SecurityHomeScreenActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_intercom_security) {
+            Intent intent=new Intent(SecurityHomeScreenActivity.this,IntercomActivity.class);
+            startActivity(intent);
             // Handle the camera action
         } else if (id == R.id.nav_admin_info_security) {
+            Intent intent=new Intent(SecurityHomeScreenActivity.this,AdminInfoActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_vendors_security) {
+            Intent intent=new Intent(SecurityHomeScreenActivity.this,ServiceVendorActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_visitor_history_security) {
             Intent intent = new Intent(SecurityHomeScreenActivity.this, VisitorHistorySecurityContainerActivity.class);

@@ -105,6 +105,7 @@
                 android:drawableStart="@drawable/ic_lock_black_24dp"
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/secondaryColor"
+                android:maxLength="25"
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:paddingLeft="10dp"
@@ -133,6 +134,7 @@
                 android:drawableTint="@color/secondaryColor"
                 android:fontFamily="@font/roboto_mono"
                 android:hint="Username"
+                android:maxLength="25"
                 android:inputType="textPersonName|text"
                 android:paddingLeft="10dp"
                 android:textSize="14sp" />

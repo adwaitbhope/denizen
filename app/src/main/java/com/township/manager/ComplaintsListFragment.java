@@ -125,7 +125,7 @@ public class ComplaintsListFragment extends Fragment {
         horizontalScrollView = view.findViewById(R.id.horizontalScrollView);
 
         if (cursor.getString(typeCol).equals("admin")) {
-            filter.setVisibility(View.VISIBLE);
+            //filter.setVisibility(View.VISIBLE);
             horizontalScrollView.setVisibility(View.VISIBLE);
         }
 

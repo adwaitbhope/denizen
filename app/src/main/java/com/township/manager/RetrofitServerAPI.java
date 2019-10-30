@@ -5,6 +5,8 @@ import com.squareup.moshi.Json;
 
 import org.json.JSONArray;
 
+import org.json.JSONArray;
+
 import java.io.FileInputStream;
 import java.util.Map;
 
@@ -387,41 +389,70 @@ public interface RetrofitServerAPI {
             @Field("num_admins") String num_admins
     );
 
-
-
-
+    @FormUrlEncoded
+    @POST("finances/new/")
+    Call<JsonArray> addNewFinance(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("title") String title,
+            @Field("expense_type") int expense_type,
+            @Field("amount") String amount,
+            @Field("payment_mode") int payment_mode,
+            @Field("cheque_no") String cheque_no,
+            @Field("day") String day,
+            @Field("month") String month,
+            @Field("year") String year
+    );
 
     @FormUrlEncoded
-    @POST("/finances/")
-    Call<JsonArray> getFinances(
+    @POST("finances/generate_report/")
+    Call<JsonArray> generateFinanceReport(
             @Field("username") String username,
             @Field("password") String password
     );
 
     @FormUrlEncoded
-    @POST("/finances/credit/new/")
-    Call<JsonArray> addFinanacesCredit(
-            @Field("username") String username,
-            @Field("password") String password,
-            @Field("day") String credit_day,
-            @Field("month") String credit_month,
-            @Field("year") String credit_year,
-            @Field("mode_of_payment") String credit_mode_of_payment,
-            @Field("amount") String credit_amount,
-            @Field("title") String credit_title
+    @POST("/reset_password/")
+    Call<JsonArray> getForgotPassword(
+            @Field("email") String email
     );
 
     @FormUrlEncoded
-    @POST("/finances/debit/new/")
-    Call<JsonArray> addFinanacesDebit(
+    @POST("/service_vendors/")
+    Call<JsonArray> getServiceVendors(
+            @Field("username") String username,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("/service_vendors/new/")
+    Call<JsonArray> addServiceVendors(
             @Field("username") String username,
             @Field("password") String password,
-            @Field("day") String debit_day,
-            @Field("month") String debit_month,
-            @Field("year") String debit_year,
-            @Field("mode_of_payment") String debit_mode_of_payment,
-            @Field("amount") String debit_amount,
-            @Field("title") String debit_title
+            @Field("first_name") String first_name,
+            @Field("last_name") String last_name,
+            @Field("phone") String phone,
+            @Field("work") String work
+    );
+
+    @FormUrlEncoded
+    @POST("/service_vendors/edit/")
+    Call<JsonArray> editServiceVendors(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("vendor_id") String vendor_id,
+            @Field("first_name") String first_name,
+            @Field("last_name") String last_name,
+            @Field("phone") String phone,
+            @Field("work") String work
+    );
+
+    @FormUrlEncoded
+    @POST("/service_vendors/delete/")
+    Call<JsonArray> deleteServiceVendors(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("vendor_id") String vendor_id
     );
 
 

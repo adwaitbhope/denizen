@@ -236,6 +236,7 @@
             android:drawablePadding="10dp"
             android:drawableTint="@color/secondaryColor"
             android:hint="@string/email"
+            android:maxLength="25"
             android:inputType="textEmailAddress"
             android:paddingLeft="10dp"
             android:textSize="14sp" />
