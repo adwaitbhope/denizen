@@ -2,6 +2,8 @@ package com.township.manager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,18 +32,19 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class SecurityPersonnelAdapter extends RecyclerView.Adapter implements PopupMenu.OnMenuItemClickListener {
+public class SecurityPersonnelAdapter extends RecyclerView.Adapter {
 
     ArrayList<SecurityPersonnel> dataset;
     Context context;
-    SecurityPersonnel securityPersonnel;
     String TOWNSHIP_ID, username, password;
+    SecurityPersonnelDao personnelDao;
 
     String[] months = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
-    public SecurityPersonnelAdapter(ArrayList<SecurityPersonnel> dataset, Context context) {
+    public SecurityPersonnelAdapter(ArrayList<SecurityPersonnel> dataset, Context context, SecurityPersonnelDao personnelDao) {
         this.dataset = dataset;
         this.context = context;
+        this.personnelDao = personnelDao;
     }
 
     @NonNull
@@ -54,22 +57,53 @@ public class SecurityPersonnelAdapter extends RecyclerView.Adapter implements Po
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        securityPersonnel = dataset.get(position);
+        final SecurityPersonnel securityPersonnel = dataset.get(position);
         final ViewHolder viewHolder = (ViewHolder) holder;
 
-        final String url = "https://township-manager.s3.ap-south-1.amazonaws.com/townships/" + TOWNSHIP_ID + "/notices/" + securityPersonnel.getPersonnel_id() + ".png";
+        final String url = "https://township-manager.s3.ap-south-1.amazonaws.com/townships/" + TOWNSHIP_ID + "/security_personnel/" + securityPersonnel.getPersonnel_id() + ".png";
         Picasso.get()
                 .load(url)
                 .into(viewHolder.photo);
 
+        viewHolder.photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, FullScreenImageViewActivity.class);
+                intent.putExtra("url", url);
+                context.startActivity(intent);
+            }
+        });
+
+        viewHolder.name.setText(securityPersonnel.getFirst_name() + " " + securityPersonnel.getLast_name());
         viewHolder.shift.setText(getFormattedTime(securityPersonnel.getShift_start()) + " to " + getFormattedTime(securityPersonnel.getShift_end()));
         viewHolder.phone.setText(securityPersonnel.getPhone());
-        viewHolder.name.setText(securityPersonnel.getLast_name() + " " + securityPersonnel.getLast_name());
         viewHolder.threeDots.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 PopupMenu popupMenu = new PopupMenu(context, view);
-                popupMenu.setOnMenuItemClickListener(SecurityPersonnelAdapter.this);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.edit_security_personnel:
+                                Intent intent = new Intent(context, AddSecurityPersonnelActivity.class);
+                                intent.putExtra("type", "edit");
+                                intent.putExtra("township_id", TOWNSHIP_ID);
+                                intent.putExtra("id", securityPersonnel.getPersonnel_id());
+                                intent.putExtra("first_name", securityPersonnel.getFirst_name());
+                                intent.putExtra("last_name", securityPersonnel.getLast_name());
+                                intent.putExtra("phone", securityPersonnel.getPhone());
+                                intent.putExtra("shift_from", securityPersonnel.getShift_start());
+                                intent.putExtra("shift_till", securityPersonnel.getShift_end());
+                                context.startActivity(intent);
+                                return true;
+                            case R.id.delete_security_personnel:
+                                deleteFromServer(securityPersonnel);
+                                return true;
+                        }
+                        return false;
+                    }
+                });
                 popupMenu.inflate(R.menu.menu_edit_security_personnel);
                 popupMenu.show();
             }
@@ -81,27 +115,28 @@ public class SecurityPersonnelAdapter extends RecyclerView.Adapter implements Po
         return dataset.size();
     }
 
-    @Override
-    public boolean onMenuItemClick(MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.edit_security_personnel:
-                Intent intent = new Intent(context, AddSecurityPersonnelActivity.class);
+//    @Override
+//    public boolean onMenuItemClick(MenuItem menuItem) {
+//        switch (menuItem.getItemId()) {
+//            case R.id.edit_security_personnel:
+//                Intent intent = new Intent(context, AddSecurityPersonnelActivity.class);
 //                intent.putExtra("type", "edit");
 //                intent.putExtra("id", securityPersonnel.getPersonnel_id());
-//                intent.putExtra("name", securityPersonnel.getSecurity_personnel_name());
-//                intent.putExtra("phone", securityPersonnel.getSecurity_personnel_phone());
-//                intent.putExtra("from", securityPersonnel.getSecurity_personnel_timings_from());
-//                intent.putExtra("till", securityPersonnel.getSecurity_personnel_timings_till());
-                context.startActivity(intent);
-                return true;
-            case R.id.delete_security_personnel:
-                deleteFromServer();
-                return true;
-        }
-        return false;
-    }
+//                intent.putExtra("first_name", securityPersonnel.getFirst_name());
+//                intent.putExtra("last_name", securityPersonnel.getLast_name());
+//                intent.putExtra("phone", securityPersonnel.getPhone());
+//                intent.putExtra("shift_from", securityPersonnel.getShift_start());
+//                intent.putExtra("shift_till", securityPersonnel.getShift_end());
+//                context.startActivity(intent);
+//                return true;
+//            case R.id.delete_security_personnel:
+//                deleteFromServer();
+//                return true;
+//        }
+//        return false;
+//    }
 
-    private void deleteFromServer() {
+    private void deleteFromServer(final SecurityPersonnel personnel) {
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(context.getString(R.string.server_addr))
                 .addConverterFactory(GsonConverterFactory.create());
@@ -112,7 +147,7 @@ public class SecurityPersonnelAdapter extends RecyclerView.Adapter implements Po
         Call<JsonArray> call = retrofitServerAPI.deleteSecurityPersonnel(
                 username,
                 password,
-                securityPersonnel.getPersonnel_id()
+                personnel.getPersonnel_id()
         );
         call.enqueue(new Callback<JsonArray>() {
             @Override
@@ -124,7 +159,11 @@ public class SecurityPersonnelAdapter extends RecyclerView.Adapter implements Po
                     if (loginJson.getString("login_status").equals("1")) {
                         if (loginJson.getString("request_status").equals("1")) {
                             Toast.makeText(context, "Deleted successfully", Toast.LENGTH_SHORT).show();
-                            notifyDataSetChanged();
+
+                            int position = dataset.indexOf(personnel);
+                            dataset.remove(position);
+                            notifyItemRemoved(position);
+//                            new SecurityPersonnelAsyncTask().execute(personnel);
                         }
                     }
                 } catch (JSONException e) {
@@ -137,6 +176,26 @@ public class SecurityPersonnelAdapter extends RecyclerView.Adapter implements Po
 
             }
         });
+    }
+
+    private class SecurityPersonnelAsyncTask extends AsyncTask<SecurityPersonnel, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(SecurityPersonnel... personnel) {
+            personnelDao.delete(personnel[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            notifyDataSetChanged();
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -186,7 +245,11 @@ public class SecurityPersonnelAdapter extends RecyclerView.Adapter implements Po
         if (hourInt == 0) {
             hour = "00";
         }
-        int minute = Integer.valueOf(timestamp.substring(3, 5));
+        String minute = "00";
+        int minuteInt = Integer.valueOf(timestamp.substring(3, 5));
+        if (minuteInt != 0) {
+            minute = String.valueOf(minuteInt);
+        }
         return hour + ":" + minute + " " + period;
     }
 

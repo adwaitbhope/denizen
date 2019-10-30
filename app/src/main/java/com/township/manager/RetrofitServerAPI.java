@@ -232,10 +232,13 @@ public interface RetrofitServerAPI {
     Call<JsonArray> addNewSecurityPersonnel(
             @Field("username") String username,
             @Field("password") String password,
-            @Field("security_personnel_name") String security_personnel_name,
-            @Field("security_personnel_phone") String security_personnel_phone,
-            @Field("security_personnel_timings_from") Integer security_personnel_timings_from,
-            @Field("security_personnel_timings_till") Integer security_personnel_timings_till
+            @Field("first_name") String first_name,
+            @Field("last_name") String last_name,
+            @Field("phone") String phone,
+            @Field("shift_start_hour") int shift_start_hour,
+            @Field("shift_start_minute") int shift_start_minute,
+            @Field("shift_end_hour") int shift_end_hour,
+            @Field("shift_end_minute") int shift_end_minute
 
     );
 
@@ -245,10 +248,13 @@ public interface RetrofitServerAPI {
             @Field("username") String username,
             @Field("password") String password,
             @Field("personnel_id") String personnel_id,
-            @Field("security_personnel_name") String security_personnel_name,
-            @Field("security_personnel_phone") String security_personnel_phone,
-            @Field("security_personnel_timings_from") Integer security_personnel_timings_from,
-            @Field("security_personnel_timings_till") Integer security_personnel_timings_till
+            @Field("first_name") String first_name,
+            @Field("last_name") String last_name,
+            @Field("phone") String phone,
+            @Field("shift_start_hour") int shift_start_hour,
+            @Field("shift_start_minute") int shift_start_minute,
+            @Field("shift_end_hour") int shift_end_hour,
+            @Field("shift_end_minute") int shift_end_minute
     );
 
     @FormUrlEncoded

@@ -1,5 +1,6 @@
 package com.township.manager;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -123,6 +124,7 @@ public class SecurityDesksListFragment extends Fragment {
 
     public void updateRecyclerView() {
         new SecurityDesksAsyncTask().execute();
+//        mListener.updateUI();
     }
 
     @Override
@@ -179,6 +181,7 @@ public class SecurityDesksListFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+        void updateUI();
     }
 
     private class SecurityDesksAsyncTask extends AsyncTask<Void, Void, Void> {

@@ -53,6 +53,13 @@ public class SecurityActivity extends AppCompatActivity implements SecurityDesks
         setContentView(R.layout.activity_security);
         SliderAdapter sliderAdapter = new SliderAdapter(Objects.requireNonNull(this).getSupportFragmentManager());
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.security_info_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Security Info");
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         appDatabase = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "app-database")
                 .fallbackToDestructiveMigration()
@@ -78,28 +85,22 @@ public class SecurityActivity extends AppCompatActivity implements SecurityDesks
         mSlideViewPager.setAdapter(sliderAdapter);
         mSlideViewPager.setOffscreenPageLimit(1);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.security_info_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Security Info");
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         TabLayout tabLayout = (TabLayout) findViewById(R.id.security_tab_layout);
         tabLayout.setupWithViewPager(mSlideViewPager);
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_people_black_24dp);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_store_black_24dp);
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if (securityPersonnelListFragment.getContext() != null) {
-            new SecurityPersonnelAsyncTask().execute();
+//            securityPersonnelListFragment.updateRecyclerView();
+            getSecurityPersonnelFromServer();
         }
         if (securityDesksListFragment.getContext() != null) {
-            new SecurityDesksAsyncTask().execute();
+//            securityDesksListFragment.updateRecyclerView();
+            getSecurityDesksFromServer();
         }
     }
 
@@ -287,5 +288,10 @@ public class SecurityActivity extends AppCompatActivity implements SecurityDesks
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void updateUI() {
+        onResume();
     }
 }

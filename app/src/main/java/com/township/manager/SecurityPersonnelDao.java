@@ -24,6 +24,6 @@ public interface SecurityPersonnelDao {
     @Query("DELETE FROM SecurityPersonnel")
     void deleteAll();
 
-    @Query("DELETE FROM SECURITYPERSONNEL WHERE personnel_id=:id")
+    @Query("DELETE FROM SecurityPersonnel WHERE personnel_id=:id")
     void deleteById(String id);
 }

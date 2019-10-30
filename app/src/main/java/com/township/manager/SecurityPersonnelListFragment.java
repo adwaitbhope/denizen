@@ -1,6 +1,7 @@
 package com.township.manager;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -113,7 +114,7 @@ public class SecurityPersonnelListFragment extends Fragment {
         updateRecyclerView();
 
         recyclerView = view.findViewById(R.id.security_personnel_recycler_view);
-        adapter = new SecurityPersonnelAdapter(dataset, getContext());
+        adapter = new SecurityPersonnelAdapter(dataset, getContext(), securityPersonnelDao);
 
         DBManager dbManager = new DBManager(getContext());
         Cursor cursor = dbManager.getDataLogin();
@@ -137,6 +138,7 @@ public class SecurityPersonnelListFragment extends Fragment {
 
     public void updateRecyclerView() {
         new SecurityPersonnelAsyncTask().execute();
+//        mListener.updateUI();
     }
 
     @Override
@@ -195,6 +197,7 @@ public class SecurityPersonnelListFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+        void updateUI();
     }
 
     private class SecurityPersonnelAsyncTask extends AsyncTask<Void, Void, Void> {
