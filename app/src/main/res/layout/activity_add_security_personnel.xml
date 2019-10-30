@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:clickable="true"
+        android:focusableInTouchMode="true"
+        tools:context=".AddSecurityPersonnelActivity">
+
+        <ImageView
+            android:id="@+id/add_security_personnel_photo_image_view"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_noice"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_security_personnel_shift_from_button" />
+
+        <TextView
+            android:id="@+id/add_security_personnel_shift_timings_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:text="Shift Timings"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_security_personnel_phone_number_til" />
+
+        <TextView
+            android:id="@+id/add_security_personnel_shift_timings_from_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="9 am"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@+id/add_security_personnel_shift_from_button"
+            app:layout_constraintStart_toStartOf="@+id/add_security_personnel_shift_from_button"
+            app:layout_constraintTop_toBottomOf="@+id/add_security_personnel_shift_timings_text_view" />
+
+        <TextView
+            android:id="@+id/add_security_personnel_shift_timings_till_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6 pm"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/add_security_personnel_shift_timings_from_text_view"
+            app:layout_constraintEnd_toEndOf="@+id/add_security_personnel_shift_till_button"
+            app:layout_constraintStart_toStartOf="@+id/add_security_personnel_shift_till_button"
+            app:layout_constraintTop_toTopOf="@+id/add_security_personnel_shift_timings_from_text_view" />
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/add_security_personnel_app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/add_security_personnel_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_security_personnel_save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:paddingLeft="8dp"
+            android:text="Save"
+            app:icon="@drawable/ic_check_circle_black_24dp"
+            app:iconPadding="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/add_security_personnel_cancel_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/add_security_personnel_cancel_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_security_personnel_cancel_button"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:text="@android:string/cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/add_security_personnel_save_button"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_security_personnel_upload_photo_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_security_personnel_upload_photo_button"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:text="Upload Photo"
+            app:icon="@drawable/ic_add_a_photo_black_24dp"
+            app:iconPadding="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/add_security_personnel_photo_image_view"
+            app:layout_constraintStart_toStartOf="@+id/add_security_personnel_photo_image_view"
+            app:layout_constraintTop_toBottomOf="@+id/add_security_personnel_image_progress_bar"
+            app:srcCompat="@drawable/ic_add_a_photo_black_24dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_security_personnel_shift_from_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="8dp"
+            android:text="From"
+            app:icon="@drawable/ic_call_received_black_24dp"
+            app:iconPadding="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/add_security_personnel_shift_till_button"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_security_personnel_shift_timings_from_text_view" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_security_personnel_shift_till_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:text="Till"
+            app:icon="@drawable/ic_call_made_black_24dp"
+            app:iconPadding="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/add_security_personnel_shift_from_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/add_security_personnel_shift_from_button"
+            app:layout_constraintTop_toTopOf="@+id/add_security_personnel_shift_from_button" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_security_personnel_first_name_til"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_security_personnel_app_bar_layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_security_personnel_first_name_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_person_black_24dp"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/secondaryColor"
+                android:fontFamily="@font/roboto_mono"
+                android:hint="First name"
+                android:inputType="textShortMessage|textPersonName|textCapWords"
+                android:paddingLeft="10dp"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_security_personnel_last_name_til"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="16dp"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_security_personnel_first_name_til">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_security_personnel_last_name_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_person_black_24dp"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/secondaryColor"
+                android:fontFamily="@font/roboto_mono"
+                android:hint=" Last name"
+                android:inputType="textShortMessage|textPersonName|textCapWords"
+                android:paddingLeft="10dp"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_security_personnel_phone_number_til"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="16dp"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_security_personnel_last_name_til">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_security_personnel_phone_number_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_call_black_24dp"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/secondaryColor"
+                android:fontFamily="@font/roboto_mono"
+                android:hint="Phone"
+                android:inputType="phone"
+                android:paddingLeft="10dp"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ProgressBar
+            android:id="@+id/add_security_personnel_image_progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@+id/add_security_personnel_photo_image_view"
+            app:layout_constraintStart_toStartOf="@+id/add_security_personnel_photo_image_view"
+            app:layout_constraintTop_toBottomOf="@+id/add_security_personnel_photo_image_view" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

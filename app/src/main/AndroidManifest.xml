@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
@@ -24,9 +23,32 @@
         <activity android:name=".SecurityActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".IntercomActivity"
+        <activity android:name=".AddFinancesActivity"></activity>
+        <activity
+            android:name=".AmenityBookSlotActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SecurityActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AddSecurityDeskActivity"
+            android:label="Add Desk"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ServiceVendorActivity" />
+        <activity
+            android:name=".AddServiceVendorActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AddSecurityPersonnelActivity"
+            android:label="Add Security"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".VisitorHistorySecurityContainerActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".IntercomActivity"
             android:label="Intercom"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".AmenitiesOneTimePaymentsActivity"
             android:label="One-time Payment List"
@@ -52,13 +74,21 @@
         <activity
             android:name=".AddMaintenanceActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AddAdminActivity"
+            android:label="Add Admin(s)"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity android:name=".AddServiceVendorActivity"
             android:label="Add Vendor"
             android:parentActivityName=".ServiceVendorActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".VisitorHistorySecurityContainerActivity"
+            android:name=".AdminInfoActivity"
+            android:label="Admin Info"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AddMaintenanceActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ComplaintsResidentContainerActivity"

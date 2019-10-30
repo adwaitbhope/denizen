@@ -2,6 +2,7 @@ package com.township.manager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -49,6 +50,8 @@ public class AmenitiesFragment extends Fragment implements View.OnClickListener 
     AmenitiesAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
 
+    String type;
+
     private OnFragmentInteractionListener mListener;
 
     public AmenitiesFragment() {
@@ -88,6 +91,12 @@ public class AmenitiesFragment extends Fragment implements View.OnClickListener 
                 .fallbackToDestructiveMigration()
                 .build();
         amenityDao = appDatabase.amenityDao();
+
+        DBManager dbManager = new DBManager(getContext().getApplicationContext());
+        Cursor cursor = dbManager.getDataLogin();
+        cursor.moveToFirst();
+
+        type = cursor.getString(cursor.getColumnIndexOrThrow("Type"));
     }
 
     @Override
@@ -96,7 +105,7 @@ public class AmenitiesFragment extends Fragment implements View.OnClickListener 
         View view = inflater.inflate(R.layout.fragment_amenities, container, false);
 
         recyclerView = view.findViewById(R.id.amenities_recycler_view);
-        adapter = new AmenitiesAdapter(dataset, getContext());
+        adapter = new AmenitiesAdapter(dataset, getContext(), type);
 
         final ExtendedFloatingActionButton membershipDetailsButton = view.findViewById(R.id.membership_details_ex_fab);
         membershipDetailsButton.setOnClickListener(new View.OnClickListener() {

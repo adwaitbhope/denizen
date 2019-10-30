@@ -46,11 +46,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class AdminHomeScreenActivity extends AppCompatActivity
-        implements NoticeBoardFragment.OnFragmentInteractionListener, ComplaintsListFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener, ComplaintsFragment.OnFragmentInteractionListener {
+        implements NoticeBoardFragment.OnFragmentInteractionListener, ComplaintsListFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener, ComplaintsFragment.OnFragmentInteractionListener, FinancesFragment.OnFragmentInteractionListener {
 
     String username, password;
     NoticeBoardFragment noticeBoardFragment;
     ComplaintsFragment complaintsFragment;
+    FinancesFragment financesFragment;
 
     AppDatabase appDatabase;
 
@@ -155,7 +156,15 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                         return true;
 
                     case R.id.admin_finances:
-//                        appBarLayout.setElevation(4);
+                        fragment = getSupportFragmentManager().findFragmentById(R.id.admin_home_screen_fragment_area);
+                        if (!(fragment instanceof FinancesFragment)) {
+                            appBarLayout.setElevation(0);
+                            transaction = getSupportFragmentManager().beginTransaction();
+                            financesFragment = new FinancesFragment();
+                            transaction.replace(R.id.admin_home_screen_fragment_area, new FinancesFragment());
+                            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                            transaction.commit();
+                        }
                         return true;
                 }
                 return false;
@@ -228,6 +237,8 @@ public class AdminHomeScreenActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_admin_info_admin) {
+            Intent intent = new Intent(AdminHomeScreenActivity.this, AdminInfoActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_security_list_admin) {
             Intent intent = new Intent(AdminHomeScreenActivity.this, SecurityActivity.class);

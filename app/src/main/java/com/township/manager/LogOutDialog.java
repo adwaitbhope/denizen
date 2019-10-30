@@ -38,6 +38,12 @@ public class LogOutDialog extends AppCompatDialogFragment {
                                 .fallbackToDestructiveMigration()
                                 .build();
 
+                        appDatabase.serviceVendorDao().deleteAll();
+                        appDatabase.financesCreditDao().deleteAll();
+                        appDatabase.financesDebitDao().deleteAll();
+                        appDatabase.adminInfoDao().deleteAll();
+                        appDatabase.securityDesksDao().deleteAll();
+                        appDatabase.securityPersonnelDao().deleteAll();
                         appDatabase.intercomDao().deleteAll();
                         appDatabase.membershipPaymentDao().deleteAll();
                         appDatabase.amenityBookingDao().deleteAll();
@@ -50,7 +56,6 @@ public class LogOutDialog extends AppCompatDialogFragment {
                         appDatabase.complaintDao().deleteAll();
                         appDatabase.residentDao().deleteAll();
                         appDatabase.wingDao().deleteAll();
-                        appDatabase.serviceVendorDao().deleteAll();
                     }
                 }.start();
 
