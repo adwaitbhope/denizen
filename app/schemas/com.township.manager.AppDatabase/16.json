@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 16,
-    "identityHash": "0c36473a994f3be00a432c6234aad163",
+    "identityHash": "4343bfd55f888ccac229f8ed6655e45c",
     "entities": [
       {
         "tableName": "Notice",
@@ -512,43 +512,43 @@
         "foreignKeys": []
       },
       {
-        "tableName": "SecurityPersonnel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`personnel_id` TEXT NOT NULL, `security_personnel_name` TEXT, `security_personnel_phone` TEXT, `security_personnel_timings_from` TEXT, `security_personnel_timings_till` TEXT, PRIMARY KEY(`personnel_id`))",
+        "tableName": "Amenity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`amenity_id` TEXT NOT NULL, `name` TEXT, `time_period` INTEGER NOT NULL, `billing_rate` INTEGER NOT NULL, `free_for_members` INTEGER, PRIMARY KEY(`amenity_id`))",
         "fields": [
           {
-            "fieldPath": "personnel_id",
-            "columnName": "personnel_id",
+            "fieldPath": "amenity_id",
+            "columnName": "amenity_id",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "security_personnel_name",
-            "columnName": "security_personnel_name",
+            "fieldPath": "name",
+            "columnName": "name",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "security_personnel_phone",
-            "columnName": "security_personnel_phone",
-            "affinity": "TEXT",
-            "notNull": false
+            "fieldPath": "time_period",
+            "columnName": "time_period",
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
-            "fieldPath": "security_personnel_timings_from",
-            "columnName": "security_personnel_timings_from",
-            "affinity": "TEXT",
-            "notNull": false
+            "fieldPath": "billing_rate",
+            "columnName": "billing_rate",
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
-            "fieldPath": "security_personnel_timings_till",
-            "columnName": "security_personnel_timings_till",
-            "affinity": "TEXT",
+            "fieldPath": "free_for_members",
+            "columnName": "free_for_members",
+            "affinity": "INTEGER",
             "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "personnel_id"
+            "amenity_id"
           ],
           "autoGenerate": false
         },
@@ -556,42 +556,102 @@
         "foreignKeys": []
       },
       {
-        "tableName": "SecurityDesks",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`desk_id` TEXT NOT NULL, `designation` TEXT, `phone` TEXT, PRIMARY KEY(`desk_id`))",
+        "tableName": "AmenityBooking",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`booking_id` TEXT NOT NULL, `amenity_id` TEXT, `first_name` TEXT, `last_name` TEXT, `wing_id` TEXT, `apartment` TEXT, `booking_from` TEXT, `booking_to` TEXT, `payment` INTEGER, `payment_mode` TEXT, `payment_amount` TEXT, PRIMARY KEY(`booking_id`), FOREIGN KEY(`wing_id`) REFERENCES `Wing`(`wing_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
-            "fieldPath": "desk_id",
-            "columnName": "desk_id",
+            "fieldPath": "booking_id",
+            "columnName": "booking_id",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "designation",
-            "columnName": "designation",
+            "fieldPath": "amenity_id",
+            "columnName": "amenity_id",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "phone",
-            "columnName": "phone",
+            "fieldPath": "first_name",
+            "columnName": "first_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "last_name",
+            "columnName": "last_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "wing_id",
+            "columnName": "wing_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "apartment",
+            "columnName": "apartment",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "booking_from",
+            "columnName": "booking_from",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "booking_to",
+            "columnName": "booking_to",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "payment",
+            "columnName": "payment",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "payment_mode",
+            "columnName": "payment_mode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "payment_amount",
+            "columnName": "payment_amount",
             "affinity": "TEXT",
             "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "desk_id"
+            "booking_id"
           ],
           "autoGenerate": false
         },
         "indices": [],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "Wing",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "wing_id"
+            ],
+            "referencedColumns": [
+              "wing_id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0c36473a994f3be00a432c6234aad163')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4343bfd55f888ccac229f8ed6655e45c')"
     ]
   }
 }

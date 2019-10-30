@@ -47,17 +47,12 @@ public class ComplaintsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    AppDatabase appDatabase;
-    ArrayList<Complaint> pendingComplaintsDataset = new ArrayList<>();
-    ArrayList<Complaint> resolvedComplaintDataset = new ArrayList<>();
-    ArrayList<Complaint> temporaryPendingDataset = new ArrayList<>();
-    ArrayList<Complaint> temporaryResolvedDataset = new ArrayList<>();
-    ComplaintDao complaintDao;
-    ComplaintsListFragment pendingListFragment,resolvedListFragment;
-    ComplaintsAdapter pendingAdapter,resolvedAdapter;
+    ComplaintsListFragment pendingListFragment, resolvedListFragment;
     public static final int ADD_COMPLAINT_REQUEST = 69;
     public static final int ADD_COMPLAINT_RESULT = 70;
 
+    public String username, password, townshipId, type;
+    Boolean isAdmin = false;
 
 
     public ComplaintsFragment() {
@@ -90,11 +85,17 @@ public class ComplaintsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        appDatabase = Room.databaseBuilder(getContext().getApplicationContext(),
-                AppDatabase.class, "app-database")
-                .fallbackToDestructiveMigration()
-                .build();
-        complaintDao=appDatabase.complaintDao();
+        DBManager dbManager = new DBManager(getContext().getApplicationContext());
+        Cursor cursor = dbManager.getDataLogin();
+        cursor.moveToFirst();
+
+        username = cursor.getString(cursor.getColumnIndexOrThrow("Username"));
+        password = cursor.getString(cursor.getColumnIndexOrThrow("Password"));
+        townshipId = cursor.getString(cursor.getColumnIndexOrThrow("TownshipId"));
+        type = cursor.getString(cursor.getColumnIndexOrThrow("Type"));
+        if (type.equals("admin")) {
+            isAdmin = true;
+        }
     }
 
     @Override
@@ -104,11 +105,8 @@ public class ComplaintsFragment extends Fragment {
 
         SliderAdapter sliderAdapter = new SliderAdapter(Objects.requireNonNull(getActivity()).getSupportFragmentManager());
 
-        pendingListFragment = ComplaintsListFragment.newInstance(false);
-        resolvedListFragment = ComplaintsListFragment.newInstance(true);
-
-        pendingAdapter=pendingListFragment.adapter;
-        resolvedAdapter=resolvedListFragment.adapter;
+        pendingListFragment = ComplaintsListFragment.newInstance(false, username, password, townshipId, isAdmin);
+        resolvedListFragment = ComplaintsListFragment.newInstance(true, username, password, townshipId, isAdmin);
 
         sliderAdapter.addFragment(pendingListFragment, "Pending");
         sliderAdapter.addFragment(resolvedListFragment, "Resolved");
@@ -119,14 +117,6 @@ public class ComplaintsFragment extends Fragment {
         int typeCol;
         typeCol = cursor.getColumnIndexOrThrow("Type");
 
-        // temporary dataset here
-
-
-        updateRecyclerView();
-
-        pendingListFragment.setDataset(pendingComplaintsDataset);
-        resolvedListFragment.setDataset(resolvedComplaintDataset);
-
         ViewPager mSlideViewPager = (ViewPager) view.findViewById(R.id.complaints_view_pager);
         mSlideViewPager.setAdapter(sliderAdapter);
         mSlideViewPager.setOffscreenPageLimit(1);
@@ -135,7 +125,6 @@ public class ComplaintsFragment extends Fragment {
         tabLayout.setupWithViewPager(mSlideViewPager);
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_assignment_late_black_24dp);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_assignment_turned_in_black_24dp);
-
 
         FloatingActionButton button = view.findViewById(R.id.complaints_add_complaint_fab);
 
@@ -147,7 +136,7 @@ public class ComplaintsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), RegisterComplaintActivity.class);
-                startActivityForResult(intent,ADD_COMPLAINT_REQUEST);
+                startActivityForResult(intent, ADD_COMPLAINT_REQUEST);
             }
         });
 
@@ -155,7 +144,12 @@ public class ComplaintsFragment extends Fragment {
     }
 
     public void updateRecyclerView() {
-        new ComplaintsAsync().execute();
+        if (pendingListFragment.getContext() != null) {
+            pendingListFragment.updateRecyclerView();
+        }
+        if (resolvedListFragment.getContext() != null) {
+            resolvedListFragment.updateRecyclerView();
+        }
     }
 
 
@@ -169,17 +163,19 @@ public class ComplaintsFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ADD_COMPLAINT_REQUEST) {
             if (resultCode == ADD_COMPLAINT_RESULT) {
-                Log.d("added","add");
-                updateRecyclerView();
+                Log.d("added", "add");
+                pendingListFragment.updateRecyclerView();
                 pendingListFragment.recyclerView.smoothScrollToPosition(0);
             }
         }
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -206,32 +202,5 @@ public class ComplaintsFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-    @SuppressLint("StaticFieldLeak")
-    private class ComplaintsAsync extends AsyncTask<Void, Void, Void> {
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            temporaryPendingDataset.clear();
-            temporaryPendingDataset.addAll(complaintDao.getPendingComplaints());
-            temporaryResolvedDataset.clear();
-            temporaryResolvedDataset.addAll(complaintDao.getResolvedComplaints());
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            pendingComplaintsDataset.clear();
-            pendingComplaintsDataset.addAll(temporaryPendingDataset);
-            resolvedComplaintDataset.clear();
-            resolvedComplaintDataset.addAll(temporaryResolvedDataset);
-            pendingListFragment.setDataset(pendingComplaintsDataset);
-            resolvedListFragment.setDataset(resolvedComplaintDataset);
-        }
-    }
 }

@@ -14,14 +14,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+
+import static android.view.View.GONE;
 
 
 /**
@@ -125,7 +127,7 @@ public class MaintenanceFragment extends Fragment {
             addMaintenanceFloat.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getContext(), PaymentForMaintenance.class);
+                    Intent intent = new Intent(getContext(), MaintenancePaymentActivity.class);
                     startActivity(intent);
                 }
             });
@@ -158,6 +160,7 @@ public class MaintenanceFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        updateRecyclerView();
         recyclerView.smoothScrollToPosition(0);
     }
 
@@ -228,6 +231,7 @@ public class MaintenanceFragment extends Fragment {
             dataset.clear();
             dataset.addAll(temporaryDataset);
             if (adapter != null) {
+                ((ProgressBar) getView().findViewById(R.id.maintenance_list_progress_bar)).setVisibility(GONE);
                 adapter.notifyDataSetChanged();
             }
         }

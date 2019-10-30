@@ -40,7 +40,7 @@ public class MaintenanceAdapter extends RecyclerView.Adapter {
         final ViewHolder viewHolder = (ViewHolder) holder;
         Maintenance maintenance = dataset.get(position);
         viewHolder.name.setText(maintenance.getFirst_name() + " " + maintenance.getLast_name());
-        viewHolder.apartment.setText(maintenance.getWing() + "-" + maintenance.getApartment());
+        viewHolder.apartment.setText("(" + maintenance.getWing() + "-" + maintenance.getApartment() + ")");
         viewHolder.amount.setText("₹ " + maintenance.getAmount() + "/-");
         viewHolder.paymentMode.setText(maintenance.getMode());
         viewHolder.timestamp.setText(getFormattedDate(maintenance.getTimestamp()));
@@ -83,9 +83,6 @@ public class MaintenanceAdapter extends RecyclerView.Adapter {
         String month = months[Integer.valueOf(timestamp.substring(5, 7)) - 1];
 
         String year = timestamp.substring(2, 4);
-
-        int hour = Integer.valueOf(timestamp.substring(11, 13));
-        int minute = Integer.valueOf(timestamp.substring(14, 16));
 
         return month + " " + day + ", '" + year;
     }

@@ -35,6 +35,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
@@ -192,6 +193,7 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                 .placeholder(R.drawable.ic_man)
                 .error(R.drawable.ic_man)
                 .networkPolicy(NetworkPolicy.NO_CACHE)
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .into(profilePic);
 
         adminDesignation = headerView.findViewById(R.id.navheader_admin_home_screen_designation_textview);
@@ -218,6 +220,8 @@ public class AdminHomeScreenActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_intercom_admin) {
+            Intent intent=new Intent(AdminHomeScreenActivity.this, IntercomActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_maintenance_admin) {
             Intent intent = new Intent(AdminHomeScreenActivity.this, MaintenanceAdminContainerActivity.class);
@@ -410,7 +414,12 @@ public class AdminHomeScreenActivity extends AppCompatActivity
                         for (int i = 0; i < jsonArrayComplaint.length(); i++) {
                             jsonObjectComplaint = jsonArrayComplaint.getJSONObject(i);
                             complaint = gson.fromJson(jsonObjectComplaint.toString(), Complaint.class);
-
+                            complaints.add(complaint);
+                        }
+                        jsonArrayComplaint = jsonArray.getJSONArray(2);
+                        for (int i = 0; i < jsonArrayComplaint.length(); i++) {
+                            jsonObjectComplaint = jsonArrayComplaint.getJSONObject(i);
+                            complaint = gson.fromJson(jsonObjectComplaint.toString(), Complaint.class);
                             complaints.add(complaint);
                         }
                         addComplaintsToDatabase(complaints);

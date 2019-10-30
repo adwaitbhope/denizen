@@ -179,7 +179,7 @@ public interface RetrofitServerAPI {
             @Field("password") String password,
             @Field("wing_id") String wing_id,
             @Field("apartment") String apartment,
-            @Field("amount")   String amount,
+            @Field("amount") String amount,
             @Field("payment_mode") String payment_mode,
             @Field("cheque_no ") String cheque_no
     );
@@ -202,6 +202,110 @@ public interface RetrofitServerAPI {
         @Field("username") String username,
         @Field("password") String password,
         @Field("ORDER_ID") String ORDER_ID
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/")
+    Call<JsonArray> getAmenities(
+            @Field("username") String username,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/availability/")
+    Call<JsonArray> getAmenitySlots(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("amenity_id") String amenity_id,
+            @Field("day") int day,
+            @Field("month") int month,
+            @Field("year") int year
+    );
+
+    @FormUrlEncoded
+    @POST("amenities/book/")
+    Call<JsonArray> bookAmenity(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("amenity_id") String amenity_id,
+            @Field("day") int day,
+            @Field("month") int month,
+            @Field("year") int year,
+            @Field("hour") int hour
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/book/pay/initiate/")
+    Call<JsonArray> initiateAmenityBookingPayment(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("TXN_AMOUNT") String txnAmount,
+            @Field("CHANNEL_ID") String channelId,
+            @Field("WEBSITE") String website,
+            @Field("CALLBACK_URL") String callbackUrl,
+            @Field("INDUSTRY_TYPE_ID") String industryTypeId
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/book/pay/verify/")
+    Call<JsonArray> verifyAmenityBookingPayment(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("ORDER_ID") String ORDER_ID,
+            @Field("amenity_id") String amenity_id,
+            @Field("day") int day,
+            @Field("month") int month,
+            @Field("year") int year,
+            @Field("hour") int hour
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/membership/")
+    Call<JsonArray> getMembershipPayments(
+            @Field("username") String username,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/membership/check/")
+    Call<JsonArray> checkMembershipStatus(
+            @Field("username") String username,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/booking_history/")
+    Call<JsonArray> getAmenityBookingHistory(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("with_payments_only") Boolean with_payments_only
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/membership/pay/initiate/")
+    Call<JsonArray> initiateAmenityMembershipPayment(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("TXN_AMOUNT") String txnAmount,
+            @Field("CHANNEL_ID") String channelId,
+            @Field("WEBSITE") String website,
+            @Field("CALLBACK_URL") String callbackUrl,
+            @Field("INDUSTRY_TYPE_ID") String industryTypeId
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/membership/pay/verify/")
+    Call<JsonArray> verifyAmenityMembershipPayment(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("ORDER_ID") String ORDER_ID
+    );
+
+    @FormUrlEncoded
+    @POST("/intercom/")
+    Call<JsonArray> getIntercomDetails(
+            @Field("username") String username,
+            @Field("password") String password
     );
 
     @FormUrlEncoded
