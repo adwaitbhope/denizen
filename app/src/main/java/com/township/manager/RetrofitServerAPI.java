@@ -424,5 +424,11 @@ public interface RetrofitServerAPI {
             @Field("title") String debit_title
     );
 
+    @FormUrlEncoded
+    @POST("/reset_password/")
+    Call<JsonArray> getForgotPassword(
+            @Field("email") String email
+    );
+
 
 }
