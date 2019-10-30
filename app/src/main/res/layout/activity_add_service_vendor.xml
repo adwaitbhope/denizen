@@ -31,7 +31,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_noice"
+        android:src="@drawable/ic_man"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,7 +71,7 @@
             android:drawablePadding="10dp"
             android:drawableTint="@color/secondaryColor"
             android:hint="@string/first_name"
-            android:inputType="textPersonName"
+            android:inputType="textPersonName|textCapWords"
             android:paddingLeft="10dp"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -95,7 +95,7 @@
             android:drawablePadding="10dp"
             android:drawableTint="@color/secondaryColor"
             android:hint="@string/last_name"
-            android:inputType="textPersonName"
+            android:inputType="textPersonName|textCapWords"
             android:paddingLeft="10dp"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -119,7 +119,7 @@
             android:drawablePadding="10dp"
             android:drawableTint="@color/secondaryColor"
             android:hint="Type Of Service"
-            android:inputType="text"
+            android:inputType="textCapWords"
             android:paddingLeft="10dp"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -143,7 +143,7 @@
             android:drawablePadding="10dp"
             android:drawableTint="@color/secondaryColor"
             android:hint="Address"
-            android:inputType="text|textPostalAddress|textMultiLine"
+            android:inputType="text|textPostalAddress|textMultiLine|textCapWords"
             android:paddingLeft="10dp"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>

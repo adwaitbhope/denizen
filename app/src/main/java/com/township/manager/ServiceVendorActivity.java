@@ -37,13 +37,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ServiceVendorActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener,ServiceVendorFragment.OnFragmentInteractionListener{
+public class ServiceVendorActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener, ServiceVendorFragment.OnFragmentInteractionListener {
 
 //    TextView popUpMenu;
 
 
     ServiceVendorFragment serviceVendorFragment;
-    String username,password;
+    String username, password;
     AppDatabase appDatabase;
 
     ServiceVendorDao serviceVendorDao;
@@ -64,9 +64,9 @@ public class ServiceVendorActivity extends AppCompatActivity implements PopupMen
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        serviceVendorFragment=new ServiceVendorFragment();
+        serviceVendorFragment = new ServiceVendorFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.service_vendors_container_frame,serviceVendorFragment );
+        transaction.replace(R.id.service_vendors_container_frame, serviceVendorFragment);
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.commit();
 
@@ -134,19 +134,18 @@ public class ServiceVendorActivity extends AppCompatActivity implements PopupMen
                         ServiceVendors serviceVendors;
                         Gson gson = new Gson();
 
-                        for(int i=0;i<jsonServiceVendorsArray.length();i++){
-                            jsonServiceVendor=jsonServiceVendorsArray.getJSONObject(i);
-                            serviceVendors=gson.fromJson(jsonServiceVendor.toString(),ServiceVendors.class);
+                        for (int i = 0; i < jsonServiceVendorsArray.length(); i++) {
+                            jsonServiceVendor = jsonServiceVendorsArray.getJSONObject(i);
+                            serviceVendors = gson.fromJson(jsonServiceVendor.toString(), ServiceVendors.class);
                             serviceVendorsArrayList.add(serviceVendors);
-                            Log.d("i",String.valueOf(i));
+                            Log.d("i", String.valueOf(i));
                         }
 
                         addServiceVendorsToDatabase(serviceVendorsArrayList);
 
 
                     }
-                }
-                catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
@@ -162,11 +161,11 @@ public class ServiceVendorActivity extends AppCompatActivity implements PopupMen
 
     private void addServiceVendorsToDatabase(final ArrayList<ServiceVendors> serviceVendorsArrayList) {
 
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
-                serviceVendorDao=appDatabase.serviceVendorDao();
-                serviceVendorsArray=new ServiceVendors[serviceVendorsArrayList.size()];
+                serviceVendorDao = appDatabase.serviceVendorDao();
+                serviceVendorsArray = new ServiceVendors[serviceVendorsArrayList.size()];
 
                 serviceVendorsArrayList.toArray(serviceVendorsArray);
                 new ServiceVendorsAsyncTask().execute();
@@ -193,8 +192,8 @@ public class ServiceVendorActivity extends AppCompatActivity implements PopupMen
 
         @Override
         protected Void doInBackground(Void... voids) {
+            serviceVendorDao.deleteAll();
             serviceVendorDao.insert(serviceVendorsArray);
-
             return null;
         }
 
@@ -204,7 +203,6 @@ public class ServiceVendorActivity extends AppCompatActivity implements PopupMen
             super.onPostExecute(aVoid);
         }
     }
-
 
 
 }

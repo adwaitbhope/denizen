@@ -1,5 +1,6 @@
 package com.township.manager;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -57,8 +58,8 @@ public class AddServiceVendorActivity extends AppCompatActivity {
 
     ImageView serviceVendorImage;
     MaterialButton saveVendor;
-    TextInputLayout firstNameTIL,workTIL,phoneTIL,lastNameTIL;
-    TextInputEditText firstName,lastName,phoneEditText,workEditText;
+    TextInputLayout firstNameTIL, workTIL, phoneTIL, lastNameTIL;
+    TextInputEditText firstName, lastName, phoneEditText, workEditText;
     String username, password;
     AppDatabase appDatabase;
     ServiceVendors serviceVendors;
@@ -70,25 +71,26 @@ public class AddServiceVendorActivity extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
     File file;
     Bitmap photo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_service_vendor);
-        firstName=findViewById(R.id.service_vendor_first_name_child);
-        firstNameTIL=findViewById(R.id.service_vendor_first_name);
+        firstName = findViewById(R.id.service_vendor_first_name_child);
+        firstNameTIL = findViewById(R.id.service_vendor_first_name);
 
-        lastName=findViewById(R.id.service_vendor_last_name_child);
-        lastNameTIL=findViewById(R.id.service_vendor_last_name);
+        lastName = findViewById(R.id.service_vendor_last_name_child);
+        lastNameTIL = findViewById(R.id.service_vendor_last_name);
 
-        workEditText=findViewById(R.id.service_vendor_service_work_child);
-        workTIL=findViewById(R.id.service_vendor_service_work);
+        workEditText = findViewById(R.id.service_vendor_service_work_child);
+        workTIL = findViewById(R.id.service_vendor_service_work);
 
-        phoneEditText=findViewById(R.id.service_vendor_contact_no_child);
-        phoneTIL=findViewById(R.id.service_vendor_contact_no);
+        phoneEditText = findViewById(R.id.service_vendor_contact_no_child);
+        phoneTIL = findViewById(R.id.service_vendor_contact_no);
 
-        saveVendor=findViewById(R.id.save_service_vendor_button);
+        saveVendor = findViewById(R.id.save_service_vendor_button);
 
-        serviceVendorImage=findViewById(R.id.service_vendor_profile_photo);
+        serviceVendorImage = findViewById(R.id.service_vendor_profile_photo);
 
         appDatabase = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "app-database")
@@ -112,25 +114,24 @@ public class AddServiceVendorActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
-        intent=getIntent();
-        if(intent.getStringExtra("request").equals("1")) {
+        intent = getIntent();
+        if (intent.getStringExtra("request").equals("1")) {
             saveVendor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     addVendorToServer();
                 }
             });
-            serviceVendorImage.setOnClickListener(new View.OnClickListener() {
+            ((MaterialButton) findViewById(R.id.add_service_vendor_upload_photo_button)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     pickImage();
                 }
             });
 
-        }
-        else{
+        } else {
 
-            final String url = "https://township-manager.s3.ap-south-1.amazonaws.com/townships/" +township_id+ "/servicevendors/" + intent.getStringExtra("id") + ".png";
+            final String url = "https://township-manager.s3.ap-south-1.amazonaws.com/townships/" + township_id + "/servicevendors/" + intent.getStringExtra("id") + ".png";
             Picasso.get()
                     .load(url)
                     .into(serviceVendorImage);
@@ -161,11 +162,11 @@ public class AddServiceVendorActivity extends AppCompatActivity {
 
     private void editVendorToServer() {
 
-        String firstname,lastname,phone,work;
-        firstname=firstName.getText().toString();
-        lastname=lastName.getText().toString();
-        phone=phoneEditText.getText().toString();
-        work=workEditText.getText().toString();
+        String firstname, lastname, phone, work;
+        firstname = firstName.getText().toString();
+        lastname = lastName.getText().toString();
+        phone = phoneEditText.getText().toString();
+        work = workEditText.getText().toString();
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(getString(R.string.server_addr))
@@ -174,7 +175,7 @@ public class AddServiceVendorActivity extends AppCompatActivity {
 
         RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
 
-        Call<JsonArray> call=retrofitServerAPI.editServiceVendors(username,password,intent.getStringExtra("id"),firstname,lastname,phone,work);
+        Call<JsonArray> call = retrofitServerAPI.editServiceVendors(username, password, intent.getStringExtra("id"), firstname, lastname, phone, work);
 
         call.enqueue(new Callback<JsonArray>() {
             @Override
@@ -192,8 +193,7 @@ public class AddServiceVendorActivity extends AppCompatActivity {
                         }
                     }
 
-                }
-                catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
@@ -224,6 +224,22 @@ public class AddServiceVendorActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_CODE: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    Intent getIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(Intent.createChooser(getIntent, "Select a photo"), PICK_IMAGE);
+                } else {
+                    showError();
+                }
+            }
+        }
+    }
+
     public void uploadToS3() {
         new Thread() {
             public void run() {
@@ -236,7 +252,7 @@ public class AddServiceVendorActivity extends AppCompatActivity {
                 AmazonS3 s3Client = new AmazonS3Client(credentialsProvider);
 
                 try {
-                    if(file!=null) {
+                    if (file != null) {
                         FileInputStream stream = new FileInputStream(file);
                         ObjectMetadata metadata = new ObjectMetadata();
                         metadata.setContentLength(file.length());
@@ -284,6 +300,7 @@ public class AddServiceVendorActivity extends AppCompatActivity {
 
         }
     }
+
     public File getOutputMediaFile() {
         File root = new File(Environment.getExternalStorageDirectory(), getResources().getString(R.string.app_name));
         if (!root.exists()) {
@@ -297,13 +314,14 @@ public class AddServiceVendorActivity extends AppCompatActivity {
     private void showError() {
         Toast.makeText(this, "Please allow external storage access", Toast.LENGTH_SHORT).show();
     }
+
     private void addVendorToServer() {
 
-        String firstname,lastname,phone,work;
-        firstname=firstName.getText().toString();
-        lastname=lastName.getText().toString();
-        phone=phoneEditText.getText().toString();
-        work=workEditText.getText().toString();
+        String firstname, lastname, phone, work;
+        firstname = firstName.getText().toString();
+        lastname = lastName.getText().toString();
+        phone = phoneEditText.getText().toString();
+        work = workEditText.getText().toString();
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(getString(R.string.server_addr))
@@ -311,8 +329,8 @@ public class AddServiceVendorActivity extends AppCompatActivity {
         Retrofit retrofit = builder.build();
 
         RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
-        Log.d("phone",phone);
-        Call<JsonArray> call=retrofitServerAPI.addServiceVendors(username,password,firstname,lastname,phone,work);
+        Log.d("phone", phone);
+        Call<JsonArray> call = retrofitServerAPI.addServiceVendors(username, password, firstname, lastname, phone, work);
 
         call.enqueue(new Callback<JsonArray>() {
             @Override
@@ -332,8 +350,7 @@ public class AddServiceVendorActivity extends AppCompatActivity {
                         }
                     }
 
-                }
-                catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
@@ -345,6 +362,7 @@ public class AddServiceVendorActivity extends AppCompatActivity {
             }
         });
     }
+
     private class AddServiceVendorAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -385,11 +403,10 @@ public class AddServiceVendorActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             setResult(ADD_SERVICE_VENODR_RESULT);
-//            finish();
+            finish();
             super.onPostExecute(aVoid);
         }
     }
-
 
 
 }
