@@ -270,13 +270,19 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
             startActivity(intent);
             // Handle the camera action
         } else if (id == R.id.nav_vendors_resident) {
+            Intent intent=new Intent(ResidentHomeScreenActivity.this,ServiceVendorActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_admin_info_resident) {
+            Intent intent=new Intent(ResidentHomeScreenActivity.this,AdminInfoActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_complaints_resident) {
             startActivity(new Intent(ResidentHomeScreenActivity.this, ComplaintsResidentContainerActivity.class));
 
         } else if (id == R.id.nav_security_list_resident) {
+            Intent intent=new Intent(ResidentHomeScreenActivity.this,SecurityActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_logout_resident) {
             LogOutDialog logOutDialog = new LogOutDialog();
