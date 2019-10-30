@@ -2,6 +2,7 @@ package com.township.manager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -43,6 +44,7 @@ public class RegistrationStepTwoStatusActivity extends AppCompatActivity {
 
     ProgressBar progressBar;
     String applicationId, email;
+    ColorStateList colorStateList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,18 @@ public class RegistrationStepTwoStatusActivity extends AppCompatActivity {
         statusValue = findViewById(R.id.application_status_status_value_tv);
         applicationEmailTil = findViewById(R.id.registration_step_two_status_email_til);
         applicationNumberTil = findViewById(R.id.registration_step_two_status_application_til);
+
+        int[][] states = new int[][]{
+                new int[]{android.R.attr.state_activated},
+                new int[]{android.R.attr.state_enabled}
+        };
+
+        int[] colors = new int[]{
+                Color.GREEN,
+                Color.RED,
+        };
+        colorStateList = new ColorStateList(states, colors);
+
 
         progressBar = findViewById(R.id.registration_check_status_progress_bar);
 
@@ -119,6 +133,7 @@ public class RegistrationStepTwoStatusActivity extends AppCompatActivity {
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                     textInputLayout.setError(null);
                     textInputLayout.setErrorEnabled(false);
+                    applicationEmailTil.setHelperTextEnabled(false);
                 }
 
                 @Override
@@ -143,7 +158,7 @@ public class RegistrationStepTwoStatusActivity extends AppCompatActivity {
 
     private void checkStatus() {
 
-        progressBar.setVisibility(View.VISIBLE);
+
 
         invisible(appplicationStatusHeading);
         invisible(nameKey);
@@ -182,7 +197,7 @@ public class RegistrationStepTwoStatusActivity extends AppCompatActivity {
             applicationEmailTil.setErrorIconDrawable(null);
             return;
         }
-
+        progressBar.setVisibility(View.VISIBLE);
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(getString(R.string.server_addr))
@@ -208,6 +223,9 @@ public class RegistrationStepTwoStatusActivity extends AppCompatActivity {
 
                     JSONObject authorizationData = jsonArray.getJSONObject(0);
                     if (authorizationData.getInt("request_status") == 0) {
+                        applicationEmailTil.setHelperTextEnabled(true);
+                        applicationEmailTil.setHelperText(authorizationData.getString("status_description"));
+                        applicationEmailTil.setHelperTextColor(colorStateList);
                         Toast.makeText(RegistrationStepTwoStatusActivity.this, authorizationData.getString("status_description"), Toast.LENGTH_SHORT).show();
                         return;
                     }
