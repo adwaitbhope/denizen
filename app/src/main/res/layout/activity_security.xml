@@ -15,18 +15,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/security_tab_layout" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_new_security"
-        android:layout_width="wrap_content"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/security_info_app_bar_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_add_circle_outline_black_24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:elevation="0dp"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/security_info_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/security_tab_layout"
@@ -35,21 +39,23 @@
         android:background="@color/primaryColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tabIndicatorColor="@android:color/white"
-        app:tabTextColor="@android:color/white">
+        android:elevation="4dp"
+        app:tabInlineLabel="true"
+        app:layout_constraintTop_toBottomOf="@id/security_info_app_bar_layout">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/desk_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/desks" />
+            android:icon="@drawable/ic_people_black_24dp"
+            android:text="Personnel"/>
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/personnel_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/personnel" />
+            android:icon="@drawable/ic_store_black_24dp"
+            android:text="Desks" />
 
     </com.google.android.material.tabs.TabLayout>
 

@@ -39,7 +39,7 @@ public class NoticeBoardCommentActivity extends AppCompatActivity {
     CommentsAdapter adapter;
     LinearLayoutManager layoutManager;
 
-    String notice_id;
+    String notice_id, townshipId;
     ArrayList<Notice.Comment> dataset = new ArrayList<>();
     ArrayList<Notice.Comment> tempDataset;
 
@@ -73,11 +73,17 @@ public class NoticeBoardCommentActivity extends AppCompatActivity {
                 .fallbackToDestructiveMigration()
                 .build();
 
+        DBManager dbManager = new DBManager(getApplicationContext());
+        Cursor cursor = dbManager.getDataLogin();
+        cursor.moveToFirst();
+
+        townshipId = cursor.getString(cursor.getColumnIndexOrThrow("TownshipId"));
+
         Intent intent = getIntent();
         notice_id = intent.getStringExtra("notice_id");
 
         recyclerView = findViewById(R.id.notice_board_comments_recycler_view);
-        adapter = new CommentsAdapter(dataset, this);
+        adapter = new CommentsAdapter(dataset, this, townshipId);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setStackFromEnd(true);
         layoutManager.setReverseLayout(false);

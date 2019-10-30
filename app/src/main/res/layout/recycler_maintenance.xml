@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/maintenance_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="4dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/maintenance_cardview_constraint_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/recycler_maintenance_apartment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="A/32"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/recycler_maintenance_name"
+                app:layout_constraintEnd_toStartOf="@+id/recycler_maintenance_three_dots"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/recycler_maintenance_name" />
+
+            <TextView
+                android:id="@+id/recycler_maintenance_payment_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Paytm"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/recycler_maintenance_paid_via_description_text_view"
+                app:layout_constraintStart_toEndOf="@+id/recycler_maintenance_paid_via_description_text_view"
+                app:layout_constraintTop_toTopOf="@+id/recycler_maintenance_paid_via_description_text_view" />
+
+            <TextView
+                android:id="@+id/recycler_maintenance_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+
+                android:text="Rs. 5000"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/recycler_maintenance_amount_description_text_view"
+                app:layout_constraintStart_toEndOf="@+id/recycler_maintenance_amount_description_text_view"
+                app:layout_constraintTop_toTopOf="@+id/recycler_maintenance_amount_description_text_view" />
+
+            <TextView
+                android:id="@+id/recycler_maintenance_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="8/2019"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/recycler_maintenance_paid_on_description_text_view"
+                app:layout_constraintStart_toEndOf="@+id/recycler_maintenance_paid_on_description_text_view"
+                app:layout_constraintTop_toTopOf="@+id/recycler_maintenance_paid_on_description_text_view" />
+
+            <TextView
+                android:id="@+id/recycler_maintenance_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Jonybhau Batliwala Sr."
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/recycler_maintenance_amount_description_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/ic_rupee_indian_24dp"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/secondaryColor"
+                android:text="Amount:"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_maintenance_name" />
+
+            <TextView
+                android:id="@+id/recycler_maintenance_paid_on_description_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/ic_today_black_24dp"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/secondaryColor"
+                android:text="Paid on:"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_maintenance_amount_description_text_view" />
+
+            <TextView
+                android:id="@+id/recycler_maintenance_paid_via_description_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="24dp"
+                android:drawableStart="@drawable/ic_credit_card_black_24dp"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/secondaryColor"
+                android:text="Paid via:"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_maintenance_paid_on_description_text_view" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/recycler_maintenance_three_dots"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:icon="@drawable/ic_more_vert_black_24dp"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconTint="@color/material_on_surface_emphasis_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,9 @@
 package com.township.manager;
 
 import com.google.gson.JsonArray;
+import com.squareup.moshi.Json;
+
+import org.json.JSONArray;
 
 import java.io.FileInputStream;
 import java.util.Map;
@@ -46,8 +49,8 @@ public interface RetrofitServerAPI {
             @Field("WEBSITE") String website,
             @Field("CALLBACK_URL") String callbackUrl,
             @Field("INDUSTRY_TYPE_ID") String industryTypeId,
-            @QueryMap Map<String,Object> wingdata,
-            @QueryMap Map<String,Object> amenitydata,
+            @QueryMap Map<String, Object> wingdata,
+            @QueryMap Map<String, Object> amenitydata,
             @Field("admin_ids") Integer admin_ids,
             @Field("security_ids") Integer security_ids,
             @Field("wings_num") Integer wings_num,
@@ -72,7 +75,7 @@ public interface RetrofitServerAPI {
     );
 
     @GET("/register/check_verification/")
-    Call<JsonArray>checkstatus(
+    Call<JsonArray> checkstatus(
             @Query("application_id") String application_id,
             @Query("email") String email
     );
@@ -80,9 +83,9 @@ public interface RetrofitServerAPI {
     @FormUrlEncoded
     @POST("/notices/")
     Call<JsonArray> getNotices(
-        @Field("username") String username,
-        @Field("password") String password,
-        @Field("timestamp") String timestamp
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("timestamp") String timestamp
     );
 
     @FormUrlEncoded
@@ -118,11 +121,256 @@ public interface RetrofitServerAPI {
 
     @FormUrlEncoded
     @POST("visitors/get/")
-    Call <JsonArray> getVisitorHistory(
+    Call<JsonArray> getVisitorHistory(
             @Field("username") String username,
             @Field("password") String password,
             @Field("timestamp") String timestamp
     );
+
+    @FormUrlEncoded
+    @POST("profile/edit/")
+    Call<JsonArray> editProfile(
+            @Field("org_username") String org_username,
+            @Field("org_password") String org_password,
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("phone") String phone,
+            @Field("email") String email,
+            @Field("designation") String designation,
+            @Field("first_name") String first_name,
+            @Field("last_name") String last_name
+    );
+
+    @GET("profile/check_username_availability/")
+    Call<JsonArray> checkUsernameAvailability(
+            @Query("username") String username
+    );
+
+    @FormUrlEncoded
+    @POST("/complaints/")
+    Call<JsonArray> getComplaints(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("timestamp") String timestamp,
+            @Field("resolved") Boolean resolved
+
+    );
+
+    @FormUrlEncoded
+    @POST("/complaints/resolve/")
+    Call<JsonArray> resolveComplaints(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("complaint_id") String complaint_id
+    );
+
+    @FormUrlEncoded
+    @POST("/maintenance/")
+    Call<JsonArray> getMaintenance(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("timestamp") String timestamp
+    );
+
+    @FormUrlEncoded
+    @POST("/maintenance/add/")
+    Call<JsonArray> addMaintenance(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("wing_id") String wing_id,
+            @Field("apartment") String apartment,
+            @Field("amount") String amount,
+            @Field("payment_mode") String payment_mode,
+            @Field("cheque_no ") String cheque_no
+    );
+
+    @FormUrlEncoded
+    @POST("/maintenance/pay/initiate/")
+    Call<JsonArray> intiateMaintenancePayment(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("TXN_AMOUNT") String txnAmount,
+            @Field("CHANNEL_ID") String channelId,
+            @Field("WEBSITE") String website,
+            @Field("CALLBACK_URL") String callbackUrl,
+            @Field("INDUSTRY_TYPE_ID") String industryTypeId
+    );
+
+    @FormUrlEncoded
+    @POST("/maintenance/pay/verify/")
+    Call<JsonArray> verifyMaintenancePayment(
+        @Field("username") String username,
+        @Field("password") String password,
+        @Field("ORDER_ID") String ORDER_ID
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/")
+    Call<JsonArray> getAmenities(
+            @Field("username") String username,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/availability/")
+    Call<JsonArray> getAmenitySlots(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("amenity_id") String amenity_id,
+            @Field("day") int day,
+            @Field("month") int month,
+            @Field("year") int year
+    );
+
+    @FormUrlEncoded
+    @POST("amenities/book/")
+    Call<JsonArray> bookAmenity(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("amenity_id") String amenity_id,
+            @Field("day") int day,
+            @Field("month") int month,
+            @Field("year") int year,
+            @Field("hour") int hour
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/book/pay/initiate/")
+    Call<JsonArray> initiateAmenityBookingPayment(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("TXN_AMOUNT") String txnAmount,
+            @Field("CHANNEL_ID") String channelId,
+            @Field("WEBSITE") String website,
+            @Field("CALLBACK_URL") String callbackUrl,
+            @Field("INDUSTRY_TYPE_ID") String industryTypeId
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/book/pay/verify/")
+    Call<JsonArray> verifyAmenityBookingPayment(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("ORDER_ID") String ORDER_ID,
+            @Field("amenity_id") String amenity_id,
+            @Field("day") int day,
+            @Field("month") int month,
+            @Field("year") int year,
+            @Field("hour") int hour
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/membership/")
+    Call<JsonArray> getMembershipPayments(
+            @Field("username") String username,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/membership/check/")
+    Call<JsonArray> checkMembershipStatus(
+            @Field("username") String username,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/booking_history/")
+    Call<JsonArray> getAmenityBookingHistory(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("with_payments_only") Boolean with_payments_only
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/membership/pay/initiate/")
+    Call<JsonArray> initiateAmenityMembershipPayment(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("TXN_AMOUNT") String txnAmount,
+            @Field("CHANNEL_ID") String channelId,
+            @Field("WEBSITE") String website,
+            @Field("CALLBACK_URL") String callbackUrl,
+            @Field("INDUSTRY_TYPE_ID") String industryTypeId
+    );
+
+    @FormUrlEncoded
+    @POST("/amenities/membership/pay/verify/")
+    Call<JsonArray> verifyAmenityMembershipPayment(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("ORDER_ID") String ORDER_ID
+    );
+
+    @FormUrlEncoded
+    @POST("/intercom/")
+    Call<JsonArray> getIntercomDetails(
+            @Field("username") String username,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("/security/desks/")
+    Call<JsonArray> getSecurityDesks(
+        @Field("username") String username,
+        @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("/security/desks/new/")
+    Call<JsonArray> addNewSecurityDesks(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("name") String name,
+            @Field("phone") String phone
+    );
+
+    @FormUrlEncoded
+    @POST("/security/personnel/")
+    Call<JsonArray> getSecurityPersonnel(
+            @Field("username") String username,
+            @Field("password") String passsword
+    );
+
+    @FormUrlEncoded
+    @POST("/security/personnel/new/")
+    Call<JsonArray> addNewSecurityPersonnel(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("first_name") String first_name,
+            @Field("last_name") String last_name,
+            @Field("phone") String phone,
+            @Field("shift_start_hour") int shift_start_hour,
+            @Field("shift_start_minute") int shift_start_minute,
+            @Field("shift_end_hour") int shift_end_hour,
+            @Field("shift_end_minute") int shift_end_minute
+
+    );
+
+    @FormUrlEncoded
+    @POST("/security/personnel/edit/")
+    Call<JsonArray> editSecurityPersonnel(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("personnel_id") String personnel_id,
+            @Field("first_name") String first_name,
+            @Field("last_name") String last_name,
+            @Field("phone") String phone,
+            @Field("shift_start_hour") int shift_start_hour,
+            @Field("shift_start_minute") int shift_start_minute,
+            @Field("shift_end_hour") int shift_end_hour,
+            @Field("shift_end_minute") int shift_end_minute
+    );
+
+    @FormUrlEncoded
+    @POST("/security/personnel/delete/")
+    Call<JsonArray> deleteSecurityPersonnel(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("personnel_id") String personnel_id
+    );
+
+
+
 
     @FormUrlEncoded
     @POST("/admins/")

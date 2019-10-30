@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 10,
-    "identityHash": "7a690fcc1028b316672c196ec67b0c2a",
+    "identityHash": "e636884cbab96111be451ea39d2d11ad",
     "entities": [
       {
         "tableName": "Notice",
@@ -362,62 +362,12 @@
         },
         "indices": [],
         "foreignKeys": []
-      },
-      {
-        "tableName": "AdminInfo",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`admin_id` TEXT NOT NULL, `first_name` TEXT, `last_name` TEXT, `designation` TEXT, `phone` TEXT, `email` TEXT, PRIMARY KEY(`admin_id`))",
-        "fields": [
-          {
-            "fieldPath": "admin_id",
-            "columnName": "admin_id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "first_name",
-            "columnName": "first_name",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "last_name",
-            "columnName": "last_name",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "designation",
-            "columnName": "designation",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "phone",
-            "columnName": "phone",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "email",
-            "columnName": "email",
-            "affinity": "TEXT",
-            "notNull": false
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "admin_id"
-          ],
-          "autoGenerate": false
-        },
-        "indices": [],
-        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7a690fcc1028b316672c196ec67b0c2a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e636884cbab96111be451ea39d2d11ad')"
     ]
   }
 }

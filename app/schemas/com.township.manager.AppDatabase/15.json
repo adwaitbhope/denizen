@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 15,
-    "identityHash": "a63eefee153d78e7419e3aff165ad9ed",
+    "identityHash": "d7f4f1342113a932cc7a7d1b562f5845",
     "entities": [
       {
         "tableName": "Notice",
@@ -512,75 +512,43 @@
         "foreignKeys": []
       },
       {
-        "tableName": "SecurityPersonnel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`personnel_id` TEXT NOT NULL, `security_personnel_name` TEXT, `security_personnel_phone` TEXT, `security_personnel_timings_from` TEXT, `security_personnel_timings_till` TEXT, PRIMARY KEY(`personnel_id`))",
+        "tableName": "Amenity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`amenity_id` TEXT NOT NULL, `name` TEXT, `time_period` INTEGER NOT NULL, `billing_rate` INTEGER NOT NULL, `free_for_members` INTEGER, PRIMARY KEY(`amenity_id`))",
         "fields": [
           {
-            "fieldPath": "personnel_id",
-            "columnName": "personnel_id",
+            "fieldPath": "amenity_id",
+            "columnName": "amenity_id",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "security_personnel_name",
-            "columnName": "security_personnel_name",
+            "fieldPath": "name",
+            "columnName": "name",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "security_personnel_phone",
-            "columnName": "security_personnel_phone",
-            "affinity": "TEXT",
-            "notNull": false
+            "fieldPath": "time_period",
+            "columnName": "time_period",
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
-            "fieldPath": "security_personnel_timings_from",
-            "columnName": "security_personnel_timings_from",
-            "affinity": "TEXT",
-            "notNull": false
+            "fieldPath": "billing_rate",
+            "columnName": "billing_rate",
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
-            "fieldPath": "security_personnel_timings_till",
-            "columnName": "security_personnel_timings_till",
-            "affinity": "TEXT",
+            "fieldPath": "free_for_members",
+            "columnName": "free_for_members",
+            "affinity": "INTEGER",
             "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "personnel_id"
-          ],
-          "autoGenerate": false
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
-        "tableName": "SecurityDesks",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`desk_id` TEXT NOT NULL, `security_desk_name` TEXT, `security_desk_phone` TEXT, PRIMARY KEY(`desk_id`))",
-        "fields": [
-          {
-            "fieldPath": "desk_id",
-            "columnName": "desk_id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "security_desk_name",
-            "columnName": "security_desk_name",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "security_desk_phone",
-            "columnName": "security_desk_phone",
-            "affinity": "TEXT",
-            "notNull": false
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "desk_id"
+            "amenity_id"
           ],
           "autoGenerate": false
         },
@@ -591,7 +559,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a63eefee153d78e7419e3aff165ad9ed')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd7f4f1342113a932cc7a7d1b562f5845')"
     ]
   }
 }

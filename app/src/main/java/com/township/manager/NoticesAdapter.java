@@ -24,7 +24,6 @@ public class NoticesAdapter extends RecyclerView.Adapter {
     String TOWNSHIP_ID;
     ArrayList<Notice> dataset;
     Context context;
-    InputStream stream = null;
 
     public NoticesAdapter(ArrayList<Notice> dataset, Context context) {
         this.dataset = dataset;
@@ -45,11 +44,6 @@ public class NoticesAdapter extends RecyclerView.Adapter {
 
         final ViewHolder viewHolder = (ViewHolder) holder;
         final Notice notice = dataset.get(position);
-
-//        Object[] params = new Object[2];
-//        params[0] = notice;
-//        params[1] = viewHolder;
-//        new GetPDF().execute(params);
 
         final String url = "https://township-manager.s3.ap-south-1.amazonaws.com/townships/" + TOWNSHIP_ID + "/notices/" + notice.getNotice_id() + ".png";
         Picasso.get()

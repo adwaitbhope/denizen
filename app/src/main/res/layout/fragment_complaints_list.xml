@@ -1,82 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ComplaintsListFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ComplaintsListFragment">
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="8dp"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/filtertv"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textView111"
+        <com.google.android.material.chip.ChipGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:paddingTop="4dp"
-            android:text="Filter"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:singleLine="true">
 
-        <HorizontalScrollView
-            android:id="@+id/horizontalScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
-            android:layout_marginTop="8dp"
-            android:scrollbars="none"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView111"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.chip.ChipGroup
-                android:layout_width="match_parent"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/datechip"
+                style="@style/AppChipFilterStyle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:singleLine="true">
+                android:text="By Date"
+                android:textAppearance="@style/chipTextAppearance" />
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip6"
-                    style="@style/AppChipFilterStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="By Date"
-                    android:textAppearance="@style/chipTextAppearance" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/wingchip"
+                style="@style/AppChipFilterStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="By Wing"
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip7"
-                    style="@style/AppChipFilterStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="By Wing"
-                    android:textAppearance="@style/chipTextAppearance" />
+                android:textAppearance="@style/chipTextAppearance" />
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip107"
-                    style="@style/AppChipFilterStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="By Flat"
-                    android:textAppearance="@style/chipTextAppearance" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/flatchip"
+                style="@style/AppChipFilterStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="By Flat"
+                android:textAppearance="@style/chipTextAppearance" />
 
-            </com.google.android.material.chip.ChipGroup>
-        </HorizontalScrollView>
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/complaints_recycler_view"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/complaints_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/filtertv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:paddingTop="4dp"
+        android:text="Filter"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

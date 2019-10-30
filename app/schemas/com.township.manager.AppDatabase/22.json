@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 22,
-    "identityHash": "dc8b40db474e9c8ecc93de12cdfbf5d2",
+    "identityHash": "97c7da5e9f36f6b3b4103b8a79aacd8d",
     "entities": [
       {
         "tableName": "Notice",
@@ -802,12 +802,12 @@
         ]
       },
       {
-        "tableName": "ServiceVendors",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`vendor_id` TEXT NOT NULL, `first_name` TEXT, `last_name` TEXT, `phone` TEXT, `work` TEXT, PRIMARY KEY(`vendor_id`))",
+        "tableName": "SecurityPersonnel",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`personnel_id` TEXT NOT NULL, `first_name` TEXT, `last_name` TEXT, `phone` TEXT, `shift_days` INTEGER NOT NULL, `shift_start` TEXT, `shift_end` TEXT, PRIMARY KEY(`personnel_id`))",
         "fields": [
           {
-            "fieldPath": "vendor_id",
-            "columnName": "vendor_id",
+            "fieldPath": "personnel_id",
+            "columnName": "personnel_id",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -830,15 +830,59 @@
             "notNull": false
           },
           {
-            "fieldPath": "work",
-            "columnName": "work",
+            "fieldPath": "days",
+            "columnName": "shift_days",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "shift_start",
+            "columnName": "shift_start",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "shift_end",
+            "columnName": "shift_end",
             "affinity": "TEXT",
             "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "vendor_id"
+            "personnel_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "SecurityDesks",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`desk_id` TEXT NOT NULL, `designation` TEXT, `phone` TEXT, PRIMARY KEY(`desk_id`))",
+        "fields": [
+          {
+            "fieldPath": "desk_id",
+            "columnName": "desk_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "designation",
+            "columnName": "designation",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "phone",
+            "columnName": "phone",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "desk_id"
           ],
           "autoGenerate": false
         },
@@ -849,7 +893,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dc8b40db474e9c8ecc93de12cdfbf5d2')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '97c7da5e9f36f6b3b4103b8a79aacd8d')"
     ]
   }
 }

@@ -8,8 +8,17 @@ import androidx.room.RoomDatabase;
         Wing.class,
         NoticeWing.class,
         Notice.Comment.class,
+        Complaint.class,
+        Maintenance.class,
         Resident.class,
-        Visitor.class, AdminInfo.class}, version = 10)
+        Amenity.class,
+        AmenityBooking.class,
+        MembershipPayment.class,
+        Visitor.class,
+        Intercom.class,
+        SecurityPersonnel.class,
+        SecurityDesks.class,
+        AdminInfo.class}, version = 23)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract WingDao wingDao();
 
@@ -19,9 +28,25 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract CommentDao commentDao();
 
+    public abstract ComplaintDao complaintDao();
+
+    public abstract MaintenanceDao maintenanceDao();
+
     public abstract ResidentDao residentDao();
 
     public abstract VisitorDao visitorDao();
 
     public abstract AdminInfoDao adminInfoDao();
+
+    public abstract SecurityDesksDao securityDesksDao();
+
+    public abstract SecurityPersonnelDao securityPersonnelDao();
+
+    public abstract IntercomDao intercomDao();
+
+    public abstract AmenityDao amenityDao();
+
+    public abstract AmenityBookingDao amenityBookingDao();
+
+    public abstract MembershipPaymentDao membershipPaymentDao();
 }
