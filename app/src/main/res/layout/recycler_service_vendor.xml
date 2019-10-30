@@ -24,8 +24,8 @@
 
             <ImageView
                 android:id="@+id/vendor_profile_image"
-                android:layout_width="104dp"
-                android:layout_height="104dp"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:src="@drawable/ic_noice"
@@ -47,24 +47,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!--            <ImageButton-->
-            <!--                android:id="@+id/imageButton"-->
-            <!--                android:layout_width="56dp"-->
-            <!--                android:layout_height="56dp"-->
-            <!--                app:layout_constraintStart_toEndOf="@+id/textView2"-->
-            <!--                app:srcCompat="@drawable/ic_call_black_24dp"-->
-            <!--                tools:layout_editor_absoluteY="83dp" />-->
 
             <TextView
                 android:id="@+id/vendor_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:text="Parshuram Nalwale"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/security_desks_three_dots"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/vendor_profile_image"
                 app:layout_constraintTop_toTopOf="@+id/vendor_profile_image" />
 
@@ -74,7 +69,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Plumber"
-                android:textSize="14sp"
+                android:textSize="18sp"
+                android:drawableStart="@drawable/ic_business_center_black_24dp"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/secondaryColor"
                 app:layout_constraintStart_toStartOf="@+id/vendor_name"
                 app:layout_constraintTop_toBottomOf="@+id/vendor_name" />
 
@@ -98,7 +96,7 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:paddingStart="8dp"
@@ -107,7 +105,31 @@
                 app:iconPadding="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/vendor_service" />
+                app:layout_constraintTop_toBottomOf="@+id/service_vendor_address_text_view"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/service_vendor_address_description_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_place_black_24dp"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/secondaryColor"
+                android:text="Address:"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="120dp" />
+
+            <TextView
+                android:id="@+id/service_vendor_address_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:text="Shop 101, Behind Chitale Bandhu, Pune 99"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/service_vendor_address_description_text_view"
+                app:layout_constraintTop_toTopOf="@+id/service_vendor_address_description_text_view" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
