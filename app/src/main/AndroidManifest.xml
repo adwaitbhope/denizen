@@ -18,17 +18,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".AmenityBookSlotActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".SecurityActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".IntercomActivity"/>
+        <activity android:name=".AddFinancesActivity"/>
         <activity
             android:name=".AmenityBookSlotActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".SecurityActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddSecurityDeskActivity"
             android:label="Add Desk"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ServiceVendorActivity" />
+        <activity android:name=".ServiceVendorActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".AddServiceVendorActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -38,10 +42,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".VisitorHistorySecurityContainerActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".IntercomActivity"
-            android:label="Intercom"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AmenitiesOneTimePaymentsActivity"
@@ -66,15 +66,15 @@
             android:name=".MaintenanceAdminContainerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".AddMaintenanceActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".AddAdminActivity"
             android:label="Add Admin(s)"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AdminInfoActivity"
             android:label="Admin Info"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".AddMaintenanceActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ComplaintsResidentContainerActivity"

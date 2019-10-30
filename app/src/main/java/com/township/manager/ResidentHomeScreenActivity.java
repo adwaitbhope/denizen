@@ -270,7 +270,8 @@ public class ResidentHomeScreenActivity extends AppCompatActivity
             startActivity(intent);
             // Handle the camera action
         } else if (id == R.id.nav_vendors_resident) {
-
+            Intent intent=new Intent(ResidentHomeScreenActivity.this,ServiceVendorActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_admin_info_resident) {
 
         } else if (id == R.id.nav_complaints_resident) {
