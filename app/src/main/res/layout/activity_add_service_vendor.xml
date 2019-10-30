@@ -10,28 +10,42 @@
         android:id="@+id/service_vendor_profile_photo"
         android:layout_width="128dp"
         android:layout_height="128dp"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/selfie"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:src="@drawable/ic_noice"
+        tools:layout_editor_absoluteX="141dp"
+        tools:layout_editor_absoluteY="356dp" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:id="@+id/save_service_vendor_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:text=""
+        app:icon="@drawable/ic_person_add_black_24dp"
+        app:iconPadding="8dp"
+        />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/service_vendor_first_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/service_vendor_profile_photo">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/service_vendor_first_name_child"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/first_name" />
+            android:hint="@string/first_name"
+            android:drawableStart="@drawable/ic_person_black_24dp"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/secondaryColor"
+            android:paddingLeft="10dp"
+            android:textSize="14sp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -49,7 +63,12 @@
             android:id="@+id/service_vendor_last_name_child"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/last_name" />
+            android:hint="@string/last_name"
+            android:drawableStart="@drawable/ic_person_black_24dp"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/secondaryColor"
+            android:paddingLeft="10dp"
+            android:textSize="14sp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -67,7 +86,12 @@
             android:id="@+id/service_vendor_service_work_child"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Type Of Service" />
+            android:hint="Type Of Service"
+            android:drawableStart="@drawable/ic_business_center_black_24dp"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/secondaryColor"
+            android:paddingLeft="10dp"
+            android:textSize="14sp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -85,25 +109,26 @@
             android:id="@+id/service_vendor_contact_no_child"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Contact No."
+            android:hint="Phone"
             android:inputType="number"
-            android:phoneNumber="true" />
+            android:phoneNumber="true"
+            android:drawableStart="@drawable/ic_call_black_24dp"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/secondaryColor"
+            android:paddingLeft="10dp"
+            android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/save_service_vendor_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         android:paddingLeft="8dp"
-        android:text="Save Vendor"
-        app:layout_constraintTop_toBottomOf="@id/service_vendor_contact_no"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-
+        android:text="Add Vendor"
+        app:icon="@drawable/ic_person_add_black_24dp"
+        app:iconPadding="8dp"
+        tools:layout_editor_absoluteX="239dp"
+        tools:layout_editor_absoluteY="590dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
