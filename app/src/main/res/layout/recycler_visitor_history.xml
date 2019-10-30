@@ -125,7 +125,7 @@
         android:tint="@color/secondaryColor"
         app:layout_constraintBottom_toBottomOf="@+id/recycler_view_visitor_time_in_text_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/recycler_view_visitor_time_in_text_view"
         app:layout_constraintTop_toTopOf="@+id/recycler_view_visitor_time_in_text_view"
         app:srcCompat="@drawable/ic_call_received_black_24dp" />
