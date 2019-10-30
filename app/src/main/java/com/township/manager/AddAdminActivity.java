@@ -1,6 +1,7 @@
 package com.township.manager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.room.Room;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,6 +43,13 @@ public class AddAdminActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_admin);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.add_admin_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Add Admin");
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         noOfAdmins=findViewById(R.id.add_admin_no_of_admins_edit_text);
         createAdminButton=findViewById(R.id.add_admin_create_admins_button);
 

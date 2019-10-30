@@ -2,6 +2,7 @@ package com.township.manager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -13,9 +14,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -45,22 +49,25 @@ public class AdminInfoActivity extends AppCompatActivity {
     public static final int ADD_ADMIN_REQUEST = 69;
     public static final int ADD_ADMIN_RESULT = 70;
     String townshipId;
-    String username,password;
+    String username, password;
     AdminInfo[] adminInfos;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_info);
         floatingActionButton = findViewById(R.id.add_admin_floatingActionButton);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.admin_info_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Admin Info");
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(AdminInfoActivity.this,AddAdminActivity.class),ADD_ADMIN_REQUEST);
+                startActivityForResult(new Intent(AdminInfoActivity.this, AddAdminActivity.class), ADD_ADMIN_REQUEST);
 
             }
         });
@@ -70,14 +77,13 @@ public class AdminInfoActivity extends AppCompatActivity {
                 .fallbackToDestructiveMigration()
                 .build();
 
-        adminInfoDao=appDatabase.adminInfoDao();
-
-
+        adminInfoDao = appDatabase.adminInfoDao();
 
         DBManager dbManager = new DBManager(getApplicationContext());
         Cursor cursor = dbManager.getDataLogin();
         cursor.moveToFirst();
-        int usernameCol,passwordCol;
+        int usernameCol, passwordCol;
+
         usernameCol = cursor.getColumnIndexOrThrow("Username");
         passwordCol = cursor.getColumnIndexOrThrow("Password");
 
@@ -93,6 +99,16 @@ public class AdminInfoActivity extends AppCompatActivity {
         updateRecyclerView();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void getAdminInfoFromServer() {
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(getString(R.string.server_addr))
@@ -101,11 +117,10 @@ public class AdminInfoActivity extends AppCompatActivity {
 
         RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
 
-        Call<JsonArray> call=retrofitServerAPI.getAdmins(
+        Call<JsonArray> call = retrofitServerAPI.getAdmins(
                 username,
                 password
         );
-        Log.d("usresponse", username);
         call.enqueue(new Callback<JsonArray>() {
             @Override
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
@@ -117,22 +132,21 @@ public class AdminInfoActivity extends AppCompatActivity {
                     JSONObject loginResponse = jsonArray.getJSONObject(0);
 
                     if (loginResponse.getInt("login_status") == 1) {
-                        JSONArray jsonArrayAdminInfo=jsonArray.getJSONArray(1);
+                        JSONArray jsonArrayAdminInfo = jsonArray.getJSONArray(1);
                         JSONObject jsonObjectAdminInfo;
 
-                        ArrayList<AdminInfo> adminInfosArrayList=new ArrayList<>();
+                        ArrayList<AdminInfo> adminInfosArrayList = new ArrayList<>();
                         AdminInfo adminInfo;
-                        Gson gson=new Gson();
+                        Gson gson = new Gson();
 
-                        for(int i=0;i<jsonArrayAdminInfo.length();i++){
-                            jsonObjectAdminInfo=jsonArrayAdminInfo.getJSONObject(i);
-                            adminInfo=gson.fromJson(jsonObjectAdminInfo.toString(),AdminInfo.class);
+                        for (int i = 0; i < jsonArrayAdminInfo.length(); i++) {
+                            jsonObjectAdminInfo = jsonArrayAdminInfo.getJSONObject(i);
+                            adminInfo = gson.fromJson(jsonObjectAdminInfo.toString(), AdminInfo.class);
                             adminInfosArrayList.add(adminInfo);
                         }
                         addAdminInfoToDatabase(adminInfosArrayList);
                     }
-                }
-                catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
@@ -146,15 +160,15 @@ public class AdminInfoActivity extends AppCompatActivity {
     }
 
     private void addAdminInfoToDatabase(final ArrayList<AdminInfo> adminInfosArrayList) {
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 super.run();
 
-                adminInfos=new AdminInfo[adminInfosArrayList.size()];
+                adminInfos = new AdminInfo[adminInfosArrayList.size()];
                 adminInfosArrayList.toArray(adminInfos);
 
-                AdminInfoAsyncTaskExecute adminInfoAsyncTaskExecute=new AdminInfoAsyncTaskExecute();
+                AdminInfoAsyncTaskExecute adminInfoAsyncTaskExecute = new AdminInfoAsyncTaskExecute();
                 adminInfoAsyncTaskExecute.execute();
             }
         }.start();
@@ -169,7 +183,8 @@ public class AdminInfoActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            appDatabase.adminInfoDao().deleteAll();;
+            appDatabase.adminInfoDao().deleteAll();
+            ;
             adminInfoDao.insert(adminInfos);
             return null;
         }
@@ -185,7 +200,7 @@ public class AdminInfoActivity extends AppCompatActivity {
     private void intializeRecyclerView() {
 
         recyclerView = findViewById(R.id.admin_info_recycler_view);
-        adapter = new AdminInfoAdapter(dataset,AdminInfoActivity.this);
+        adapter = new AdminInfoAdapter(dataset, AdminInfoActivity.this);
 
         adapter.TOWNSHIP_ID = townshipId;
         layoutManager = new LinearLayoutManager(AdminInfoActivity.this);
