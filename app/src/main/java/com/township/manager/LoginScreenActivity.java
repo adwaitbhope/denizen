@@ -207,7 +207,7 @@ public class LoginScreenActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressDialog.show();
+
 
                 try {
                     InputMethodManager manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -234,7 +234,7 @@ public class LoginScreenActivity extends AppCompatActivity {
                     passwordTextLayout.setErrorIconDrawable(null);
                     return;
                 }
-
+                progressDialog.show();
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, getString(R.string.server_addr) + "/login/",
                         new Response.Listener<String>() {
                             @Override
@@ -399,6 +399,7 @@ public class LoginScreenActivity extends AppCompatActivity {
                                         progressDialog.dismiss();
                                     }
                                 } catch (JSONException e) {
+                                    progressDialog.dismiss();
                                     e.printStackTrace();
                                     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
