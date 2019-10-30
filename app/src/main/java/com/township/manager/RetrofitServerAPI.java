@@ -132,20 +132,14 @@ public interface RetrofitServerAPI {
     );
 
     @FormUrlEncoded
-    @POST("/admins/new")
+    @POST("/admins/new/")
     Call<JsonArray> addNewAdmins(
             @Field("username") String username,
             @Field("password") String password,
             @Field("num_admins") String num_admins
     );
 
-    @FormUrlEncoded
-    @POST("/admins/delete")
-    Call<JsonArray> deleteAdmin(
-            @Field("username") String username,
-            @Field("password") String password,
-            @Field("admin_id") String admin_id
-    );
+
 
 
 

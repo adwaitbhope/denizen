@@ -14,10 +14,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -87,6 +89,7 @@ public class AddAdminActivity extends AppCompatActivity {
                     JSONObject loginJson = responseArray.getJSONObject(0);
                     if (loginJson.getString("login_status").equals("1")) {
                         if (loginJson.getString("request_status").equals("1")) {
+                            Log.d("addadmin",responseString);
 
                             AdminInfo adminInfo;
                             Gson gson=new Gson();
@@ -145,7 +148,7 @@ public class AddAdminActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             setResult(ADD_ADMIN_RESULT);
-//            finish();
+            finish();
             super.onPostExecute(aVoid);
         }
     }

@@ -60,13 +60,16 @@ public class AdminInfoAdapter extends RecyclerView.Adapter {
             }
         });
 
+        final String[] sendTo;
+        sendTo=new String[1];
+        sendTo[0]=adminInfo.getEmail();
         viewHolder.adminEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent emailIntent = new Intent(Intent.ACTION_SEND);
                 emailIntent.setData(Uri.parse("mailto:"));
                 emailIntent.setType("text/plain");
-                emailIntent.putExtra(Intent.EXTRA_EMAIL,adminInfo.getEmail());
+                emailIntent.putExtra(Intent.EXTRA_EMAIL,sendTo);
                 context.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
             }
         });

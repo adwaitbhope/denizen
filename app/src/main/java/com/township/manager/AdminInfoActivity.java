@@ -72,11 +72,7 @@ public class AdminInfoActivity extends AppCompatActivity {
 
         adminInfoDao=appDatabase.adminInfoDao();
 
-        getAdminInfoFromServer();
 
-        intializeRecyclerView();
-
-        updateRecyclerView();
 
         DBManager dbManager = new DBManager(getApplicationContext());
         Cursor cursor = dbManager.getDataLogin();
@@ -89,6 +85,12 @@ public class AdminInfoActivity extends AppCompatActivity {
         password = cursor.getString(passwordCol);
 
         townshipId = cursor.getString(cursor.getColumnIndexOrThrow("TownshipId"));
+
+        getAdminInfoFromServer();
+
+        intializeRecyclerView();
+
+        updateRecyclerView();
     }
 
     private void getAdminInfoFromServer() {
@@ -103,11 +105,12 @@ public class AdminInfoActivity extends AppCompatActivity {
                 username,
                 password
         );
+        Log.d("usresponse", username);
         call.enqueue(new Callback<JsonArray>() {
             @Override
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
                 assert response.body() != null;
-                Log.d("response", username);
+
                 String responseString = response.body().getAsJsonArray().toString();
                 try {
                     JSONArray jsonArray = new JSONArray(responseString);
