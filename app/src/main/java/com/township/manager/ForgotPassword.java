@@ -18,6 +18,7 @@ import com.squareup.moshi.Json;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import android.util.Log;
 import org.json.JSONObject;
 
 import java.util.Objects;
@@ -120,6 +121,7 @@ public class ForgotPassword extends AppCompatActivity {
             @Override
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
                 String responseString = response.body().toString();
+                Log.d("responeforgotpassword",responseString);
                 try {
                     JSONArray responseArray = new JSONArray(responseString);
                     JSONObject loginJson = responseArray.getJSONObject(0);

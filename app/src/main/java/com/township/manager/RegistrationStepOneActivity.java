@@ -1,6 +1,7 @@
 package com.township.manager;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +31,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.textfield.TextInputLayout;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.Objects;
@@ -61,6 +67,7 @@ public class RegistrationStepOneActivity extends AppCompatActivity implements On
     private Boolean locationSelected = false, fileSelected = false;
     private TextView locationError, fileMessage;
     private File orignalFile;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +80,8 @@ public class RegistrationStepOneActivity extends AppCompatActivity implements On
         getSupportActionBar().setTitle("Society Details");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        progressDialog=new ProgressDialog(RegistrationStepOneActivity.this);
+        progressDialog.setMessage("Just a moment...");
 
         usernameTextLayout = findViewById(R.id.registration_step_one_username_til);
         administratorPhoneNumberTextLayout = findViewById(R.id.registration_step_one_admin_phone_til);
@@ -141,7 +150,6 @@ public class RegistrationStepOneActivity extends AppCompatActivity implements On
             @Override
             public void onClick(View view) {
 
-                submitButton.setText("Submitting...");
 
                 adminName = usernameTextLayout.getEditText().getText().toString();
                 adminPhone = administratorPhoneNumberTextLayout.getEditText().getText().toString();
@@ -212,7 +220,7 @@ public class RegistrationStepOneActivity extends AppCompatActivity implements On
                     fileMessage.setTextColor(Color.RED);
                     return;
                 }
-
+                progressDialog.show();
 
                 sendNetworkRequest();
 
@@ -248,17 +256,33 @@ public class RegistrationStepOneActivity extends AppCompatActivity implements On
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Toast.makeText(RegistrationStepOneActivity.this, "Application submitted!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(RegistrationStepOneActivity.this, RegistrationSuccessfulActivity.class);
-                intent.putExtra("title", "Application status");
-                intent.putExtra("heading", "Application submitted!");
-                intent.putExtra("description", "Thank you for registering!\nWe've received your application and we'll be reviewing it as soon as possible.\n\nOnce it's verified, you we'll notify you via email, so you can proceed to complete the registration process.");
-                finish();
-                startActivity(intent);
-            }
+                String responseString = response.body().toString();
+                Log.d("responsestepone",responseString);
+             //   try {
+                //    JSONArray responseArray = new JSONArray(responseString);
+                  //  JSONObject loginJson = responseArray.getJSONObject(0);
+                   // if (loginJson.getString("registration_status").equals("1")) {
+                        Toast.makeText(RegistrationStepOneActivity.this, "Application submitted!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(RegistrationStepOneActivity.this, RegistrationSuccessfulActivity.class);
+                        intent.putExtra("title", "Application status");
+                        intent.putExtra("heading", "Application submitted!");
+                        intent.putExtra("description", "Thank you for registering!\nWe've received your application and we'll be reviewing it as soon as possible.\n\nOnce it's verified, you we'll notify you via email, so you can proceed to complete the registration process.");
+                        finish();
+                        startActivity(intent);
+                    //}
+                    //else {
+                      //  progressDialog.dismiss();
+                    //}
+               // }    //catch (JSONException e) {
+                    //progressDialog.dismiss();
+                    //e.printStackTrace();
+                }
+
+        //}
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                progressDialog.dismiss();
             }
         });
 //        }
