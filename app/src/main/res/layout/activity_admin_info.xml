@@ -9,15 +9,17 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/admin_info_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_admin_floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="32dp"
-        android:clickable="true"
         android:layout_gravity="bottom|end"
-        app:srcCompat="@drawable/ic_add_circle_black_24dp" />
+        android:layout_margin="16dp"
+        android:clickable="true"
+        app:maxImageSize="32dp"
+        app:srcCompat="@drawable/ic_add_black_24dp"
+        app:tint="@android:color/white"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
