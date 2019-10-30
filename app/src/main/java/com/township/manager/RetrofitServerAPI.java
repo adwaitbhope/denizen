@@ -199,9 +199,9 @@ public interface RetrofitServerAPI {
     @FormUrlEncoded
     @POST("/maintenance/pay/verify/")
     Call<JsonArray> verifyMaintenancePayment(
-            @Field("username") String username,
-            @Field("password") String passsword,
-            @Field("ORDER_ID") String ORDER_ID
+        @Field("username") String username,
+        @Field("password") String password,
+        @Field("ORDER_ID") String ORDER_ID
     );
 
     @FormUrlEncoded
@@ -300,6 +300,96 @@ public interface RetrofitServerAPI {
             @Field("password") String password,
             @Field("ORDER_ID") String ORDER_ID
     );
+
+    @FormUrlEncoded
+    @POST("/intercom/")
+    Call<JsonArray> getIntercomDetails(
+            @Field("username") String username,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("/security/desks/")
+    Call<JsonArray> getSecurityDesks(
+        @Field("username") String username,
+        @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("/security/desks/new/")
+    Call<JsonArray> addNewSecurityDesks(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("name") String name,
+            @Field("phone") String phone
+    );
+
+    @FormUrlEncoded
+    @POST("/security/personnel/")
+    Call<JsonArray> getSecurityPersonnel(
+            @Field("username") String username,
+            @Field("password") String passsword
+    );
+
+    @FormUrlEncoded
+    @POST("/security/personnel/new/")
+    Call<JsonArray> addNewSecurityPersonnel(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("first_name") String first_name,
+            @Field("last_name") String last_name,
+            @Field("phone") String phone,
+            @Field("shift_start_hour") int shift_start_hour,
+            @Field("shift_start_minute") int shift_start_minute,
+            @Field("shift_end_hour") int shift_end_hour,
+            @Field("shift_end_minute") int shift_end_minute
+
+    );
+
+    @FormUrlEncoded
+    @POST("/security/personnel/edit/")
+    Call<JsonArray> editSecurityPersonnel(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("personnel_id") String personnel_id,
+            @Field("first_name") String first_name,
+            @Field("last_name") String last_name,
+            @Field("phone") String phone,
+            @Field("shift_start_hour") int shift_start_hour,
+            @Field("shift_start_minute") int shift_start_minute,
+            @Field("shift_end_hour") int shift_end_hour,
+            @Field("shift_end_minute") int shift_end_minute
+    );
+
+    @FormUrlEncoded
+    @POST("/security/personnel/delete/")
+    Call<JsonArray> deleteSecurityPersonnel(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("personnel_id") String personnel_id
+    );
+
+
+
+
+    @FormUrlEncoded
+    @POST("/admins/")
+    Call<JsonArray> getAdmins(
+            @Field("username") String username,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("/admins/new/")
+    Call<JsonArray> addNewAdmins(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("num_admins") String num_admins
+    );
+
+
+
+
 
     @FormUrlEncoded
     @POST("/finances/")

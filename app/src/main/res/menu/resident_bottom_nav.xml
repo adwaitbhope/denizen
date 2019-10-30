@@ -24,6 +24,6 @@
     <item
         android:id="@+id/resident_visitor_history"
         android:icon="@drawable/ic_group_black_24dp"
-        android:title="Visitor History" />
+        android:title="Visitors" />
 
 </menu>
