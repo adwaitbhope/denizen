@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 21,
-    "identityHash": "0e1a7f425dd4c6ebca4954eb126e5b3d",
+    "identityHash": "6ade3aa3b8308e866591982edc47075b",
     "entities": [
       {
         "tableName": "Notice",
@@ -450,68 +450,6 @@
         ]
       },
       {
-        "tableName": "Visitor",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `first_name` TEXT, `last_name` TEXT, `phone` TEXT, `in_timestamp` TEXT, `out_timestamp` TEXT, `wing_id` TEXT, `apartment` TEXT)",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "first_name",
-            "columnName": "first_name",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "last_name",
-            "columnName": "last_name",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "phone",
-            "columnName": "phone",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "in_timestamp",
-            "columnName": "in_timestamp",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "out_timestamp",
-            "columnName": "out_timestamp",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "wing_id",
-            "columnName": "wing_id",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "apartment",
-            "columnName": "apartment",
-            "affinity": "TEXT",
-            "notNull": false
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "id"
-          ],
-          "autoGenerate": true
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
         "tableName": "Amenity",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`amenity_id` TEXT NOT NULL, `name` TEXT, `time_period` INTEGER NOT NULL, `billing_rate` INTEGER NOT NULL, `free_for_members` INTEGER, PRIMARY KEY(`amenity_id`))",
         "fields": [
@@ -728,98 +666,146 @@
         ]
       },
       {
-        "tableName": "FinancesCredit",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`credit_id` TEXT NOT NULL, `credit_timestamp` TEXT, `credit_title` TEXT, `credit_amount` TEXT, `credit_mode_of_payment` TEXT, PRIMARY KEY(`credit_id`))",
+        "tableName": "Visitor",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `first_name` TEXT, `last_name` TEXT, `phone` TEXT, `in_timestamp` TEXT, `out_timestamp` TEXT, `wing_id` TEXT, `apartment` TEXT)",
         "fields": [
           {
-            "fieldPath": "credit_id",
-            "columnName": "credit_id",
-            "affinity": "TEXT",
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "credit_timestamp",
-            "columnName": "credit_timestamp",
+            "fieldPath": "first_name",
+            "columnName": "first_name",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "credit_title",
-            "columnName": "credit_title",
+            "fieldPath": "last_name",
+            "columnName": "last_name",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "credit_amount",
-            "columnName": "credit_amount",
+            "fieldPath": "phone",
+            "columnName": "phone",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "credit_mode_of_payment",
-            "columnName": "credit_mode_of_payment",
+            "fieldPath": "in_timestamp",
+            "columnName": "in_timestamp",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "out_timestamp",
+            "columnName": "out_timestamp",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "wing_id",
+            "columnName": "wing_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "apartment",
+            "columnName": "apartment",
             "affinity": "TEXT",
             "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "credit_id"
+            "id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
       },
       {
-        "tableName": "FinancesDebit",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`debit_id` TEXT NOT NULL, `debit_timestamp` TEXT, `debit_title` TEXT, `debit_amount` TEXT, `debit_mode_of_payment` TEXT, PRIMARY KEY(`debit_id`))",
+        "tableName": "Intercom",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_id` TEXT NOT NULL, `type` TEXT, `first_name` TEXT, `last_name` TEXT, `phone` TEXT, `wing_id` TEXT, `apartment` TEXT, `designation` TEXT, PRIMARY KEY(`user_id`), FOREIGN KEY(`wing_id`) REFERENCES `Wing`(`wing_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
-            "fieldPath": "debit_id",
-            "columnName": "debit_id",
+            "fieldPath": "user_id",
+            "columnName": "user_id",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "debit_timestamp",
-            "columnName": "debit_timestamp",
+            "fieldPath": "type",
+            "columnName": "type",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "debit_title",
-            "columnName": "debit_title",
+            "fieldPath": "first_name",
+            "columnName": "first_name",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "debit_amount",
-            "columnName": "debit_amount",
+            "fieldPath": "last_name",
+            "columnName": "last_name",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "debit_mode_of_payment",
-            "columnName": "debit_mode_of_payment",
+            "fieldPath": "phone",
+            "columnName": "phone",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "wing_id",
+            "columnName": "wing_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "apartment",
+            "columnName": "apartment",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "designation",
+            "columnName": "designation",
             "affinity": "TEXT",
             "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "debit_id"
+            "user_id"
           ],
           "autoGenerate": false
         },
         "indices": [],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "Wing",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "wing_id"
+            ],
+            "referencedColumns": [
+              "wing_id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0e1a7f425dd4c6ebca4954eb126e5b3d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6ade3aa3b8308e866591982edc47075b')"
     ]
   }
 }

@@ -18,10 +18,12 @@ public class AmenitiesAdapter extends RecyclerView.Adapter {
 
     ArrayList<Amenity> dataset;
     Context context;
+    String type;
 
-    public AmenitiesAdapter(ArrayList<Amenity> dataset, Context context) {
+    public AmenitiesAdapter(ArrayList<Amenity> dataset, Context context, String type) {
         this.dataset = dataset;
         this.context = context;
+        this.type = type;
     }
 
     @NonNull
@@ -45,16 +47,20 @@ public class AmenitiesAdapter extends RecyclerView.Adapter {
         } else {
             viewHolder.freeForMembers.setText("Not free for members");
         }
-        viewHolder.reserveSlot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, AmenitySlotsActivity.class);
-                intent.putExtra("amenity_id", amenity.getAmenity_id());
-                intent.putExtra("free_for_members", amenity.getFree_for_members());
-                intent.putExtra("amount", amenity.getBilling_rate());
-                context.startActivity(intent);
-            }
-        });
+        if (type.equals("admin")) {
+            viewHolder.reserveSlot.setVisibility(View.GONE);
+        } else {
+            viewHolder.reserveSlot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, AmenitySlotsActivity.class);
+                    intent.putExtra("amenity_id", amenity.getAmenity_id());
+                    intent.putExtra("free_for_members", amenity.getFree_for_members());
+                    intent.putExtra("amount", amenity.getBilling_rate());
+                    context.startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override

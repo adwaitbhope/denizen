@@ -21,24 +21,26 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/complaint_card_constraint_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-<!--            TODO-->
-<!--            android:animateLayoutChanges="true">-->
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true">
 
             <ImageView
                 android:id="@+id/complaint_image_button"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:elevation="6dp"
                 android:minWidth="0dp"
                 android:padding="0dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_noice"
                 android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@id/complaint_description_textview"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/complaint_resident_name" />
+                app:layout_constraintTop_toBottomOf="@+id/complaint_card_click_area"
+                app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
                 android:id="@+id/complaint_expand_button"
@@ -111,7 +113,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:paddingLeft="8dp"
@@ -132,8 +133,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:paddingBottom="8dp"
                 android:fontFamily="@font/roboto_mono"
+                android:paddingBottom="8dp"
                 android:text="The parking bulb is not working anymore. I suggest you to change the damaged one as it becomes difficult at night times. Images are attached herewith. Thank you."
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"

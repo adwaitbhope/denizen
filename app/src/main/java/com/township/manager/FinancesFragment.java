@@ -13,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -33,14 +34,6 @@ public class FinancesFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-    boolean isFABOpen = false;
-
-    FloatingActionButton fab, fab1, fab2;
-
-    CoordinatorLayout fabLayout1, fabLayout2, fabLayout;
-
-    View fabBGLayout;
 
     private OnFragmentInteractionListener mListener;
 
@@ -80,44 +73,54 @@ public class FinancesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_finances, container, false);
-        fab = view.findViewById(R.id.fab);
-        fab1 = view.findViewById(R.id.fab1);
-        fab2 = view.findViewById(R.id.fab2);
 
-        fabLayout1 = (CoordinatorLayout) view.findViewById(R.id.fabLayout1);
-        fabLayout2 = (CoordinatorLayout) view.findViewById(R.id.fabLayout2);
-//        fabLayout = (CoordinatorLayout) view.findViewById(R.id.fabLayout);
 
-        fabBGLayout = view.findViewById(R.id.fabBGLayout);
-
-        fabLayout1.setVisibility(View.INVISIBLE);
-        fabLayout2.setVisibility(View.INVISIBLE);
-
-        fab1.setOnClickListener(new View.OnClickListener() {
+        ExtendedFloatingActionButton reportButton = view.findViewById(R.id.finances_report_ex_fab);
+        reportButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 startActivity(new Intent(getContext(), AddFinancesActivity.class));
             }
         });
 
+//        fab = view.findViewById(R.id.fab);
+//        fab1 = view.findViewById(R.id.fab1);
+//        fab2 = view.findViewById(R.id.fab2);
+//
+//        fabLayout1 = (CoordinatorLayout) view.findViewById(R.id.fabLayout1);
+//        fabLayout2 = (CoordinatorLayout) view.findViewById(R.id.fabLayout2);
+//        fabLayout = (CoordinatorLayout) view.findViewById(R.id.fabLayout);
+//
+//        fabBGLayout = view.findViewById(R.id.fabBGLayout);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!isFABOpen) {
-                    showFABMenu();
-                } else {
-                    closeFABMenu();
-                }
-            }
-        });
-        fabBGLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                closeFABMenu();
-            }
-        });
-
+//        fabLayout1.setVisibility(View.INVISIBLE);
+//        fabLayout2.setVisibility(View.INVISIBLE);
+//
+//        fab1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getContext(), AddFinancesActivity.class));
+//            }
+//        });
+//
+//
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (!isFABOpen) {
+//                    showFABMenu();
+//                } else {
+//                    closeFABMenu();
+//                }
+//            }
+//        });
+//        fabBGLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                closeFABMenu();
+//            }
+//        });
+//
 //        FloatingActionButton fabMenu = view.findViewById(R.id.finances_menu_fab);
 //        FloatingActionButton fabCredit = view.findViewById(R.id.finances_credit_fab);
 //        FloatingActionButton fabDebit = view.findViewById(R.id.finances_debit_fab);
@@ -146,62 +149,62 @@ public class FinancesFragment extends Fragment {
         return view;
     }
 
-    private void showFABMenu() {
-        isFABOpen = true;
-        fabLayout1.setVisibility(View.VISIBLE);
-        fabLayout2.setVisibility(View.VISIBLE);
+//    private void showFABMenu() {
+//        isFABOpen = true;
+//        fabLayout1.setVisibility(View.VISIBLE);
+//        fabLayout2.setVisibility(View.VISIBLE);
+//
+//        fabBGLayout.setVisibility(View.VISIBLE);
+//        fab.animate().rotationBy(135);
+//        fabLayout1.animate().translationY(-getResources().getDimension(R.dimen.standard_10));
+//        fabLayout2.animate().translationY(-getResources().getDimension(R.dimen.standard_20));
+//
+//
+//    }
 
-        fabBGLayout.setVisibility(View.VISIBLE);
-        fab.animate().rotationBy(135);
-        fabLayout1.animate().translationY(-getResources().getDimension(R.dimen.standard_10));
-        fabLayout2.animate().translationY(-getResources().getDimension(R.dimen.standard_20));
-
-
-    }
-
-    private void closeFABMenu() {
-        isFABOpen = false;
-        fabBGLayout.setVisibility(View.GONE);
-        fab.animate().rotation(0);
-        fabLayout1.animate().translationY(0);
-        fabLayout2.animate().translationY(0);
-        fabLayout2.animate().translationY(0).setListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                if (!isFABOpen) {
-                    fabLayout1.setVisibility(View.GONE);
-                    fabLayout2.setVisibility(View.GONE);
-                }
-/*                if (fab.getRotation() != -180) {
-                    fab.setRotation(-180);
-                }*/
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-
-            }
-        });
-    }
-
-
-    public void onBackPressed() {
-        if (isFABOpen) {
-            closeFABMenu();
-        } else {
-            onBackPressed();
-        }
-    }
+//    private void closeFABMenu() {
+//        isFABOpen = false;
+//        fabBGLayout.setVisibility(View.GONE);
+//        fab.animate().rotation(0);
+//        fabLayout1.animate().translationY(0);
+//        fabLayout2.animate().translationY(0);
+//        fabLayout2.animate().translationY(0).setListener(new Animator.AnimatorListener() {
+//            @Override
+//            public void onAnimationStart(Animator animator) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animator animator) {
+//                if (!isFABOpen) {
+//                    fabLayout1.setVisibility(View.GONE);
+//                    fabLayout2.setVisibility(View.GONE);
+//                }
+///*                if (fab.getRotation() != -180) {
+//                    fab.setRotation(-180);
+//                }*/
+//            }
+//
+//            @Override
+//            public void onAnimationCancel(Animator animator) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animator animator) {
+//
+//            }
+//        });
+//    }
+//
+//
+//    public void onBackPressed() {
+//        if (isFABOpen) {
+//            closeFABMenu();
+//        } else {
+//            onBackPressed();
+//        }
+//    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

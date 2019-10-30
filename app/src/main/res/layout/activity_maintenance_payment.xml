@@ -52,14 +52,16 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text=" Pay "
+        android:text="Complete Payment"
+        app:icon="@drawable/ic_check_circle_black_24dp"
+        android:paddingLeft="8dp"
         app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/enter_maintenance_amount_textinput"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/enter_maintenance_amount_textinput"
@@ -76,6 +78,7 @@
             android:id="@+id/enter_maintenance_amount_textinput_child"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_rupee_indian_24dp"
             android:drawablePadding="10dp"
             android:drawableTint="@color/secondaryColor"
             android:hint="Amount"

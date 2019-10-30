@@ -26,6 +26,25 @@
             android:name=".SecurityActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".AddSecurityDeskActivity"
+            android:label="Add Desk"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ServiceVendorActivity" />
+        <activity
+            android:name=".AddServiceVendorActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AddSecurityPersonnelActivity"
+            android:label="Add Security"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".VisitorHistorySecurityContainerActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".IntercomActivity"
+            android:label="Intercom"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".AmenitiesOneTimePaymentsActivity"
             android:label="One-time Payment List"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -48,10 +67,15 @@
             android:name=".MaintenanceAdminContainerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AddMaintenanceActivity"
+            android:name=".AddAdminActivity"
+            android:label="Add Admin(s)"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".VisitorHistorySecurityContainerActivity"
+            android:name=".AdminInfoActivity"
+            android:label="Admin Info"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AddMaintenanceActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ComplaintsResidentContainerActivity"
