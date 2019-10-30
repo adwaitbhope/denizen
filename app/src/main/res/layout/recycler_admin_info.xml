@@ -44,7 +44,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="24dp"
                 android:text="vinodkamat@gmail.com"
@@ -53,7 +52,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/admin_info_email_description_text_view"
-                app:layout_constraintTop_toBottomOf="@+id/admin_info_phone_number_textView" />
+                app:layout_constraintTop_toTopOf="@+id/admin_info_email_description_text_view" />
 
             <ImageView
                 android:id="@+id/admin_info_profile_picture"
@@ -94,14 +93,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:drawableStart="@drawable/ic_email_black_24dp"
                 android:drawablePadding="8dp"
                 android:drawableTint="@color/secondaryColor"
                 android:text="Email:"
-                app:layout_constraintBottom_toBottomOf="@+id/admin_info_email_text_view"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/admin_info_email_text_view"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toBottomOf="@+id/admin_info_phone_number_textView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

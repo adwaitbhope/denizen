@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="32dp"
         android:clickable="true"
-        android:layout_gravity="bottom|right|end"
+        android:layout_gravity="bottom|end"
         app:srcCompat="@drawable/ic_add_circle_black_24dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
