@@ -203,7 +203,7 @@
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/secondaryColor"
                 android:fontFamily="@font/roboto_mono"
-                android:hint=" Last name"
+                android:hint="Last name"
                 android:inputType="textShortMessage|textPersonName|textCapWords"
                 android:paddingLeft="10dp"
                 android:textSize="14sp" />
