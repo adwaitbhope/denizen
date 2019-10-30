@@ -1,8 +1,11 @@
 package com.township.manager;
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -59,8 +62,10 @@ public class LoginScreenActivity extends AppCompatActivity {
 
     DBManager dbManager;
     private AppDatabase appDatabase;
+    ColorStateList colorStateList;
 
     Resident[] residentsArray;
+    ProgressDialog progressDialog;
     String userType;
 
     @Override
@@ -72,6 +77,20 @@ public class LoginScreenActivity extends AppCompatActivity {
                 AppDatabase.class, "app-database")
                 .fallbackToDestructiveMigration()
                 .build();
+        int[][] states = new int[][]{
+                new int[]{android.R.attr.state_activated},
+                new int[]{android.R.attr.state_enabled}
+        };
+
+        int[] colors = new int[]{
+                Color.GREEN,
+                Color.RED,
+        };
+
+
+        progressDialog=new ProgressDialog(LoginScreenActivity.this);
+        progressDialog.setMessage("Just a moment...");
+        colorStateList = new ColorStateList(states, colors);
 
         dbManager = new DBManager(this);
         Cursor cursor = dbManager.getDataLogin();
@@ -142,6 +161,7 @@ public class LoginScreenActivity extends AppCompatActivity {
         error(usernameTextLayout);
         error(passwordTextLayout);
 
+
     }
 
     public void uploadToS3() {
@@ -171,6 +191,7 @@ public class LoginScreenActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 textInputLayout.setError(null);
                 textInputLayout.setErrorEnabled(false);
+                passwordTextLayout.setHelperTextEnabled(false);
             }
 
             @Override
@@ -186,6 +207,7 @@ public class LoginScreenActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressDialog.show();
 
                 try {
                     InputMethodManager manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -370,7 +392,11 @@ public class LoginScreenActivity extends AppCompatActivity {
                                         }
 
                                     } else {
+                                        passwordTextLayout.setHelperTextEnabled(true);
+                                        passwordTextLayout.setHelperText("invalid username or password");
+                                        passwordTextLayout.setHelperTextColor(colorStateList);
                                         Log.d("login", "failed");
+                                        progressDialog.dismiss();
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
