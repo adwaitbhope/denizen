@@ -75,6 +75,7 @@ public class ComplaintsAdapter extends RecyclerView.Adapter {
                     viewHolder.complaintExpanded = false;
                 } else {
                     viewHolder.expandButton.setImageResource(R.drawable.ic_keyboard_arrow_up_black_24dp);
+                    if(isAdmin)
                     viewHolder.complaintResolveButton.setVisibility(View.VISIBLE);
                     viewHolder.complaintDescriptionTextView.setVisibility(View.VISIBLE);
                     viewHolder.complaintImageButton.setVisibility(View.VISIBLE);
