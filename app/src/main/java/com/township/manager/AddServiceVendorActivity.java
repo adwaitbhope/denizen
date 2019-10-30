@@ -2,6 +2,7 @@ package com.township.manager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.room.Room;
@@ -101,6 +102,13 @@ public class AddServiceVendorActivity extends AppCompatActivity {
         password = cursor.getString(cursor.getColumnIndexOrThrow("Password"));
         township_id = cursor.getString(cursor.getColumnIndexOrThrow("TownshipId"));
 
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.add_service_vendor_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Add Vendor");
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         intent=getIntent();
         if(intent.getStringExtra("request").equals("1")) {
