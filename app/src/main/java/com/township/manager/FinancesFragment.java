@@ -5,13 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -76,7 +75,6 @@ public class FinancesFragment extends Fragment {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -118,6 +116,32 @@ public class FinancesFragment extends Fragment {
                 closeFABMenu();
             }
         });
+
+//        FloatingActionButton fabMenu = view.findViewById(R.id.finances_menu_fab);
+//        FloatingActionButton fabCredit = view.findViewById(R.id.finances_credit_fab);
+//        FloatingActionButton fabDebit = view.findViewById(R.id.finances_debit_fab);
+//        View bgFabMenu = view.findViewById(R.id.bg_fab_menu);
+//
+//        fabMenu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (!isFABOpen) {
+//                    showFABMenu();
+//                } else {
+//                    closeFABMenu();
+//                }
+//            }
+//        });
+//
+//        bgFabMenu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                closeFABMenu();
+//            }
+//        });
+
+
+
         return view;
     }
 
