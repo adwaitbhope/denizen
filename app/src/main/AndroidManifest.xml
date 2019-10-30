@@ -38,14 +38,7 @@
             android:label="Add Security"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".SecurityActivity"
-            android:label="Security"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".VisitorHistorySecurityContainerActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".AmenityBookSlotActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".IntercomActivity"
@@ -83,9 +76,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddMaintenanceActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".VisitorHistorySecurityContainerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ComplaintsResidentContainerActivity"

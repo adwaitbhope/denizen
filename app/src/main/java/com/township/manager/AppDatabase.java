@@ -13,7 +13,6 @@ import androidx.room.RoomDatabase;
         Resident.class,
         Amenity.class,
         AmenityBooking.class,
-        MembershipPayment.class,
         Visitor.class,
         Intercom.class,
         SecurityPersonnel.class,
