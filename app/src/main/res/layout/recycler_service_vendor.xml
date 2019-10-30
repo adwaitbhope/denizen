@@ -112,12 +112,14 @@
                 android:id="@+id/service_vendor_address_description_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:drawableStart="@drawable/ic_place_black_24dp"
                 android:drawablePadding="8dp"
                 android:drawableTint="@color/secondaryColor"
                 android:text="Address:"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="120dp" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vendor_profile_image" />
 
             <TextView
                 android:id="@+id/service_vendor_address_text_view"
