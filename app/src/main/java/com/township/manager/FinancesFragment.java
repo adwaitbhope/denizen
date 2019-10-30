@@ -66,7 +66,7 @@ public class FinancesFragment extends Fragment {
     CalendarView calendarView;
     TextInputLayout titleTextInputLayout,typeOfExpenseTextInputLayout,amountTextInputLayout,paidViaTextInputLayout,chequeNumberTextInputLayout;
     EditText titleEdit,amountEdit,chequeNoEdit;
-    String username,password,day,month,year;
+    String username,password,day,month,year,chequeNumber;
     MaterialButton saveButton;
     ExtendedFloatingActionButton generateReportFloatingActionButton;
     AutoCompleteTextView typeOfExpenseAutoCompleteTextView,paidViaAutoCompleteTextView;
@@ -200,6 +200,11 @@ public class FinancesFragment extends Fragment {
             }
         });
 
+        if(paidViaAutoCompleteTextView.getText().toString().equals("Cheque")) {
+            chequeNoEdit.setVisibility(View.VISIBLE);
+        }
+
+
 //        fab = view.findViewById(R.id.fab);
 //        fab1 = view.findViewById(R.id.fab1);
 //        fab2 = view.findViewById(R.id.fab2);
@@ -268,11 +273,10 @@ public class FinancesFragment extends Fragment {
 
     private void addFinanceEntry() {
 
-        String title,amount,chequeNumber;
+        String title,amount;
         int typeOfExpense,paymentMode;
         title=titleEdit.getText().toString();
         amount=amountEdit.getText().toString();
-        chequeNumber=null;
 
         typeOfExpense=0;
         paymentMode=0;
@@ -284,8 +288,10 @@ public class FinancesFragment extends Fragment {
 
         if(paidViaAutoCompleteTextView.getText().toString().equals("Cash"))
             paymentMode=1;
-        else if(paidViaAutoCompleteTextView.getText().toString().equals("Cheque"))
-            paymentMode=2;
+        else if(paidViaAutoCompleteTextView.getText().toString().equals("Cheque")) {
+            paymentMode = 2;
+            chequeNumber=chequeNoEdit.getText().toString();
+        }
         else if(paidViaAutoCompleteTextView.getText().toString().equals("Online"))
             paymentMode=3;
 
