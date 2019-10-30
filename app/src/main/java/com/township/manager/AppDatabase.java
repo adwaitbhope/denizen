@@ -19,8 +19,7 @@ import androidx.room.RoomDatabase;
         SecurityDesks.class,
         AdminInfo.class,
         MembershipPayment.class,
-        FinancesCredit.class,
-        FinancesDebit.class},
+        },
         version = 23)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract WingDao wingDao();
@@ -53,7 +52,4 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract MembershipPaymentDao membershipPaymentDao();
 
-    public abstract FinancesCreditDao financesCreditDao();
-
-    public abstract FinancesDebitDao financesDebitDao();
 }

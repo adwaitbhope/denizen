@@ -387,42 +387,26 @@ public interface RetrofitServerAPI {
             @Field("num_admins") String num_admins
     );
 
-
-
-
+    @FormUrlEncoded
+    @POST("finances/new/")
+    Call<JsonArray> addNewFinance(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("title") String title,
+            @Field("expense_type") int expense_type,
+            @Field("amount") String amount,
+            @Field("payment_mode") int payment_mode,
+            @Field("cheque_no") String cheque_no,
+            @Field("day") String day,
+            @Field("month") String month,
+            @Field("year") String year
+    );
 
     @FormUrlEncoded
-    @POST("/finances/")
-    Call<JsonArray> getFinances(
+    @POST("finances/generate_report/")
+    Call<JsonArray> generateFinanceReport(
             @Field("username") String username,
             @Field("password") String password
     );
-
-    @FormUrlEncoded
-    @POST("/finances/credit/new/")
-    Call<JsonArray> addFinanacesCredit(
-            @Field("username") String username,
-            @Field("password") String password,
-            @Field("day") String credit_day,
-            @Field("month") String credit_month,
-            @Field("year") String credit_year,
-            @Field("mode_of_payment") String credit_mode_of_payment,
-            @Field("amount") String credit_amount,
-            @Field("title") String credit_title
-    );
-
-    @FormUrlEncoded
-    @POST("/finances/debit/new/")
-    Call<JsonArray> addFinanacesDebit(
-            @Field("username") String username,
-            @Field("password") String password,
-            @Field("day") String debit_day,
-            @Field("month") String debit_month,
-            @Field("year") String debit_year,
-            @Field("mode_of_payment") String debit_mode_of_payment,
-            @Field("amount") String debit_amount,
-            @Field("title") String debit_title
-    );
-
 
 }

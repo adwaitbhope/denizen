@@ -3,18 +3,43 @@ package com.township.manager;
 import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.CalendarView;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.JsonArray;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
@@ -31,11 +56,21 @@ public class FinancesFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    CalendarView calendarView;
+    TextInputLayout titleTextInputLayout,typeOfExpenseTextInputLayout,amountTextInputLayout,paidViaTextInputLayout,chequeNumberTextInputLayout;
+    EditText titleEdit,amountEdit,chequeNoEdit;
+    String username,password,day,month,year;
+    MaterialButton saveButton;
+    ExtendedFloatingActionButton generateReportFloatingActionButton;
+    AutoCompleteTextView typeOfExpenseAutoCompleteTextView,paidViaAutoCompleteTextView;
+    Date today;
 
     public FinancesFragment() {
         // Required empty public constructor
@@ -66,6 +101,12 @@ public class FinancesFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        DBManager dbManager = new DBManager(getContext());
+        Cursor cursor = dbManager.getDataLogin();
+        cursor.moveToFirst();
+
+        username = cursor.getString(cursor.getColumnIndexOrThrow("Username"));
+        password = cursor.getString(cursor.getColumnIndexOrThrow("Password"));
     }
 
 
@@ -74,12 +115,88 @@ public class FinancesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_finances, container, false);
 
+        titleTextInputLayout=view.findViewById(R.id.finance_title_textInputLayout);
+        titleEdit=view.findViewById(R.id.finance_title_textInputLayout_child);
 
-        ExtendedFloatingActionButton reportButton = view.findViewById(R.id.finances_report_ex_fab);
-        reportButton.setOnClickListener(new View.OnClickListener() {
+        amountTextInputLayout=view.findViewById(R.id.finance_amount_textInputLayout);
+        amountEdit=view.findViewById(R.id.finance_amount_textInputLayout_child);
+
+        typeOfExpenseTextInputLayout=view.findViewById(R.id.finance_type_of_expense_dropdown_til);
+        typeOfExpenseAutoCompleteTextView=view.findViewById(R.id.finance_type_of_expense_dropdown);
+
+        paidViaTextInputLayout=view.findViewById(R.id.finance_mode_of_payment_payment_mode_til);
+        paidViaTextInputLayout=view.findViewById(R.id.finance_mode_of_payment_mode_dropdown);
+
+        chequeNumberTextInputLayout=view.findViewById(R.id.finance_cheque_no_payment_mode_til);
+        chequeNoEdit=view.findViewById(R.id.finance_cheque_no_mode_edit_text);
+
+        calendarView=view.findViewById(R.id.finance_calendarView);
+
+        saveButton=view.findViewById(R.id.finances_save_button);
+
+        generateReportFloatingActionButton=view.findViewById(R.id.finances_report_ex_fab);
+
+        String[] type=new String[]{"Credit","Debit"};
+
+        ArrayAdapter<String> adapterType=new ArrayAdapter<>(
+                getContext(),
+                R.layout.dropdown_menu_popup_item,
+                type
+        );
+
+        typeOfExpenseAutoCompleteTextView.setAdapter(adapterType);
+
+        String[] paymentmode=new String[]{"Cash","Cheque","Online"};
+
+        ArrayAdapter<String> adapterPaymentMode=new ArrayAdapter<>(
+                getContext(),
+                R.layout.dropdown_menu_popup_item,
+                paymentmode
+        );
+
+        paidViaAutoCompleteTextView.setAdapter(adapterPaymentMode);
+
+
+
+        generateReportFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), AddFinancesActivity.class));
+            public void onClick(View view) {
+                getFinanceReport();
+            }
+        });
+
+
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addFinanceEntry();
+            }
+        });
+
+        final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        today = new Date(calendarView.getDate());
+
+
+        String selectedDate = sdf.format(today);
+        try {
+            today = sdf.parse(selectedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        day=selectedDate.substring(0,2);
+        month=selectedDate.substring(3,5);
+        year=selectedDate.substring(6,10);
+
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int yearCal, int monthCal, int dayCal) {
+                monthCal++;
+                month=String.valueOf(monthCal);
+                day=String.valueOf(dayCal);
+                year=String.valueOf(dayCal);
+
             }
         });
 
@@ -88,7 +205,7 @@ public class FinancesFragment extends Fragment {
 //        fab2 = view.findViewById(R.id.fab2);
 //
 //        fabLayout1 = (CoordinatorLayout) view.findViewById(R.id.fabLayout1);
-//        fabLayout2 = (CoordinatorLayout) view.findViewById(R.id.fabLayout2);
+//        fabLayout2 = (CoordinatorLayout) view.(R.id.fabLayout2);
 //        fabLayout = (CoordinatorLayout) view.findViewById(R.id.fabLayout);
 //
 //        fabBGLayout = view.findViewById(R.id.fabBGLayout);
@@ -147,6 +264,114 @@ public class FinancesFragment extends Fragment {
 
 
         return view;
+    }
+
+    private void addFinanceEntry() {
+
+        String title,amount,chequeNumber;
+        int typeOfExpense,paymentMode;
+        title=titleEdit.getText().toString();
+        amount=amountEdit.getText().toString();
+        chequeNumber=null;
+
+        typeOfExpense=0;
+        paymentMode=0;
+
+        if(typeOfExpenseAutoCompleteTextView.getText().toString().equals("Credit"))
+            typeOfExpense=1;
+        else if(typeOfExpenseAutoCompleteTextView.getText().toString().equals("Debit"))
+            typeOfExpense=2;
+
+        if(paidViaAutoCompleteTextView.getText().toString().equals("Cash"))
+            paymentMode=1;
+        else if(paidViaAutoCompleteTextView.getText().toString().equals("Cheque"))
+            paymentMode=2;
+        else if(paidViaAutoCompleteTextView.getText().toString().equals("Online"))
+            paymentMode=3;
+
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(getString(R.string.server_addr))
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit retrofit = builder.build();
+
+        RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
+
+        Call<JsonArray> call=retrofitServerAPI.addNewFinance(
+                username,
+                password,
+                title,
+                typeOfExpense,
+                amount,
+                paymentMode,
+                chequeNumber,
+                day,
+                month,
+                year
+
+        );
+        call.enqueue(new Callback<JsonArray>() {
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                String responseString = response.body().toString();
+                try {
+                    JSONArray responseArray = new JSONArray(responseString);
+                    JSONObject loginJson = responseArray.getJSONObject(0);
+                    if (loginJson.getString("login_status").equals("1")) {
+                        if (loginJson.getString("request_status").equals("1")) {
+                            Toast.makeText(getActivity(),"Finance Added",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    private void getFinanceReport() {
+
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(getString(R.string.server_addr))
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit retrofit = builder.build();
+
+        RetrofitServerAPI retrofitServerAPI = retrofit.create(RetrofitServerAPI.class);
+
+        Call<JsonArray> call=retrofitServerAPI.generateFinanceReport(
+                username,
+                password
+        );
+
+        call.enqueue(new Callback<JsonArray>() {
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                String responseString = response.body().toString();
+                try {
+                    JSONArray responseArray = new JSONArray(responseString);
+                    JSONObject loginJson = responseArray.getJSONObject(0);
+                    if (loginJson.getString("login_status").equals("1")) {
+                        if (loginJson.getString("request_status").equals("1")) {
+                            Toast.makeText(getActivity(),"Report Generated",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+
+            }
+        });
+
     }
 
 //    private void showFABMenu() {
