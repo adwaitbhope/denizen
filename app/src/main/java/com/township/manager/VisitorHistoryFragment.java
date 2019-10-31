@@ -1,6 +1,7 @@
 package com.township.manager;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -93,7 +94,13 @@ public class VisitorHistoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_visitor_history, container, false);
 
-        adapter = new VisitorHistoryAdapter(dataset, getContext());
+        DBManager dbManager = new DBManager(getContext().getApplicationContext());
+        Cursor cursor = dbManager.getDataLogin();
+        cursor.moveToFirst();
+
+        String townshipId = cursor.getString(cursor.getColumnIndexOrThrow("TownshipId"));
+
+        adapter = new VisitorHistoryAdapter(dataset, getContext(), townshipId);
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView = view.findViewById(R.id.visitor_history_recycler_view);
         recyclerView.setAdapter(adapter);
@@ -149,7 +156,11 @@ public class VisitorHistoryFragment extends Fragment {
                         .build();
             }
             visitorDao = appDatabase.visitorDao();
+            WingDao wingDao = appDatabase.wingDao();
             temporaryDataset = (ArrayList<Visitor>) visitorDao.getAll();
+            for (Visitor visitor : temporaryDataset) {
+                visitor.setWing(wingDao.getWingName(visitor.getWing_id()));
+            }
             return null;
         }
 

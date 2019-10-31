@@ -30,7 +30,7 @@
                 android:layout_height="96dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:src="@drawable/ic_noice"
+                android:src="@drawable/ic_man"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -119,6 +119,7 @@
                 android:drawablePadding="8dp"
                 android:drawableTint="@color/secondaryColor"
                 android:text="Address:"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/vendor_profile_image" />
 
@@ -129,6 +130,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
                 android:text="Shop 101, Behind Chitale Bandhu, Pune 99"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/service_vendor_address_description_text_view"

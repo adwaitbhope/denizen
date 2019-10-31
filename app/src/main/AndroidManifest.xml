@@ -27,7 +27,9 @@
             android:name=".SecurityActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
-        <activity android:name=".IntercomActivity"/>
+        <activity android:name=".IntercomActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".AddSecurityDeskActivity"
             android:label="Add Desk"

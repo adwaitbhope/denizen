@@ -31,7 +31,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/recycler_view_date_description_text_view"
         app:layout_constraintStart_toEndOf="@+id/recycler_view_date_description_text_view"
-        app:layout_constraintTop_toTopOf="@+id/recycler_view_date_description_text_view" />
+        app:layout_constraintTop_toTopOf="@+id/recycler_view_date_description_text_view"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/recycler_view_visitor_time_in_text_view"
@@ -43,7 +44,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/recycler_view_date_description_text_view"
         app:layout_constraintStart_toEndOf="@+id/recycler_view_time_description_text_view"
-        app:layout_constraintTop_toTopOf="@+id/recycler_view_date_description_text_view" />
+        app:layout_constraintTop_toTopOf="@+id/recycler_view_date_description_text_view"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/recycler_view_visitor_time_out_text_view"
@@ -114,7 +116,7 @@
         android:drawableTint="@color/secondaryColor"
         android:text="Date:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recycler_view_visitor_purpose_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view_visitor_image_view" />
 
     <ImageView
         android:id="@+id/visitor_in_image_view"
@@ -153,7 +155,8 @@
         android:text="Time:"
         app:layout_constraintBottom_toBottomOf="@+id/recycler_view_date_description_text_view"
         app:layout_constraintStart_toEndOf="@+id/recycler_view_visitor_date_in_text_view"
-        app:layout_constraintTop_toTopOf="@+id/recycler_view_date_description_text_view" />
+        app:layout_constraintTop_toTopOf="@+id/recycler_view_date_description_text_view"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/recycler_view_visitor_phone_number"
@@ -184,6 +187,7 @@
         android:drawablePadding="8dp"
         android:drawableTint="@color/secondaryColor"
         android:text="Purpose:"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/recycler_view_visitee_description_text_view"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/recycler_view_visitee_description_text_view"
@@ -196,6 +200,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
         android:text="Food Delivery"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/recycler_view_visitor_purpose_description_text_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

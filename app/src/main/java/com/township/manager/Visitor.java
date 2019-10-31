@@ -3,6 +3,7 @@ package com.township.manager;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
@@ -26,6 +27,9 @@ class Visitor {
 
     @ColumnInfo(name = "out_timestamp")
     String out_timestamp;
+
+    @Ignore
+    String wing;
 
     @ColumnInfo(name = "wing_id")
     String wing_id;
@@ -63,6 +67,14 @@ class Visitor {
 
     public String getApartment() {
         return apartment;
+    }
+
+    public String getWing() {
+        return wing;
+    }
+
+    public void setWing(String wing) {
+        this.wing = wing;
     }
 
     public void setId(int id) {

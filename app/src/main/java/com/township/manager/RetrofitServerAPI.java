@@ -183,7 +183,7 @@ public interface RetrofitServerAPI {
             @Field("apartment") String apartment,
             @Field("amount") String amount,
             @Field("payment_mode") String payment_mode,
-            @Field("cheque_no ") String cheque_no
+            @Field("cheque_no") String cheque_no
     );
 
     @FormUrlEncoded

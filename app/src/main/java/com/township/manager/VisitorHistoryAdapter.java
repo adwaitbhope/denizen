@@ -1,11 +1,14 @@
 package com.township.manager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -16,12 +19,14 @@ public class VisitorHistoryAdapter extends RecyclerView.Adapter {
 
     ArrayList<Visitor> dataset;
     Context context;
+    String townshipId;
 
     String[] months = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
-    public VisitorHistoryAdapter (ArrayList<Visitor> dataset, Context context) {
+    public VisitorHistoryAdapter (ArrayList<Visitor> dataset, Context context, String townshipId) {
         this.dataset = dataset;
         this.context = context;
+        this.townshipId = townshipId;
     }
 
     @NonNull
@@ -35,7 +40,23 @@ public class VisitorHistoryAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
         Visitor visitor = dataset.get(position);
+
+        final String url = "https://township-manager.s3.ap-south-1.amazonaws.com/townships/" + townshipId + "/visitors/" + visitor.getId() + ".png";
+        Picasso.get()
+                .load(url)
+                .into(viewHolder.image);
+
+        viewHolder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, FullScreenImageViewActivity.class);
+                intent.putExtra("url", url);
+                context.startActivity(intent);
+            }
+        });
+
         viewHolder.name.setText(visitor.getFirst_name() + " " + visitor.getLast_name());
+//        viewHolder.visitee.setText(visitor.getWing() + "-" + visitor.getApartment());
         viewHolder.dateIn.setText(getFormattedDate(visitor.getIn_timestamp()));
         viewHolder.timeIn.setText(getFormattedTime(visitor.getIn_timestamp()));
         if (visitor.getOut_timestamp() == null) {
@@ -57,6 +78,8 @@ public class VisitorHistoryAdapter extends RecyclerView.Adapter {
 
         TextView name, dateIn, timeIn, dateOut, timeOut;
         ImageView outImage;
+        ImageView image;
+        TextView visitee;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +89,8 @@ public class VisitorHistoryAdapter extends RecyclerView.Adapter {
             dateOut = itemView.findViewById(R.id.recycler_view_visitor_date_out_text_view);
             timeOut = itemView.findViewById(R.id.recycler_view_visitor_time_out_text_view);
             outImage = itemView.findViewById(R.id.visitor_out_image_view);
+            image = itemView.findViewById(R.id.recycler_view_visitor_image_view);
+            visitee = itemView.findViewById(R.id.recycler_view_visitee_wing_flat_text_view);
         }
     }
 

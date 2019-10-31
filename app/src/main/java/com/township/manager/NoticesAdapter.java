@@ -77,13 +77,6 @@ public class NoticesAdapter extends RecyclerView.Adapter {
         });
 
         String title = notice.getTitle();
-        if (notice.getWings().size() != 0) {
-            title += " ( ";
-            for (Wing wing : notice.getWings()) {
-                title += wing.getName() + " ";
-            }
-            title += ")";
-        }
 
         viewHolder.title.setText(title);
         viewHolder.description.setText(notice.getDescription());
