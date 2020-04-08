@@ -21,16 +21,16 @@ Security can
 1. Track visitors' entry and exit
 2. Talk to others using intercom
 
-### Technologies used  
+## Technologies used  
 
-Frontend
+### Frontend
 1. Java + XML
 2. Room (a layer over the local SQLite database, used for caching)
 3. Volley/Retrofit (for consuming backend's REST API)
 4. AWS S3 API (for storing files)
 5. PayTM Developer API (for payments)
 
-Backend
+### Backend
 1. Django (application to host the logic and communicate with database)
 2. PostgreSQL database (main database to store all user data)
 3. gunicorn (WSGI server to serve the Django application)
